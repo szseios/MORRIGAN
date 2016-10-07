@@ -7,6 +7,10 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		3EA89B861DA74DB7009BE348 /* MusicManager.m in Sources */ = {isa = PBXBuildFile; fileRef = 3EA89B851DA74DB7009BE348 /* MusicManager.m */; };
+		3EA89B891DA77E87009BE348 /* MusicModel.m in Sources */ = {isa = PBXBuildFile; fileRef = 3EA89B881DA77E87009BE348 /* MusicModel.m */; };
+		3EA89B941DA79199009BE348 /* MusicViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 3EA89B921DA79199009BE348 /* MusicViewController.m */; };
+		3EA89B971DA797D4009BE348 /* MusicViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = 3EA89B961DA797D4009BE348 /* MusicViewController.xib */; };
 		EB7AD9411DA72FF6001D1DCA /* main.m in Sources */ = {isa = PBXBuildFile; fileRef = EB7AD9401DA72FF6001D1DCA /* main.m */; };
 		EB7AD9441DA72FF6001D1DCA /* AppDelegate.m in Sources */ = {isa = PBXBuildFile; fileRef = EB7AD9431DA72FF6001D1DCA /* AppDelegate.m */; };
 		EB7AD94C1DA72FF6001D1DCA /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = EB7AD94B1DA72FF6001D1DCA /* Assets.xcassets */; };
@@ -34,6 +38,13 @@
 /* End PBXContainerItemProxy section */
 
 /* Begin PBXFileReference section */
+		3EA89B841DA74DB7009BE348 /* MusicManager.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MusicManager.h; sourceTree = "<group>"; };
+		3EA89B851DA74DB7009BE348 /* MusicManager.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = MusicManager.m; sourceTree = "<group>"; };
+		3EA89B871DA77E87009BE348 /* MusicModel.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MusicModel.h; sourceTree = "<group>"; };
+		3EA89B881DA77E87009BE348 /* MusicModel.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = MusicModel.m; sourceTree = "<group>"; };
+		3EA89B911DA79199009BE348 /* MusicViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MusicViewController.h; sourceTree = "<group>"; };
+		3EA89B921DA79199009BE348 /* MusicViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = MusicViewController.m; sourceTree = "<group>"; };
+		3EA89B961DA797D4009BE348 /* MusicViewController.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = MusicViewController.xib; sourceTree = "<group>"; };
 		EB7AD93C1DA72FF6001D1DCA /* MORRIGAN.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = MORRIGAN.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		EB7AD9401DA72FF6001D1DCA /* main.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = main.m; sourceTree = "<group>"; };
 		EB7AD9421DA72FF6001D1DCA /* AppDelegate.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = AppDelegate.h; sourceTree = "<group>"; };
@@ -77,6 +88,20 @@
 /* End PBXFrameworksBuildPhase section */
 
 /* Begin PBXGroup section */
+		3EA89B801DA74CE6009BE348 /* Music */ = {
+			isa = PBXGroup;
+			children = (
+				3EA89B841DA74DB7009BE348 /* MusicManager.h */,
+				3EA89B851DA74DB7009BE348 /* MusicManager.m */,
+				3EA89B871DA77E87009BE348 /* MusicModel.h */,
+				3EA89B881DA77E87009BE348 /* MusicModel.m */,
+				3EA89B911DA79199009BE348 /* MusicViewController.h */,
+				3EA89B921DA79199009BE348 /* MusicViewController.m */,
+				3EA89B961DA797D4009BE348 /* MusicViewController.xib */,
+			);
+			path = Music;
+			sourceTree = "<group>";
+		};
 		EB7AD9331DA72FF6001D1DCA = {
 			isa = PBXGroup;
 			children = (
@@ -141,6 +166,7 @@
 		EBF0115E1DA73137009E8394 /* UI */ = {
 			isa = PBXGroup;
 			children = (
+				3EA89B801DA74CE6009BE348 /* Music */,
 				EBF0115F1DA73137009E8394 /* Login */,
 				EBF011631DA7319F009E8394 /* Setting */,
 			);
@@ -270,8 +296,7 @@
 				TargetAttributes = {
 					EB7AD93B1DA72FF6001D1DCA = {
 						CreatedOnToolsVersion = 8.0;
-						DevelopmentTeam = DX9W839DB6;
-						ProvisioningStyle = Automatic;
+						ProvisioningStyle = Manual;
 					};
 					EB7AD9541DA72FF6001D1DCA = {
 						CreatedOnToolsVersion = 8.0;
@@ -310,6 +335,7 @@
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				3EA89B971DA797D4009BE348 /* MusicViewController.xib in Resources */,
 				EB7AD94C1DA72FF6001D1DCA /* Assets.xcassets in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -335,6 +361,9 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				3EA89B941DA79199009BE348 /* MusicViewController.m in Sources */,
+				3EA89B861DA74DB7009BE348 /* MusicManager.m in Sources */,
+				3EA89B891DA77E87009BE348 /* MusicModel.m in Sources */,
 				EBF011661DA731DA009E8394 /* LoginViewController.m in Sources */,
 				EB7AD9441DA72FF6001D1DCA /* AppDelegate.m in Sources */,
 				EB7AD9411DA72FF6001D1DCA /* main.m in Sources */,
@@ -466,12 +495,16 @@
 			isa = XCBuildConfiguration;
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
-				DEVELOPMENT_TEAM = DX9W839DB6;
+				CODE_SIGN_IDENTITY = "iPhone Developer: ge ping (49AB9267DB)";
+				DEVELOPMENT_TEAM = "";
 				GCC_PREFIX_HEADER = MORRIGAN/PrefixHeader.pch;
 				INFOPLIST_FILE = MORRIGAN/Info.plist;
+				IPHONEOS_DEPLOYMENT_TARGET = 7.0;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
-				PRODUCT_BUNDLE_IDENTIFIER = com.morrigan.demo.MORRIGAN;
+				PRODUCT_BUNDLE_IDENTIFIER = com.szse.nmoastg;
 				PRODUCT_NAME = "$(TARGET_NAME)";
+				PROVISIONING_PROFILE = "26bced54-c35a-4b6a-b35b-12fdaa23999b";
+				PROVISIONING_PROFILE_SPECIFIER = NMOA_Development;
 			};
 			name = Debug;
 		};
@@ -479,12 +512,16 @@
 			isa = XCBuildConfiguration;
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
-				DEVELOPMENT_TEAM = DX9W839DB6;
+				CODE_SIGN_IDENTITY = "iPhone Developer: ge ping (49AB9267DB)";
+				DEVELOPMENT_TEAM = "";
 				GCC_PREFIX_HEADER = MORRIGAN/PrefixHeader.pch;
 				INFOPLIST_FILE = MORRIGAN/Info.plist;
+				IPHONEOS_DEPLOYMENT_TARGET = 7.0;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
-				PRODUCT_BUNDLE_IDENTIFIER = com.morrigan.demo.MORRIGAN;
+				PRODUCT_BUNDLE_IDENTIFIER = com.szse.nmoastg;
 				PRODUCT_NAME = "$(TARGET_NAME)";
+				PROVISIONING_PROFILE = "26bced54-c35a-4b6a-b35b-12fdaa23999b";
+				PROVISIONING_PROFILE_SPECIFIER = NMOA_Development;
 			};
 			name = Release;
 		};
