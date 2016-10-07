@@ -8,6 +8,9 @@
 
 #import "AppDelegate.h"
 #import "LoginViewController.h"
+#import "MusicViewController.h"
+#import "MusicManager.h"
+#import <AVFoundation/AVFoundation.h>
 
 @interface AppDelegate ()
 
@@ -19,9 +22,12 @@
 - (BOOL)application:(UIApplication *)application didFinishLaunchingWithOptions:(NSDictionary *)launchOptions {
     // Override point for customization after application launch.
 
+    [MusicManager share];
     
     self.window = [[UIWindow alloc] initWithFrame:[[UIScreen mainScreen] bounds]];//设置窗口
     LoginViewController *loginViewController = [[LoginViewController alloc] init];
+//    MusicViewController *loginViewController = [[MusicViewController alloc] init];
+//    loginViewController.musics = [MusicManager share].musics;
     UINavigationController *nav = [[UINavigationController alloc] initWithRootViewController:loginViewController];
     nav.navigationBarHidden = YES;
     self.window.rootViewController = nav;
