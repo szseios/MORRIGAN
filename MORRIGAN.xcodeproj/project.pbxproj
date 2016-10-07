@@ -1,0 +1,581 @@
+// !$*UTF8*$!
+{
+	archiveVersion = 1;
+	classes = {
+	};
+	objectVersion = 46;
+	objects = {
+
+/* Begin PBXBuildFile section */
+		EB7AD9411DA72FF6001D1DCA /* main.m in Sources */ = {isa = PBXBuildFile; fileRef = EB7AD9401DA72FF6001D1DCA /* main.m */; };
+		EB7AD9441DA72FF6001D1DCA /* AppDelegate.m in Sources */ = {isa = PBXBuildFile; fileRef = EB7AD9431DA72FF6001D1DCA /* AppDelegate.m */; };
+		EB7AD94C1DA72FF6001D1DCA /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = EB7AD94B1DA72FF6001D1DCA /* Assets.xcassets */; };
+		EB7AD95A1DA72FF6001D1DCA /* MORRIGANTests.m in Sources */ = {isa = PBXBuildFile; fileRef = EB7AD9591DA72FF6001D1DCA /* MORRIGANTests.m */; };
+		EB7AD9651DA72FF6001D1DCA /* MORRIGANUITests.m in Sources */ = {isa = PBXBuildFile; fileRef = EB7AD9641DA72FF6001D1DCA /* MORRIGANUITests.m */; };
+		EBF011661DA731DA009E8394 /* LoginViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = EBF011651DA731DA009E8394 /* LoginViewController.m */; };
+		EBF011671DA731DA009E8394 /* LoginViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = EBF011651DA731DA009E8394 /* LoginViewController.m */; };
+/* End PBXBuildFile section */
+
+/* Begin PBXContainerItemProxy section */
+		EB7AD9561DA72FF6001D1DCA /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = EB7AD9341DA72FF6001D1DCA /* Project object */;
+			proxyType = 1;
+			remoteGlobalIDString = EB7AD93B1DA72FF6001D1DCA;
+			remoteInfo = MORRIGAN;
+		};
+		EB7AD9611DA72FF6001D1DCA /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = EB7AD9341DA72FF6001D1DCA /* Project object */;
+			proxyType = 1;
+			remoteGlobalIDString = EB7AD93B1DA72FF6001D1DCA;
+			remoteInfo = MORRIGAN;
+		};
+/* End PBXContainerItemProxy section */
+
+/* Begin PBXFileReference section */
+		EB7AD93C1DA72FF6001D1DCA /* MORRIGAN.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = MORRIGAN.app; sourceTree = BUILT_PRODUCTS_DIR; };
+		EB7AD9401DA72FF6001D1DCA /* main.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = main.m; sourceTree = "<group>"; };
+		EB7AD9421DA72FF6001D1DCA /* AppDelegate.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = AppDelegate.h; sourceTree = "<group>"; };
+		EB7AD9431DA72FF6001D1DCA /* AppDelegate.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = AppDelegate.m; sourceTree = "<group>"; };
+		EB7AD94B1DA72FF6001D1DCA /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
+		EB7AD9501DA72FF6001D1DCA /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
+		EB7AD9551DA72FF6001D1DCA /* MORRIGANTests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = MORRIGANTests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
+		EB7AD9591DA72FF6001D1DCA /* MORRIGANTests.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = MORRIGANTests.m; sourceTree = "<group>"; };
+		EB7AD95B1DA72FF6001D1DCA /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
+		EB7AD9601DA72FF6001D1DCA /* MORRIGANUITests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = MORRIGANUITests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
+		EB7AD9641DA72FF6001D1DCA /* MORRIGANUITests.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = MORRIGANUITests.m; sourceTree = "<group>"; };
+		EB7AD9661DA72FF6001D1DCA /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
+		EBF011641DA731DA009E8394 /* LoginViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = LoginViewController.h; path = MORRIGAN/UI/Setting/LoginViewController.h; sourceTree = SOURCE_ROOT; };
+		EBF011651DA731DA009E8394 /* LoginViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = LoginViewController.m; path = MORRIGAN/UI/Setting/LoginViewController.m; sourceTree = SOURCE_ROOT; };
+		EBF0116A1DA737A3009E8394 /* GlobalDefinition.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = GlobalDefinition.h; sourceTree = "<group>"; };
+		EBF0116B1DA7383B009E8394 /* PrefixHeader.pch */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = PrefixHeader.pch; sourceTree = "<group>"; };
+/* End PBXFileReference section */
+
+/* Begin PBXFrameworksBuildPhase section */
+		EB7AD9391DA72FF6001D1DCA /* Frameworks */ = {
+			isa = PBXFrameworksBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		EB7AD9521DA72FF6001D1DCA /* Frameworks */ = {
+			isa = PBXFrameworksBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		EB7AD95D1DA72FF6001D1DCA /* Frameworks */ = {
+			isa = PBXFrameworksBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+/* End PBXFrameworksBuildPhase section */
+
+/* Begin PBXGroup section */
+		EB7AD9331DA72FF6001D1DCA = {
+			isa = PBXGroup;
+			children = (
+				EB7AD93E1DA72FF6001D1DCA /* MORRIGAN */,
+				EB7AD9581DA72FF6001D1DCA /* MORRIGANTests */,
+				EB7AD9631DA72FF6001D1DCA /* MORRIGANUITests */,
+				EB7AD93D1DA72FF6001D1DCA /* Products */,
+			);
+			sourceTree = "<group>";
+		};
+		EB7AD93D1DA72FF6001D1DCA /* Products */ = {
+			isa = PBXGroup;
+			children = (
+				EB7AD93C1DA72FF6001D1DCA /* MORRIGAN.app */,
+				EB7AD9551DA72FF6001D1DCA /* MORRIGANTests.xctest */,
+				EB7AD9601DA72FF6001D1DCA /* MORRIGANUITests.xctest */,
+			);
+			name = Products;
+			sourceTree = "<group>";
+		};
+		EB7AD93E1DA72FF6001D1DCA /* MORRIGAN */ = {
+			isa = PBXGroup;
+			children = (
+				EBF011681DA73784009E8394 /* Common */,
+				EBF0115E1DA73137009E8394 /* UI */,
+				EB7AD9421DA72FF6001D1DCA /* AppDelegate.h */,
+				EB7AD9431DA72FF6001D1DCA /* AppDelegate.m */,
+				EB7AD94B1DA72FF6001D1DCA /* Assets.xcassets */,
+				EB7AD9501DA72FF6001D1DCA /* Info.plist */,
+				EB7AD93F1DA72FF6001D1DCA /* Supporting Files */,
+			);
+			path = MORRIGAN;
+			sourceTree = "<group>";
+		};
+		EB7AD93F1DA72FF6001D1DCA /* Supporting Files */ = {
+			isa = PBXGroup;
+			children = (
+				EBF0116B1DA7383B009E8394 /* PrefixHeader.pch */,
+				EB7AD9401DA72FF6001D1DCA /* main.m */,
+			);
+			name = "Supporting Files";
+			sourceTree = "<group>";
+		};
+		EB7AD9581DA72FF6001D1DCA /* MORRIGANTests */ = {
+			isa = PBXGroup;
+			children = (
+				EB7AD9591DA72FF6001D1DCA /* MORRIGANTests.m */,
+				EB7AD95B1DA72FF6001D1DCA /* Info.plist */,
+			);
+			path = MORRIGANTests;
+			sourceTree = "<group>";
+		};
+		EB7AD9631DA72FF6001D1DCA /* MORRIGANUITests */ = {
+			isa = PBXGroup;
+			children = (
+				EB7AD9641DA72FF6001D1DCA /* MORRIGANUITests.m */,
+				EB7AD9661DA72FF6001D1DCA /* Info.plist */,
+			);
+			path = MORRIGANUITests;
+			sourceTree = "<group>";
+		};
+		EBF0115E1DA73137009E8394 /* UI */ = {
+			isa = PBXGroup;
+			children = (
+				EBF0115F1DA73137009E8394 /* Login */,
+				EBF011631DA7319F009E8394 /* Setting */,
+			);
+			path = UI;
+			sourceTree = "<group>";
+		};
+		EBF0115F1DA73137009E8394 /* Login */ = {
+			isa = PBXGroup;
+			children = (
+				EBF011611DA73168009E8394 /* Manager */,
+				EBF011621DA73168009E8394 /* View */,
+				EBF011601DA73137009E8394 /* Controllers */,
+			);
+			path = Login;
+			sourceTree = "<group>";
+		};
+		EBF011601DA73137009E8394 /* Controllers */ = {
+			isa = PBXGroup;
+			children = (
+				EBF011641DA731DA009E8394 /* LoginViewController.h */,
+				EBF011651DA731DA009E8394 /* LoginViewController.m */,
+			);
+			path = Controllers;
+			sourceTree = "<group>";
+		};
+		EBF011611DA73168009E8394 /* Manager */ = {
+			isa = PBXGroup;
+			children = (
+			);
+			path = Manager;
+			sourceTree = "<group>";
+		};
+		EBF011621DA73168009E8394 /* View */ = {
+			isa = PBXGroup;
+			children = (
+			);
+			path = View;
+			sourceTree = "<group>";
+		};
+		EBF011631DA7319F009E8394 /* Setting */ = {
+			isa = PBXGroup;
+			children = (
+			);
+			path = Setting;
+			sourceTree = "<group>";
+		};
+		EBF011681DA73784009E8394 /* Common */ = {
+			isa = PBXGroup;
+			children = (
+				EBF011691DA73784009E8394 /* Other */,
+			);
+			path = Common;
+			sourceTree = "<group>";
+		};
+		EBF011691DA73784009E8394 /* Other */ = {
+			isa = PBXGroup;
+			children = (
+				EBF0116A1DA737A3009E8394 /* GlobalDefinition.h */,
+			);
+			path = Other;
+			sourceTree = "<group>";
+		};
+/* End PBXGroup section */
+
+/* Begin PBXNativeTarget section */
+		EB7AD93B1DA72FF6001D1DCA /* MORRIGAN */ = {
+			isa = PBXNativeTarget;
+			buildConfigurationList = EB7AD9691DA72FF6001D1DCA /* Build configuration list for PBXNativeTarget "MORRIGAN" */;
+			buildPhases = (
+				EB7AD9381DA72FF6001D1DCA /* Sources */,
+				EB7AD9391DA72FF6001D1DCA /* Frameworks */,
+				EB7AD93A1DA72FF6001D1DCA /* Resources */,
+			);
+			buildRules = (
+			);
+			dependencies = (
+			);
+			name = MORRIGAN;
+			productName = MORRIGAN;
+			productReference = EB7AD93C1DA72FF6001D1DCA /* MORRIGAN.app */;
+			productType = "com.apple.product-type.application";
+		};
+		EB7AD9541DA72FF6001D1DCA /* MORRIGANTests */ = {
+			isa = PBXNativeTarget;
+			buildConfigurationList = EB7AD96C1DA72FF6001D1DCA /* Build configuration list for PBXNativeTarget "MORRIGANTests" */;
+			buildPhases = (
+				EB7AD9511DA72FF6001D1DCA /* Sources */,
+				EB7AD9521DA72FF6001D1DCA /* Frameworks */,
+				EB7AD9531DA72FF6001D1DCA /* Resources */,
+			);
+			buildRules = (
+			);
+			dependencies = (
+				EB7AD9571DA72FF6001D1DCA /* PBXTargetDependency */,
+			);
+			name = MORRIGANTests;
+			productName = MORRIGANTests;
+			productReference = EB7AD9551DA72FF6001D1DCA /* MORRIGANTests.xctest */;
+			productType = "com.apple.product-type.bundle.unit-test";
+		};
+		EB7AD95F1DA72FF6001D1DCA /* MORRIGANUITests */ = {
+			isa = PBXNativeTarget;
+			buildConfigurationList = EB7AD96F1DA72FF6001D1DCA /* Build configuration list for PBXNativeTarget "MORRIGANUITests" */;
+			buildPhases = (
+				EB7AD95C1DA72FF6001D1DCA /* Sources */,
+				EB7AD95D1DA72FF6001D1DCA /* Frameworks */,
+				EB7AD95E1DA72FF6001D1DCA /* Resources */,
+			);
+			buildRules = (
+			);
+			dependencies = (
+				EB7AD9621DA72FF6001D1DCA /* PBXTargetDependency */,
+			);
+			name = MORRIGANUITests;
+			productName = MORRIGANUITests;
+			productReference = EB7AD9601DA72FF6001D1DCA /* MORRIGANUITests.xctest */;
+			productType = "com.apple.product-type.bundle.ui-testing";
+		};
+/* End PBXNativeTarget section */
+
+/* Begin PBXProject section */
+		EB7AD9341DA72FF6001D1DCA /* Project object */ = {
+			isa = PBXProject;
+			attributes = {
+				LastUpgradeCheck = 0800;
+				ORGANIZATIONNAME = "mac-jhw";
+				TargetAttributes = {
+					EB7AD93B1DA72FF6001D1DCA = {
+						CreatedOnToolsVersion = 8.0;
+						DevelopmentTeam = DX9W839DB6;
+						ProvisioningStyle = Automatic;
+					};
+					EB7AD9541DA72FF6001D1DCA = {
+						CreatedOnToolsVersion = 8.0;
+						ProvisioningStyle = Automatic;
+						TestTargetID = EB7AD93B1DA72FF6001D1DCA;
+					};
+					EB7AD95F1DA72FF6001D1DCA = {
+						CreatedOnToolsVersion = 8.0;
+						ProvisioningStyle = Automatic;
+						TestTargetID = EB7AD93B1DA72FF6001D1DCA;
+					};
+				};
+			};
+			buildConfigurationList = EB7AD9371DA72FF6001D1DCA /* Build configuration list for PBXProject "MORRIGAN" */;
+			compatibilityVersion = "Xcode 3.2";
+			developmentRegion = English;
+			hasScannedForEncodings = 0;
+			knownRegions = (
+				en,
+				Base,
+			);
+			mainGroup = EB7AD9331DA72FF6001D1DCA;
+			productRefGroup = EB7AD93D1DA72FF6001D1DCA /* Products */;
+			projectDirPath = "";
+			projectRoot = "";
+			targets = (
+				EB7AD93B1DA72FF6001D1DCA /* MORRIGAN */,
+				EB7AD9541DA72FF6001D1DCA /* MORRIGANTests */,
+				EB7AD95F1DA72FF6001D1DCA /* MORRIGANUITests */,
+			);
+		};
+/* End PBXProject section */
+
+/* Begin PBXResourcesBuildPhase section */
+		EB7AD93A1DA72FF6001D1DCA /* Resources */ = {
+			isa = PBXResourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				EB7AD94C1DA72FF6001D1DCA /* Assets.xcassets in Resources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		EB7AD9531DA72FF6001D1DCA /* Resources */ = {
+			isa = PBXResourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		EB7AD95E1DA72FF6001D1DCA /* Resources */ = {
+			isa = PBXResourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+/* End PBXResourcesBuildPhase section */
+
+/* Begin PBXSourcesBuildPhase section */
+		EB7AD9381DA72FF6001D1DCA /* Sources */ = {
+			isa = PBXSourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				EBF011661DA731DA009E8394 /* LoginViewController.m in Sources */,
+				EB7AD9441DA72FF6001D1DCA /* AppDelegate.m in Sources */,
+				EB7AD9411DA72FF6001D1DCA /* main.m in Sources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		EB7AD9511DA72FF6001D1DCA /* Sources */ = {
+			isa = PBXSourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				EBF011671DA731DA009E8394 /* LoginViewController.m in Sources */,
+				EB7AD95A1DA72FF6001D1DCA /* MORRIGANTests.m in Sources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		EB7AD95C1DA72FF6001D1DCA /* Sources */ = {
+			isa = PBXSourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				EB7AD9651DA72FF6001D1DCA /* MORRIGANUITests.m in Sources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+/* End PBXSourcesBuildPhase section */
+
+/* Begin PBXTargetDependency section */
+		EB7AD9571DA72FF6001D1DCA /* PBXTargetDependency */ = {
+			isa = PBXTargetDependency;
+			target = EB7AD93B1DA72FF6001D1DCA /* MORRIGAN */;
+			targetProxy = EB7AD9561DA72FF6001D1DCA /* PBXContainerItemProxy */;
+		};
+		EB7AD9621DA72FF6001D1DCA /* PBXTargetDependency */ = {
+			isa = PBXTargetDependency;
+			target = EB7AD93B1DA72FF6001D1DCA /* MORRIGAN */;
+			targetProxy = EB7AD9611DA72FF6001D1DCA /* PBXContainerItemProxy */;
+		};
+/* End PBXTargetDependency section */
+
+/* Begin XCBuildConfiguration section */
+		EB7AD9671DA72FF6001D1DCA /* Debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ALWAYS_SEARCH_USER_PATHS = NO;
+				CLANG_ANALYZER_NONNULL = YES;
+				CLANG_CXX_LANGUAGE_STANDARD = "gnu++0x";
+				CLANG_CXX_LIBRARY = "libc++";
+				CLANG_ENABLE_MODULES = YES;
+				CLANG_ENABLE_OBJC_ARC = YES;
+				CLANG_WARN_BOOL_CONVERSION = YES;
+				CLANG_WARN_CONSTANT_CONVERSION = YES;
+				CLANG_WARN_DIRECT_OBJC_ISA_USAGE = YES_ERROR;
+				CLANG_WARN_DOCUMENTATION_COMMENTS = YES;
+				CLANG_WARN_EMPTY_BODY = YES;
+				CLANG_WARN_ENUM_CONVERSION = YES;
+				CLANG_WARN_INFINITE_RECURSION = YES;
+				CLANG_WARN_INT_CONVERSION = YES;
+				CLANG_WARN_OBJC_ROOT_CLASS = YES_ERROR;
+				CLANG_WARN_SUSPICIOUS_MOVES = YES;
+				CLANG_WARN_UNREACHABLE_CODE = YES;
+				CLANG_WARN__DUPLICATE_METHOD_MATCH = YES;
+				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
+				COPY_PHASE_STRIP = NO;
+				DEBUG_INFORMATION_FORMAT = dwarf;
+				ENABLE_STRICT_OBJC_MSGSEND = YES;
+				ENABLE_TESTABILITY = YES;
+				GCC_C_LANGUAGE_STANDARD = gnu99;
+				GCC_DYNAMIC_NO_PIC = NO;
+				GCC_NO_COMMON_BLOCKS = YES;
+				GCC_OPTIMIZATION_LEVEL = 0;
+				GCC_PREPROCESSOR_DEFINITIONS = (
+					"DEBUG=1",
+					"$(inherited)",
+				);
+				GCC_WARN_64_TO_32_BIT_CONVERSION = YES;
+				GCC_WARN_ABOUT_RETURN_TYPE = YES_ERROR;
+				GCC_WARN_UNDECLARED_SELECTOR = YES;
+				GCC_WARN_UNINITIALIZED_AUTOS = YES_AGGRESSIVE;
+				GCC_WARN_UNUSED_FUNCTION = YES;
+				GCC_WARN_UNUSED_VARIABLE = YES;
+				IPHONEOS_DEPLOYMENT_TARGET = 10.0;
+				MTL_ENABLE_DEBUG_INFO = YES;
+				ONLY_ACTIVE_ARCH = YES;
+				SDKROOT = iphoneos;
+			};
+			name = Debug;
+		};
+		EB7AD9681DA72FF6001D1DCA /* Release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ALWAYS_SEARCH_USER_PATHS = NO;
+				CLANG_ANALYZER_NONNULL = YES;
+				CLANG_CXX_LANGUAGE_STANDARD = "gnu++0x";
+				CLANG_CXX_LIBRARY = "libc++";
+				CLANG_ENABLE_MODULES = YES;
+				CLANG_ENABLE_OBJC_ARC = YES;
+				CLANG_WARN_BOOL_CONVERSION = YES;
+				CLANG_WARN_CONSTANT_CONVERSION = YES;
+				CLANG_WARN_DIRECT_OBJC_ISA_USAGE = YES_ERROR;
+				CLANG_WARN_DOCUMENTATION_COMMENTS = YES;
+				CLANG_WARN_EMPTY_BODY = YES;
+				CLANG_WARN_ENUM_CONVERSION = YES;
+				CLANG_WARN_INFINITE_RECURSION = YES;
+				CLANG_WARN_INT_CONVERSION = YES;
+				CLANG_WARN_OBJC_ROOT_CLASS = YES_ERROR;
+				CLANG_WARN_SUSPICIOUS_MOVES = YES;
+				CLANG_WARN_UNREACHABLE_CODE = YES;
+				CLANG_WARN__DUPLICATE_METHOD_MATCH = YES;
+				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
+				COPY_PHASE_STRIP = NO;
+				DEBUG_INFORMATION_FORMAT = "dwarf-with-dsym";
+				ENABLE_NS_ASSERTIONS = NO;
+				ENABLE_STRICT_OBJC_MSGSEND = YES;
+				GCC_C_LANGUAGE_STANDARD = gnu99;
+				GCC_NO_COMMON_BLOCKS = YES;
+				GCC_WARN_64_TO_32_BIT_CONVERSION = YES;
+				GCC_WARN_ABOUT_RETURN_TYPE = YES_ERROR;
+				GCC_WARN_UNDECLARED_SELECTOR = YES;
+				GCC_WARN_UNINITIALIZED_AUTOS = YES_AGGRESSIVE;
+				GCC_WARN_UNUSED_FUNCTION = YES;
+				GCC_WARN_UNUSED_VARIABLE = YES;
+				IPHONEOS_DEPLOYMENT_TARGET = 10.0;
+				MTL_ENABLE_DEBUG_INFO = NO;
+				SDKROOT = iphoneos;
+				VALIDATE_PRODUCT = YES;
+			};
+			name = Release;
+		};
+		EB7AD96A1DA72FF6001D1DCA /* Debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
+				DEVELOPMENT_TEAM = DX9W839DB6;
+				GCC_PREFIX_HEADER = MORRIGAN/PrefixHeader.pch;
+				INFOPLIST_FILE = MORRIGAN/Info.plist;
+				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
+				PRODUCT_BUNDLE_IDENTIFIER = com.morrigan.demo.MORRIGAN;
+				PRODUCT_NAME = "$(TARGET_NAME)";
+			};
+			name = Debug;
+		};
+		EB7AD96B1DA72FF6001D1DCA /* Release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
+				DEVELOPMENT_TEAM = DX9W839DB6;
+				GCC_PREFIX_HEADER = MORRIGAN/PrefixHeader.pch;
+				INFOPLIST_FILE = MORRIGAN/Info.plist;
+				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
+				PRODUCT_BUNDLE_IDENTIFIER = com.morrigan.demo.MORRIGAN;
+				PRODUCT_NAME = "$(TARGET_NAME)";
+			};
+			name = Release;
+		};
+		EB7AD96D1DA72FF6001D1DCA /* Debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				BUNDLE_LOADER = "$(TEST_HOST)";
+				GCC_PREFIX_HEADER = MORRIGAN/PrefixHeader.pch;
+				INFOPLIST_FILE = MORRIGANTests/Info.plist;
+				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks @loader_path/Frameworks";
+				PRODUCT_BUNDLE_IDENTIFIER = com.morrigan.demo.MORRIGANTests;
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				TEST_HOST = "$(BUILT_PRODUCTS_DIR)/MORRIGAN.app/MORRIGAN";
+			};
+			name = Debug;
+		};
+		EB7AD96E1DA72FF6001D1DCA /* Release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				BUNDLE_LOADER = "$(TEST_HOST)";
+				GCC_PREFIX_HEADER = MORRIGAN/PrefixHeader.pch;
+				INFOPLIST_FILE = MORRIGANTests/Info.plist;
+				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks @loader_path/Frameworks";
+				PRODUCT_BUNDLE_IDENTIFIER = com.morrigan.demo.MORRIGANTests;
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				TEST_HOST = "$(BUILT_PRODUCTS_DIR)/MORRIGAN.app/MORRIGAN";
+			};
+			name = Release;
+		};
+		EB7AD9701DA72FF6001D1DCA /* Debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				INFOPLIST_FILE = MORRIGANUITests/Info.plist;
+				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks @loader_path/Frameworks";
+				PRODUCT_BUNDLE_IDENTIFIER = com.morrigan.demo.MORRIGANUITests;
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				TEST_TARGET_NAME = MORRIGAN;
+			};
+			name = Debug;
+		};
+		EB7AD9711DA72FF6001D1DCA /* Release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				INFOPLIST_FILE = MORRIGANUITests/Info.plist;
+				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks @loader_path/Frameworks";
+				PRODUCT_BUNDLE_IDENTIFIER = com.morrigan.demo.MORRIGANUITests;
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				TEST_TARGET_NAME = MORRIGAN;
+			};
+			name = Release;
+		};
+/* End XCBuildConfiguration section */
+
+/* Begin XCConfigurationList section */
+		EB7AD9371DA72FF6001D1DCA /* Build configuration list for PBXProject "MORRIGAN" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				EB7AD9671DA72FF6001D1DCA /* Debug */,
+				EB7AD9681DA72FF6001D1DCA /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
+		};
+		EB7AD9691DA72FF6001D1DCA /* Build configuration list for PBXNativeTarget "MORRIGAN" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				EB7AD96A1DA72FF6001D1DCA /* Debug */,
+				EB7AD96B1DA72FF6001D1DCA /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
+		};
+		EB7AD96C1DA72FF6001D1DCA /* Build configuration list for PBXNativeTarget "MORRIGANTests" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				EB7AD96D1DA72FF6001D1DCA /* Debug */,
+				EB7AD96E1DA72FF6001D1DCA /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
+		};
+		EB7AD96F1DA72FF6001D1DCA /* Build configuration list for PBXNativeTarget "MORRIGANUITests" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				EB7AD9701DA72FF6001D1DCA /* Debug */,
+				EB7AD9711DA72FF6001D1DCA /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
+		};
+/* End XCConfigurationList section */
+	};
+	rootObject = EB7AD9341DA72FF6001D1DCA /* Project object */;
+}

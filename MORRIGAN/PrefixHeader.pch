@@ -1,0 +1,18 @@
+//
+//  PrefixHeader.pch
+//  NMOA
+//
+//  Created by snhuang on 15/9/1.
+//  Copyright (c) 2015年 snhuang. All rights reserved.
+//
+
+
+
+#ifdef __OBJC__
+
+#import <UIKit/UIKit.h>
+#import "GlobalDefinition.h"
+
+
+#endif
+
