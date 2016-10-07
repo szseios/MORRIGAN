@@ -9,6 +9,7 @@
 //
 
 #import "LoginViewController.h"
+#import "RegisterViewController.h"
 
 @interface LoginViewController ()
 
@@ -79,7 +80,7 @@
     CGFloat showPWDViewW = 50.0;
     UIButton *showPWDView = [[UIButton alloc] initWithFrame:CGRectMake(editViewW - showPWDViewW , 0, showPWDViewW, editViewH)];
     showPWDView.backgroundColor = [UIColor blueColor];
-    [showPWDView addTarget:self action:@selector(showPWDButtonClick) forControlEvents:UIControlEventTouchUpInside];
+    [showPWDView addTarget:self action:@selector(showPWDButtonClickInLogin) forControlEvents:UIControlEventTouchUpInside];
     [PWDRootView addSubview:showPWDView];
     // 密码输入框
     UITextField *PWDInputView = [[UITextField alloc] initWithFrame:CGRectMake(iconW + phoneinputViewPaddingLeft, 0, PWDRootView.frame.size.width - iconW - showPWDViewW - phoneinputViewPaddingLeft, editViewH)];
@@ -98,7 +99,7 @@
     CGFloat forgetPWDViewH = 45.0;
     UIButton *forgetPWDView = [[UIButton alloc] initWithFrame:CGRectMake(kScreenWidth - editViewPaddingLeftRight - forgetPWDViewW, PWDRootView.frame.origin.y + PWDRootView.frame.size.height + 5, forgetPWDViewW, forgetPWDViewH)];
     [forgetPWDView setTitle:@"忘记密码？" forState:UIControlStateNormal];
-    [forgetPWDView addTarget:self action:@selector(forgetPWDButtonClick) forControlEvents:UIControlEventTouchUpInside];
+    [forgetPWDView addTarget:self action:@selector(forgetPWDButtonClickInLogin) forControlEvents:UIControlEventTouchUpInside];
     [rootView addSubview:forgetPWDView];
     
     
@@ -117,13 +118,13 @@
     UIButton *registerBtnView = [[UIButton alloc] initWithFrame:CGRectMake(0, 0, buttonW, registerAndLoginBtnRootViewH)];
     [registerBtnView setTitle:@"注册" forState:UIControlStateNormal];
     registerBtnView.backgroundColor = [UIColor blueColor];
-    [registerBtnView addTarget:self action:@selector(registerButtonClick) forControlEvents:UIControlEventTouchUpInside];
+    [registerBtnView addTarget:self action:@selector(registerButtonClickInLogin) forControlEvents:UIControlEventTouchUpInside];
     [registerAndLoginBtnRootView addSubview:registerBtnView];
     // 登陆
     UIButton *loginBtnView = [[UIButton alloc] initWithFrame:CGRectMake(buttonW + registerAndLoginBtnRootViewSpace, 0, buttonW, registerAndLoginBtnRootViewH)];
     [loginBtnView setTitle:@"登陆" forState:UIControlStateNormal];
     loginBtnView.backgroundColor = [UIColor orangeColor];
-    [loginBtnView addTarget:self action:@selector(loginButtonClick) forControlEvents:UIControlEventTouchUpInside];
+    [loginBtnView addTarget:self action:@selector(loginButtonClickInLogin) forControlEvents:UIControlEventTouchUpInside];
     [registerAndLoginBtnRootView addSubview:loginBtnView];
     
     
@@ -133,30 +134,32 @@
 #pragma mark - 按钮点击处理
 
 // 显示密码按钮点击
-- (void)showPWDButtonClick
+- (void)showPWDButtonClickInLogin
 {
-    NSLog(@"showPWDButtonClick");
+    NSLog(@"showPWDButtonClickInLogin");
 }
 
 
 // 忘记密码按钮点击
-- (void)forgetPWDButtonClick
+- (void)forgetPWDButtonClickInLogin
 {
-    NSLog(@"forgetPWDButtonClick");
+    NSLog(@"forgetPWDButtonClickInLogin");
 }
 
 
 // 注册按钮点击
-- (void)registerButtonClick
+- (void)registerButtonClickInLogin
 {
-    NSLog(@"registerButtonClick");
+    NSLog(@"registerButtonClickInLogin");
+    RegisterViewController *registerViewController = [[RegisterViewController alloc] init];
+    [self.navigationController pushViewController:registerViewController animated:YES];
 }
 
 
 // 登陆按钮点击
-- (void)loginButtonClick
+- (void)loginButtonClickInLogin
 {
-    NSLog(@"loginButtonClick");
+    NSLog(@"loginButtonClickInLogin");
 }
 
 

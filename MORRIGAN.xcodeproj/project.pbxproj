@@ -13,6 +13,7 @@
 		EB7AD95A1DA72FF6001D1DCA /* MORRIGANTests.m in Sources */ = {isa = PBXBuildFile; fileRef = EB7AD9591DA72FF6001D1DCA /* MORRIGANTests.m */; };
 		EB7AD9651DA72FF6001D1DCA /* MORRIGANUITests.m in Sources */ = {isa = PBXBuildFile; fileRef = EB7AD9641DA72FF6001D1DCA /* MORRIGANUITests.m */; };
 		EBF011711DA754E6009E8394 /* LoginViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = EBF0116E1DA754E6009E8394 /* LoginViewController.m */; };
+		EBF011741DA755E1009E8394 /* RegisterViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = EBF011731DA755E1009E8394 /* RegisterViewController.m */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -49,6 +50,8 @@
 		EBF0116B1DA7383B009E8394 /* PrefixHeader.pch */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = PrefixHeader.pch; sourceTree = "<group>"; };
 		EBF0116D1DA754E6009E8394 /* LoginViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = LoginViewController.h; sourceTree = "<group>"; };
 		EBF0116E1DA754E6009E8394 /* LoginViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = LoginViewController.m; sourceTree = "<group>"; };
+		EBF011721DA755E1009E8394 /* RegisterViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = RegisterViewController.h; sourceTree = "<group>"; };
+		EBF011731DA755E1009E8394 /* RegisterViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = RegisterViewController.m; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -184,6 +187,8 @@
 			children = (
 				EBF0116D1DA754E6009E8394 /* LoginViewController.h */,
 				EBF0116E1DA754E6009E8394 /* LoginViewController.m */,
+				EBF011721DA755E1009E8394 /* RegisterViewController.h */,
+				EBF011731DA755E1009E8394 /* RegisterViewController.m */,
 			);
 			path = Controller;
 			sourceTree = "<group>";
@@ -337,6 +342,7 @@
 				EB7AD9441DA72FF6001D1DCA /* AppDelegate.m in Sources */,
 				EB7AD9411DA72FF6001D1DCA /* main.m in Sources */,
 				EBF011711DA754E6009E8394 /* LoginViewController.m in Sources */,
+				EBF011741DA755E1009E8394 /* RegisterViewController.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
