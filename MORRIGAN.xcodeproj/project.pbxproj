@@ -12,8 +12,7 @@
 		EB7AD94C1DA72FF6001D1DCA /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = EB7AD94B1DA72FF6001D1DCA /* Assets.xcassets */; };
 		EB7AD95A1DA72FF6001D1DCA /* MORRIGANTests.m in Sources */ = {isa = PBXBuildFile; fileRef = EB7AD9591DA72FF6001D1DCA /* MORRIGANTests.m */; };
 		EB7AD9651DA72FF6001D1DCA /* MORRIGANUITests.m in Sources */ = {isa = PBXBuildFile; fileRef = EB7AD9641DA72FF6001D1DCA /* MORRIGANUITests.m */; };
-		EBF011661DA731DA009E8394 /* LoginViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = EBF011651DA731DA009E8394 /* LoginViewController.m */; };
-		EBF011671DA731DA009E8394 /* LoginViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = EBF011651DA731DA009E8394 /* LoginViewController.m */; };
+		EBF011711DA754E6009E8394 /* LoginViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = EBF0116E1DA754E6009E8394 /* LoginViewController.m */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -46,10 +45,10 @@
 		EB7AD9601DA72FF6001D1DCA /* MORRIGANUITests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = MORRIGANUITests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
 		EB7AD9641DA72FF6001D1DCA /* MORRIGANUITests.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = MORRIGANUITests.m; sourceTree = "<group>"; };
 		EB7AD9661DA72FF6001D1DCA /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
-		EBF011641DA731DA009E8394 /* LoginViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = LoginViewController.h; path = MORRIGAN/UI/Setting/LoginViewController.h; sourceTree = SOURCE_ROOT; };
-		EBF011651DA731DA009E8394 /* LoginViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = LoginViewController.m; path = MORRIGAN/UI/Setting/LoginViewController.m; sourceTree = SOURCE_ROOT; };
 		EBF0116A1DA737A3009E8394 /* GlobalDefinition.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = GlobalDefinition.h; sourceTree = "<group>"; };
 		EBF0116B1DA7383B009E8394 /* PrefixHeader.pch */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = PrefixHeader.pch; sourceTree = "<group>"; };
+		EBF0116D1DA754E6009E8394 /* LoginViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = LoginViewController.h; sourceTree = "<group>"; };
+		EBF0116E1DA754E6009E8394 /* LoginViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = LoginViewController.m; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -150,34 +149,11 @@
 		EBF0115F1DA73137009E8394 /* Login */ = {
 			isa = PBXGroup;
 			children = (
-				EBF011611DA73168009E8394 /* Manager */,
-				EBF011621DA73168009E8394 /* View */,
-				EBF011601DA73137009E8394 /* Controllers */,
+				EBF0116F1DA754E6009E8394 /* Manager */,
+				EBF011701DA754E6009E8394 /* View */,
+				EBF0116C1DA754E6009E8394 /* Controller */,
 			);
 			path = Login;
-			sourceTree = "<group>";
-		};
-		EBF011601DA73137009E8394 /* Controllers */ = {
-			isa = PBXGroup;
-			children = (
-				EBF011641DA731DA009E8394 /* LoginViewController.h */,
-				EBF011651DA731DA009E8394 /* LoginViewController.m */,
-			);
-			path = Controllers;
-			sourceTree = "<group>";
-		};
-		EBF011611DA73168009E8394 /* Manager */ = {
-			isa = PBXGroup;
-			children = (
-			);
-			path = Manager;
-			sourceTree = "<group>";
-		};
-		EBF011621DA73168009E8394 /* View */ = {
-			isa = PBXGroup;
-			children = (
-			);
-			path = View;
 			sourceTree = "<group>";
 		};
 		EBF011631DA7319F009E8394 /* Setting */ = {
@@ -201,6 +177,29 @@
 				EBF0116A1DA737A3009E8394 /* GlobalDefinition.h */,
 			);
 			path = Other;
+			sourceTree = "<group>";
+		};
+		EBF0116C1DA754E6009E8394 /* Controller */ = {
+			isa = PBXGroup;
+			children = (
+				EBF0116D1DA754E6009E8394 /* LoginViewController.h */,
+				EBF0116E1DA754E6009E8394 /* LoginViewController.m */,
+			);
+			path = Controller;
+			sourceTree = "<group>";
+		};
+		EBF0116F1DA754E6009E8394 /* Manager */ = {
+			isa = PBXGroup;
+			children = (
+			);
+			path = Manager;
+			sourceTree = "<group>";
+		};
+		EBF011701DA754E6009E8394 /* View */ = {
+			isa = PBXGroup;
+			children = (
+			);
+			path = View;
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
@@ -335,9 +334,9 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				EBF011661DA731DA009E8394 /* LoginViewController.m in Sources */,
 				EB7AD9441DA72FF6001D1DCA /* AppDelegate.m in Sources */,
 				EB7AD9411DA72FF6001D1DCA /* main.m in Sources */,
+				EBF011711DA754E6009E8394 /* LoginViewController.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -345,7 +344,6 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				EBF011671DA731DA009E8394 /* LoginViewController.m in Sources */,
 				EB7AD95A1DA72FF6001D1DCA /* MORRIGANTests.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
