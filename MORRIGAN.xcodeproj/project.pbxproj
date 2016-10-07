@@ -14,6 +14,12 @@
 		EB7AD9651DA72FF6001D1DCA /* MORRIGANUITests.m in Sources */ = {isa = PBXBuildFile; fileRef = EB7AD9641DA72FF6001D1DCA /* MORRIGANUITests.m */; };
 		EBF011711DA754E6009E8394 /* LoginViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = EBF0116E1DA754E6009E8394 /* LoginViewController.m */; };
 		EBF011741DA755E1009E8394 /* RegisterViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = EBF011731DA755E1009E8394 /* RegisterViewController.m */; };
+		EBF011811DA7883B009E8394 /* libSZSENetLibrary.a in Frameworks */ = {isa = PBXBuildFile; fileRef = EBF011761DA7883B009E8394 /* libSZSENetLibrary.a */; };
+		EBF011821DA7883B009E8394 /* NMOANetWorking.m in Sources */ = {isa = PBXBuildFile; fileRef = EBF011791DA7883B009E8394 /* NMOANetWorking.m */; };
+		EBF011831DA7883B009E8394 /* SZSEURLSessionDownloadTask.m in Sources */ = {isa = PBXBuildFile; fileRef = EBF0117E1DA7883B009E8394 /* SZSEURLSessionDownloadTask.m */; };
+		EBF011841DA7883B009E8394 /* Urls.plist in Resources */ = {isa = PBXBuildFile; fileRef = EBF011801DA7883B009E8394 /* Urls.plist */; };
+		EBF011AF1DA7920A009E8394 /* Utils.m in Sources */ = {isa = PBXBuildFile; fileRef = EBF011AE1DA7920A009E8394 /* Utils.m */; };
+		EBF011B01DA7920A009E8394 /* Utils.m in Sources */ = {isa = PBXBuildFile; fileRef = EBF011AE1DA7920A009E8394 /* Utils.m */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -52,6 +58,18 @@
 		EBF0116E1DA754E6009E8394 /* LoginViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = LoginViewController.m; sourceTree = "<group>"; };
 		EBF011721DA755E1009E8394 /* RegisterViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = RegisterViewController.h; sourceTree = "<group>"; };
 		EBF011731DA755E1009E8394 /* RegisterViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = RegisterViewController.m; sourceTree = "<group>"; };
+		EBF011761DA7883B009E8394 /* libSZSENetLibrary.a */ = {isa = PBXFileReference; lastKnownFileType = archive.ar; path = libSZSENetLibrary.a; sourceTree = "<group>"; };
+		EBF011781DA7883B009E8394 /* NMOANetWorking.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = NMOANetWorking.h; sourceTree = "<group>"; };
+		EBF011791DA7883B009E8394 /* NMOANetWorking.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = NMOANetWorking.m; sourceTree = "<group>"; };
+		EBF0117A1DA7883B009E8394 /* SZSEConfigTool.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SZSEConfigTool.h; sourceTree = "<group>"; };
+		EBF0117B1DA7883B009E8394 /* SZSENetWorking.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SZSENetWorking.h; sourceTree = "<group>"; };
+		EBF0117C1DA7883B009E8394 /* SZSEUpgradeTool.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SZSEUpgradeTool.h; sourceTree = "<group>"; };
+		EBF0117D1DA7883B009E8394 /* SZSEURLSessionDownloadTask.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SZSEURLSessionDownloadTask.h; sourceTree = "<group>"; };
+		EBF0117E1DA7883B009E8394 /* SZSEURLSessionDownloadTask.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = SZSEURLSessionDownloadTask.m; sourceTree = "<group>"; };
+		EBF0117F1DA7883B009E8394 /* SZSEURLSessionTask.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SZSEURLSessionTask.h; sourceTree = "<group>"; };
+		EBF011801DA7883B009E8394 /* Urls.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = Urls.plist; sourceTree = "<group>"; };
+		EBF011AD1DA7920A009E8394 /* Utils.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = Utils.h; sourceTree = "<group>"; };
+		EBF011AE1DA7920A009E8394 /* Utils.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = Utils.m; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -59,6 +77,7 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				EBF011811DA7883B009E8394 /* libSZSENetLibrary.a in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -169,6 +188,7 @@
 		EBF011681DA73784009E8394 /* Common */ = {
 			isa = PBXGroup;
 			children = (
+				EBF011751DA7883B009E8394 /* netWorking */,
 				EBF011691DA73784009E8394 /* Other */,
 			);
 			path = Common;
@@ -178,6 +198,8 @@
 			isa = PBXGroup;
 			children = (
 				EBF0116A1DA737A3009E8394 /* GlobalDefinition.h */,
+				EBF011AD1DA7920A009E8394 /* Utils.h */,
+				EBF011AE1DA7920A009E8394 /* Utils.m */,
 			);
 			path = Other;
 			sourceTree = "<group>";
@@ -205,6 +227,31 @@
 			children = (
 			);
 			path = View;
+			sourceTree = "<group>";
+		};
+		EBF011751DA7883B009E8394 /* netWorking */ = {
+			isa = PBXGroup;
+			children = (
+				EBF011761DA7883B009E8394 /* libSZSENetLibrary.a */,
+				EBF011771DA7883B009E8394 /* NMOANetWorking */,
+				EBF0117A1DA7883B009E8394 /* SZSEConfigTool.h */,
+				EBF0117B1DA7883B009E8394 /* SZSENetWorking.h */,
+				EBF0117C1DA7883B009E8394 /* SZSEUpgradeTool.h */,
+				EBF0117D1DA7883B009E8394 /* SZSEURLSessionDownloadTask.h */,
+				EBF0117E1DA7883B009E8394 /* SZSEURLSessionDownloadTask.m */,
+				EBF0117F1DA7883B009E8394 /* SZSEURLSessionTask.h */,
+				EBF011801DA7883B009E8394 /* Urls.plist */,
+			);
+			path = netWorking;
+			sourceTree = "<group>";
+		};
+		EBF011771DA7883B009E8394 /* NMOANetWorking */ = {
+			isa = PBXGroup;
+			children = (
+				EBF011781DA7883B009E8394 /* NMOANetWorking.h */,
+				EBF011791DA7883B009E8394 /* NMOANetWorking.m */,
+			);
+			path = NMOANetWorking;
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
@@ -314,6 +361,7 @@
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				EBF011841DA7883B009E8394 /* Urls.plist in Resources */,
 				EB7AD94C1DA72FF6001D1DCA /* Assets.xcassets in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -339,9 +387,12 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				EBF011831DA7883B009E8394 /* SZSEURLSessionDownloadTask.m in Sources */,
 				EB7AD9441DA72FF6001D1DCA /* AppDelegate.m in Sources */,
 				EB7AD9411DA72FF6001D1DCA /* main.m in Sources */,
 				EBF011711DA754E6009E8394 /* LoginViewController.m in Sources */,
+				EBF011821DA7883B009E8394 /* NMOANetWorking.m in Sources */,
+				EBF011AF1DA7920A009E8394 /* Utils.m in Sources */,
 				EBF011741DA755E1009E8394 /* RegisterViewController.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -351,6 +402,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				EB7AD95A1DA72FF6001D1DCA /* MORRIGANTests.m in Sources */,
+				EBF011B01DA7920A009E8394 /* Utils.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -474,6 +526,10 @@
 				GCC_PREFIX_HEADER = MORRIGAN/PrefixHeader.pch;
 				INFOPLIST_FILE = MORRIGAN/Info.plist;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
+				LIBRARY_SEARCH_PATHS = (
+					"$(inherited)",
+					"$(PROJECT_DIR)/MORRIGAN/Common/netWorking",
+				);
 				PRODUCT_BUNDLE_IDENTIFIER = com.morrigan.demo.MORRIGAN;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 			};
@@ -487,6 +543,10 @@
 				GCC_PREFIX_HEADER = MORRIGAN/PrefixHeader.pch;
 				INFOPLIST_FILE = MORRIGAN/Info.plist;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
+				LIBRARY_SEARCH_PATHS = (
+					"$(inherited)",
+					"$(PROJECT_DIR)/MORRIGAN/Common/netWorking",
+				);
 				PRODUCT_BUNDLE_IDENTIFIER = com.morrigan.demo.MORRIGAN;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 			};

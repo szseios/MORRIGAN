@@ -12,6 +12,7 @@
 
 #import <UIKit/UIKit.h>
 #import "GlobalDefinition.h"
+#import "SZSENetWorking.h"
 
 
 #endif
