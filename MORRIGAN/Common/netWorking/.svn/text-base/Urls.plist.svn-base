@@ -1,0 +1,29 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE plist PUBLIC "-//Apple//DTD PLIST 1.0//EN" "http://www.apple.com/DTDs/PropertyList-1.0.dtd">
+<plist version="1.0">
+<dict>
+	<key>verifyCertificate</key>
+	<false/>
+	<key>parallelCount</key>
+	<integer>2</integer>
+	<key>Debug</key>
+	<true/>
+	<key>networkActivityIndicatorVisible</key>
+	<true/>
+	<key>requestTimeout</key>
+	<integer>30</integer>
+	<key>dataType</key>
+	<string>2</string>
+	<key>appAddress</key>
+	<dict>
+		<key>stg</key>
+		<string>itms-services:///?action=download-manifest&amp;url=https://raw.githubusercontent.com/s1monHuang/NMOA/master/download.plist</string>
+		<key>int</key>
+		<string>itms-services:///?action=download-manifest&amp;url=https://raw.githubusercontent.com/s1monHuang/NMOA/master/download.plist</string>
+		<key>prd</key>
+		<string>http://itunes.apple.com/cn/app/id743484337?mt=8</string>
+	</dict>
+	<key>PA_ENVIRONMENT</key>
+	<string>prd</string>
+</dict>
+</plist>

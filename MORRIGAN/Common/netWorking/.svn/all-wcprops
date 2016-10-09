@@ -1,0 +1,53 @@
+K 25
+svn:wc:ra_dav:version-url
+V 55
+/svn/nmoa/!svn/ver/5738/iOS/NMOA/NMOA/Common/netWorking
+END
+Urls.plist
+K 25
+svn:wc:ra_dav:version-url
+V 65
+/svn/nmoa/!svn/ver/556/iOS/NMOA/NMOA/Common/netWorking/Urls.plist
+END
+SZSEUpgradeTool.h
+K 25
+svn:wc:ra_dav:version-url
+V 73
+/svn/nmoa/!svn/ver/5738/iOS/NMOA/NMOA/Common/netWorking/SZSEUpgradeTool.h
+END
+SZSEURLSessionDownloadTask.m
+K 25
+svn:wc:ra_dav:version-url
+V 83
+/svn/nmoa/!svn/ver/899/iOS/NMOA/NMOA/Common/netWorking/SZSEURLSessionDownloadTask.m
+END
+SZSENetWorking.h
+K 25
+svn:wc:ra_dav:version-url
+V 70
+/svn/nmoa/!svn/ver/15/iOS/NMOA/NMOA/Common/netWorking/SZSENetWorking.h
+END
+SZSEURLSessionTask.h
+K 25
+svn:wc:ra_dav:version-url
+V 76
+/svn/nmoa/!svn/ver/5099/iOS/NMOA/NMOA/Common/netWorking/SZSEURLSessionTask.h
+END
+libSZSENetLibrary.a
+K 25
+svn:wc:ra_dav:version-url
+V 75
+/svn/nmoa/!svn/ver/5738/iOS/NMOA/NMOA/Common/netWorking/libSZSENetLibrary.a
+END
+SZSEURLSessionDownloadTask.h
+K 25
+svn:wc:ra_dav:version-url
+V 84
+/svn/nmoa/!svn/ver/3228/iOS/NMOA/NMOA/Common/netWorking/SZSEURLSessionDownloadTask.h
+END
+SZSEConfigTool.h
+K 25
+svn:wc:ra_dav:version-url
+V 71
+/svn/nmoa/!svn/ver/646/iOS/NMOA/NMOA/Common/netWorking/SZSEConfigTool.h
+END

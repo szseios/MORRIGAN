@@ -9,6 +9,8 @@
 //
 
 #import "RegisterViewController.h"
+#import "NMOANetWorking.h"
+#import "Utils.h"
 
 
 #define kManButtonTag     1001
@@ -16,7 +18,15 @@
 
 
 
-@interface RegisterViewController ()
+@interface RegisterViewController () <UIAlertViewDelegate>
+{
+    NSString *_sexString;
+    UIButton *_manButton;
+    UIButton *_womanButton;
+    UITextField *_phoneNumbrInputView;
+    UITextField *_authCodeInputView;
+    UITextField *_passwordInputView;
+}
 
 @end
 
@@ -26,7 +36,13 @@
     [super viewDidLoad];
     
     
+    // 初始化视图
     [self initView];
+    
+    
+    // 默认性别：男
+    _sexString = @"M";
+    _manButton.backgroundColor = [UIColor greenColor];
 
 }
 
@@ -67,15 +83,17 @@
     CGFloat sexBtnH = 100.0;
     CGFloat setBtnSpace = (kScreenWidth - 2*sexBtnLeftRightMarging - sexBtnH *2);
     UIButton *manButton = [[UIButton alloc] initWithFrame:CGRectMake(sexBtnLeftRightMarging, secBtnY, sexBtnH, sexBtnH)];
-    manButton.backgroundColor = [UIColor greenColor];
+    manButton.backgroundColor = [UIColor whiteColor];
     manButton.tag = kManButtonTag;
     [manButton addTarget:self action:@selector(sexButtonClickInRegister:) forControlEvents:UIControlEventTouchUpInside];
+    _manButton = manButton;
     [sexRootView addSubview:manButton];
     // 女士
     UIButton *womanButton = [[UIButton alloc] initWithFrame:CGRectMake(sexBtnLeftRightMarging + sexBtnH + setBtnSpace, secBtnY, sexBtnH, sexBtnH)];
-    womanButton.backgroundColor = [UIColor greenColor];
+    womanButton.backgroundColor = [UIColor whiteColor];
     womanButton.tag = kWomanButtonTag;
     [womanButton addTarget:self action:@selector(sexButtonClickInRegister:) forControlEvents:UIControlEventTouchUpInside];
+    _womanButton = womanButton;
     [sexRootView addSubview:womanButton];
     // 男士
     CGFloat manLabelY = manButton.frame.origin.y + manButton.frame.size.height + 10.0;
@@ -116,6 +134,7 @@
     UITextField *phoneInputView = [[UITextField alloc] initWithFrame:CGRectMake(iconW + phoneinputViewPaddingLeft, 0, phoneNumRootView.frame.size.width - iconW - phoneinputViewPaddingLeft, editViewH)];
     phoneInputView.backgroundColor = [UIColor greenColor];
     phoneInputView.placeholder = @"请填写手机号码";
+    _phoneNumbrInputView = phoneInputView;
     [phoneNumRootView addSubview:phoneInputView];
     // 分割线
     UIView *lineView = [[UIView alloc] initWithFrame:CGRectMake(0, editViewH - 1, editViewW, 1)];
@@ -143,6 +162,7 @@
     UITextField *authCodeInputView = [[UITextField alloc] initWithFrame:CGRectMake(iconW + phoneinputViewPaddingLeft, 0, authCodeRootView.frame.size.width - iconW - getAuthCodeViewW - phoneinputViewPaddingLeft, editViewH)];
     authCodeInputView.backgroundColor = [UIColor greenColor];
     authCodeInputView.placeholder = @"输入验证码";
+    _authCodeInputView = authCodeInputView;
     [authCodeRootView addSubview:authCodeInputView];
     // 分割线
     UIView *lineView2 = [[UIView alloc] initWithFrame:CGRectMake(0, editViewH - 1, editViewW, 1)];
@@ -170,6 +190,7 @@
     UITextField *PWDInputView = [[UITextField alloc] initWithFrame:CGRectMake(iconW + phoneinputViewPaddingLeft, 0, PWDRootView.frame.size.width - iconW - showPWDViewW - phoneinputViewPaddingLeft, editViewH)];
     PWDInputView.backgroundColor = [UIColor greenColor];
     PWDInputView.placeholder = @"设置密码";
+    _passwordInputView = PWDInputView;
     [PWDRootView addSubview:PWDInputView];
     // 分割线
     UIView *lineView3 = [[UIView alloc] initWithFrame:CGRectMake(0, editViewH - 1, editViewW, 1)];
@@ -215,13 +236,17 @@
     switch (button.tag) {
         case kManButtonTag:
         {
-            
+            _womanButton.backgroundColor = [UIColor whiteColor];
+            _manButton.backgroundColor = [UIColor greenColor];
+            _sexString = @"M";
         }
             break;
             
         case kWomanButtonTag:
         {
-            
+            _manButton.backgroundColor = [UIColor whiteColor];
+            _womanButton.backgroundColor = [UIColor greenColor];
+            _sexString = @"F";
         }
             break;
             
@@ -236,6 +261,23 @@
 - (void)getAuthCodeButtonClickInRegister
 {
     NSLog(@"getAuthCodeButtonClickInRegister");
+    NSString *phoneNumber = _phoneNumbrInputView.text;
+    BOOL isPhoneNumberRight = [Utils checkMobile: phoneNumber];
+    
+    if(phoneNumber && phoneNumber.length == 0) {
+        UIAlertView *alert = [[UIAlertView alloc] initWithTitle:@"请输入手机号" message:nil delegate:self cancelButtonTitle:nil otherButtonTitles:@"确定", nil];
+        [alert show];
+        return;
+    }
+    
+    if(!isPhoneNumberRight) {
+        UIAlertView *alert = [[UIAlertView alloc] initWithTitle:@"您输入的手机号码有误" message:nil delegate:self cancelButtonTitle:nil otherButtonTitles:@"确定", nil];
+        [alert show];
+        return;
+    }
+    
+    UIAlertView *alert = [[UIAlertView alloc] initWithTitle:@"确认手机号码" message:phoneNumber delegate:self cancelButtonTitle:@"取消" otherButtonTitles:@"确定", nil];
+    [alert show];
 }
 
 // 显示密码按钮点击
@@ -249,6 +291,85 @@
 - (void)registerButtonClickInRegister
 {
     NSLog(@"registerButtonClickInRegister");
+    NSString *phoneNumber = _phoneNumbrInputView.text;
+    NSString *authCode = _authCodeInputView.text;
+    NSString *password = _passwordInputView.text;
+    BOOL isPhoneNumberRight = [Utils checkMobile: phoneNumber];
+    BOOL isPasswordRight = [Utils checkPassWord: password];
+    BOOL isauthCodeRight = [Utils checkAuthCode: authCode];
+    
+    
+    if(phoneNumber && phoneNumber.length == 0) {
+        UIAlertView *alert = [[UIAlertView alloc] initWithTitle:@"请输入手机号" message:nil delegate:self cancelButtonTitle:nil otherButtonTitles:@"确定", nil];
+        [alert show];
+        return;
+    }
+    
+    if(!isPhoneNumberRight) {
+        UIAlertView *alert = [[UIAlertView alloc] initWithTitle:@"您输入的手机号码有误" message:nil delegate:self cancelButtonTitle:nil otherButtonTitles:@"确定", nil];
+        [alert show];
+        return;
+    }
+    
+    
+    if(password && password.length == 0) {
+        UIAlertView *alert = [[UIAlertView alloc] initWithTitle:@"请输入密码" message:nil delegate:self cancelButtonTitle:nil otherButtonTitles:@"确定", nil];
+        [alert show];
+        return;
+    }
+    
+    if(!isPasswordRight) {
+        UIAlertView *alert = [[UIAlertView alloc] initWithTitle:@"您输入的密码格式有误" message:nil delegate:self cancelButtonTitle:nil otherButtonTitles:@"确定", nil];
+        [alert show];
+        return;
+    }
+    
+    if(authCode && authCode.length == 0) {
+        UIAlertView *alert = [[UIAlertView alloc] initWithTitle:@"请输入验证码" message:nil delegate:self cancelButtonTitle:nil otherButtonTitles:@"确定", nil];
+        [alert show];
+        return;
+    }
+    
+    if(!isauthCodeRight) {
+        UIAlertView *alert = [[UIAlertView alloc] initWithTitle:@"验证码格式错误，请重新填写" message:nil delegate:self cancelButtonTitle:nil otherButtonTitles:@"确定", nil];
+        [alert show];
+        return;
+    }
+
+    
+    NSLog(@"手机：%@, 验证码：%@, 密码：%@ , 性别：%@", phoneNumber, authCode, password, _sexString);
+    
+    
+    
+    
+    NSDictionary *dictionary = @{@"mobile": phoneNumber,
+                                 @"msgCode": authCode,
+                                 @"password": password,
+                                 @"sex": _sexString,
+                                 };
+    NSString *bodyString = [NMOANetWorking handleHTTPBodyParams:dictionary];
+    [[NMOANetWorking share] taskWithTag:ID_REGISTER
+                              urlString:URL_REGISTER
+                               httpHead:nil
+                             bodyString:bodyString
+                     objectTaskFinished:^(NSError *error, id obj)
+     {
+         
+         if ([[obj objectForKey:HTTP_KEY_RESULTCODE] isEqualToString:HTTP_RESULTCODE_SUCCESS]) {
+             NSLog(@"注册成功！");
+             
+         } else {
+             
+             NSLog(@"注册失败！");
+         }
+         
+         UIAlertView *alert = [[UIAlertView alloc] initWithTitle:[obj objectForKey:HTTP_KEY_RESULTMESSAGE] message:nil delegate:self cancelButtonTitle:nil otherButtonTitles:@"确定", nil];
+         [alert show];
+         
+    }];
+
+    
+    
 }
 
 
@@ -258,6 +379,57 @@
     NSLog(@"loginButtonClickInRegister");
     [self.navigationController popViewControllerAnimated:YES];
 }
+
+
+#pragma mark - UIAlertViewDelegate
+-(void)alertView:(UIAlertView *)alertView clickedButtonAtIndex:(NSInteger)buttonIndex
+{
+    switch (buttonIndex) {
+        case 0:  // 取消
+        {
+        
+        
+        }
+            break;
+            
+        case 1:  // 确定
+        {
+         
+            //获取验证码
+            NSDictionary *dictionary = @{@"mobile":_phoneNumbrInputView.text};
+            NSString *bodyString = [NMOANetWorking handleHTTPBodyParams:dictionary];
+            [[NMOANetWorking share] taskWithTag:ID_GET_PHONE_MSG_CODE
+                                      urlString:URL_GET_PHONE_MSG_CODE
+                                       httpHead:nil
+                                     bodyString:bodyString
+                             objectTaskFinished:^(NSError *error, id obj)
+             {
+        
+                 if ([[obj objectForKey:HTTP_KEY_RESULTCODE] isEqualToString:HTTP_RESULTCODE_SUCCESS]) {
+        
+                     NSLog(@"获取验证码成功！");
+                 } else {
+                     
+                     NSLog(@"获取验证码失败！");
+                 }
+                 
+                 UIAlertView *alert = [[UIAlertView alloc] initWithTitle:[obj objectForKey:HTTP_KEY_RESULTMESSAGE] message:nil delegate:self cancelButtonTitle:nil otherButtonTitles:@"确定", nil];
+                 [alert show];
+
+                 
+             }];
+            
+            
+        }
+            break;
+            
+        default:
+            break;
+    }
+}
+
+
+
 
 
 

@@ -1,0 +1,284 @@
+//
+//  NMOANetWorking.m
+//  NMOA
+//
+//  Created by snhuang on 15/9/29.
+//  Copyright © 2015年 snhuang. All rights reserved.
+//
+
+#import "NMOANetWorking.h"
+#import "SZSEURLSessionTask.h"
+
+/*============================Json解析===============================*/
+
+@implementation NMOAJson
+
++ (id)jsonWithData:(NSData *)data {
+    NSError *error;
+    id jsonObject = [NSJSONSerialization JSONObjectWithData:data options:NSJSONReadingAllowFragments error:&error];
+    if (error) {
+        NSLog(@"json解析失败:%@",error);
+        NSLog(@"%@",[[NSString alloc] initWithData:data encoding:NSUTF8StringEncoding]);
+        return nil;
+    }
+    return jsonObject;
+}
+
++ (id)jsonWithNSString:(NSString *)string {
+    NSData *data = [string dataUsingEncoding:NSUTF8StringEncoding];
+    return [NMOAJson jsonWithData:data];
+}
+
++ (NSData *)dataWithJson:(id)obj {
+    NSError *error;
+    NSData *data = [NSJSONSerialization dataWithJSONObject:obj options:NSJSONWritingPrettyPrinted error:&error];
+    if (error) {
+        NSLog(@"%@",error);
+        return nil;
+    }
+    return data;
+}
+
+
+@end
+/*============================Json解析  END===============================*/
+
+
+
+@interface NMOANetWorking () {
+    NSMutableDictionary *_httpDictionary;
+}
+
+@end
+
+
+static NMOANetWorking *netWorking = nil;
+
+
+@implementation NMOANetWorking
+
++ (NMOANetWorking *)share {
+    static dispatch_once_t onceToken;
+    dispatch_once(&onceToken, ^{
+        netWorking = [[NMOANetWorking alloc] init];
+    });
+    return netWorking;
+}
+
++ (NSString *)handleHTTPBodyParams:(NSDictionary *)params {
+    
+    if (!params) {
+        return nil;
+    }
+    
+    NSString *paramsStr = [[NSString alloc] init];
+    NSArray *keys = [params allKeys];
+    NSInteger count = [keys count];
+    
+    for (int i = 0; i < count; i++) {
+        NSString *key = [keys objectAtIndex:i];
+        NSString *value = [params objectForKey:key];
+        if ([value isKindOfClass:[NSString class]]) {
+            //参数转换成百分比编码
+            value = [value stringByAddingPercentEncodingWithAllowedCharacters:[NSCharacterSet characterSetWithCharactersInString:@""]];
+        }
+        if (i == 0) {
+            paramsStr = [paramsStr stringByAppendingFormat:@"%@=%@",key,value];
+        }else {
+            paramsStr = [paramsStr stringByAppendingFormat:@"&%@=%@",key,value];
+        }
+    }
+    
+    return paramsStr;
+}
+
+- (instancetype)init
+{
+    self = [super init];
+    if (self) {
+        _httpDictionary = [[NSMutableDictionary alloc] init];
+    }
+    return self;
+}
+
+- (void)taskWithTag:(NSInteger)tag
+          urlString:(NSString *)urlString
+           httpHead:(NSDictionary *)httpHead
+         bodyString:(NSString *)bodyString
+   dataTaskFinished:(NMOANetWorkingDataTaskFinished)taskFinished {
+    
+    SZSEURLSessionTask *task = [[SZSEURLSessionTask alloc] initWithURL:urlString
+                                                                  body:bodyString
+                                                              httpHead:httpHead
+                                                                   Tag:tag
+                                                               timeout:URLSessionTaskTimeout
+                                                          taskFinished:^(SZSEURLSessionTask *task, NSError *error, NSData *data) {
+                                                              dispatch_async(dispatch_get_main_queue(), ^{
+                                                                  taskFinished(error,data);
+                                                              });
+                                                          }];
+    [task resume];
+    [_httpDictionary setObject:task forKey:@(task.tag).stringValue];
+}
+
+- (void)taskWithTag:(NSInteger)tag
+          urlString:(NSString *)urlString
+           httpHead:(NSDictionary *)httpHead
+         bodyString:(NSString *)bodyString
+ objectTaskFinished:(NMOANetWorkingObjectTaskFinished)taskFinished {
+    SZSEURLSessionTask *sessionTask = [_httpDictionary objectForKey:@(tag).stringValue];
+    if (sessionTask) {
+        NSError *error = [NSError errorWithDomain:[NSString stringWithFormat:@"已存在此网络请求 tag = %ld   url = %@",tag,urlString]
+                                             code:-888
+                                         userInfo:nil];
+        dispatch_async(dispatch_get_main_queue(), ^{
+            taskFinished(error,nil);
+        });
+        return;
+    }
+    __block NSMutableDictionary *blockHttpDictionary = _httpDictionary;
+    SZSEURLSessionTask *task = [[SZSEURLSessionTask alloc] initWithURL:urlString
+                                                                  body:bodyString
+                                                              httpHead:httpHead
+                                                                   Tag:tag
+                                                               timeout:URLSessionTaskTimeout
+                                                          taskFinished:^(SZSEURLSessionTask *task, NSError *error, NSData *data) {
+                                                              [blockHttpDictionary removeObjectForKey:@(tag).stringValue];
+                                                              if (error) {
+                                                                  NSLog(@"网络请求错误:  \n   tag:%ld\n   url:%@\n   head:%@\n   body%@",tag,urlString,httpHead,bodyString);
+                                                                  dispatch_async(dispatch_get_main_queue(), ^{
+                                                                      taskFinished(error,nil);
+                                                                  });
+                                                                  return ;
+                                                              }
+#ifdef DEBUG
+                                                              NSLog(@"tag : %@   %@",@(tag).stringValue,[[NSString alloc] initWithData:data encoding:NSUTF8StringEncoding]);
+#endif
+                                                              
+                                                              id obj = [NMOAJson jsonWithData:data];
+                                                              //获取code码
+                                                              if ([obj isKindOfClass:[NSDictionary class]]) {
+                                                                  NSString *code = [obj objectForKey:HTTP_KEY_RESULTCODE];
+//                                                                  //session 失效 回到手势密码界面
+//                                                                  if ([code isEqualToString:HTTP_RESULTCODE_SESSIONINVALID] &&
+//                                                                      [self isBackByTaskTag:task.tag]) {
+//                                                                      [self cancelAllTask];
+////                                                                      [[NSNotificationCenter defaultCenter] postNotificationName:NMOABackGestureNotification
+////                                                                                                                          object:@(NO)];
+//                                                                  }
+//                                                                  //设备变更或者密码变更,回到登录界面
+//                                                                  else if (([code isEqualToString:HTTP_RESULTCODE_DEVEICECHANGED] ||
+//                                                                           [code isEqualToString:HTTP_RESULTCODE_PASSWORDCHANGED]) &&
+//                                                                           [self isBackByTaskTag:task.tag]) {
+//                                                                      [self cancelAllTask];
+////                                                                      [MBProgressHUD showHUDByContent:@"您的账号已在其它设备上登录。若非本人操作，您的密码可能已经泄漏，请及时修改密码。紧急情况可致电30000服务电话。"
+////                                                                                                 view:UI_Window
+////                                                                                           afterDelay:5];
+////                                                                      [[NSNotificationCenter defaultCenter] postNotificationName:NMOABackLoginNotification
+////                                                                                                                          object:nil];
+//                                                                  }
+                                                              }
+                                                              dispatch_async(dispatch_get_main_queue(), ^{
+                                                                  taskFinished(error,obj);
+                                                              });
+                                                          }];
+    [task resume];
+    [_httpDictionary setObject:task forKey:@(task.tag).stringValue];
+}
+
+- (void)taskWithTag:(NSInteger)tag
+          urlString:(NSString *)urlString
+         httpMethod:(NSString *)httpMethod
+           httpHead:(NSDictionary *)httpHead
+         bodyString:(NSString *)bodyString
+   dataTaskFinished:(NMOANetWorkingDataTaskFinished)taskFinished {
+    
+    SZSEURLSessionTask *task = [[SZSEURLSessionTask alloc] initWithURL:urlString
+                                                            httpMethod:httpMethod
+                                                                  body:bodyString
+                                                              httpHead:httpHead
+                                                                   Tag:tag
+                                                               timeout:URLSessionTaskTimeout
+                                                          taskFinished:^(SZSEURLSessionTask *task, NSError *error, NSData *data) {
+                                                              dispatch_async(dispatch_get_main_queue(), ^{
+                                                                  taskFinished(error,data);
+                                                              });
+                                                          }];
+    [task resume];
+    [_httpDictionary setObject:task forKey:@(task.tag).stringValue];
+}
+
+- (void)resumeAllTask {
+    for (NSString *key in _httpDictionary.allKeys) {
+        SZSEURLSessionTask *task = [_httpDictionary objectForKey:key];
+        [task resume];
+    }
+}
+
+- (void)cancelTaskByTag:(NSInteger)tag {
+    SZSEURLSessionTask *task = [_httpDictionary objectForKey:@(tag).stringValue];
+    [task cancel];
+}
+
+- (void)cancelAllTask {
+    for (NSString *key in _httpDictionary.allKeys) {
+        SZSEURLSessionTask *task = [_httpDictionary objectForKey:key];
+        [task cancel];
+    }
+}
+
+- (void)removeTaskByTag:(NSInteger)tag {
+    [self cancelTaskByTag:tag];
+    [_httpDictionary removeObjectForKey:@(tag).stringValue];
+}
+
+- (BOOL)isTaskExistByTag:(NSInteger)tag {
+    if(_httpDictionary) {
+        SZSEURLSessionTask *sessionTask = [_httpDictionary objectForKey:@(tag).stringValue];
+        if (sessionTask) {
+            return YES;
+        }
+    }
+    return NO;
+}
+
+- (void)removeAllTask {
+    [self cancelAllTask];
+    [_httpDictionary removeAllObjects];
+}
+
+- (BOOL)isBackByTaskTag:(NSInteger)tag {
+//    //如果是持续登录,验证码,登录,持续登录,OTP验证,不需要回到主界面或手势密码界面
+//    if (tag == ID_CHECKVERSION ||
+//        tag == ID_CAPTCHA ||
+//        tag == ID_LOGIN ||
+//        tag == ID_PERSISTENTLOGIN ||
+//        tag == ID_OTPVALID) {
+//        return NO;
+//    }
+    return YES;
+}
+
++ (void)taskErrorHandle:(id)obj view:(UIView *)view {
+    NSString *resultMsg = nil;
+    resultMsg = [obj objectForKey:HTTP_KEY_RESULTMESSAGE]?[obj objectForKey:HTTP_KEY_RESULTMESSAGE]:@"网络连接失败";
+//    [MBProgressHUD showHUDByContent:resultMsg
+//                               view:view
+//                         afterDelay:2];
+}
+
+
+- (NSString *)encodeToPercentEscapeString:(NSString *)input
+{
+    // Encode all the reserved characters, per RFC 3986
+    // ()
+    NSString *outputStr = (NSString *)
+    CFBridgingRelease(CFURLCreateStringByAddingPercentEscapes(kCFAllocatorDefault,
+                                            (CFStringRef)input,
+                                            NULL,
+                                            (CFStringRef)@"!*'();:@&=+$,/?%#[]",
+                                            kCFStringEncodingUTF8));
+    return outputStr;
+}
+
+@end
