@@ -15,6 +15,7 @@
 #import "Utils.h"
 #import "NMOANetWorking.h"
 #import "HomeViewController.h"
+#import "ForgetPwdViewController.h"
 
 @interface LoginViewController ()
 {
@@ -176,6 +177,8 @@
 - (void)forgetPWDButtonClickInLogin
 {
     NSLog(@"forgetPWDButtonClickInLogin");
+    ForgetPwdViewController *forgetPwdViewController = [[ForgetPwdViewController alloc] init];
+    [self.navigationController pushViewController:forgetPwdViewController animated:YES];
 }
 
 
