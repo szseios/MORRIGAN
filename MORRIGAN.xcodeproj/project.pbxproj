@@ -7,6 +7,11 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		3EF795841DA9EDFC00E5EBC6 /* MusicTableViewCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 3EF795821DA9EDFC00E5EBC6 /* MusicTableViewCell.m */; };
+		3EF795851DA9EDFC00E5EBC6 /* MusicTableViewCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = 3EF795831DA9EDFC00E5EBC6 /* MusicTableViewCell.xib */; };
+		3EF7958D1DAA0A5E00E5EBC6 /* Common.m in Sources */ = {isa = PBXBuildFile; fileRef = 3EF795881DAA0A5E00E5EBC6 /* Common.m */; };
+		3EF7958E1DAA0A5E00E5EBC6 /* PCSEQVisualizer.m in Sources */ = {isa = PBXBuildFile; fileRef = 3EF7958A1DAA0A5E00E5EBC6 /* PCSEQVisualizer.m */; };
+		3EF7958F1DAA0A5E00E5EBC6 /* UIImage+Color.m in Sources */ = {isa = PBXBuildFile; fileRef = 3EF7958C1DAA0A5E00E5EBC6 /* UIImage+Color.m */; };
 		EB534AD21DA9D924007AA325 /* MusicManager.m in Sources */ = {isa = PBXBuildFile; fileRef = EB534ACC1DA9D924007AA325 /* MusicManager.m */; };
 		EB534AD31DA9D924007AA325 /* MusicModel.m in Sources */ = {isa = PBXBuildFile; fileRef = EB534ACE1DA9D924007AA325 /* MusicModel.m */; };
 		EB534AD41DA9D924007AA325 /* MusicViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = EB534AD01DA9D924007AA325 /* MusicViewController.m */; };
@@ -44,6 +49,15 @@
 /* End PBXContainerItemProxy section */
 
 /* Begin PBXFileReference section */
+		3EF795811DA9EDFC00E5EBC6 /* MusicTableViewCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MusicTableViewCell.h; sourceTree = "<group>"; };
+		3EF795821DA9EDFC00E5EBC6 /* MusicTableViewCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = MusicTableViewCell.m; sourceTree = "<group>"; };
+		3EF795831DA9EDFC00E5EBC6 /* MusicTableViewCell.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = MusicTableViewCell.xib; sourceTree = "<group>"; };
+		3EF795871DAA0A5E00E5EBC6 /* Common.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = Common.h; sourceTree = "<group>"; };
+		3EF795881DAA0A5E00E5EBC6 /* Common.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = Common.m; sourceTree = "<group>"; };
+		3EF795891DAA0A5E00E5EBC6 /* PCSEQVisualizer.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = PCSEQVisualizer.h; sourceTree = "<group>"; };
+		3EF7958A1DAA0A5E00E5EBC6 /* PCSEQVisualizer.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = PCSEQVisualizer.m; sourceTree = "<group>"; };
+		3EF7958B1DAA0A5E00E5EBC6 /* UIImage+Color.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "UIImage+Color.h"; sourceTree = "<group>"; };
+		3EF7958C1DAA0A5E00E5EBC6 /* UIImage+Color.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "UIImage+Color.m"; sourceTree = "<group>"; };
 		EB534ACB1DA9D924007AA325 /* MusicManager.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MusicManager.h; sourceTree = "<group>"; };
 		EB534ACC1DA9D924007AA325 /* MusicManager.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = MusicManager.m; sourceTree = "<group>"; };
 		EB534ACD1DA9D924007AA325 /* MusicModel.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MusicModel.h; sourceTree = "<group>"; };
@@ -109,9 +123,23 @@
 /* End PBXFrameworksBuildPhase section */
 
 /* Begin PBXGroup section */
+		3EF795861DAA0A5E00E5EBC6 /* PCSEQ */ = {
+			isa = PBXGroup;
+			children = (
+				3EF795871DAA0A5E00E5EBC6 /* Common.h */,
+				3EF795881DAA0A5E00E5EBC6 /* Common.m */,
+				3EF795891DAA0A5E00E5EBC6 /* PCSEQVisualizer.h */,
+				3EF7958A1DAA0A5E00E5EBC6 /* PCSEQVisualizer.m */,
+				3EF7958B1DAA0A5E00E5EBC6 /* UIImage+Color.h */,
+				3EF7958C1DAA0A5E00E5EBC6 /* UIImage+Color.m */,
+			);
+			path = PCSEQ;
+			sourceTree = "<group>";
+		};
 		EB534ACA1DA9D924007AA325 /* Music */ = {
 			isa = PBXGroup;
 			children = (
+				3EF795861DAA0A5E00E5EBC6 /* PCSEQ */,
 				EB534ACB1DA9D924007AA325 /* MusicManager.h */,
 				EB534ACC1DA9D924007AA325 /* MusicManager.m */,
 				EB534ACD1DA9D924007AA325 /* MusicModel.h */,
@@ -119,6 +147,9 @@
 				EB534ACF1DA9D924007AA325 /* MusicViewController.h */,
 				EB534AD01DA9D924007AA325 /* MusicViewController.m */,
 				EB534AD11DA9D924007AA325 /* MusicViewController.xib */,
+				3EF795811DA9EDFC00E5EBC6 /* MusicTableViewCell.h */,
+				3EF795821DA9EDFC00E5EBC6 /* MusicTableViewCell.m */,
+				3EF795831DA9EDFC00E5EBC6 /* MusicTableViewCell.xib */,
 			);
 			path = Music;
 			sourceTree = "<group>";
@@ -347,8 +378,8 @@
 				TargetAttributes = {
 					EB7AD93B1DA72FF6001D1DCA = {
 						CreatedOnToolsVersion = 8.0;
-						DevelopmentTeam = DX9W839DB6;
-						ProvisioningStyle = Automatic;
+						DevelopmentTeam = 6C7QEGP2K7;
+						ProvisioningStyle = Manual;
 					};
 					EB7AD9541DA72FF6001D1DCA = {
 						CreatedOnToolsVersion = 8.0;
@@ -390,6 +421,7 @@
 				EB534AD51DA9D924007AA325 /* MusicViewController.xib in Resources */,
 				EBF011841DA7883B009E8394 /* Urls.plist in Resources */,
 				EB7AD94C1DA72FF6001D1DCA /* Assets.xcassets in Resources */,
+				3EF795851DA9EDFC00E5EBC6 /* MusicTableViewCell.xib in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -414,12 +446,16 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				3EF7958D1DAA0A5E00E5EBC6 /* Common.m in Sources */,
+				3EF7958E1DAA0A5E00E5EBC6 /* PCSEQVisualizer.m in Sources */,
+				3EF795841DA9EDFC00E5EBC6 /* MusicTableViewCell.m in Sources */,
 				EBF011831DA7883B009E8394 /* SZSEURLSessionDownloadTask.m in Sources */,
 				EB7AD9441DA72FF6001D1DCA /* AppDelegate.m in Sources */,
 				EB7AD9411DA72FF6001D1DCA /* main.m in Sources */,
 				EBF011711DA754E6009E8394 /* LoginViewController.m in Sources */,
 				EBF011821DA7883B009E8394 /* NMOANetWorking.m in Sources */,
 				EB534AD21DA9D924007AA325 /* MusicManager.m in Sources */,
+				3EF7958F1DAA0A5E00E5EBC6 /* UIImage+Color.m in Sources */,
 				EB534AD41DA9D924007AA325 /* MusicViewController.m in Sources */,
 				EBF011AF1DA7920A009E8394 /* Utils.m in Sources */,
 				EB534AD31DA9D924007AA325 /* MusicModel.m in Sources */,
@@ -552,16 +588,21 @@
 			isa = XCBuildConfiguration;
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
-				DEVELOPMENT_TEAM = DX9W839DB6;
+				CODE_SIGN_IDENTITY = "iPhone Developer: ge ping (49AB9267DB)";
+				DEVELOPMENT_TEAM = 6C7QEGP2K7;
+				ENABLE_BITCODE = NO;
 				GCC_PREFIX_HEADER = MORRIGAN/PrefixHeader.pch;
 				INFOPLIST_FILE = MORRIGAN/Info.plist;
+				IPHONEOS_DEPLOYMENT_TARGET = 7.0;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
 				LIBRARY_SEARCH_PATHS = (
 					"$(inherited)",
 					"$(PROJECT_DIR)/MORRIGAN/Common/netWorking",
 				);
-				PRODUCT_BUNDLE_IDENTIFIER = com.morrigan.demo.MORRIGAN;
+				PRODUCT_BUNDLE_IDENTIFIER = com.szse.nmoastg;
 				PRODUCT_NAME = "$(TARGET_NAME)";
+				PROVISIONING_PROFILE = "26bced54-c35a-4b6a-b35b-12fdaa23999b";
+				PROVISIONING_PROFILE_SPECIFIER = NMOA_Development;
 			};
 			name = Debug;
 		};
@@ -569,16 +610,21 @@
 			isa = XCBuildConfiguration;
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
-				DEVELOPMENT_TEAM = DX9W839DB6;
+				CODE_SIGN_IDENTITY = "iPhone Developer: ge ping (49AB9267DB)";
+				DEVELOPMENT_TEAM = 6C7QEGP2K7;
+				ENABLE_BITCODE = NO;
 				GCC_PREFIX_HEADER = MORRIGAN/PrefixHeader.pch;
 				INFOPLIST_FILE = MORRIGAN/Info.plist;
+				IPHONEOS_DEPLOYMENT_TARGET = 7.0;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
 				LIBRARY_SEARCH_PATHS = (
 					"$(inherited)",
 					"$(PROJECT_DIR)/MORRIGAN/Common/netWorking",
 				);
-				PRODUCT_BUNDLE_IDENTIFIER = com.morrigan.demo.MORRIGAN;
+				PRODUCT_BUNDLE_IDENTIFIER = com.szse.nmoastg;
 				PRODUCT_NAME = "$(TARGET_NAME)";
+				PROVISIONING_PROFILE = "26bced54-c35a-4b6a-b35b-12fdaa23999b";
+				PROVISIONING_PROFILE_SPECIFIER = NMOA_Development;
 			};
 			name = Release;
 		};

@@ -14,4 +14,6 @@
 
 + (MusicManager *)share;
 
+- (void)playMusicByURL:(NSURL *)url;
+
 @end
