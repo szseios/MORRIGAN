@@ -7,6 +7,10 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		EB534AD21DA9D924007AA325 /* MusicManager.m in Sources */ = {isa = PBXBuildFile; fileRef = EB534ACC1DA9D924007AA325 /* MusicManager.m */; };
+		EB534AD31DA9D924007AA325 /* MusicModel.m in Sources */ = {isa = PBXBuildFile; fileRef = EB534ACE1DA9D924007AA325 /* MusicModel.m */; };
+		EB534AD41DA9D924007AA325 /* MusicViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = EB534AD01DA9D924007AA325 /* MusicViewController.m */; };
+		EB534AD51DA9D924007AA325 /* MusicViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = EB534AD11DA9D924007AA325 /* MusicViewController.xib */; };
 		EB7AD9411DA72FF6001D1DCA /* main.m in Sources */ = {isa = PBXBuildFile; fileRef = EB7AD9401DA72FF6001D1DCA /* main.m */; };
 		EB7AD9441DA72FF6001D1DCA /* AppDelegate.m in Sources */ = {isa = PBXBuildFile; fileRef = EB7AD9431DA72FF6001D1DCA /* AppDelegate.m */; };
 		EB7AD94C1DA72FF6001D1DCA /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = EB7AD94B1DA72FF6001D1DCA /* Assets.xcassets */; };
@@ -40,6 +44,13 @@
 /* End PBXContainerItemProxy section */
 
 /* Begin PBXFileReference section */
+		EB534ACB1DA9D924007AA325 /* MusicManager.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MusicManager.h; sourceTree = "<group>"; };
+		EB534ACC1DA9D924007AA325 /* MusicManager.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = MusicManager.m; sourceTree = "<group>"; };
+		EB534ACD1DA9D924007AA325 /* MusicModel.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MusicModel.h; sourceTree = "<group>"; };
+		EB534ACE1DA9D924007AA325 /* MusicModel.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = MusicModel.m; sourceTree = "<group>"; };
+		EB534ACF1DA9D924007AA325 /* MusicViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MusicViewController.h; sourceTree = "<group>"; };
+		EB534AD01DA9D924007AA325 /* MusicViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = MusicViewController.m; sourceTree = "<group>"; };
+		EB534AD11DA9D924007AA325 /* MusicViewController.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = MusicViewController.xib; sourceTree = "<group>"; };
 		EB7AD93C1DA72FF6001D1DCA /* MORRIGAN.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = MORRIGAN.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		EB7AD9401DA72FF6001D1DCA /* main.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = main.m; sourceTree = "<group>"; };
 		EB7AD9421DA72FF6001D1DCA /* AppDelegate.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = AppDelegate.h; sourceTree = "<group>"; };
@@ -98,6 +109,20 @@
 /* End PBXFrameworksBuildPhase section */
 
 /* Begin PBXGroup section */
+		EB534ACA1DA9D924007AA325 /* Music */ = {
+			isa = PBXGroup;
+			children = (
+				EB534ACB1DA9D924007AA325 /* MusicManager.h */,
+				EB534ACC1DA9D924007AA325 /* MusicManager.m */,
+				EB534ACD1DA9D924007AA325 /* MusicModel.h */,
+				EB534ACE1DA9D924007AA325 /* MusicModel.m */,
+				EB534ACF1DA9D924007AA325 /* MusicViewController.h */,
+				EB534AD01DA9D924007AA325 /* MusicViewController.m */,
+				EB534AD11DA9D924007AA325 /* MusicViewController.xib */,
+			);
+			path = Music;
+			sourceTree = "<group>";
+		};
 		EB7AD9331DA72FF6001D1DCA = {
 			isa = PBXGroup;
 			children = (
@@ -164,6 +189,7 @@
 			children = (
 				EBF0115F1DA73137009E8394 /* Login */,
 				EBF011631DA7319F009E8394 /* Setting */,
+				EB534ACA1DA9D924007AA325 /* Music */,
 			);
 			path = UI;
 			sourceTree = "<group>";
@@ -361,6 +387,7 @@
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				EB534AD51DA9D924007AA325 /* MusicViewController.xib in Resources */,
 				EBF011841DA7883B009E8394 /* Urls.plist in Resources */,
 				EB7AD94C1DA72FF6001D1DCA /* Assets.xcassets in Resources */,
 			);
@@ -392,7 +419,10 @@
 				EB7AD9411DA72FF6001D1DCA /* main.m in Sources */,
 				EBF011711DA754E6009E8394 /* LoginViewController.m in Sources */,
 				EBF011821DA7883B009E8394 /* NMOANetWorking.m in Sources */,
+				EB534AD21DA9D924007AA325 /* MusicManager.m in Sources */,
+				EB534AD41DA9D924007AA325 /* MusicViewController.m in Sources */,
 				EBF011AF1DA7920A009E8394 /* Utils.m in Sources */,
+				EB534AD31DA9D924007AA325 /* MusicModel.m in Sources */,
 				EBF011741DA755E1009E8394 /* RegisterViewController.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
