@@ -1,14 +1,14 @@
 //
-//  注册界面
+//  找回密码界面
 //
-//  RegisterViewController.m
+//  ForgetPwdViewController.m
 //  MORRIGAN
 //
 //  Created by mac-jhw on 16/10/7.
 //  Copyright © 2016年 mac-jhw. All rights reserved.
 //
 
-#import "RegisterViewController.h"
+#import "ForgetPwdViewController.h"
 #import "NMOANetWorking.h"
 #import "UserInfo.h"
 #import "LoginManager.h"
@@ -24,11 +24,8 @@
 
 
 
-@interface RegisterViewController () <UIAlertViewDelegate>
+@interface ForgetPwdViewController () <UIAlertViewDelegate>
 {
-    NSString *_sexString;
-    UIButton *_manButton;
-    UIButton *_womanButton;
     UITextField *_phoneNumbrInputView;
     UITextField *_authCodeInputView;
     UITextField *_passwordInputView;
@@ -39,7 +36,7 @@
 
 @end
 
-@implementation RegisterViewController
+@implementation ForgetPwdViewController
 
 - (void)viewDidLoad {
     [super viewDidLoad];
@@ -47,12 +44,6 @@
     
     // 初始化视图
     [self initView];
-    
-    
-    // 默认性别：男
-    _sexString = @"M";
-    _manButton.backgroundColor = [UIColor greenColor];
-
 }
 
 
@@ -64,66 +55,38 @@
     [self.view addSubview:rootView];
     
     
-    // 性别选择
-    CGFloat imageViewH = 270.0;
-    UIView *sexRootView = [[UIView alloc] initWithFrame:CGRectMake(0, 0, kScreenWidth, imageViewH)];
-    sexRootView.backgroundColor = [UIColor redColor];
-    [rootView addSubview:sexRootView];
-    // 选择性别
-    CGFloat labelView1Y = 35.0;
+    // 上半部分视图
+    CGFloat imageViewH = 200.0;
+    UIView *topRootView = [[UIView alloc] initWithFrame:CGRectMake(0, 0, kScreenWidth, imageViewH)];
+    topRootView.backgroundColor = [UIColor redColor];
+    [rootView addSubview:topRootView];
+    // 取消按钮
+    CGFloat cancleBtnY = 25.0;
+    CGFloat cancleBtnW = 50.0;
+    UIButton *cancleBtn = [[UIButton alloc] initWithFrame:CGRectMake(0, cancleBtnY, cancleBtnW, cancleBtnW)];
+    cancleBtn.backgroundColor = [UIColor blueColor];
+    [cancleBtn addTarget:self action:@selector(cancleButtonClickInForgetPwd) forControlEvents:UIControlEventTouchUpInside];
+    [topRootView addSubview:cancleBtn];
+    // 忘记密码
+    CGFloat labelView1Y = cancleBtnY + cancleBtnW;
     CGFloat labelView1H = 30.0;
     UILabel *labelView1 = [[UILabel alloc] initWithFrame:CGRectMake(0, labelView1Y, kScreenWidth, labelView1H)];
-    labelView1.text = @"选择性别";
+    labelView1.text = @"忘记密码";
     labelView1.textColor = [UIColor whiteColor];
     labelView1.textAlignment = NSTextAlignmentCenter;
     labelView1.font = [UIFont boldSystemFontOfSize:20.0];
-    [sexRootView addSubview:labelView1];
-    // 一旦选择 性别 注册后不可更改
+    [topRootView addSubview:labelView1];
+    // 输入您的手机号，获取验证码方可修改密码，密码修改成功后，要牢记哦
     CGFloat labelView2H = 20.0;
-    UILabel *labelView2 = [[UILabel alloc] initWithFrame:CGRectMake(0, labelView1Y + labelView1H, kScreenWidth, labelView2H)];
-    labelView2.text = @"一旦选择 性别 注册后不可更改";
+    UILabel *labelView2 = [[UILabel alloc] initWithFrame:CGRectMake(20, labelView1Y + labelView1H, kScreenWidth - 20*2, labelView2H)];
+    labelView2.text = @" 输入您的手机号,获取验证码方可修改密码,密码修改成功后,要牢记哦";
+    labelView2.numberOfLines = 0;
+    [labelView2 sizeToFit];
     labelView2.textColor = [UIColor whiteColor];
     labelView2.textAlignment = NSTextAlignmentCenter;
     labelView2.font = [UIFont systemFontOfSize:15.0];
-    [sexRootView addSubview:labelView2];
-    // 男士
-    CGFloat secBtnY = labelView2.frame.origin.y + labelView2.frame.size.height + 20.0;
-    CGFloat sexBtnLeftRightMarging = 60.0;
-    CGFloat sexBtnH = 100.0;
-    CGFloat setBtnSpace = (kScreenWidth - 2*sexBtnLeftRightMarging - sexBtnH *2);
-    UIButton *manButton = [[UIButton alloc] initWithFrame:CGRectMake(sexBtnLeftRightMarging, secBtnY, sexBtnH, sexBtnH)];
-    manButton.backgroundColor = [UIColor whiteColor];
-    manButton.tag = kManButtonTag;
-    [manButton addTarget:self action:@selector(sexButtonClickInRegister:) forControlEvents:UIControlEventTouchUpInside];
-    _manButton = manButton;
-    [sexRootView addSubview:manButton];
-    // 女士
-    UIButton *womanButton = [[UIButton alloc] initWithFrame:CGRectMake(sexBtnLeftRightMarging + sexBtnH + setBtnSpace, secBtnY, sexBtnH, sexBtnH)];
-    womanButton.backgroundColor = [UIColor whiteColor];
-    womanButton.tag = kWomanButtonTag;
-    [womanButton addTarget:self action:@selector(sexButtonClickInRegister:) forControlEvents:UIControlEventTouchUpInside];
-    _womanButton = womanButton;
-    [sexRootView addSubview:womanButton];
-    // 男士
-    CGFloat manLabelY = manButton.frame.origin.y + manButton.frame.size.height + 10.0;
-    CGFloat manLabelW = sexBtnH;
-    CGFloat manLabelH = 20.0;
-    UILabel *manLabel = [[UILabel alloc] initWithFrame:CGRectMake(manButton.frame.origin.x, manLabelY, manLabelW, manLabelH)];
-    manLabel.text = @"男士";
-    manLabel.textAlignment = NSTextAlignmentCenter;
-    manLabel.textColor = [UIColor whiteColor];
-    manLabel.font = [UIFont boldSystemFontOfSize:17.0];
-    [sexRootView addSubview:manLabel];
-    // 女士
-    UILabel *womanLabel = [[UILabel alloc] initWithFrame:CGRectMake(womanButton.frame.origin.x, manLabelY, manLabelW, manLabelH)];
-    womanLabel.text = @"女士";
-    womanLabel.textAlignment = NSTextAlignmentCenter;
-    womanLabel.textColor = [UIColor whiteColor];
-    womanLabel.font = [UIFont boldSystemFontOfSize:17.0];
-    [sexRootView addSubview:womanLabel];
-    
-    
-    
+    [topRootView addSubview:labelView2];
+
     
     // 手机号
     CGFloat editViewPaddingTop = 30.0;
@@ -164,7 +127,7 @@
     CGFloat getAuthCodeViewW = 100.0;
     UIButton *getAuthCodeView = [[UIButton alloc] initWithFrame:CGRectMake(editViewW - getAuthCodeViewW , 0, getAuthCodeViewW, editViewH)];
     getAuthCodeView.backgroundColor = [UIColor blueColor];
-    [getAuthCodeView addTarget:self action:@selector(getAuthCodeButtonClickInRegister) forControlEvents:UIControlEventTouchUpInside];
+    [getAuthCodeView addTarget:self action:@selector(getAuthCodeButtonClickInForgetPwd) forControlEvents:UIControlEventTouchUpInside];
     [getAuthCodeView setTitle:@"获取验证码" forState:UIControlStateNormal];
     [authCodeRootView addSubview:getAuthCodeView];
     // 验证码输入框
@@ -193,7 +156,7 @@
     CGFloat showPWDViewW = 50.0;
     UIButton *showPWDView = [[UIButton alloc] initWithFrame:CGRectMake(editViewW - showPWDViewW , 0, showPWDViewW, editViewH)];
     showPWDView.backgroundColor = [UIColor blueColor];
-    [showPWDView addTarget:self action:@selector(showPWDButtonClickInRegister) forControlEvents:UIControlEventTouchUpInside];
+    [showPWDView addTarget:self action:@selector(showPWDButtonClickInForgetPwd) forControlEvents:UIControlEventTouchUpInside];
     _showPwdButton = showPWDView;
     [PWDRootView addSubview:showPWDView];
     // 密码输入框
@@ -213,25 +176,19 @@
     // 注册／登陆
     CGFloat registerAndLoginBtnRootViewH = 64.0;
     CGFloat registerAndLoginBtnRootViewW = editViewW;
-    CGFloat registerAndLoginBtnRootViewSpace = 20.0;
     CGFloat registerAndLoginBtnRootViewX = editViewPaddingLeftRight;
     CGFloat registerAndLoginBtnRootViewY = kScreenHeight - 80.0 - registerAndLoginBtnRootViewH;
     UIView *registerAndLoginBtnRootView = [[UIView alloc]initWithFrame:CGRectMake(registerAndLoginBtnRootViewX, registerAndLoginBtnRootViewY, registerAndLoginBtnRootViewW, registerAndLoginBtnRootViewH)];
     registerAndLoginBtnRootView.backgroundColor = [UIColor clearColor];
     [rootView addSubview:registerAndLoginBtnRootView];
-    // 注册
-    CGFloat buttonW = (registerAndLoginBtnRootViewW - registerAndLoginBtnRootViewSpace)/2;
-    UIButton *registerBtnView = [[UIButton alloc] initWithFrame:CGRectMake(0, 0, buttonW, registerAndLoginBtnRootViewH)];
-    [registerBtnView setTitle:@"注册" forState:UIControlStateNormal];
-    registerBtnView.backgroundColor = [UIColor blueColor];
-    [registerBtnView addTarget:self action:@selector(registerButtonClickInRegister) forControlEvents:UIControlEventTouchUpInside];
-    [registerAndLoginBtnRootView addSubview:registerBtnView];
-    // 登陆
-    UIButton *loginBtnView = [[UIButton alloc] initWithFrame:CGRectMake(buttonW + registerAndLoginBtnRootViewSpace, 0, buttonW, registerAndLoginBtnRootViewH)];
-    [loginBtnView setTitle:@"登陆" forState:UIControlStateNormal];
-    loginBtnView.backgroundColor = [UIColor orangeColor];
-    [loginBtnView addTarget:self action:@selector(loginButtonClickInRegister) forControlEvents:UIControlEventTouchUpInside];
-    [registerAndLoginBtnRootView addSubview:loginBtnView];
+    // 确定
+    CGFloat buttonW = registerAndLoginBtnRootViewW;
+    UIButton *okBtnView = [[UIButton alloc] initWithFrame:CGRectMake(0, 0, buttonW, registerAndLoginBtnRootViewH)];
+    [okBtnView setTitle:@"完成" forState:UIControlStateNormal];
+    okBtnView.backgroundColor = [UIColor blueColor];
+    [okBtnView addTarget:self action:@selector(okButtonClickInForgetPwd) forControlEvents:UIControlEventTouchUpInside];
+    [registerAndLoginBtnRootView addSubview:okBtnView];
+
     
     
 }
@@ -240,38 +197,9 @@
 #pragma mark - 按钮点击处理
 
 // 获取验证码按钮点击
-- (void)sexButtonClickInRegister:(id)sender
+- (void)getAuthCodeButtonClickInForgetPwd
 {
-    NSLog(@"sexButtonClickInRegister");
-    UIButton *button = (UIButton *)sender;
-    switch (button.tag) {
-        case kManButtonTag:
-        {
-            _womanButton.backgroundColor = [UIColor whiteColor];
-            _manButton.backgroundColor = [UIColor greenColor];
-            _sexString = @"M";
-        }
-            break;
-            
-        case kWomanButtonTag:
-        {
-            _manButton.backgroundColor = [UIColor whiteColor];
-            _womanButton.backgroundColor = [UIColor greenColor];
-            _sexString = @"F";
-        }
-            break;
-            
-        default:
-            break;
-    }
-    
-}
-
-
-// 获取验证码按钮点击
-- (void)getAuthCodeButtonClickInRegister
-{
-    NSLog(@"getAuthCodeButtonClickInRegister");
+    NSLog(@"getAuthCodeButtonClickInForgetPwd");
     NSString *phoneNumber = _phoneNumbrInputView.text;
     BOOL isPhoneNumberRight = [Utils checkMobile: phoneNumber];
     
@@ -293,19 +221,25 @@
 }
 
 // 显示密码按钮点击
-- (void)showPWDButtonClickInRegister
+- (void)showPWDButtonClickInForgetPwd
 {
-    NSLog(@"showPWDButtonClickInRegister");
+    NSLog(@"showPWDButtonClickInForgetPwd");
     _passwordInputView.secureTextEntry = !_passwordInputView.secureTextEntry;
     _showPwdButton.backgroundColor = _passwordInputView.secureTextEntry ? [UIColor blueColor] : [UIColor redColor];
  
 }
 
-
-// 注册按钮点击
-- (void)registerButtonClickInRegister
+// 取消按钮点击
+- (void)cancleButtonClickInForgetPwd
 {
-    NSLog(@"registerButtonClickInRegister");
+    [self.navigationController popViewControllerAnimated:NO];
+}
+
+
+// 完成按钮点击
+- (void)okButtonClickInForgetPwd
+{
+    NSLog(@"okButtonClickInForgetPwd");
     NSString *phoneNumber = _phoneNumbrInputView.text;
     NSString *authCode = _authCodeInputView.text;
     NSString *password = _passwordInputView.text;
@@ -350,20 +284,12 @@
         [alert show];
         return;
     }
-
-    // 注册
-    [self beginRegister:phoneNumber authCode:authCode password:password sex:_sexString];
     
+    // 更改密码
+    [self beginResetPwd:phoneNumber authCode:authCode password:password];
 }
 
 
-// 登陆按钮点击
-- (void)loginButtonClickInRegister
-{
-    NSLog(@"loginButtonClickInRegister");
-    [LoginManager share].autoLogin = NO;
-    [self.navigationController popViewControllerAnimated:YES];
-}
 
 
 #pragma mark - UIAlertViewDelegate
@@ -374,8 +300,7 @@
         {
             if(alertView.tag == kAlertViewTagOfIntoLogin) {
                 
-                // 进入登陆界面
-                [self intoLoginPage];
+                
             }
 
         }
@@ -426,22 +351,21 @@
      }];
 }
 
-// 注册
-- (void)beginRegister:(NSString *)phoneNumber authCode:(NSString *)authCode password:(NSString *)password sex:(NSString *)sex
+// 重置密码
+- (void)beginResetPwd:(NSString *)phoneNumber authCode:(NSString *)authCode password:(NSString *)password
 {
     
-    [self remoteAnimation:@"正在注册, 请稍候..."];
+    [self remoteAnimation:@"正在重置密码, 请稍候..."];
     
-    NSLog(@"注册，手机：%@, 验证码：%@, 密码：%@ , 性别：%@", phoneNumber, authCode, password, sex);
+    NSLog(@"重置密码，手机：%@, 验证码：%@, 密码：%@", phoneNumber, authCode, password);
     
     NSDictionary *dictionary = @{@"mobile": phoneNumber,
                                  @"msgCode": authCode,
-                                 @"password": password,
-                                 @"sex": sex,
+                                 @"newPsw": password
                                  };
     NSString *bodyString = [NMOANetWorking handleHTTPBodyParams:dictionary];
-    [[NMOANetWorking share] taskWithTag:ID_REGISTER
-                              urlString:URL_REGISTER
+    [[NMOANetWorking share] taskWithTag:ID_RESET_PWD
+                              urlString:URL_RESET_PWD
                                httpHead:nil
                              bodyString:bodyString
                      objectTaskFinished:^(NSError *error, id obj)
@@ -453,36 +377,22 @@
          
          
          if ([[obj objectForKey:HTTP_KEY_RESULTCODE] isEqualToString:HTTP_RESULTCODE_SUCCESS]) {
-             NSLog(@"注册成功！");
-             UIAlertView *alert = [[UIAlertView alloc] initWithTitle:@"注册成功!" message:@"点击确认进入登陆界面" delegate:self cancelButtonTitle:nil otherButtonTitles:@"确定", nil];
+             NSLog(@"重置密码成功！");
+             UIAlertView *alert = [[UIAlertView alloc] initWithTitle: [obj objectForKey:HTTP_KEY_RESULTMESSAGE] message:nil delegate:self cancelButtonTitle:nil otherButtonTitles:@"确定", nil];
              alert.tag = kAlertViewTagOfIntoLogin;
              [alert show];
              
          } else {
-             
-             NSLog(@"注册失败！");
-             UIAlertView *alert = [[UIAlertView alloc] initWithTitle:@"注册失败!" message: [obj objectForKey:HTTP_KEY_RESULTMESSAGE] delegate:self cancelButtonTitle:nil otherButtonTitles:@"确定", nil];
+             NSLog(@"重置密码失败！");
+             UIAlertView *alert = [[UIAlertView alloc] initWithTitle:@"重置密码失败!" message: [obj objectForKey:HTTP_KEY_RESULTMESSAGE] delegate:self cancelButtonTitle:nil otherButtonTitles:@"确定", nil];
              [alert show];
          }
          
      }];
     
-
-}
-
-
-// 进入登陆界面
-- (void)intoLoginPage
-{
-    [UserInfo share].mobile = _phoneNumbrInputView.text;
-    [UserInfo share].password = _passwordInputView.text;
-    [UserInfo share].sex = _sexString;
-    
-    
-    [LoginManager share].autoLogin = NO;
-    [self.navigationController popViewControllerAnimated:YES];
     
 }
+
 
 -(void)remoteAnimation:(NSString *)message{
     

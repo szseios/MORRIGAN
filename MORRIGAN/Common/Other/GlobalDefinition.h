@@ -36,6 +36,16 @@
 // 短信验证码
 #define ID_GET_PHONE_MSG_CODE   1002
 #define URL_GET_PHONE_MSG_CODE  @"http://112.74.100.227:8083//rest/moli/send-msg"
+// 登陆
+#define ID_LOGIN                1003
+#define URL_LOGIN               @"http://112.74.100.227:8083/rest/moli/login"
+// 重置密码
+#define ID_RESET_PWD            1004
+#define URL_RESET_PWD           @"http://112.74.100.227:8083/rest/moli/forget-psw"
+
+
+
+
 
 
 

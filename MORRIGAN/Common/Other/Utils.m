@@ -51,8 +51,8 @@
 //判断验证码是否有效
 + (BOOL)checkAuthCode:(NSString *)authCode
 {
-    //4位数字
-    NSString *regex = @"^[0-9]{4}$";
+    //4-9位数字
+    NSString *regex = @"^[0-9]{4,9}$";
     NSPredicate *pred = [NSPredicate predicateWithFormat:@"SELF MATCHES %@", regex];
     if ([pred evaluateWithObject:authCode]) {
         return YES ;
