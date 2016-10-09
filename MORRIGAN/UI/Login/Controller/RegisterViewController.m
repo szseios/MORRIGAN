@@ -10,11 +10,17 @@
 
 #import "RegisterViewController.h"
 #import "NMOANetWorking.h"
+#import "UserInfo.h"
+#import "LoginManager.h"
 #import "Utils.h"
+
 
 
 #define kManButtonTag     1001
 #define kWomanButtonTag   1002
+
+#define kAlertViewTagOfConfirmPhoneNumber  2001
+#define kAlertViewTagOfIntoLogin           2002
 
 
 
@@ -26,6 +32,8 @@
     UITextField *_phoneNumbrInputView;
     UITextField *_authCodeInputView;
     UITextField *_passwordInputView;
+    
+    UIAlertView *remoteAlertView;
 }
 
 @end
@@ -277,6 +285,7 @@
     }
     
     UIAlertView *alert = [[UIAlertView alloc] initWithTitle:@"确认手机号码" message:phoneNumber delegate:self cancelButtonTitle:@"取消" otherButtonTitles:@"确定", nil];
+    alert.tag = kAlertViewTagOfConfirmPhoneNumber;
     [alert show];
 }
 
@@ -298,7 +307,7 @@
     BOOL isPasswordRight = [Utils checkPassWord: password];
     BOOL isauthCodeRight = [Utils checkAuthCode: authCode];
     
-    
+    // 校验
     if(phoneNumber && phoneNumber.length == 0) {
         UIAlertView *alert = [[UIAlertView alloc] initWithTitle:@"请输入手机号" message:nil delegate:self cancelButtonTitle:nil otherButtonTitles:@"确定", nil];
         [alert show];
@@ -336,16 +345,93 @@
         return;
     }
 
+    // 注册
+    [self beginRegister:phoneNumber authCode:authCode password:password sex:_sexString];
     
-    NSLog(@"手机：%@, 验证码：%@, 密码：%@ , 性别：%@", phoneNumber, authCode, password, _sexString);
+}
+
+
+// 登陆按钮点击
+- (void)loginButtonClickInRegister
+{
+    NSLog(@"loginButtonClickInRegister");
+    [LoginManager share].autoLogin = NO;
+    [self.navigationController popViewControllerAnimated:YES];
+}
+
+
+#pragma mark - UIAlertViewDelegate
+-(void)alertView:(UIAlertView *)alertView clickedButtonAtIndex:(NSInteger)buttonIndex
+{
+    switch (buttonIndex) {
+        case 0:
+        {
+            if(alertView.tag == kAlertViewTagOfIntoLogin) {
+                
+                // 进入登陆界面
+                [self intoLoginPage];
+            }
+
+        }
+            break;
+            
+        case 1:
+        {
+            if(alertView.tag == kAlertViewTagOfConfirmPhoneNumber) {
+               
+                // 获取手机验证码
+                [self getPhoneMsgCode];
+                
+            }
+        }
+            break;
+            
+        default:
+            break;
+    }
+}
+
+#pragma mark - other
+
+// 获取手机验证码
+- (void)getPhoneMsgCode
+{
+    NSDictionary *dictionary = @{@"mobile":_phoneNumbrInputView.text};
+    NSString *bodyString = [NMOANetWorking handleHTTPBodyParams:dictionary];
+    [[NMOANetWorking share] taskWithTag:ID_GET_PHONE_MSG_CODE
+                              urlString:URL_GET_PHONE_MSG_CODE
+                               httpHead:nil
+                             bodyString:bodyString
+                     objectTaskFinished:^(NSError *error, id obj)
+     {
+         
+         if ([[obj objectForKey:HTTP_KEY_RESULTCODE] isEqualToString:HTTP_RESULTCODE_SUCCESS]) {
+             
+             NSLog(@"获取验证码成功！");
+         } else {
+             
+             NSLog(@"获取验证码失败！");
+         }
+         
+         UIAlertView *alert = [[UIAlertView alloc] initWithTitle:[obj objectForKey:HTTP_KEY_RESULTMESSAGE] message:nil delegate:self cancelButtonTitle:nil otherButtonTitles:@"确定", nil];
+         [alert show];
+         
+         
+     }];
+}
+
+// 注册
+- (void)beginRegister:(NSString *)phoneNumber authCode:(NSString *)authCode password:(NSString *)password sex:(NSString *)sex
+{
     
+    [self remoteAnimation:@"正在注册, 请稍候..."];
     
-    
+    NSLog(@"注册，手机：%@, 验证码：%@, 密码：%@ , 性别：%@", phoneNumber, authCode, password, sex);
     
     NSDictionary *dictionary = @{@"mobile": phoneNumber,
                                  @"msgCode": authCode,
                                  @"password": password,
-                                 @"sex": _sexString,
+                                 @"sex": sex,
                                  };
     NSString *bodyString = [NMOANetWorking handleHTTPBodyParams:dictionary];
     [[NMOANetWorking share] taskWithTag:ID_REGISTER
@@ -355,80 +441,63 @@
                      objectTaskFinished:^(NSError *error, id obj)
      {
          
+         dispatch_async(dispatch_get_main_queue(), ^{
+             [remoteAlertView dismissWithClickedButtonIndex:0 animated:YES];
+         });
+         
+         
          if ([[obj objectForKey:HTTP_KEY_RESULTCODE] isEqualToString:HTTP_RESULTCODE_SUCCESS]) {
              NSLog(@"注册成功！");
+             UIAlertView *alert = [[UIAlertView alloc] initWithTitle:@"注册成功!" message:@"点击确认进入登陆界面" delegate:self cancelButtonTitle:nil otherButtonTitles:@"确定", nil];
+             alert.tag = kAlertViewTagOfIntoLogin;
+             [alert show];
              
          } else {
              
              NSLog(@"注册失败！");
+             UIAlertView *alert = [[UIAlertView alloc] initWithTitle:@"注册失败!" message: [obj objectForKey:HTTP_KEY_RESULTMESSAGE] delegate:self cancelButtonTitle:nil otherButtonTitles:@"确定", nil];
+             [alert show];
          }
          
-         UIAlertView *alert = [[UIAlertView alloc] initWithTitle:[obj objectForKey:HTTP_KEY_RESULTMESSAGE] message:nil delegate:self cancelButtonTitle:nil otherButtonTitles:@"确定", nil];
-         [alert show];
-         
-    }];
+     }];
+    
 
-    
-    
 }
 
 
-// 登陆按钮点击
-- (void)loginButtonClickInRegister
+// 进入登陆界面
+- (void)intoLoginPage
 {
-    NSLog(@"loginButtonClickInRegister");
+    [UserInfo share].mobile = _phoneNumbrInputView.text;
+    [UserInfo share].password = _passwordInputView.text;
+    [UserInfo share].sex = _sexString;
+    
+    
+    [LoginManager share].autoLogin = YES;
     [self.navigationController popViewControllerAnimated:YES];
+    
 }
 
-
-#pragma mark - UIAlertViewDelegate
--(void)alertView:(UIAlertView *)alertView clickedButtonAtIndex:(NSInteger)buttonIndex
-{
-    switch (buttonIndex) {
-        case 0:  // 取消
-        {
-        
-        
-        }
-            break;
-            
-        case 1:  // 确定
-        {
-         
-            //获取验证码
-            NSDictionary *dictionary = @{@"mobile":_phoneNumbrInputView.text};
-            NSString *bodyString = [NMOANetWorking handleHTTPBodyParams:dictionary];
-            [[NMOANetWorking share] taskWithTag:ID_GET_PHONE_MSG_CODE
-                                      urlString:URL_GET_PHONE_MSG_CODE
-                                       httpHead:nil
-                                     bodyString:bodyString
-                             objectTaskFinished:^(NSError *error, id obj)
-             {
-        
-                 if ([[obj objectForKey:HTTP_KEY_RESULTCODE] isEqualToString:HTTP_RESULTCODE_SUCCESS]) {
-        
-                     NSLog(@"获取验证码成功！");
-                 } else {
-                     
-                     NSLog(@"获取验证码失败！");
-                 }
-                 
-                 UIAlertView *alert = [[UIAlertView alloc] initWithTitle:[obj objectForKey:HTTP_KEY_RESULTMESSAGE] message:nil delegate:self cancelButtonTitle:nil otherButtonTitles:@"确定", nil];
-                 [alert show];
-
-                 
-             }];
-            
-            
-        }
-            break;
-            
-        default:
-            break;
+-(void)remoteAnimation:(NSString *)message{
+    
+    if (remoteAlertView) {
+        remoteAlertView = nil;
     }
+    remoteAlertView =  [[UIAlertView alloc] initWithTitle:@"提示" message:message delegate:self cancelButtonTitle:nil otherButtonTitles:nil, nil ];
+    UIActivityIndicatorView *aiView = [[UIActivityIndicatorView alloc] initWithFrame:CGRectMake(125.0, 80.0, 30.0, 30.0)];
+    aiView.activityIndicatorViewStyle = UIActivityIndicatorViewStyleWhiteLarge;
+    aiView.color = [UIColor blackColor];
+    //check if os version is 7 or above. ios7.0及以上UIAlertView弃用了addSubview方法
+    if ([[[UIDevice currentDevice] systemVersion] compare:@"7.0"] != NSOrderedAscending) {
+        [remoteAlertView setValue:aiView forKey:@"accessoryView"];
+    }else{
+        [remoteAlertView addSubview:aiView];
+    }
+    // 不加这句不显示
+    [remoteAlertView setValue:aiView forKey:@"accessoryView"];
+    [remoteAlertView show];
+    [aiView startAnimating];
 }
-
-
 
 
 

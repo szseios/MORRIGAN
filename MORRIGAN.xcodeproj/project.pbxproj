@@ -7,6 +7,12 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		EB4BF1A61DA9EACD000A60B5 /* HomeViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = EB4BF1A51DA9EACD000A60B5 /* HomeViewController.m */; };
+		EB4BF1A71DA9EACD000A60B5 /* HomeViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = EB4BF1A51DA9EACD000A60B5 /* HomeViewController.m */; };
+		EB4BF1AB1DA9EEDD000A60B5 /* UserInfo.m in Sources */ = {isa = PBXBuildFile; fileRef = EB4BF1AA1DA9EEDD000A60B5 /* UserInfo.m */; };
+		EB4BF1AC1DA9EEDD000A60B5 /* UserInfo.m in Sources */ = {isa = PBXBuildFile; fileRef = EB4BF1AA1DA9EEDD000A60B5 /* UserInfo.m */; };
+		EB4BF1AF1DA9EF80000A60B5 /* LoginManager.m in Sources */ = {isa = PBXBuildFile; fileRef = EB4BF1AE1DA9EF80000A60B5 /* LoginManager.m */; };
+		EB4BF1B01DA9EF80000A60B5 /* LoginManager.m in Sources */ = {isa = PBXBuildFile; fileRef = EB4BF1AE1DA9EF80000A60B5 /* LoginManager.m */; };
 		EB534AD21DA9D924007AA325 /* MusicManager.m in Sources */ = {isa = PBXBuildFile; fileRef = EB534ACC1DA9D924007AA325 /* MusicManager.m */; };
 		EB534AD31DA9D924007AA325 /* MusicModel.m in Sources */ = {isa = PBXBuildFile; fileRef = EB534ACE1DA9D924007AA325 /* MusicModel.m */; };
 		EB534AD41DA9D924007AA325 /* MusicViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = EB534AD01DA9D924007AA325 /* MusicViewController.m */; };
@@ -44,6 +50,12 @@
 /* End PBXContainerItemProxy section */
 
 /* Begin PBXFileReference section */
+		EB4BF1A41DA9EACD000A60B5 /* HomeViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = HomeViewController.h; sourceTree = "<group>"; };
+		EB4BF1A51DA9EACD000A60B5 /* HomeViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = HomeViewController.m; sourceTree = "<group>"; };
+		EB4BF1A91DA9EEDD000A60B5 /* UserInfo.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = UserInfo.h; sourceTree = "<group>"; };
+		EB4BF1AA1DA9EEDD000A60B5 /* UserInfo.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = UserInfo.m; sourceTree = "<group>"; };
+		EB4BF1AD1DA9EF80000A60B5 /* LoginManager.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = LoginManager.h; sourceTree = "<group>"; };
+		EB4BF1AE1DA9EF80000A60B5 /* LoginManager.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = LoginManager.m; sourceTree = "<group>"; };
 		EB534ACB1DA9D924007AA325 /* MusicManager.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MusicManager.h; sourceTree = "<group>"; };
 		EB534ACC1DA9D924007AA325 /* MusicManager.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = MusicManager.m; sourceTree = "<group>"; };
 		EB534ACD1DA9D924007AA325 /* MusicModel.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MusicModel.h; sourceTree = "<group>"; };
@@ -109,6 +121,32 @@
 /* End PBXFrameworksBuildPhase section */
 
 /* Begin PBXGroup section */
+		EB4BF1A21DA9EA79000A60B5 /* Home */ = {
+			isa = PBXGroup;
+			children = (
+				EB4BF1A31DA9EAB5000A60B5 /* Controller */,
+			);
+			path = Home;
+			sourceTree = "<group>";
+		};
+		EB4BF1A31DA9EAB5000A60B5 /* Controller */ = {
+			isa = PBXGroup;
+			children = (
+				EB4BF1A41DA9EACD000A60B5 /* HomeViewController.h */,
+				EB4BF1A51DA9EACD000A60B5 /* HomeViewController.m */,
+			);
+			path = Controller;
+			sourceTree = "<group>";
+		};
+		EB4BF1A81DA9EEDD000A60B5 /* Model */ = {
+			isa = PBXGroup;
+			children = (
+				EB4BF1A91DA9EEDD000A60B5 /* UserInfo.h */,
+				EB4BF1AA1DA9EEDD000A60B5 /* UserInfo.m */,
+			);
+			path = Model;
+			sourceTree = "<group>";
+		};
 		EB534ACA1DA9D924007AA325 /* Music */ = {
 			isa = PBXGroup;
 			children = (
@@ -188,6 +226,7 @@
 			isa = PBXGroup;
 			children = (
 				EBF0115F1DA73137009E8394 /* Login */,
+				EB4BF1A21DA9EA79000A60B5 /* Home */,
 				EBF011631DA7319F009E8394 /* Setting */,
 				EB534ACA1DA9D924007AA325 /* Music */,
 			);
@@ -197,6 +236,7 @@
 		EBF0115F1DA73137009E8394 /* Login */ = {
 			isa = PBXGroup;
 			children = (
+				EB4BF1A81DA9EEDD000A60B5 /* Model */,
 				EBF0116F1DA754E6009E8394 /* Manager */,
 				EBF011701DA754E6009E8394 /* View */,
 				EBF0116C1DA754E6009E8394 /* Controller */,
@@ -244,6 +284,8 @@
 		EBF0116F1DA754E6009E8394 /* Manager */ = {
 			isa = PBXGroup;
 			children = (
+				EB4BF1AD1DA9EF80000A60B5 /* LoginManager.h */,
+				EB4BF1AE1DA9EF80000A60B5 /* LoginManager.m */,
 			);
 			path = Manager;
 			sourceTree = "<group>";
@@ -414,6 +456,8 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				EB4BF1AF1DA9EF80000A60B5 /* LoginManager.m in Sources */,
+				EB4BF1AB1DA9EEDD000A60B5 /* UserInfo.m in Sources */,
 				EBF011831DA7883B009E8394 /* SZSEURLSessionDownloadTask.m in Sources */,
 				EB7AD9441DA72FF6001D1DCA /* AppDelegate.m in Sources */,
 				EB7AD9411DA72FF6001D1DCA /* main.m in Sources */,
@@ -424,6 +468,7 @@
 				EBF011AF1DA7920A009E8394 /* Utils.m in Sources */,
 				EB534AD31DA9D924007AA325 /* MusicModel.m in Sources */,
 				EBF011741DA755E1009E8394 /* RegisterViewController.m in Sources */,
+				EB4BF1A61DA9EACD000A60B5 /* HomeViewController.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -433,6 +478,9 @@
 			files = (
 				EB7AD95A1DA72FF6001D1DCA /* MORRIGANTests.m in Sources */,
 				EBF011B01DA7920A009E8394 /* Utils.m in Sources */,
+				EB4BF1AC1DA9EEDD000A60B5 /* UserInfo.m in Sources */,
+				EB4BF1B01DA9EF80000A60B5 /* LoginManager.m in Sources */,
+				EB4BF1A71DA9EACD000A60B5 /* HomeViewController.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
