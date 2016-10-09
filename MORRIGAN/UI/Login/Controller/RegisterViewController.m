@@ -32,6 +32,7 @@
     UITextField *_phoneNumbrInputView;
     UITextField *_authCodeInputView;
     UITextField *_passwordInputView;
+    UIButton *_showPwdButton;
     
     UIAlertView *remoteAlertView;
 }
@@ -193,11 +194,13 @@
     UIButton *showPWDView = [[UIButton alloc] initWithFrame:CGRectMake(editViewW - showPWDViewW , 0, showPWDViewW, editViewH)];
     showPWDView.backgroundColor = [UIColor blueColor];
     [showPWDView addTarget:self action:@selector(showPWDButtonClickInRegister) forControlEvents:UIControlEventTouchUpInside];
+    _showPwdButton = showPWDView;
     [PWDRootView addSubview:showPWDView];
     // 密码输入框
     UITextField *PWDInputView = [[UITextField alloc] initWithFrame:CGRectMake(iconW + phoneinputViewPaddingLeft, 0, PWDRootView.frame.size.width - iconW - showPWDViewW - phoneinputViewPaddingLeft, editViewH)];
     PWDInputView.backgroundColor = [UIColor greenColor];
     PWDInputView.placeholder = @"设置密码";
+    PWDInputView.secureTextEntry = YES;
     _passwordInputView = PWDInputView;
     [PWDRootView addSubview:PWDInputView];
     // 分割线
@@ -293,6 +296,9 @@
 - (void)showPWDButtonClickInRegister
 {
     NSLog(@"showPWDButtonClickInRegister");
+    _passwordInputView.secureTextEntry = !_passwordInputView.secureTextEntry;
+    _showPwdButton.backgroundColor = _passwordInputView.secureTextEntry ? [UIColor blueColor] : [UIColor redColor];
+ 
 }
 
 
