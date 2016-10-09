@@ -473,7 +473,7 @@
     [UserInfo share].sex = _sexString;
     
     
-    [LoginManager share].autoLogin = YES;
+    [LoginManager share].autoLogin = NO;
     [self.navigationController popViewControllerAnimated:YES];
     
 }

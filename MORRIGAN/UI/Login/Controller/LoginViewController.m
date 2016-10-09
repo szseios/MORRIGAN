@@ -41,13 +41,12 @@
 {
     [super viewWillAppear: animated];
     
-    // 注册成功自动登陆
-    if([LoginManager share].autoLogin) {
-        _phoneNumbrInputView.text = [UserInfo share].mobile;
+    
+    if([UserInfo share].mobile && [UserInfo share].mobile.length > 0) {
+         _phoneNumbrInputView.text = [UserInfo share].mobile;
+    }
+    if([UserInfo share].password && [UserInfo share].password.length > 0) {
         _passwordInputView.text = [UserInfo share].password;
-        [LoginManager share].autoLogin = NO;
-       
-        [self loginButtonClickInLogin];
     }
     
 }

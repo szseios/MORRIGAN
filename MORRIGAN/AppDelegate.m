@@ -25,9 +25,9 @@
     [MusicManager share];
     
     self.window = [[UIWindow alloc] initWithFrame:[[UIScreen mainScreen] bounds]];//设置窗口
-//    LoginViewController *loginViewController = [[LoginViewController alloc] init];
-    MusicViewController *loginViewController = [[MusicViewController alloc] init];
-    loginViewController.musics = [MusicManager share].musics;
+    LoginViewController *loginViewController = [[LoginViewController alloc] init];
+    //MusicViewController *loginViewController = [[MusicViewController alloc] init];
+    //loginViewController.musics = [MusicManager share].musics;
     UINavigationController *nav = [[UINavigationController alloc] initWithRootViewController:loginViewController];
     nav.navigationBarHidden = YES;
     self.window.rootViewController = nav;
