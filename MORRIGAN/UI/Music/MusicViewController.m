@@ -17,6 +17,7 @@
 }
 
 @property (weak, nonatomic) IBOutlet UIView *musicView;
+@property (weak, nonatomic) IBOutlet UISlider *slider;
 @property (nonatomic,strong) UITableView *tableView;
 
 @end
@@ -28,11 +29,16 @@
     // Do any additional setup after loading the view from its nib.
     self.view.backgroundColor = [UIColor whiteColor];
     
+    [_slider setThumbImage:[UIImage imageNamed:@"music_adjust_progress"]
+                  forState:UIControlStateNormal];
+    [_slider setThumbImage:[UIImage imageNamed:@"music_adjust_progress"]
+                  forState:UIControlStateHighlighted];
+    
     UIImageView *imageView = [[UIImageView alloc] initWithFrame:CGRectMake(0,
                                                                            0,
                                                                            self.view.frame.size.width,
                                                                            60)];
-    imageView.backgroundColor = [UIColor redColor];
+    imageView.backgroundColor = [UIColor clearColor];
     imageView.userInteractionEnabled = YES;
     [_musicView addSubview:imageView];
     
@@ -40,14 +46,14 @@
     [imageView addGestureRecognizer:show];
     
     UITapGestureRecognizer *hidde = [[UITapGestureRecognizer alloc] initWithTarget:self action:@selector(hiddeMusicView)];
-//    [self.view addGestureRecognizer:hidde];
+    [self.view addGestureRecognizer:hidde];
     
     [hidde requireGestureRecognizerToFail:show];
     
     _tableView = [[UITableView alloc] initWithFrame:CGRectMake(0,
-                                                               80,
-                                                               _musicView.frame.size.width,
-                                                               _musicView.frame.size.height - 80)
+                                                               65,
+                                                               kScreenWidth,
+                                                               _musicView.frame.size.height - 65)
                                               style:UITableViewStylePlain];
     _tableView.dataSource = self;
     _tableView.delegate = self;
@@ -70,7 +76,10 @@
                                                                   0,
                                                                   _pcseView.frame.size.width,
                                                                   _pcseView.frame.size.height / 2)];
-    shadowView.backgroundColor = [UIColor colorWithWhite:1 alpha:0.8];
+    shadowView.backgroundColor = [UIColor colorWithRed:158 / 255.0
+                                                 green:95 / 255.0
+                                                  blue:247 / 255.0
+                                                 alpha:0.2];
     [_pcseView addSubview:shadowView];
     
 //    [_tableView selectRowAtIndexPath:[NSIndexPath indexPathForRow:2 inSection:0]
@@ -116,7 +125,7 @@
 - (void)hiddeMusicView {
     if (![self musicViewOnBottom]) {
         CGRect frame = _musicView.frame;
-        frame.origin.y = kScreenHeight - 60;
+        frame.origin.y = kScreenHeight - 65;
         [_musicView setFrame:frame];
     }
     NSLog(@"hiddeMusicView");
@@ -124,7 +133,7 @@
 
 //判断是否在底部
 - (BOOL)musicViewOnBottom {
-    if (_musicView.frame.origin.y == (kScreenHeight - 60)) {
+    if (_musicView.frame.origin.y == (kScreenHeight - 65)) {
         return YES;
     }
     return NO;

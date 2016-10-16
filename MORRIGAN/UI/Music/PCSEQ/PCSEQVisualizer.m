@@ -31,7 +31,7 @@
         for(int i = 0; i < numberOfBars; i++){
             
             UIImageView* bar = [[UIImageView alloc]initWithFrame:CGRectMake(i*kWidth+i*kPadding, 0, kWidth, 1)];
-            bar.image = [UIImage imageWithColor:[UIColor redColor]];
+            bar.image = [UIImage imageWithColor:[UIColor colorWithWhite:1 alpha:0.2]];
             [self addSubview:bar];
             [tempBarArray addObject:bar];
             
