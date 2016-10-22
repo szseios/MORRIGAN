@@ -33,7 +33,7 @@
 - (void)viewDidLoad {
     [super viewDidLoad];
     
-    
+    [[UIApplication sharedApplication] setStatusBarStyle:UIStatusBarStyleLightContent animated:NO];
     [self initView];
 
 }
@@ -57,70 +57,88 @@
 {
 
     UIView *rootView = [[UIView alloc] initWithFrame:CGRectMake(0, 0, kScreenWidth, kScreenHeight)];
-    rootView.backgroundColor = [UIColor lightGrayColor];
+    rootView.backgroundColor = [Utils stringTOColor:kColor_6911a5];
     [self.view addSubview:rootView];
     
     
     // 上面的图片
-    CGFloat imageViewH = 200.0;
-    UIImageView *imageView = [[UIImageView alloc] initWithFrame:CGRectMake(0, 0, kScreenWidth, imageViewH)];
-    imageView.backgroundColor = [UIColor redColor];
-    [rootView addSubview:imageView];
+    CGFloat imageViewH = 434/2.0;
+    UIImageView *imageViewBg = [[UIImageView alloc] initWithFrame:CGRectMake(0, 0, kScreenWidth, imageViewH)];
+    imageViewBg.backgroundColor = [Utils stringTOColor:kColor_440067];
+    CGFloat imageH = (imageViewH - 169) + 30;
+    CGFloat imageW = (kScreenWidth - 169) + 20;
+    UIImageView *imageView = [[UIImageView alloc] initWithFrame:CGRectMake(169/2, 169/2, imageW, imageH)];
+    imageView.image = [UIImage imageNamed:@"bg_morrig"];
+    [imageViewBg addSubview:imageView];
+    [rootView addSubview:imageViewBg];
+    
+
     
     
+    UIColor *inputViewTextColor = [UIColor colorWithRed:255.0 green:255.0 blue:255.0 alpha:0.3];
     // 手机号
-    CGFloat editViewPaddingTop = 50.0;
-    CGFloat editViewPaddingLeftRight = 20.0;
-    CGFloat editViewH = 64.0;
+    CGFloat editViewPaddingTop = 70.0;
+    CGFloat editViewPaddingLeftRight = 30.0;
+    CGFloat editViewH = 44.0;
     CGFloat editViewW = kScreenWidth - editViewPaddingLeftRight * 2;
     UIView *phoneNumRootView = [[UIView alloc] initWithFrame:CGRectMake(editViewPaddingLeftRight, imageViewH + editViewPaddingTop, editViewW, editViewH)];
     phoneNumRootView.backgroundColor = [UIColor clearColor];
     [rootView addSubview:phoneNumRootView];
     // 手机图标
-    CGFloat iconW = 50.0;
-    UIImageView *phoneIconView = [[UIImageView alloc] initWithFrame:CGRectMake(0, 0, iconW, editViewH)];
-    phoneIconView.backgroundColor = [UIColor orangeColor];
+    CGFloat iconW = 25.0;
+    UIImageView *phoneIconView = [[UIImageView alloc] initWithFrame:CGRectMake(0, (editViewH - iconW)/2, iconW, iconW)];
+    //phoneIconView.backgroundColor = [UIColor orangeColor];
+    phoneIconView.image = [UIImage imageNamed:@"ic_mobile"];
     [phoneNumRootView addSubview:phoneIconView];
     // 手机输入框
-    CGFloat phoneinputViewPaddingLeft = 10.0;
+    CGFloat phoneinputViewPaddingLeft = 5.0;
     UITextField *phoneInputView = [[UITextField alloc] initWithFrame:CGRectMake(iconW + phoneinputViewPaddingLeft, 0, phoneNumRootView.frame.size.width - iconW - phoneinputViewPaddingLeft, editViewH)];
-    phoneInputView.backgroundColor = [UIColor greenColor];
+    //phoneInputView.backgroundColor = [UIColor greenColor];
     phoneInputView.placeholder = @"请填写手机号码";
+    // 注意：先设置phoneInputView.placeholder才有效
+    [phoneInputView setValue:inputViewTextColor forKeyPath:@"_placeholderLabel.textColor"];
+    phoneInputView.textColor = inputViewTextColor;
     _phoneNumbrInputView = phoneInputView;
     [phoneNumRootView addSubview:phoneInputView];
     // 分割线
     UIView *lineView = [[UIView alloc] initWithFrame:CGRectMake(0, editViewH - 1, editViewW, 1)];
-    lineView.backgroundColor = [UIColor blackColor];
+    lineView.backgroundColor = [Utils stringTOColor:kColor_ffffff];
+    lineView.alpha = 0.1;
     [phoneNumRootView addSubview:lineView];
     
     
   
     // 密码
-    CGFloat PWDeditViewPaddingTop = 10.0;
+    CGFloat PWDeditViewPaddingTop = 20.0;
     UIView *PWDRootView = [[UIView alloc] initWithFrame:CGRectMake(editViewPaddingLeftRight, imageViewH + editViewPaddingTop + editViewH + PWDeditViewPaddingTop, editViewW, editViewH)];
     PWDRootView.backgroundColor = [UIColor clearColor];
     [rootView addSubview:PWDRootView];
     // 密码图标
-    UIImageView *PWDIconView = [[UIImageView alloc] initWithFrame:CGRectMake(0, 0, iconW, editViewH)];
-    PWDIconView.backgroundColor = [UIColor orangeColor];
+    UIImageView *PWDIconView = [[UIImageView alloc] initWithFrame:CGRectMake(0, (editViewH - iconW)/2, iconW, iconW)];
+    //PWDIconView.backgroundColor = [UIColor orangeColor];
+    PWDIconView.image = [UIImage imageNamed:@"ic_pwd"];
     [PWDRootView addSubview:PWDIconView];
     // 显示密码按钮
-    CGFloat showPWDViewW = 50.0;
-    UIButton *showPWDView = [[UIButton alloc] initWithFrame:CGRectMake(editViewW - showPWDViewW , 0, showPWDViewW, editViewH)];
-    showPWDView.backgroundColor = [UIColor blueColor];
+    CGFloat showPWDViewW = 30.0;
+    UIButton *showPWDView = [[UIButton alloc] initWithFrame:CGRectMake(editViewW - showPWDViewW , (editViewH - showPWDViewW)/2, showPWDViewW, showPWDViewW)];
+    //showPWDView.backgroundColor = [UIColor blueColor];
     [showPWDView addTarget:self action:@selector(showPWDButtonClickInLogin) forControlEvents:UIControlEventTouchUpInside];
     _showPwdButton = showPWDView;
+    [_showPwdButton setImage:[UIImage imageNamed:@"ic_show_pwd_off"] forState:UIControlStateNormal];
     [PWDRootView addSubview:showPWDView];
     // 密码输入框
     UITextField *PWDInputView = [[UITextField alloc] initWithFrame:CGRectMake(iconW + phoneinputViewPaddingLeft, 0, PWDRootView.frame.size.width - iconW - showPWDViewW - phoneinputViewPaddingLeft, editViewH)];
-    PWDInputView.backgroundColor = [UIColor greenColor];
+    //PWDInputView.backgroundColor = [UIColor greenColor];
     PWDInputView.placeholder = @"输入密码";
+    [PWDInputView setValue:inputViewTextColor forKeyPath:@"_placeholderLabel.textColor"];
+    PWDInputView.textColor = inputViewTextColor;
     PWDInputView.secureTextEntry = YES;
     _passwordInputView = PWDInputView;
     [PWDRootView addSubview:PWDInputView];
     // 分割线
     UIView *lineView2 = [[UIView alloc] initWithFrame:CGRectMake(0, editViewH - 1, editViewW, 1)];
-    lineView2.backgroundColor = [UIColor blackColor];
+    lineView2.backgroundColor = [Utils stringTOColor:kColor_ffffff];
+    lineView2.alpha = 0.1;
     [PWDRootView addSubview:lineView2];
     
     
@@ -130,17 +148,18 @@
     CGFloat forgetPWDViewH = 45.0;
     UIButton *forgetPWDView = [[UIButton alloc] initWithFrame:CGRectMake(kScreenWidth - editViewPaddingLeftRight - forgetPWDViewW, PWDRootView.frame.origin.y + PWDRootView.frame.size.height + 5, forgetPWDViewW, forgetPWDViewH)];
     [forgetPWDView setTitle:@"忘记密码？" forState:UIControlStateNormal];
+    [forgetPWDView setTitleColor:[UIColor colorWithRed:255.0 green:255.0 blue:255.0 alpha:0.6] forState:UIControlStateNormal];
     [forgetPWDView addTarget:self action:@selector(forgetPWDButtonClickInLogin) forControlEvents:UIControlEventTouchUpInside];
     [rootView addSubview:forgetPWDView];
     
     
     
     // 注册／登陆
-    CGFloat registerAndLoginBtnRootViewH = 64.0;
+    CGFloat registerAndLoginBtnRootViewH = 40.0;
     CGFloat registerAndLoginBtnRootViewW = editViewW;
     CGFloat registerAndLoginBtnRootViewSpace = 20.0;
     CGFloat registerAndLoginBtnRootViewX = editViewPaddingLeftRight;
-    CGFloat registerAndLoginBtnRootViewY = kScreenHeight - 100.0 - registerAndLoginBtnRootViewH;
+    CGFloat registerAndLoginBtnRootViewY = kScreenHeight - 120.0 - registerAndLoginBtnRootViewH;
     UIView *registerAndLoginBtnRootView = [[UIView alloc]initWithFrame:CGRectMake(registerAndLoginBtnRootViewX, registerAndLoginBtnRootViewY, registerAndLoginBtnRootViewW, registerAndLoginBtnRootViewH)];
     registerAndLoginBtnRootView.backgroundColor = [UIColor clearColor];
     [rootView addSubview:registerAndLoginBtnRootView];
@@ -148,14 +167,29 @@
     CGFloat buttonW = (registerAndLoginBtnRootViewW - registerAndLoginBtnRootViewSpace)/2;
     UIButton *registerBtnView = [[UIButton alloc] initWithFrame:CGRectMake(0, 0, buttonW, registerAndLoginBtnRootViewH)];
     [registerBtnView setTitle:@"注册" forState:UIControlStateNormal];
-    registerBtnView.backgroundColor = [UIColor blueColor];
-    [registerBtnView addTarget:self action:@selector(registerButtonClickInLogin) forControlEvents:UIControlEventTouchUpInside];
+    //registerBtnView.backgroundColor = [UIColor blueColor];
+    registerBtnView.backgroundColor = [UIColor clearColor];
+    [registerBtnView setTitleColor:[UIColor colorWithRed:255.0 green:255.0 blue:255.0 alpha:0.8]forState:UIControlStateNormal];
+    [registerBtnView addTarget:self action:@selector(registerAndLoginButtonClickInLoginSetBg:) forControlEvents:UIControlEventTouchDown];
+    [registerBtnView addTarget:self action:@selector(registerButtonClickInLogin:) forControlEvents:UIControlEventTouchUpInside];
+    [registerBtnView.layer setMasksToBounds:YES];
+    [registerBtnView.layer setCornerRadius:6.0]; //设置矩形四个圆角半径
+    [registerBtnView.layer setBorderWidth:1.0]; //边框宽度
+    CGColorSpaceRef colorSpace = CGColorSpaceCreateDeviceRGB();
+    CGColorRef colorref = CGColorCreate(colorSpace,(CGFloat[]){ 1, 1, 1, 0.8 });
+    [registerBtnView.layer setBorderColor:colorref];//边框颜色
     [registerAndLoginBtnRootView addSubview:registerBtnView];
     // 登陆
     UIButton *loginBtnView = [[UIButton alloc] initWithFrame:CGRectMake(buttonW + registerAndLoginBtnRootViewSpace, 0, buttonW, registerAndLoginBtnRootViewH)];
     [loginBtnView setTitle:@"登陆" forState:UIControlStateNormal];
-    loginBtnView.backgroundColor = [UIColor orangeColor];
-    [loginBtnView addTarget:self action:@selector(loginButtonClickInLogin) forControlEvents:UIControlEventTouchUpInside];
+    //loginBtnView.backgroundColor = [UIColor orangeColor];
+    loginBtnView.backgroundColor = [UIColor clearColor];
+    [loginBtnView setTitleColor:[UIColor colorWithRed:255.0 green:255.0 blue:255.0 alpha:0.8]forState:UIControlStateNormal];
+    [loginBtnView addTarget:self action:@selector(registerAndLoginButtonClickInLoginSetBg:) forControlEvents:UIControlEventTouchDown];
+    [loginBtnView addTarget:self action:@selector(loginButtonClickInLogin:) forControlEvents:UIControlEventTouchUpInside];
+    [loginBtnView.layer setCornerRadius:6.0]; //设置矩形四个圆角半径
+    [loginBtnView.layer setBorderWidth:1.0]; //边框宽度
+    [loginBtnView.layer setBorderColor:colorref];//边框颜色
     [registerAndLoginBtnRootView addSubview:loginBtnView];
     
     
@@ -169,7 +203,8 @@
 {
     NSLog(@"showPWDButtonClickInLogin");
     _passwordInputView.secureTextEntry = !_passwordInputView.secureTextEntry;
-    _showPwdButton.backgroundColor = _passwordInputView.secureTextEntry ? [UIColor blueColor] : [UIColor redColor];
+    //_showPwdButton.backgroundColor = _passwordInputView.secureTextEntry ? [UIColor blueColor] : [UIColor redColor];
+    [_showPwdButton setImage:[UIImage imageNamed:_passwordInputView.secureTextEntry ?@"ic_show_pwd_off" : @"ic_show_pwd_on"] forState:UIControlStateNormal];
 }
 
 
@@ -181,21 +216,34 @@
     [self.navigationController pushViewController:forgetPwdViewController animated:YES];
 }
 
+// 注册/登陆按钮按下(改变按钮背景)
+- (void)registerAndLoginButtonClickInLoginSetBg:(id)sender
+{
+    NSLog(@"registerButtonClickInLoginSetBg");
+    UIButton *button = (UIButton *)sender;
+    button.backgroundColor = [Utils stringTOColor:kColor_440067];
+   
+}
 
 // 注册按钮点击
-- (void)registerButtonClickInLogin
+- (void)registerButtonClickInLogin:(id)sender
 {
     NSLog(@"registerButtonClickInLogin");
+    UIButton *button = (UIButton *)sender;
+    button.backgroundColor = [UIColor clearColor];
+    
     RegisterViewController *registerViewController = [[RegisterViewController alloc] init];
     [self.navigationController pushViewController:registerViewController animated:YES];
 }
 
 
 // 登陆按钮点击
-- (void)loginButtonClickInLogin
+- (void)loginButtonClickInLogin:(id)sender
 {
     NSLog(@"loginButtonClickInLogin");
 
+    UIButton *button = (UIButton *)sender;
+    button.backgroundColor = [UIColor clearColor];
     
     NSString *phoneNumber = _phoneNumbrInputView.text;
     NSString *password = _passwordInputView.text;
