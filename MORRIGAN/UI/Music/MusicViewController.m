@@ -15,7 +15,7 @@
 @interface MusicViewController () <UITableViewDelegate,UITableViewDataSource,UIGestureRecognizerDelegate> {
     PCSEQVisualizer *_pcseView;
 }
-
+@property (weak, nonatomic) IBOutlet UIImageView *musicTopBackgoundView;
 @property (weak, nonatomic) IBOutlet UIView *musicView;
 @property (weak, nonatomic) IBOutlet UISlider *slider;
 @property (nonatomic,strong) UITableView *tableView;
@@ -33,6 +33,11 @@
                   forState:UIControlStateNormal];
     [_slider setThumbImage:[UIImage imageNamed:@"music_adjust_progress"]
                   forState:UIControlStateHighlighted];
+    if (kScreenHeight == 568) {
+//        _slider
+    }
+    
+    
     
     UIImageView *imageView = [[UIImageView alloc] initWithFrame:CGRectMake(0,
                                                                            0,
