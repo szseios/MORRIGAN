@@ -10,7 +10,10 @@
             <connections>
                 <outlet property="musicTopBackgoundView" destination="1DR-4X-eBR" id="PQb-md-AMa"/>
                 <outlet property="musicView" destination="T4n-qb-iG3" id="QR7-lW-hV4"/>
+                <outlet property="playingTimeLabel" destination="noF-f2-htB" id="IKG-5n-huc"/>
                 <outlet property="slider" destination="XYt-bf-kWe" id="nEh-E7-afU"/>
+                <outlet property="startButton" destination="vjb-bg-lit" id="JvD-Oi-SOh"/>
+                <outlet property="totalTimeLable" destination="cEJ-aK-Eal" id="Zfo-xO-hiV"/>
                 <outlet property="view" destination="iN0-l3-epB" id="ZQJ-oC-sWO"/>
             </connections>
         </placeholder>
@@ -64,27 +67,45 @@
                     <color key="textColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                     <nil key="highlightedColor"/>
                 </label>
-                <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="10:00" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" id="noF-f2-htB">
-                    <frame key="frameInset" minY="411" width="50" height="10"/>
-                    <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="00:00" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" id="noF-f2-htB">
+                    <frame key="frameInset" minY="61.62%" width="50" height="1.50%"/>
+                    <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMinY="YES" heightSizable="YES" flexibleMaxY="YES"/>
                     <fontDescription key="fontDescription" type="system" pointSize="10"/>
                     <color key="textColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                     <nil key="highlightedColor"/>
                 </label>
-                <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="18:88" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" id="cEJ-aK-Eal">
-                    <frame key="frameInset" minY="411" width="50" height="3.91%" maxX="-1"/>
-                    <autoresizingMask key="autoresizingMask" flexibleMinX="YES" heightSizable="YES" flexibleMaxY="YES"/>
+                <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="00:00" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" id="cEJ-aK-Eal">
+                    <frame key="frameInset" minY="61.62%" width="50" height="1.50%" maxX="-1"/>
+                    <autoresizingMask key="autoresizingMask" flexibleMinX="YES" flexibleMinY="YES" heightSizable="YES" flexibleMaxY="YES"/>
                     <fontDescription key="fontDescription" type="system" pointSize="10"/>
                     <color key="textColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                     <nil key="highlightedColor"/>
                 </label>
-                <slider opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" value="0.5" minValue="0.0" maxValue="1" id="XYt-bf-kWe">
-                    <frame key="frameInset" minX="50" minY="401" width="275" height="31"/>
-                    <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                <slider opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" minValue="0.0" maxValue="1" id="XYt-bf-kWe">
+                    <frame key="frameInset" minX="50" minY="63.05%" height="31" maxX="50"/>
+                    <autoresizingMask key="autoresizingMask" widthSizable="YES" flexibleMinY="YES" flexibleMaxY="YES"/>
                     <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="calibratedWhite"/>
                     <color key="tintColor" red="1" green="0.80000000000000004" blue="0.40000000000000002" alpha="1" colorSpace="calibratedRGB"/>
                     <color key="thumbTintColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                 </slider>
+                <button opaque="NO" contentMode="scaleToFill" misplaced="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" id="H5w-Fx-GGP">
+                    <frame key="frameInset" minX="50" minY="77.22%" width="70" height="70"/>
+                    <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMinY="YES" flexibleMaxY="YES"/>
+                    <state key="normal" backgroundImage="music_previous"/>
+                </button>
+                <button opaque="NO" contentMode="scaleToFill" misplaced="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" id="LOM-vt-x2p">
+                    <frame key="frameInset" minY="77.22%" width="70" height="70" maxX="50"/>
+                    <autoresizingMask key="autoresizingMask" flexibleMinX="YES" flexibleMinY="YES" flexibleMaxY="YES"/>
+                    <state key="normal" backgroundImage="music_next"/>
+                </button>
+                <button opaque="NO" contentMode="scaleToFill" misplaced="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" id="vjb-bg-lit">
+                    <frame key="frameInset" minX="50.27%" minY="80.99%" width="98.5" height="99"/>
+                    <autoresizingMask key="autoresizingMask" flexibleMinX="YES" flexibleMaxX="YES" flexibleMinY="YES" flexibleMaxY="YES"/>
+                    <state key="normal" backgroundImage="music_play"/>
+                    <connections>
+                        <action selector="startPlayMusic:" destination="-1" eventType="touchUpInside" id="ire-SY-sr0"/>
+                    </connections>
+                </button>
             </subviews>
             <color key="backgroundColor" red="1" green="1" blue="1" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
             <point key="canvasLocation" x="58.5" y="275.5"/>
@@ -94,6 +115,9 @@
         <image name="music_background_ middle" width="375" height="218"/>
         <image name="music_background_bottom" width="366" height="66"/>
         <image name="music_background_top" width="375" height="511"/>
+        <image name="music_next" width="65" height="66"/>
+        <image name="music_play" width="98" height="99"/>
+        <image name="music_previous" width="65" height="66"/>
     </resources>
     <simulatedMetricsContainer key="defaultSimulatedMetrics">
         <simulatedStatusBarMetrics key="statusBar"/>

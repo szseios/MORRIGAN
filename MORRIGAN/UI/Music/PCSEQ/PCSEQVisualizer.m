@@ -31,6 +31,7 @@
         for(int i = 0; i < numberOfBars; i++){
             
             UIImageView* bar = [[UIImageView alloc]initWithFrame:CGRectMake(i*kWidth+i*kPadding, 0, kWidth, 1)];
+            bar.userInteractionEnabled = YES;
             bar.image = [UIImage imageWithColor:[UIColor colorWithWhite:1 alpha:0.2]];
             [self addSubview:bar];
             [tempBarArray addObject:bar];
@@ -38,6 +39,8 @@
         }
 
         barArray = [[NSArray alloc]initWithArray:tempBarArray];
+        
+        [self initAnimationViews];
         
         CGAffineTransform transform = CGAffineTransformMakeRotation(M_PI_2*2);
         self.transform = transform;
@@ -62,6 +65,17 @@
     [timer invalidate];
     timer = nil;
     
+}
+
+- (void)initAnimationViews {
+    for(UIImageView* bar in barArray){
+        
+        CGRect rect = bar.frame;
+        rect.size.height = arc4random() % (kHeight - 50) + 50;
+        rect.origin.y = (self.frame.size.height - rect.size.height) / 2;
+        bar.frame = rect;
+        
+    }
 }
 
 -(void)ticker{

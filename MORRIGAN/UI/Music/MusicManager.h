@@ -16,4 +16,10 @@
 
 - (void)playMusicByURL:(NSURL *)url;
 
+- (void)setCurrentTime:(NSTimeInterval)timeInterval;
+
+- (NSTimeInterval)currentTime;
+
+- (NSString *)currentTimeString;
+
 @end

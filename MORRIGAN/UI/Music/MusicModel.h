@@ -21,6 +21,7 @@
 
 - (instancetype)initWithItem:(MPMediaItem *)item;
 
+- (NSString *)playBackDurationString;
 
 
 @end

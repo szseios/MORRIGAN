@@ -23,4 +23,11 @@
     return self;
 }
 
+- (NSString *)playBackDurationString {
+    NSInteger duration = (NSInteger)_playbackDuration;
+    NSString *string = [NSString stringWithFormat:@"%02ld:%02ld",duration / 60,duration % 60];
+    
+    return string;
+}
+
 @end

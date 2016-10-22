@@ -69,4 +69,18 @@ static MusicManager *manager = nil;
     });
 }
 
+- (void)setCurrentTime:(NSTimeInterval)timeInterval {
+    [_player setCurrentTime:timeInterval];
+}
+
+- (NSTimeInterval)currentTime {
+    return _player.currentTime;
+}
+
+- (NSString *)currentTimeString {
+    NSInteger duration = (NSInteger)_player.currentTime;
+    NSString *string = [NSString stringWithFormat:@"%02ld:%02ld",duration / 60,duration % 60];
+    return string;
+}
+
 @end
