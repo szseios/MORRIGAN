@@ -20,7 +20,8 @@
 //判断密码是否有效
 + (BOOL)checkPassWord:(NSString *)password;
 
-
+// 十六进制转UIColor（如@“＃ff0000”）
++ (UIColor *) stringTOColor:(NSString *)str;
 
 
 @end
