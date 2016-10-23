@@ -51,7 +51,7 @@
     
     // 默认性别：男
     _sexString = @"M";
-    _manButton.backgroundColor = [UIColor greenColor];
+    [self updateSelectSexState];
 
 }
 
@@ -60,14 +60,14 @@
 {
 
     UIView *rootView = [[UIView alloc] initWithFrame:CGRectMake(0, 0, kScreenWidth, kScreenHeight)];
-    rootView.backgroundColor = [UIColor lightGrayColor];
+    rootView.backgroundColor = [Utils stringTOColor:kColor_6911a5];
     [self.view addSubview:rootView];
     
     
     // 性别选择
     CGFloat imageViewH = 270.0;
     UIView *sexRootView = [[UIView alloc] initWithFrame:CGRectMake(0, 0, kScreenWidth, imageViewH)];
-    sexRootView.backgroundColor = [UIColor redColor];
+    sexRootView.backgroundColor = [Utils stringTOColor:kColor_440067];
     [rootView addSubview:sexRootView];
     // 选择性别
     CGFloat labelView1Y = 35.0;
@@ -92,14 +92,14 @@
     CGFloat sexBtnH = 100.0;
     CGFloat setBtnSpace = (kScreenWidth - 2*sexBtnLeftRightMarging - sexBtnH *2);
     UIButton *manButton = [[UIButton alloc] initWithFrame:CGRectMake(sexBtnLeftRightMarging, secBtnY, sexBtnH, sexBtnH)];
-    manButton.backgroundColor = [UIColor whiteColor];
+    //manButton.backgroundColor = [UIColor whiteColor];
     manButton.tag = kManButtonTag;
     [manButton addTarget:self action:@selector(sexButtonClickInRegister:) forControlEvents:UIControlEventTouchUpInside];
     _manButton = manButton;
     [sexRootView addSubview:manButton];
     // 女士
     UIButton *womanButton = [[UIButton alloc] initWithFrame:CGRectMake(sexBtnLeftRightMarging + sexBtnH + setBtnSpace, secBtnY, sexBtnH, sexBtnH)];
-    womanButton.backgroundColor = [UIColor whiteColor];
+    //womanButton.backgroundColor = [UIColor whiteColor];
     womanButton.tag = kWomanButtonTag;
     [womanButton addTarget:self action:@selector(sexButtonClickInRegister:) forControlEvents:UIControlEventTouchUpInside];
     _womanButton = womanButton;
@@ -123,32 +123,37 @@
     [sexRootView addSubview:womanLabel];
     
     
-    
-    
+    UIColor *inputViewTextColor = [UIColor colorWithRed:255.0 green:255.0 blue:255.0 alpha:0.3];
     // 手机号
-    CGFloat editViewPaddingTop = 30.0;
-    CGFloat editViewPaddingLeftRight = 20.0;
-    CGFloat editViewH = 54.0;
+    CGFloat editViewPaddingTop = 50.0;
+    CGFloat editViewPaddingLeftRight = 30.0;
+    CGFloat editViewH = 44.0;
     CGFloat editViewW = kScreenWidth - editViewPaddingLeftRight * 2;
     UIView *phoneNumRootView = [[UIView alloc] initWithFrame:CGRectMake(editViewPaddingLeftRight, imageViewH + editViewPaddingTop, editViewW, editViewH)];
     phoneNumRootView.backgroundColor = [UIColor clearColor];
     [rootView addSubview:phoneNumRootView];
     // 手机图标
-    CGFloat iconW = 50.0;
-    UIImageView *phoneIconView = [[UIImageView alloc] initWithFrame:CGRectMake(0, 0, iconW, editViewH)];
-    phoneIconView.backgroundColor = [UIColor orangeColor];
+    CGFloat iconW = 25.0;
+    UIImageView *phoneIconView = [[UIImageView alloc] initWithFrame:CGRectMake(0, (editViewH - iconW)/2, iconW, iconW)];
+    //phoneIconView.backgroundColor = [UIColor orangeColor];
+    phoneIconView.image = [UIImage imageNamed:@"ic_mobile"];
     [phoneNumRootView addSubview:phoneIconView];
     // 手机输入框
-    CGFloat phoneinputViewPaddingLeft = 10.0;
+    CGFloat phoneinputViewPaddingLeft = 5.0;
     UITextField *phoneInputView = [[UITextField alloc] initWithFrame:CGRectMake(iconW + phoneinputViewPaddingLeft, 0, phoneNumRootView.frame.size.width - iconW - phoneinputViewPaddingLeft, editViewH)];
-    phoneInputView.backgroundColor = [UIColor greenColor];
+    //phoneInputView.backgroundColor = [UIColor greenColor];
     phoneInputView.placeholder = @"请填写手机号码";
+    // 注意：先设置phoneInputView.placeholder才有效
+    [phoneInputView setValue:inputViewTextColor forKeyPath:@"_placeholderLabel.textColor"];
+    phoneInputView.textColor = inputViewTextColor;
     _phoneNumbrInputView = phoneInputView;
     [phoneNumRootView addSubview:phoneInputView];
     // 分割线
     UIView *lineView = [[UIView alloc] initWithFrame:CGRectMake(0, editViewH - 1, editViewW, 1)];
-    lineView.backgroundColor = [UIColor blackColor];
+    lineView.backgroundColor = [Utils stringTOColor:kColor_ffffff];
+    lineView.alpha = 0.1;
     [phoneNumRootView addSubview:lineView];
+
     
     
     // 验证码
@@ -179,34 +184,40 @@
     [authCodeRootView addSubview:lineView2];
     
     
-  
     // 密码
     CGFloat PWDeditViewPaddingTop = 10.0;
     UIView *PWDRootView = [[UIView alloc] initWithFrame:CGRectMake(editViewPaddingLeftRight, imageViewH + editViewPaddingTop + editViewH + authCodeViewPaddingTop + editViewH  + PWDeditViewPaddingTop, editViewW, editViewH)];
     PWDRootView.backgroundColor = [UIColor clearColor];
     [rootView addSubview:PWDRootView];
     // 密码图标
-    UIImageView *PWDIconView = [[UIImageView alloc] initWithFrame:CGRectMake(0, 0, iconW, editViewH)];
-    PWDIconView.backgroundColor = [UIColor orangeColor];
+    UIImageView *PWDIconView = [[UIImageView alloc] initWithFrame:CGRectMake(0, (editViewH - iconW)/2, iconW, iconW)];
+    //PWDIconView.backgroundColor = [UIColor orangeColor];
+    PWDIconView.image = [UIImage imageNamed:@"ic_pwd"];
     [PWDRootView addSubview:PWDIconView];
     // 显示密码按钮
-    CGFloat showPWDViewW = 50.0;
-    UIButton *showPWDView = [[UIButton alloc] initWithFrame:CGRectMake(editViewW - showPWDViewW , 0, showPWDViewW, editViewH)];
-    showPWDView.backgroundColor = [UIColor blueColor];
+    CGFloat showPWDViewW = 30.0;
+    UIButton *showPWDView = [[UIButton alloc] initWithFrame:CGRectMake(editViewW - showPWDViewW , (editViewH - showPWDViewW)/2, showPWDViewW, showPWDViewW)];
+    //showPWDView.backgroundColor = [UIColor blueColor];
     [showPWDView addTarget:self action:@selector(showPWDButtonClickInRegister) forControlEvents:UIControlEventTouchUpInside];
     _showPwdButton = showPWDView;
+    [_showPwdButton setImage:[UIImage imageNamed:@"ic_show_pwd_off"] forState:UIControlStateNormal];
     [PWDRootView addSubview:showPWDView];
     // 密码输入框
     UITextField *PWDInputView = [[UITextField alloc] initWithFrame:CGRectMake(iconW + phoneinputViewPaddingLeft, 0, PWDRootView.frame.size.width - iconW - showPWDViewW - phoneinputViewPaddingLeft, editViewH)];
-    PWDInputView.backgroundColor = [UIColor greenColor];
-    PWDInputView.placeholder = @"设置密码";
+    //PWDInputView.backgroundColor = [UIColor greenColor];
+    PWDInputView.placeholder = @"输入密码";
+    [PWDInputView setValue:inputViewTextColor forKeyPath:@"_placeholderLabel.textColor"];
+    PWDInputView.textColor = inputViewTextColor;
     PWDInputView.secureTextEntry = YES;
     _passwordInputView = PWDInputView;
     [PWDRootView addSubview:PWDInputView];
     // 分割线
     UIView *lineView3 = [[UIView alloc] initWithFrame:CGRectMake(0, editViewH - 1, editViewW, 1)];
-    lineView3.backgroundColor = [UIColor blackColor];
+    lineView3.backgroundColor = [Utils stringTOColor:kColor_ffffff];
+    lineView3.alpha = 0.1;
     [PWDRootView addSubview:lineView3];
+
+    
     
     
     
@@ -247,16 +258,12 @@
     switch (button.tag) {
         case kManButtonTag:
         {
-            _womanButton.backgroundColor = [UIColor whiteColor];
-            _manButton.backgroundColor = [UIColor greenColor];
             _sexString = @"M";
         }
             break;
             
         case kWomanButtonTag:
         {
-            _manButton.backgroundColor = [UIColor whiteColor];
-            _womanButton.backgroundColor = [UIColor greenColor];
             _sexString = @"F";
         }
             break;
@@ -265,6 +272,19 @@
             break;
     }
     
+    [self updateSelectSexState];
+    
+}
+
+- (void)updateSelectSexState
+{
+    if([_sexString isEqualToString:@"M"]) {
+        [_manButton setImage:[UIImage imageNamed:@"ic_man_selected"] forState:UIControlStateNormal];
+        [_womanButton setImage:[UIImage imageNamed:@"ic_woman_unselected"] forState:UIControlStateNormal];
+    } else if([_sexString isEqualToString:@"F"]) {
+        [_manButton setImage:[UIImage imageNamed:@"ic_man_unselected"] forState:UIControlStateNormal];
+        [_womanButton setImage:[UIImage imageNamed:@"ic_woman_selected"] forState:UIControlStateNormal];
+    }
 }
 
 
@@ -297,7 +317,8 @@
 {
     NSLog(@"showPWDButtonClickInRegister");
     _passwordInputView.secureTextEntry = !_passwordInputView.secureTextEntry;
-    _showPwdButton.backgroundColor = _passwordInputView.secureTextEntry ? [UIColor blueColor] : [UIColor redColor];
+    //_showPwdButton.backgroundColor = _passwordInputView.secureTextEntry ? [UIColor blueColor] : [UIColor redColor];
+    [_showPwdButton setImage:[UIImage imageNamed:_passwordInputView.secureTextEntry ?@"ic_show_pwd_off" : @"ic_show_pwd_on"] forState:UIControlStateNormal];
  
 }
 
