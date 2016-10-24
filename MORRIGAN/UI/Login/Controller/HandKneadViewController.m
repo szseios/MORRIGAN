@@ -27,17 +27,85 @@
 // 视图初始化
 - (void)viewInit
 {
+    // 下面部分背景
+    UIImageView *downBgView = [[UIImageView alloc] initWithFrame:CGRectMake(0, kScreenHeight/3*2, kScreenWidth, kScreenHeight/3)];
+    downBgView.image = [UIImage imageNamed:@"hand_backgroud"];
+    [self.view addSubview:downBgView];
+   
+    // 上面部分背景
+    UIImageView *upBgView = [[UIImageView alloc] initWithFrame:CGRectMake(0, 0, kScreenWidth, kScreenHeight + 20)];
+    upBgView.image = [UIImage imageNamed:@"hand_upBackground"];
+    [self.view addSubview:upBgView];
+
     
-    self.view.backgroundColor = [UIColor blueColor];
+    // 返回按钮
+    UIButton *backButton = [[UIButton alloc]initWithFrame:CGRectMake(15, 26, 42, 40)];
+    [backButton setImage:[UIImage imageNamed:@"ic_backButton"] forState:UIControlStateNormal];
+    [backButton setImage:[UIImage imageNamed:@"ic_backButton"] forState:UIControlStateHighlighted];
+    [self.view addSubview:backButton];
+    
+    // 标题
+    UILabel *titleLabel = [[UILabel alloc]initWithFrame:CGRectMake(100, 25, kScreenWidth - 200, 40)];
+    titleLabel.text = @"手动按摩";
+    titleLabel.font = [UIFont systemFontOfSize:20.0];
+    titleLabel.textColor = [UIColor whiteColor];
+    titleLabel.alpha = 7.0;
+    titleLabel.textAlignment = NSTextAlignmentCenter;
+    [self.view addSubview:titleLabel];
+    
+    // 连接蓝牙按钮
+    UIButton *linkButton = [[UIButton alloc]initWithFrame:CGRectMake(kScreenWidth - 15 - 40, 26, 45, 45)];
+    [linkButton setImage:[UIImage imageNamed:@"icon_rightItem_link"] forState:UIControlStateNormal];
+    [linkButton setImage:[UIImage imageNamed:@"icon_rightItem_link"] forState:UIControlStateHighlighted];
+    [self.view addSubview:linkButton];
+    
+    
+    
+    // 圆环1
+    UIImageView *circle1 = [[UIImageView alloc] initWithFrame:CGRectMake(-10, 70, kScreenWidth+20, kScreenWidth+20)];
+    circle1.image = [UIImage imageNamed:@"line_circle_4"];
+    [self.view addSubview:circle1];
+    // 圆环2
+    UIImageView *circle2 = [[UIImageView alloc] initWithFrame:CGRectMake(-10 + 20, 70 + 20, kScreenWidth-20, kScreenWidth-20)];
+    circle2.image = [UIImage imageNamed:@"line_circle_3"];
+    [self.view addSubview:circle2];
+    // 圆环3
+    UIImageView *circle3 = [[UIImageView alloc] initWithFrame:CGRectMake(-10 + 20 + 20, 70 + 20 + 20, kScreenWidth-20 - 20*2, kScreenWidth-20-20*2)];
+    circle3.image = [UIImage imageNamed:@"line_circle_2"];
+    [self.view addSubview:circle3];
+    // 圆环4
+    UIImageView *circle4 = [[UIImageView alloc] initWithFrame:CGRectMake(-10 + 20 + 20 + 20, 70 + 20 + 20 + 20, kScreenWidth-20 - 20*2 - 20*2, kScreenWidth-20-20*2 - 20*2)];
+    circle4.image = [UIImage imageNamed:@"line_circle_1"];
+    [self.view addSubview:circle4];
+
+    
+    // 波纹动画
+//    CABasicAnimation *theAnimation;
+//    theAnimation=[CABasicAnimation animationWithKeyPath:@"opacity"];
+//    theAnimation.duration=2.0;
+//    theAnimation.fromValue=[NSNumber numberWithFloat:1.0];
+//    theAnimation.toValue=[NSNumber numberWithFloat:0.0];
+//    [circle4.layer addAnimation:theAnimation forKey:@"animateOpacity"];
+//     [circle3.layer addAnimation:theAnimation forKey:@"animateOpacity"];
+//     [circle2.layer addAnimation:theAnimation forKey:@"animateOpacity"];
+//     [circle1.layer addAnimation:theAnimation forKey:@"animateOpacity"];
+//    [NSTimer scheduledTimerWithTimeInterval:theAnimation.duration
+//                                     target:self
+//                                   selector:@selector(targetMethod)
+//                                   userInfo:nil
+//                                    repeats:NO];
+    
+    
+    
     
     // 大圆圈根视图
-    CGFloat bigCircleRootViewMarging = 60;
-    CGFloat bigCircleRootViewX = bigCircleRootViewMarging;
-    CGFloat bigCircleRootViewY = 64 + bigCircleRootViewMarging;
-    CGFloat bigCircleRootViewW = kScreenWidth - 2*bigCircleRootViewMarging;
+    CGFloat bigCircleRootViewX = circle4.frame.origin.x + 15;
+    CGFloat bigCircleRootViewY = circle4.frame.origin.y + 15;
+    CGFloat bigCircleRootViewW = circle4.frame.size.width - 30;
     CGFloat bigCircleRootViewH = bigCircleRootViewW;
     UIImageView *bigCircleRootView = [[UIImageView alloc] initWithFrame:CGRectMake(bigCircleRootViewX, bigCircleRootViewY, bigCircleRootViewW, bigCircleRootViewH)];
-    bigCircleRootView.backgroundColor = [UIColor redColor];
+    //bigCircleRootView.backgroundColor = [UIColor redColor];
+    bigCircleRootView.image = [UIImage imageNamed:@"roundCircleBackgroud"];
     [self.view addSubview:bigCircleRootView];
     // gear大数字
     CGFloat gearNumLabelW = 70;
@@ -75,20 +143,30 @@
     // ＋／START/－ 根视图
     CGFloat addStartSubtractRootViewMargingLeftRight = 40;
     CGFloat addStartSubtractRootViewX = addStartSubtractRootViewMargingLeftRight;
-    CGFloat addStartSubtractRootViewY = bigCircleRootViewY + bigCircleRootViewH + 50;
+    CGFloat addStartSubtractRootViewY = bigCircleRootViewY + bigCircleRootViewH + 80;
     CGFloat addStartSubtractRootViewW = kScreenWidth - 2*addStartSubtractRootViewMargingLeftRight;
-    CGFloat addStartSubtractRootViewH = 100;
+    CGFloat addStartSubtractRootViewH = 120;
+    if(kScreenHeight > 700) {
+        //6p
+        addStartSubtractRootViewH = 140;
+    }
     UIView *addStartSubtractRootView = [[UIView alloc] initWithFrame:CGRectMake(addStartSubtractRootViewX, addStartSubtractRootViewY, addStartSubtractRootViewW, addStartSubtractRootViewH)];
-    addStartSubtractRootView.backgroundColor = [UIColor redColor];
+    //addStartSubtractRootView.backgroundColor = [UIColor redColor];
     [self.view addSubview:addStartSubtractRootView];
     // ＋
-    CGFloat addButtonW = 50;
+    CGFloat addButtonW = 80;
     CGFloat addButtonH = addButtonW;
     CGFloat addButtonX = 0;
-    CGFloat addButtonY = 10;
+    CGFloat addButtonY = 0;
+    if(kScreenHeight > 700) {
+        //6p
+        addButtonY = 10;
+    }
     UIButton *addButton = [[UIButton alloc]initWithFrame:CGRectMake(addButtonX, addButtonY, addButtonW, addButtonH)];
-    addButton.backgroundColor = [UIColor orangeColor];
-    [addButton  addTarget:self action:@selector(addButtonClick) forControlEvents: UIControlEventTouchUpInside];
+    //addButton.backgroundColor = [UIColor orangeColor];
+    [addButton setImage:[UIImage imageNamed:@"add_normal"] forState:UIControlStateNormal];
+    [addButton setImage:[UIImage imageNamed:@"add_click"] forState:UIControlStateHighlighted];
+    [addButton addTarget:self action:@selector(addButtonClick) forControlEvents: UIControlEventTouchUpInside];
     [addStartSubtractRootView addSubview:addButton];
     // -
     CGFloat subtractButtonW = addButtonW;
@@ -96,7 +174,9 @@
     CGFloat subtractButtonX = addStartSubtractRootViewW - subtractButtonW;
     CGFloat subtractButtonY = addButtonY;
     UIButton *subtractButton = [[UIButton alloc]initWithFrame:CGRectMake(subtractButtonX, subtractButtonY, subtractButtonW, subtractButtonH)];
-    subtractButton.backgroundColor = [UIColor orangeColor];
+    //subtractButton.backgroundColor = [UIColor orangeColor];
+    [subtractButton setImage:[UIImage imageNamed:@"remove_normal"] forState:UIControlStateNormal];
+    [subtractButton setImage:[UIImage imageNamed:@"remove_click"] forState:UIControlStateHighlighted];
     [subtractButton  addTarget:self action:@selector(subtractButtonClick) forControlEvents: UIControlEventTouchUpInside];
     [addStartSubtractRootView addSubview:subtractButton];
     // START
@@ -105,7 +185,9 @@
     CGFloat startButtonX = addStartSubtractRootViewW/2 - startButtonW/2;
     CGFloat startButtonY = 0;
     UIButton *startButton = [[UIButton alloc] initWithFrame:CGRectMake(startButtonX, startButtonY, startButtonW, startButtonH)];
-    startButton.backgroundColor = [UIColor orangeColor];
+    //startButton.backgroundColor = [UIColor orangeColor];
+    [startButton setImage:[UIImage imageNamed:@"start"] forState:UIControlStateNormal];
+    [startButton setImage:[UIImage imageNamed:@"start"] forState:UIControlStateHighlighted];
     [startButton  addTarget:self action:@selector(startButtonClick) forControlEvents: UIControlEventTouchUpInside];
     [addStartSubtractRootView addSubview:startButton];
     
