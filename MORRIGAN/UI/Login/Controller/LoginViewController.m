@@ -97,7 +97,7 @@
     phoneInputView.placeholder = @"请填写手机号码";
     // 注意：先设置phoneInputView.placeholder才有效
     [phoneInputView setValue:inputViewTextColor forKeyPath:@"_placeholderLabel.textColor"];
-    phoneInputView.textColor = inputViewTextColor;
+    phoneInputView.textColor = [UIColor whiteColor];
     _phoneNumbrInputView = phoneInputView;
     [phoneNumRootView addSubview:phoneInputView];
     // 分割线
@@ -131,7 +131,7 @@
     //PWDInputView.backgroundColor = [UIColor greenColor];
     PWDInputView.placeholder = @"输入密码";
     [PWDInputView setValue:inputViewTextColor forKeyPath:@"_placeholderLabel.textColor"];
-    PWDInputView.textColor = inputViewTextColor;
+    PWDInputView.textColor = [UIColor whiteColor];
     PWDInputView.secureTextEntry = YES;
     _passwordInputView = PWDInputView;
     [PWDRootView addSubview:PWDInputView];

@@ -23,6 +23,9 @@
 #define kAlertViewTagOfIntoLogin           2002
 
 
+#define kgetAuthCodeButtonOfGetting     3001
+#define kgetAuthCodeButtonOfNormal      3002
+
 
 @interface RegisterViewController () <UIAlertViewDelegate>
 {
@@ -31,10 +34,13 @@
     UIButton *_womanButton;
     UITextField *_phoneNumbrInputView;
     UITextField *_authCodeInputView;
+    UIButton *_getAuthCodeButton;
     UITextField *_passwordInputView;
     UIButton *_showPwdButton;
     
     UIAlertView *remoteAlertView;
+    NSTimer *_getAuthCodeTimer;
+    NSInteger _currentSec;
 }
 
 @end
@@ -145,7 +151,7 @@
     phoneInputView.placeholder = @"请填写手机号码";
     // 注意：先设置phoneInputView.placeholder才有效
     [phoneInputView setValue:inputViewTextColor forKeyPath:@"_placeholderLabel.textColor"];
-    phoneInputView.textColor = inputViewTextColor;
+    phoneInputView.textColor = [UIColor whiteColor];
     _phoneNumbrInputView = phoneInputView;
     [phoneNumRootView addSubview:phoneInputView];
     // 分割线
@@ -162,25 +168,38 @@
     authCodeRootView.backgroundColor = [UIColor clearColor];
     [rootView addSubview:authCodeRootView];
     // 验证码图标
-    UIImageView *authCodeIconView = [[UIImageView alloc] initWithFrame:CGRectMake(0, 0, iconW, editViewH)];
-    authCodeIconView.backgroundColor = [UIColor orangeColor];
+    UIImageView *authCodeIconView = [[UIImageView alloc] initWithFrame:CGRectMake(0, (editViewH - iconW)/2, iconW, iconW)];
+    //authCodeIconView.backgroundColor = [UIColor orangeColor];
+    authCodeIconView.image = [UIImage imageNamed:@"ic_authcode"];
     [authCodeRootView addSubview:authCodeIconView];
     // 获取验证码
-    CGFloat getAuthCodeViewW = 100.0;
-    UIButton *getAuthCodeView = [[UIButton alloc] initWithFrame:CGRectMake(editViewW - getAuthCodeViewW , 0, getAuthCodeViewW, editViewH)];
-    getAuthCodeView.backgroundColor = [UIColor blueColor];
-    [getAuthCodeView addTarget:self action:@selector(getAuthCodeButtonClickInRegister) forControlEvents:UIControlEventTouchUpInside];
+    CGFloat getAuthCodeViewW = 120.0;
+    UIButton *getAuthCodeView = [[UIButton alloc] initWithFrame:CGRectMake(editViewW - getAuthCodeViewW + 3 , 0, getAuthCodeViewW, editViewH)];
+    //getAuthCodeView.backgroundColor = [UIColor blueColor];
+    [getAuthCodeView addTarget:self action:@selector(getAuthCodeButtonClickInRegister:) forControlEvents:UIControlEventTouchUpInside];
     [getAuthCodeView setTitle:@"获取验证码" forState:UIControlStateNormal];
+    getAuthCodeView.alpha = 0.6;
+    _getAuthCodeButton = getAuthCodeView;
+    _getAuthCodeButton.tag = kgetAuthCodeButtonOfNormal;
     [authCodeRootView addSubview:getAuthCodeView];
+    // 垂直分割线
+    UIView *verticalLine = [[UIView alloc] initWithFrame:CGRectMake(editViewW - getAuthCodeViewW, 0, 1.0, editViewH - 5)];
+    verticalLine.backgroundColor = [Utils stringTOColor:kColor_ffffff];
+    verticalLine.alpha = 0.1;
+    [authCodeRootView addSubview:verticalLine];
+    
     // 验证码输入框
     UITextField *authCodeInputView = [[UITextField alloc] initWithFrame:CGRectMake(iconW + phoneinputViewPaddingLeft, 0, authCodeRootView.frame.size.width - iconW - getAuthCodeViewW - phoneinputViewPaddingLeft, editViewH)];
-    authCodeInputView.backgroundColor = [UIColor greenColor];
+    //authCodeInputView.backgroundColor = [UIColor greenColor];
     authCodeInputView.placeholder = @"输入验证码";
+    [authCodeInputView setValue:inputViewTextColor forKeyPath:@"_placeholderLabel.textColor"];
+    authCodeInputView.textColor = [UIColor whiteColor];
     _authCodeInputView = authCodeInputView;
     [authCodeRootView addSubview:authCodeInputView];
     // 分割线
     UIView *lineView2 = [[UIView alloc] initWithFrame:CGRectMake(0, editViewH - 1, editViewW, 1)];
-    lineView2.backgroundColor = [UIColor blackColor];
+    lineView2.backgroundColor = [Utils stringTOColor:kColor_ffffff];
+    lineView2.alpha = 0.1;
     [authCodeRootView addSubview:lineView2];
     
     
@@ -207,7 +226,7 @@
     //PWDInputView.backgroundColor = [UIColor greenColor];
     PWDInputView.placeholder = @"输入密码";
     [PWDInputView setValue:inputViewTextColor forKeyPath:@"_placeholderLabel.textColor"];
-    PWDInputView.textColor = inputViewTextColor;
+    PWDInputView.textColor = [UIColor whiteColor];
     PWDInputView.secureTextEntry = YES;
     _passwordInputView = PWDInputView;
     [PWDRootView addSubview:PWDInputView];
@@ -218,15 +237,13 @@
     [PWDRootView addSubview:lineView3];
 
     
-    
-    
-    
+
     // 注册／登陆
-    CGFloat registerAndLoginBtnRootViewH = 64.0;
+    CGFloat registerAndLoginBtnRootViewH = 40.0;
     CGFloat registerAndLoginBtnRootViewW = editViewW;
     CGFloat registerAndLoginBtnRootViewSpace = 20.0;
     CGFloat registerAndLoginBtnRootViewX = editViewPaddingLeftRight;
-    CGFloat registerAndLoginBtnRootViewY = kScreenHeight - 80.0 - registerAndLoginBtnRootViewH;
+    CGFloat registerAndLoginBtnRootViewY = kScreenHeight - 120.0 - registerAndLoginBtnRootViewH;
     UIView *registerAndLoginBtnRootView = [[UIView alloc]initWithFrame:CGRectMake(registerAndLoginBtnRootViewX, registerAndLoginBtnRootViewY, registerAndLoginBtnRootViewW, registerAndLoginBtnRootViewH)];
     registerAndLoginBtnRootView.backgroundColor = [UIColor clearColor];
     [rootView addSubview:registerAndLoginBtnRootView];
@@ -234,14 +251,29 @@
     CGFloat buttonW = (registerAndLoginBtnRootViewW - registerAndLoginBtnRootViewSpace)/2;
     UIButton *registerBtnView = [[UIButton alloc] initWithFrame:CGRectMake(0, 0, buttonW, registerAndLoginBtnRootViewH)];
     [registerBtnView setTitle:@"注册" forState:UIControlStateNormal];
-    registerBtnView.backgroundColor = [UIColor blueColor];
-    [registerBtnView addTarget:self action:@selector(registerButtonClickInRegister) forControlEvents:UIControlEventTouchUpInside];
+    //registerBtnView.backgroundColor = [UIColor blueColor];
+    registerBtnView.backgroundColor = [UIColor clearColor];
+    [registerBtnView setTitleColor:[UIColor colorWithRed:255.0 green:255.0 blue:255.0 alpha:0.8]forState:UIControlStateNormal];
+    [registerBtnView addTarget:self action:@selector(registerAndLoginButtonClickInRegisterSetBg:) forControlEvents:UIControlEventTouchDown];
+    [registerBtnView addTarget:self action:@selector(registerButtonClickInRegister:) forControlEvents:UIControlEventTouchUpInside];
+    [registerBtnView.layer setMasksToBounds:YES];
+    [registerBtnView.layer setCornerRadius:6.0]; //设置矩形四个圆角半径
+    [registerBtnView.layer setBorderWidth:1.0]; //边框宽度
+    CGColorSpaceRef colorSpace = CGColorSpaceCreateDeviceRGB();
+    CGColorRef colorref = CGColorCreate(colorSpace,(CGFloat[]){ 1, 1, 1, 0.8 });
+    [registerBtnView.layer setBorderColor:colorref];//边框颜色
     [registerAndLoginBtnRootView addSubview:registerBtnView];
     // 登陆
     UIButton *loginBtnView = [[UIButton alloc] initWithFrame:CGRectMake(buttonW + registerAndLoginBtnRootViewSpace, 0, buttonW, registerAndLoginBtnRootViewH)];
     [loginBtnView setTitle:@"登陆" forState:UIControlStateNormal];
-    loginBtnView.backgroundColor = [UIColor orangeColor];
-    [loginBtnView addTarget:self action:@selector(loginButtonClickInRegister) forControlEvents:UIControlEventTouchUpInside];
+    //loginBtnView.backgroundColor = [UIColor orangeColor];
+    loginBtnView.backgroundColor = [UIColor clearColor];
+    [loginBtnView setTitleColor:[UIColor colorWithRed:255.0 green:255.0 blue:255.0 alpha:0.8]forState:UIControlStateNormal];
+    [loginBtnView addTarget:self action:@selector(registerAndLoginButtonClickInRegisterSetBg:) forControlEvents:UIControlEventTouchDown];
+    [loginBtnView addTarget:self action:@selector(loginButtonClickInRegister:) forControlEvents:UIControlEventTouchUpInside];
+    [loginBtnView.layer setCornerRadius:6.0]; //设置矩形四个圆角半径
+    [loginBtnView.layer setBorderWidth:1.0]; //边框宽度
+    [loginBtnView.layer setBorderColor:colorref];//边框颜色
     [registerAndLoginBtnRootView addSubview:loginBtnView];
     
     
@@ -289,9 +321,14 @@
 
 
 // 获取验证码按钮点击
-- (void)getAuthCodeButtonClickInRegister
+- (void)getAuthCodeButtonClickInRegister:(id)sender
 {
     NSLog(@"getAuthCodeButtonClickInRegister");
+    
+    if(_getAuthCodeButton.tag == kgetAuthCodeButtonOfGetting){
+        return;
+    }
+    
     NSString *phoneNumber = _phoneNumbrInputView.text;
     BOOL isPhoneNumberRight = [Utils checkMobile: phoneNumber];
     
@@ -322,11 +359,23 @@
  
 }
 
+// 注册/登陆按钮按下(改变按钮背景)
+- (void)registerAndLoginButtonClickInRegisterSetBg:(id)sender
+{
+    NSLog(@"registerButtonClickInLoginSetBg");
+    UIButton *button = (UIButton *)sender;
+    button.backgroundColor = [Utils stringTOColor:kColor_440067];
+    
+}
 
 // 注册按钮点击
-- (void)registerButtonClickInRegister
+- (void)registerButtonClickInRegister:(id)sender
 {
     NSLog(@"registerButtonClickInRegister");
+
+    UIButton *button = (UIButton *)sender;
+    button.backgroundColor = [UIColor clearColor];
+    
     NSString *phoneNumber = _phoneNumbrInputView.text;
     NSString *authCode = _authCodeInputView.text;
     NSString *password = _passwordInputView.text;
@@ -379,9 +428,15 @@
 
 
 // 登陆按钮点击
-- (void)loginButtonClickInRegister
+- (void)loginButtonClickInRegister:(id)sender
 {
     NSLog(@"loginButtonClickInRegister");
+    
+    [self stopTimer];
+    
+    UIButton *button = (UIButton *)sender;
+    button.backgroundColor = [UIColor clearColor];
+    
     [LoginManager share].autoLogin = NO;
     [self.navigationController popViewControllerAnimated:YES];
 }
@@ -435,6 +490,8 @@
          if ([[obj objectForKey:HTTP_KEY_RESULTCODE] isEqualToString:HTTP_RESULTCODE_SUCCESS]) {
              
              NSLog(@"获取验证码成功！");
+             [self startTimer];
+             
          } else {
              
              NSLog(@"获取验证码失败！");
@@ -447,10 +504,46 @@
      }];
 }
 
+- (void)getAuthCodeTimerHander
+{
+    NSLog(@"getAuthCodeTimerHander");
+    _currentSec --;
+    if(_currentSec == 0) {
+        [self stopTimer];
+    } else {
+        [_getAuthCodeButton setTitle:[NSString stringWithFormat:@"重新获取(%ld)",_currentSec] forState:UIControlStateNormal];
+    }
+    
+}
+
+- (void)startTimer
+{
+    _getAuthCodeButton.tag = kgetAuthCodeButtonOfGetting;
+    _currentSec = 60;
+    [_getAuthCodeButton setTitle:[NSString stringWithFormat:@"重新获取(%ld)",_currentSec] forState:UIControlStateNormal];
+    
+    if(_getAuthCodeTimer) {
+        [_getAuthCodeTimer invalidate];
+        _getAuthCodeTimer = nil;
+    }
+    _getAuthCodeTimer = [NSTimer scheduledTimerWithTimeInterval:1.0 target:self selector:@selector(getAuthCodeTimerHander) userInfo:nil repeats:YES];
+}
+
+
+- (void)stopTimer
+{
+    [_getAuthCodeTimer invalidate];
+    _getAuthCodeTimer = nil;
+    _getAuthCodeButton.tag = kgetAuthCodeButtonOfNormal;
+    _currentSec = 0;
+    [_getAuthCodeButton setTitle:@"获取验证码" forState:UIControlStateNormal];
+}
+
+
 // 注册
 - (void)beginRegister:(NSString *)phoneNumber authCode:(NSString *)authCode password:(NSString *)password sex:(NSString *)sex
 {
-    
+    [self stopTimer];
     [self remoteAnimation:@"正在注册, 请稍候..."];
     
     NSLog(@"注册，手机：%@, 验证码：%@, 密码：%@ , 性别：%@", phoneNumber, authCode, password, sex);
