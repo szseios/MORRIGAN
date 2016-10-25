@@ -9,10 +9,20 @@
 //
 
 #import "HandKneadViewController.h"
+#import "Utils.h"
+
+#define kButtonUnselectedTag     1000
+#define kButtonSelectedTag       2000
+
+
+#define kButtonStartTag         1000
+#define kButtonStopTag          2000
 
 @interface HandKneadViewController ()
 
 @end
+
+
 
 @implementation HandKneadViewController
 
@@ -186,9 +196,9 @@
     CGFloat startButtonY = 0;
     UIButton *startButton = [[UIButton alloc] initWithFrame:CGRectMake(startButtonX, startButtonY, startButtonW, startButtonH)];
     //startButton.backgroundColor = [UIColor orangeColor];
+    startButton.tag = kButtonStartTag;
     [startButton setImage:[UIImage imageNamed:@"start"] forState:UIControlStateNormal];
-    [startButton setImage:[UIImage imageNamed:@"start"] forState:UIControlStateHighlighted];
-    [startButton  addTarget:self action:@selector(startButtonClick) forControlEvents: UIControlEventTouchUpInside];
+    [startButton  addTarget:self action:@selector(startButtonClick:) forControlEvents: UIControlEventTouchUpInside];
     [addStartSubtractRootView addSubview:startButton];
     
     
@@ -198,31 +208,33 @@
     CGFloat chestButtonH = chestButtonW;
     CGFloat chestLabelW = chestButtonW;
     CGFloat chestLabelH = 30;
-    CGFloat chestButtonY = kScreenHeight - chestLabelH - chestButtonH;
+    CGFloat chestButtonY = kScreenHeight - chestLabelH - chestButtonH - 10;
     UIButton *leftChestButton = [[UIButton alloc] initWithFrame:CGRectMake(chestButtonMargingLeftRight, chestButtonY, chestButtonW, chestButtonH)];
-    leftChestButton.backgroundColor = [UIColor orangeColor];
-    [leftChestButton  addTarget:self action:@selector(leftChestButtonClick) forControlEvents: UIControlEventTouchUpInside];
+    //leftChestButton.backgroundColor = [UIColor orangeColor];
+    leftChestButton.tag = kButtonUnselectedTag;
+    [leftChestButton setImage:[UIImage imageNamed:@"leftBreast"] forState:UIControlStateNormal];
+    [leftChestButton setImage:[UIImage imageNamed:@"leftBreast_highlight"] forState:UIControlStateHighlighted];
+    [leftChestButton  addTarget:self action:@selector(leftChestButtonClick:) forControlEvents: UIControlEventTouchUpInside];
     [self.view addSubview: leftChestButton];
-    UILabel *leftChestLabel = [[UILabel alloc] initWithFrame:CGRectMake(chestButtonMargingLeftRight, kScreenHeight - chestLabelH, chestLabelW, chestLabelH)];
+    UILabel *leftChestLabel = [[UILabel alloc] initWithFrame:CGRectMake(chestButtonMargingLeftRight, kScreenHeight - chestLabelH - 10, chestLabelW, chestLabelH)];
     leftChestLabel.textAlignment = NSTextAlignmentCenter;
     leftChestLabel.text = @"左胸";
-    leftChestLabel.textColor = [UIColor redColor];
+    leftChestLabel.textColor = [Utils stringTOColor:kColor_6911a5];
     [self.view addSubview:leftChestLabel];
     
     // 右胸
     UIButton *rightChestButton = [[UIButton alloc] initWithFrame:CGRectMake(kScreenWidth - chestButtonMargingLeftRight - chestButtonW, chestButtonY, chestButtonW, chestButtonH)];
-    rightChestButton.backgroundColor = [UIColor orangeColor];
-    [rightChestButton  addTarget:self action:@selector(rightChestButtonClick) forControlEvents: UIControlEventTouchUpInside];
+    //rightChestButton.backgroundColor = [UIColor orangeColor];
+    rightChestButton.tag = kButtonUnselectedTag;
+    [rightChestButton setImage:[UIImage imageNamed:@"rightBreast"] forState:UIControlStateNormal];
+    [rightChestButton setImage:[UIImage imageNamed:@"rightBreast_highlight"] forState:UIControlStateHighlighted];
+    [rightChestButton  addTarget:self action:@selector(rightChestButtonClick:) forControlEvents: UIControlEventTouchUpInside];
     [self.view addSubview: rightChestButton];
-    UILabel *rightChestLabel = [[UILabel alloc] initWithFrame:CGRectMake(kScreenWidth - chestButtonMargingLeftRight - chestButtonW, kScreenHeight - chestLabelH, chestLabelW, chestLabelH)];
+    UILabel *rightChestLabel = [[UILabel alloc] initWithFrame:CGRectMake(kScreenWidth - chestButtonMargingLeftRight - chestButtonW, kScreenHeight - chestLabelH - 10, chestLabelW, chestLabelH)];
     rightChestLabel.textAlignment = NSTextAlignmentCenter;
     rightChestLabel.text = @"右胸";
-    rightChestLabel.textColor = [UIColor redColor];
+    rightChestLabel.textColor = [Utils stringTOColor:kColor_6911a5];
     [self.view addSubview:rightChestLabel];
-    
-    
-    
-    
     
 }
 
@@ -243,21 +255,56 @@
 }
 
 // START 按钮点击
-- (void)startButtonClick
+- (void)startButtonClick:(id)sender
 {
     NSLog(@"startButtonClick");
+    
+    UIButton *button = (UIButton *)sender;
+    if(button.tag == kButtonStartTag) {
+        button.tag = kButtonStopTag;
+        [button setImage:[UIImage imageNamed:@"STOP"] forState:UIControlStateNormal];
+        
+    } else if(button.tag == kButtonStopTag) {
+        button.tag = kButtonStartTag;
+        [button setImage:[UIImage imageNamed:@"start"] forState:UIControlStateNormal];
+    }
 }
 
 // 左胸按钮点击
-- (void)leftChestButtonClick
+- (void)leftChestButtonClick:(id)sender
 {
     NSLog(@"leftChestButtonClick");
+    
+    UIButton *button = (UIButton *)sender;
+    if(button.tag == kButtonUnselectedTag) {
+        button.tag = kButtonSelectedTag;
+        [button setImage:[UIImage imageNamed:@"leftBreast_highlight"] forState:UIControlStateNormal];
+        [button setImage:[UIImage imageNamed:@"leftBreast"] forState:UIControlStateHighlighted];
+        
+    } else if(button.tag == kButtonSelectedTag) {
+        button.tag = kButtonUnselectedTag;
+        [button setImage:[UIImage imageNamed:@"leftBreast"] forState:UIControlStateNormal];
+        [button setImage:[UIImage imageNamed:@"leftBreast_highlight"] forState:UIControlStateHighlighted];
+    }
 }
 
 // 左胸按钮点击
-- (void)rightChestButtonClick
+- (void)rightChestButtonClick:(id)sender
 {
     NSLog(@"rightChestButtonClick");
+    
+    UIButton *button = (UIButton *)sender;
+    if(button.tag == kButtonUnselectedTag) {
+        button.tag = kButtonSelectedTag;
+        [button setImage:[UIImage imageNamed:@"rightBreast_higlight"] forState:UIControlStateNormal];
+        [button setImage:[UIImage imageNamed:@"rightBreast"] forState:UIControlStateHighlighted];
+
+    } else if(button.tag == kButtonSelectedTag) {
+        button.tag = kButtonUnselectedTag;
+        [button setImage:[UIImage imageNamed:@"rightBreast"] forState:UIControlStateNormal];
+        [button setImage:[UIImage imageNamed:@"rightBreast_higlight"] forState:UIControlStateHighlighted];
+    }
+    
 }
 
 
