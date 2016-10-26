@@ -127,18 +127,24 @@
     // 轻柔（底部：1行－左）
     FuntionButton *funButton1 = [[FuntionButton alloc] initWithFrame:CGRectMake(buttonX, buttonY, buttonW, buttonH)];
     [funButton1 setImage:[UIImage imageNamed:@"soft"] forState:UIControlStateNormal];
+    UIPanGestureRecognizer *panGestureRecognizer1 = [[UIPanGestureRecognizer alloc] initWithTarget:self action:@selector(dragReplyButton:)];
+    [funButton1 addGestureRecognizer:panGestureRecognizer1];
     [self.view addSubview:funButton1];
    
     buttonX = (kScreenWidth-buttonW)/2;
     // 水波（底部：1行－中）
     FuntionButton *funButton2 = [[FuntionButton alloc] initWithFrame:CGRectMake(buttonX, buttonY, buttonW, buttonH)];
     [funButton2 setImage:[UIImage imageNamed:@"warter"] forState:UIControlStateNormal];
+    UIPanGestureRecognizer *panGestureRecognizer2 = [[UIPanGestureRecognizer alloc] initWithTarget:self action:@selector(dragReplyButton:)];
+    [funButton2 addGestureRecognizer:panGestureRecognizer2];
     [self.view addSubview:funButton2];
     
     buttonX = kScreenWidth - margingLeftRight - buttonW;
     // 微按（底部：1行－右）
     FuntionButton *funButton3 = [[FuntionButton alloc] initWithFrame:CGRectMake(buttonX, buttonY, buttonW, buttonH)];
     [funButton3 setImage:[UIImage imageNamed:@"lightPress"] forState:UIControlStateNormal];
+    UIPanGestureRecognizer *panGestureRecognizer3 = [[UIPanGestureRecognizer alloc] initWithTarget:self action:@selector(dragReplyButton:)];
+    [funButton3 addGestureRecognizer:panGestureRecognizer3];
     [self.view addSubview:funButton3];
     
     buttonY = funButton3.frame.origin.y + funButton3.frame.size.height + 20;
@@ -146,17 +152,85 @@
     // 强振（底部：2行－左）
     FuntionButton *funButton4 = [[FuntionButton alloc] initWithFrame:CGRectMake(buttonX, buttonY, buttonW, buttonH)];
     [funButton4 setImage:[UIImage imageNamed:@"strongShake"] forState:UIControlStateNormal];
+    UIPanGestureRecognizer *panGestureRecognizer4 = [[UIPanGestureRecognizer alloc] initWithTarget:self action:@selector(dragReplyButton:)];
+    [funButton4 addGestureRecognizer:panGestureRecognizer4];
     [self.view addSubview:funButton4];
     
     buttonX = funButton2.frame.origin.x + funButton2.frame.size.width + ((funButton3.frame.origin.x - (funButton2.frame.origin.x + funButton2.frame.size.width))/2 - buttonW/2);
     // 动感（底部：2行－右）
     FuntionButton *funButton5 = [[FuntionButton alloc] initWithFrame:CGRectMake(buttonX, buttonY, buttonW, buttonH)];
     [funButton5 setImage:[UIImage imageNamed:@"movingFeel"] forState:UIControlStateNormal];
+    UIPanGestureRecognizer *panGestureRecognizer5 = [[UIPanGestureRecognizer alloc] initWithTarget:self action:@selector(dragReplyButton:)];
+    [funButton5 addGestureRecognizer:panGestureRecognizer5];
     [self.view addSubview:funButton5];
     
     
 }
 
+
+- (void)dragReplyButton:(UIPanGestureRecognizer *)recognizer {
+    
+    CGPoint translation = [recognizer translationInView:self.view];
+    recognizer.view.center = CGPointMake(recognizer.view.center.x + translation.x,
+                                         recognizer.view.center.y + translation.y);
+    [recognizer setTranslation:CGPointZero inView:self.view];
+    
+//    if (recognizer.state == UIGestureRecognizerStateBegan) {
+//        
+//    } else if (recognizer.state == UIGestureRecognizerStateChanged) {
+//        CGPoint location = [recognizer locationInView:self];
+//        
+//        if (location.y < 0 || location.y > self.bounds.size.height) {
+//            return;
+//        }
+//        CGPoint translation = [recognizer translationInView:self];
+//        
+//        recognizer.view.center = CGPointMake(recognizer.view.center.x + translation.x,recognizer.view.center.y + translation.y);
+//        [recognizer setTranslation:CGPointZero inView:self];
+//        
+//    } else if (recognizer.state == UIGestureRecognizerStateEnded || recognizer.state == UIGestureRecognizerStateCancelled) {
+//        CGRect currentFrame = self.addReplyView.frame;
+//        
+//        if (currentFrame.origin.x < 0) {
+//            currentFrame.origin.x = 0;
+//            if (currentFrame.origin.y < 0) {
+//                currentFrame.origin.y = 4;
+//            } else if ((currentFrame.origin.y + currentFrame.size.height) > self.bounds.size.height) {
+//                currentFrame.origin.y = self.bounds.size.height - currentFrame.size.height;
+//            }
+//            [UIView animateWithDuration:0.5 animations:^{
+//                self.addReplyView.frame = currentFrame;
+//            }];
+//            return;
+//        }
+//        if ((currentFrame.origin.x + currentFrame.size.width) > self.bounds.size.width) {
+//            currentFrame.origin.x = self.bounds.size.width - currentFrame.size.width;
+//            if (currentFrame.origin.y < 0) {
+//                currentFrame.origin.y = 4;
+//            } else if ((currentFrame.origin.y + currentFrame.size.height) > self.bounds.size.height) {
+//                currentFrame.origin.y = self.bounds.size.height - currentFrame.size.height;
+//            }
+//            [UIView animateWithDuration:0.5 animations:^{
+//                self.addReplyView.frame = currentFrame;
+//            }];
+//            return;
+//        }
+//        if (currentFrame.origin.y < 0) {
+//            currentFrame.origin.y = 4;
+//            [UIView animateWithDuration:0.5 animations:^{
+//                self.addReplyView.frame = currentFrame;
+//            }];
+//            return;
+//        }
+//        if ((currentFrame.origin.y + currentFrame.size.height) > self.bounds.size.height) {
+//            currentFrame.origin.y = self.bounds.size.height - currentFrame.size.height;
+//            [UIView animateWithDuration:0.5 animations:^{
+//                self.addReplyView.frame = currentFrame;
+//            }];
+//            return;
+//        }
+//    }
+}
 
 
 
