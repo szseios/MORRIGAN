@@ -8,6 +8,7 @@
 
 #import "AutoKneadViewController.h"
 #import "FuntionButton.h"
+#import "Utils.h"
 
 @interface AutoKneadViewController ()
 
@@ -99,6 +100,61 @@
     UIButton *startBtn = [[UIButton alloc] initWithFrame:CGRectMake((kScreenWidth - startBtnW)/2, startBtnY, startBtnW, startBtnW)];
     [startBtn setImage:[UIImage imageNamed:@"START"] forState:UIControlStateNormal];
     [self.view addSubview:startBtn];
+    
+    // 向上拖动 任意模式按钮
+    CGFloat label1H = 18;
+    CGFloat label1Y = startBtn.frame.origin.y + startBtn.frame.size.height + 20;
+    UILabel *label1 = [[UILabel alloc] initWithFrame:CGRectMake(0, label1Y, kScreenWidth, label1H)];
+    label1.text = @"向上拖动 任意模式按钮";
+    label1.textColor = [Utils stringTOColor:kColor_6911a5];
+    label1.textAlignment = NSTextAlignmentCenter;
+    label1.font = [UIFont boldSystemFontOfSize:15.0];
+    [self.view addSubview:label1];
+    
+    // 进行自由组合按摩 点击START开始按摩
+    CGFloat label2H = 16;
+    CGFloat label2Y = label1.frame.origin.y + label1.frame.size.height + 5;
+    UILabel *label2 = [[UILabel alloc] initWithFrame:CGRectMake(0, label2Y, kScreenWidth, label2H)];
+    label2.text = @"进行自由组合按摩 点击START开始按摩";
+    label2.textColor = [Utils stringTOColor:kColor_6911a5];
+    label2.textAlignment = NSTextAlignmentCenter;
+    label2.font = [UIFont boldSystemFontOfSize:12.0];
+    [self.view addSubview:label2];
+    
+    CGFloat margingLeftRight = kScreenWidth/2/2 - 50;
+    buttonY = label2.frame.origin.y + label2.frame.size.height + 60;
+    buttonX = margingLeftRight;
+    // 轻柔（底部：1行－左）
+    FuntionButton *funButton1 = [[FuntionButton alloc] initWithFrame:CGRectMake(buttonX, buttonY, buttonW, buttonH)];
+    [funButton1 setImage:[UIImage imageNamed:@"soft"] forState:UIControlStateNormal];
+    [self.view addSubview:funButton1];
+   
+    buttonX = (kScreenWidth-buttonW)/2;
+    // 水波（底部：1行－中）
+    FuntionButton *funButton2 = [[FuntionButton alloc] initWithFrame:CGRectMake(buttonX, buttonY, buttonW, buttonH)];
+    [funButton2 setImage:[UIImage imageNamed:@"warter"] forState:UIControlStateNormal];
+    [self.view addSubview:funButton2];
+    
+    buttonX = kScreenWidth - margingLeftRight - buttonW;
+    // 微按（底部：1行－右）
+    FuntionButton *funButton3 = [[FuntionButton alloc] initWithFrame:CGRectMake(buttonX, buttonY, buttonW, buttonH)];
+    [funButton3 setImage:[UIImage imageNamed:@"lightPress"] forState:UIControlStateNormal];
+    [self.view addSubview:funButton3];
+    
+    buttonY = funButton3.frame.origin.y + funButton3.frame.size.height + 20;
+    buttonX = funButton1.frame.origin.x + funButton1.frame.size.width + ((funButton2.frame.origin.x - (funButton1.frame.origin.x + funButton1.frame.size.width))/2 - buttonW/2);
+    // 强振（底部：2行－左）
+    FuntionButton *funButton4 = [[FuntionButton alloc] initWithFrame:CGRectMake(buttonX, buttonY, buttonW, buttonH)];
+    [funButton4 setImage:[UIImage imageNamed:@"strongShake"] forState:UIControlStateNormal];
+    [self.view addSubview:funButton4];
+    
+    buttonX = funButton2.frame.origin.x + funButton2.frame.size.width + ((funButton3.frame.origin.x - (funButton2.frame.origin.x + funButton2.frame.size.width))/2 - buttonW/2);
+    // 动感（底部：2行－右）
+    FuntionButton *funButton5 = [[FuntionButton alloc] initWithFrame:CGRectMake(buttonX, buttonY, buttonW, buttonH)];
+    [funButton5 setImage:[UIImage imageNamed:@"movingFeel"] forState:UIControlStateNormal];
+    [self.view addSubview:funButton5];
+    
+    
 }
 
 
