@@ -23,7 +23,7 @@
 
 - (BOOL)application:(UIApplication *)application didFinishLaunchingWithOptions:(NSDictionary *)launchOptions {
     // Override point for customization after application launch.
-
+    
     [MusicManager share];
     
     self.window = [[UIWindow alloc] initWithFrame:[[UIScreen mainScreen] bounds]];//设置窗口
@@ -37,6 +37,17 @@
     self.window.rootViewController = nav;
     [self.window makeKeyAndVisible];
     
+    
+    // 启动页面
+    UIImageView *wellcomeView = [[UIImageView alloc]initWithFrame:CGRectMake(0,0,kScreenWidth,kScreenHeight)];
+    [wellcomeView setImage:[UIImage imageNamed:@"640-1136"]];
+    [self.window addSubview:wellcomeView];
+    [self.window bringSubviewToFront:wellcomeView];
+    __block UIImageView *wellcomeViewBlock = wellcomeView;
+    dispatch_after(dispatch_time(DISPATCH_TIME_NOW, (int64_t)(2.0 * NSEC_PER_SEC)), dispatch_get_main_queue(), ^{
+        [wellcomeViewBlock removeFromSuperview];
+    });
+  
     
     return YES;
 }
