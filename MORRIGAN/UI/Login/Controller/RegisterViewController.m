@@ -99,12 +99,20 @@
     
     // 性别选择
     CGFloat imageViewH = 270.0;
+    if(kScreenHeight < 570) {
+        // 5s
+        imageViewH = 270.0 - 70;
+    }
     UIView *sexRootView = [[UIView alloc] initWithFrame:CGRectMake(0, 0, kScreenWidth, imageViewH)];
     sexRootView.backgroundColor = [Utils stringTOColor:kColor_440067];
     [rootView addSubview:sexRootView];
     // 选择性别
     CGFloat labelView1Y = 35.0;
     CGFloat labelView1H = 30.0;
+    if(kScreenHeight < 570) {
+        // 5s
+        labelView1Y = 35.0 - 20;
+    }
     UILabel *labelView1 = [[UILabel alloc] initWithFrame:CGRectMake(0, labelView1Y, kScreenWidth, labelView1H)];
     labelView1.text = @"选择性别";
     labelView1.textColor = [UIColor whiteColor];
@@ -123,6 +131,11 @@
     CGFloat secBtnY = labelView2.frame.origin.y + labelView2.frame.size.height + 20.0;
     CGFloat sexBtnLeftRightMarging = 60.0;
     CGFloat sexBtnH = 100.0;
+    if(kScreenHeight < 570) {
+        // 5s
+        sexBtnH = 70.0;
+    }
+
     CGFloat setBtnSpace = (kScreenWidth - 2*sexBtnLeftRightMarging - sexBtnH *2);
     UIButton *manButton = [[UIButton alloc] initWithFrame:CGRectMake(sexBtnLeftRightMarging, secBtnY, sexBtnH, sexBtnH)];
     //manButton.backgroundColor = [UIColor whiteColor];
@@ -274,6 +287,10 @@
     CGFloat registerAndLoginBtnRootViewSpace = 20.0;
     CGFloat registerAndLoginBtnRootViewX = editViewPaddingLeftRight;
     CGFloat registerAndLoginBtnRootViewY = kScreenHeight - 120.0 - registerAndLoginBtnRootViewH;
+    if(kScreenHeight < 570) {
+        // 5s
+        registerAndLoginBtnRootViewY = kScreenHeight - 90.0 - registerAndLoginBtnRootViewH;
+    }
     UIView *registerAndLoginBtnRootView = [[UIView alloc]initWithFrame:CGRectMake(registerAndLoginBtnRootViewX, registerAndLoginBtnRootViewY, registerAndLoginBtnRootViewW, registerAndLoginBtnRootViewH)];
     registerAndLoginBtnRootView.backgroundColor = [UIColor clearColor];
     [rootView addSubview:registerAndLoginBtnRootView];

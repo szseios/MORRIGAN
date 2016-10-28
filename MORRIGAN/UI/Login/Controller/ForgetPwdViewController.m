@@ -88,13 +88,22 @@
     
     
     // 上半部分视图
-    CGFloat imageViewH = 200.0;
+    CGFloat imageViewH = 434/2.0;
+    if(kScreenHeight < 570) {
+        // 5s
+        imageViewH = 434/2.5;
+    }
+
     UIView *topRootView = [[UIView alloc] initWithFrame:CGRectMake(0, 0, kScreenWidth, imageViewH)];
     //topRootView.backgroundColor = [UIColor redColor];
     topRootView.backgroundColor = [Utils stringTOColor:kColor_440067];
     [rootView addSubview:topRootView];
     // 取消按钮
     CGFloat cancleBtnY = 25.0;
+    if(kScreenHeight < 570) {
+        // 5s
+        cancleBtnY = 20.0;
+    }
     CGFloat cancleBtnW = 40.0;
     UIButton *cancleBtn = [[UIButton alloc] initWithFrame:CGRectMake(10, cancleBtnY, cancleBtnW, cancleBtnW)];
     //cancleBtn.backgroundColor = [UIColor blueColor];

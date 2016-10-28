@@ -120,17 +120,35 @@
     // gear大数字
     CGFloat gearNumLabelW = 70;
     CGFloat gearNumLabelH = 90;
+    if(kScreenHeight < 570) {
+        // 5s
+        gearNumLabelH = 70;
+        gearNumLabelW = 60;
+    }
     CGFloat gearNumLabelX = bigCircleRootViewW/2 - gearNumLabelW;
     CGFloat gearNumLabelY = bigCircleRootViewW/2 - gearNumLabelH;
+    if(kScreenHeight < 570) {
+        // 5s
+        gearNumLabelX = bigCircleRootViewW/2 - gearNumLabelW + 10;
+        gearNumLabelY = bigCircleRootViewW/2 - gearNumLabelH + 15;
+    }
     UILabel *gearNumLabel = [[UILabel alloc] initWithFrame:CGRectMake(gearNumLabelX, gearNumLabelY, gearNumLabelW, gearNumLabelH)];
     gearNumLabel.text = @"3";
     gearNumLabel.textColor = [UIColor whiteColor];
     gearNumLabel.font = [UIFont italicSystemFontOfSize:100.0];
+    if(kScreenHeight < 570) {
+        // 5s
+        gearNumLabel.font = [UIFont italicSystemFontOfSize:70.0];
+    }
     [bigCircleRootView addSubview:gearNumLabel];
     // gear
     CGFloat gearLabelW = 80;
     CGFloat gearLabelH = 40;
     CGFloat gearLabelX = gearNumLabelX + gearNumLabelW + 20;
+    if(kScreenHeight < 570) {
+        // 5s
+        gearLabelX = gearNumLabelX + gearNumLabelW;
+    }
     CGFloat gearLabelY = gearNumLabelY + gearNumLabelH - gearLabelH - 10;
     UILabel *gearLabel = [[UILabel alloc] initWithFrame:CGRectMake(gearLabelX, gearLabelY, gearLabelW, gearLabelH)];
     gearLabel.text = @"gear";
@@ -142,6 +160,10 @@
     CGFloat timeLabelH = 40;
     CGFloat timeLabelX = bigCircleRootViewW/2 - timeLabelW/2;
     CGFloat timeLabelY = bigCircleRootViewH - 50 - timeLabelH;
+    if(kScreenHeight < 570) {
+        // 5s
+        timeLabelY = bigCircleRootViewH - 15 - timeLabelH;
+    }
     UILabel *timeLabel = [[UILabel alloc] initWithFrame:CGRectMake(timeLabelX, timeLabelY, timeLabelW, timeLabelH)];
     timeLabel.text = @"55:55";
     timeLabel.textAlignment = NSTextAlignmentCenter;
@@ -154,17 +176,28 @@
     CGFloat addStartSubtractRootViewMargingLeftRight = 40;
     CGFloat addStartSubtractRootViewX = addStartSubtractRootViewMargingLeftRight;
     CGFloat addStartSubtractRootViewY = bigCircleRootViewY + bigCircleRootViewH + 80;
+    if(kScreenHeight < 570) {
+        // 5s
+       addStartSubtractRootViewY = bigCircleRootViewY + bigCircleRootViewH + 72;
+    }
     CGFloat addStartSubtractRootViewW = kScreenWidth - 2*addStartSubtractRootViewMargingLeftRight;
     CGFloat addStartSubtractRootViewH = 120;
     if(kScreenHeight > 700) {
         //6p
         addStartSubtractRootViewH = 140;
+    } else if(kScreenHeight < 570) {
+        // 5s
+        addStartSubtractRootViewH = 80;
     }
     UIView *addStartSubtractRootView = [[UIView alloc] initWithFrame:CGRectMake(addStartSubtractRootViewX, addStartSubtractRootViewY, addStartSubtractRootViewW, addStartSubtractRootViewH)];
     //addStartSubtractRootView.backgroundColor = [UIColor redColor];
     [self.view addSubview:addStartSubtractRootView];
     // ＋
     CGFloat addButtonW = 80;
+    if(kScreenHeight < 570) {
+        // 5s
+        addButtonW = 60;
+    }
     CGFloat addButtonH = addButtonW;
     CGFloat addButtonX = 0;
     CGFloat addButtonY = 0;
@@ -191,9 +224,13 @@
     [addStartSubtractRootView addSubview:subtractButton];
     // START
     CGFloat startButtonW = addStartSubtractRootViewH;
+    if(kScreenHeight < 570) {
+        // 5s
+        startButtonW = addStartSubtractRootViewH - 20;
+    }
     CGFloat startButtonH = startButtonW;
     CGFloat startButtonX = addStartSubtractRootViewW/2 - startButtonW/2;
-    CGFloat startButtonY = 0;
+    CGFloat startButtonY = (addStartSubtractRootViewH - startButtonH) / 2;
     UIButton *startButton = [[UIButton alloc] initWithFrame:CGRectMake(startButtonX, startButtonY, startButtonW, startButtonH)];
     //startButton.backgroundColor = [UIColor orangeColor];
     startButton.tag = kButtonStartTag;
@@ -204,7 +241,16 @@
     
     // 左胸
     CGFloat chestButtonMargingLeftRight = 30;
+    if(kScreenHeight < 570) {
+        // 5s
+        chestButtonMargingLeftRight = 50;
+    }
+
     CGFloat chestButtonW = 80;
+    if(kScreenHeight < 570) {
+        // 5s
+        chestButtonW = 50;
+    }
     CGFloat chestButtonH = chestButtonW;
     CGFloat chestLabelW = chestButtonW;
     CGFloat chestLabelH = 30;

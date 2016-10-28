@@ -38,37 +38,69 @@
     
     
     // 返回按钮
-    UIButton *backButton = [[UIButton alloc]initWithFrame:CGRectMake(15, 26, 42, 40)];
+    CGFloat backButtonW = 42.0;
+    if(kScreenHeight < 570) {
+        // 5s
+        backButtonW = 35.0;
+    }
+    UIButton *backButton = [[UIButton alloc]initWithFrame:CGRectMake(15, 26, backButtonW, backButtonW)];
     [backButton setImage:[UIImage imageNamed:@"ic_backButton"] forState:UIControlStateNormal];
     [backButton setImage:[UIImage imageNamed:@"ic_backButton"] forState:UIControlStateHighlighted];
     [self.view addSubview:backButton];
     
     // 标题
-    UILabel *titleLabel = [[UILabel alloc]initWithFrame:CGRectMake(100, 25, kScreenWidth - 200, 40)];
+    CGFloat titleLabelY = 25.0;
+    if(kScreenHeight < 570) {
+        // 5s
+        titleLabelY = 15.0;
+    }
+    UILabel *titleLabel = [[UILabel alloc]initWithFrame:CGRectMake(100, titleLabelY, kScreenWidth - 200, 40)];
     titleLabel.text = @"自动按摩";
     titleLabel.font = [UIFont systemFontOfSize:20.0];
+    if(kScreenHeight < 570) {
+        // 5s
+        titleLabel.font = [UIFont systemFontOfSize:17.0];
+    }
     titleLabel.textColor = [UIColor whiteColor];
     titleLabel.alpha = 7.0;
     titleLabel.textAlignment = NSTextAlignmentCenter;
     [self.view addSubview:titleLabel];
     
     // 设置按钮
-    UIButton *linkButton = [[UIButton alloc]initWithFrame:CGRectMake(kScreenWidth - 15 - 40, 26, 45, 45)];
+    UIButton *linkButton = [[UIButton alloc]initWithFrame:CGRectMake(kScreenWidth - 15 - 40, 26, backButtonW, backButtonW)];
     [linkButton setImage:[UIImage imageNamed:@"icon_rightItem_link"] forState:UIControlStateNormal];
     [linkButton setImage:[UIImage imageNamed:@"icon_rightItem_link"] forState:UIControlStateHighlighted];
     [self.view addSubview:linkButton];
     
     
     CGFloat buttonW = 60.0;
+    if(kScreenHeight < 570) {
+        // 5s
+        buttonW = 50.0;
+    }
     CGFloat buttonH = buttonW;
     CGFloat buttonX = (kScreenWidth - buttonW)/2;
     CGFloat buttonY = 65.0;
+    if(kScreenHeight > 700) {
+        //6p
+        buttonY = 75.0;
+    } else if(kScreenHeight < 570) {
+        // 5s
+        buttonY = 55.0;
+    }
     // 顶部一个按钮：按钮3
     FuntionButton *button3 = [[FuntionButton alloc] initWithFrame:CGRectMake(buttonX, buttonY, buttonW, buttonH)];
     [button3 setImage:[UIImage imageNamed:@"empty"] forState:UIControlStateNormal];
     [self.view addSubview:button3];
     
     buttonX = 60.0;
+    if(kScreenHeight > 700) {
+        //6p
+        buttonX = 70.0;
+    } else if(kScreenHeight < 570) {
+        // 5s
+        buttonX = 50.0;
+    }
     buttonY = buttonY + 40.0;
     // 第二行左边按钮：按钮2
     FuntionButton *button2 = [[FuntionButton alloc] initWithFrame:CGRectMake(buttonX, buttonY, buttonW, buttonH)];
@@ -76,19 +108,39 @@
     [self.view addSubview:button2];
     
     buttonX = kScreenWidth - 60.0 - buttonW;
+    if(kScreenHeight > 700) {
+        //6p
+        buttonX = kScreenWidth - 70.0 - buttonW;
+    } else if(kScreenHeight < 570) {
+        // 5s
+        buttonX = kScreenWidth - 50.0 - buttonW;
+    }
     // 第二行右边按钮：按钮4
     FuntionButton *button4 = [[FuntionButton alloc] initWithFrame:CGRectMake(buttonX, buttonY, buttonW, buttonH)];
     [button4 setImage:[UIImage imageNamed:@"empty"] forState:UIControlStateNormal];
     [self.view addSubview:button4];
     
     buttonX = 30.0;
-    buttonY = buttonY + 40.0 + 60.0;
+    if(kScreenHeight < 570) {
+        // 5s
+        buttonX = 25.0;
+    }
+    if(kScreenHeight < 570) {
+        // 5s
+        buttonY = buttonY + 40.0 + 50.0;
+    } else {
+        buttonY = buttonY + 40.0 + 60.0;
+    }
     // 第三行左边按钮：按钮1
     FuntionButton *button1 = [[FuntionButton alloc] initWithFrame:CGRectMake(buttonX, buttonY, buttonW, buttonH)];
     [button1 setImage:[UIImage imageNamed:@"empty"] forState:UIControlStateNormal];
     [self.view addSubview:button1];
     
     buttonX = kScreenWidth - 30.0 - buttonW;
+    if(kScreenHeight < 570) {
+        // 5s
+        buttonX = kScreenWidth - 30.0 - buttonW;
+    }
     // 第三行右边按钮：按钮5
     FuntionButton *button5 = [[FuntionButton alloc] initWithFrame:CGRectMake(buttonX, buttonY, buttonW, buttonH)];
     [button5 setImage:[UIImage imageNamed:@"empty"] forState:UIControlStateNormal];
@@ -97,6 +149,13 @@
     // 开始／停止按钮
     CGFloat startBtnW = 70.0;
     CGFloat startBtnY = button5.frame.origin.y + 30.0;
+    if(kScreenHeight > 700) {
+        //6p
+        startBtnY = button5.frame.origin.y + 50.0;
+    } else if(kScreenHeight < 570) {
+        // 5s
+        startBtnY = button5.frame.origin.y + 20.0;
+    }
     UIButton *startBtn = [[UIButton alloc] initWithFrame:CGRectMake((kScreenWidth - startBtnW)/2, startBtnY, startBtnW, startBtnW)];
     [startBtn setImage:[UIImage imageNamed:@"START"] forState:UIControlStateNormal];
     [self.view addSubview:startBtn];
@@ -123,6 +182,10 @@
     
     CGFloat margingLeftRight = kScreenWidth/2/2 - 50;
     buttonY = label2.frame.origin.y + label2.frame.size.height + 60;
+    if(kScreenHeight < 570) {
+        // 5s
+        buttonY = label2.frame.origin.y + label2.frame.size.height + 40;
+    }
     buttonX = margingLeftRight;
     // 轻柔（底部：1行－左）
     FuntionButton *funButton1 = [[FuntionButton alloc] initWithFrame:CGRectMake(buttonX, buttonY, buttonW, buttonH)];

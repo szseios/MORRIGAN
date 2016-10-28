@@ -91,11 +91,25 @@
     
     // 上面的图片
     CGFloat imageViewH = 434/2.0;
+    if(kScreenHeight < 570) {
+        // 5s
+        imageViewH = 434/2.5;
+    }
     UIImageView *imageViewBg = [[UIImageView alloc] initWithFrame:CGRectMake(0, 0, kScreenWidth, imageViewH)];
     imageViewBg.backgroundColor = [Utils stringTOColor:kColor_440067];
     CGFloat imageH = (imageViewH - 169) + 30;
     CGFloat imageW = (kScreenWidth - 169) + 20;
-    UIImageView *imageView = [[UIImageView alloc] initWithFrame:CGRectMake(169/2, 169/2, imageW, imageH)];
+    if(kScreenHeight < 570) {
+        // 5s
+        imageH = (imageViewH - 169) + 50;
+    }
+    CGFloat imageVieY = 169/2;
+    if(kScreenHeight < 570) {
+        // 5s
+        imageVieY = 169/2 - 20;
+    }
+
+    UIImageView *imageView = [[UIImageView alloc] initWithFrame:CGRectMake(169/2, imageVieY, imageW, imageH)];
     imageView.image = [UIImage imageNamed:@"bg_morrig"];
     [imageViewBg addSubview:imageView];
     [rootView addSubview:imageViewBg];
@@ -106,6 +120,10 @@
     UIColor *inputViewTextColor = [UIColor colorWithRed:255.0 green:255.0 blue:255.0 alpha:0.3];
     // 手机号
     CGFloat editViewPaddingTop = 70.0;
+    if(kScreenHeight < 570) {
+        // 5s
+        editViewPaddingTop = 50.0;
+    }
     CGFloat editViewPaddingLeftRight = 30.0;
     CGFloat editViewH = 44.0;
     CGFloat editViewW = kScreenWidth - editViewPaddingLeftRight * 2;
