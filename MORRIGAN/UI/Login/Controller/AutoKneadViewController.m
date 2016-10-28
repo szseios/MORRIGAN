@@ -193,7 +193,12 @@
     UIPanGestureRecognizer *panGestureRecognizer1 = [[UIPanGestureRecognizer alloc] initWithTarget:self action:@selector(dragReplyButton:)];
     [funButton1 addGestureRecognizer:panGestureRecognizer1];
     [self.view addSubview:funButton1];
-   
+    UILabel *labelLight = [[UILabel alloc] initWithFrame:CGRectMake(buttonX, buttonY + buttonH + 10, buttonW, 20)];
+    labelLight.text = @"轻柔";
+    labelLight.textColor = [Utils stringTOColor:kColor_6911a5];
+    labelLight.textAlignment = NSTextAlignmentCenter;
+    [self.view addSubview:labelLight];
+    
     buttonX = (kScreenWidth-buttonW)/2;
     // 水波（底部：1行－中）
     FuntionButton *funButton2 = [[FuntionButton alloc] initWithFrame:CGRectMake(buttonX, buttonY, buttonW, buttonH)];
@@ -201,6 +206,11 @@
     UIPanGestureRecognizer *panGestureRecognizer2 = [[UIPanGestureRecognizer alloc] initWithTarget:self action:@selector(dragReplyButton:)];
     [funButton2 addGestureRecognizer:panGestureRecognizer2];
     [self.view addSubview:funButton2];
+    UILabel *labelWater = [[UILabel alloc] initWithFrame:CGRectMake(buttonX, buttonY + buttonH + 10, buttonW, 20)];
+    labelWater.text = @"水波";
+    labelWater.textColor = [Utils stringTOColor:kColor_6911a5];
+    labelWater.textAlignment = NSTextAlignmentCenter;
+    [self.view addSubview:labelWater];
     
     buttonX = kScreenWidth - margingLeftRight - buttonW;
     // 微按（底部：1行－右）
@@ -209,8 +219,17 @@
     UIPanGestureRecognizer *panGestureRecognizer3 = [[UIPanGestureRecognizer alloc] initWithTarget:self action:@selector(dragReplyButton:)];
     [funButton3 addGestureRecognizer:panGestureRecognizer3];
     [self.view addSubview:funButton3];
+    UILabel *labelLittle = [[UILabel alloc] initWithFrame:CGRectMake(buttonX, buttonY + buttonH + 10, buttonW, 20)];
+    labelLittle.text = @"微按";
+    labelLittle.textColor = [Utils stringTOColor:kColor_6911a5];
+    labelLittle.textAlignment = NSTextAlignmentCenter;
+    [self.view addSubview:labelLittle];
     
-    buttonY = funButton3.frame.origin.y + funButton3.frame.size.height + 20;
+    buttonY = funButton3.frame.origin.y + funButton3.frame.size.height + 50;
+    if(kScreenHeight < 570) {
+        // 5s
+        buttonY = funButton3.frame.origin.y + funButton3.frame.size.height + 30;
+    }
     buttonX = funButton1.frame.origin.x + funButton1.frame.size.width + ((funButton2.frame.origin.x - (funButton1.frame.origin.x + funButton1.frame.size.width))/2 - buttonW/2);
     // 强振（底部：2行－左）
     FuntionButton *funButton4 = [[FuntionButton alloc] initWithFrame:CGRectMake(buttonX, buttonY, buttonW, buttonH)];
@@ -218,6 +237,11 @@
     UIPanGestureRecognizer *panGestureRecognizer4 = [[UIPanGestureRecognizer alloc] initWithTarget:self action:@selector(dragReplyButton:)];
     [funButton4 addGestureRecognizer:panGestureRecognizer4];
     [self.view addSubview:funButton4];
+    UILabel *labelStrong = [[UILabel alloc] initWithFrame:CGRectMake(buttonX, buttonY + buttonH + 10, buttonW, 20)];
+    labelStrong.text = @"强振";
+    labelStrong.textColor = [Utils stringTOColor:kColor_6911a5];
+    labelStrong.textAlignment = NSTextAlignmentCenter;
+    [self.view addSubview:labelStrong];
     
     buttonX = funButton2.frame.origin.x + funButton2.frame.size.width + ((funButton3.frame.origin.x - (funButton2.frame.origin.x + funButton2.frame.size.width))/2 - buttonW/2);
     // 动感（底部：2行－右）
@@ -226,6 +250,11 @@
     UIPanGestureRecognizer *panGestureRecognizer5 = [[UIPanGestureRecognizer alloc] initWithTarget:self action:@selector(dragReplyButton:)];
     [funButton5 addGestureRecognizer:panGestureRecognizer5];
     [self.view addSubview:funButton5];
+    UILabel *labelFeel = [[UILabel alloc] initWithFrame:CGRectMake(buttonX, buttonY + buttonH + 10, buttonW, 20)];
+    labelFeel.text = @"动感";
+    labelFeel.textColor = [Utils stringTOColor:kColor_6911a5];
+    labelFeel.textAlignment = NSTextAlignmentCenter;
+    [self.view addSubview:labelFeel];
     
     
 }
