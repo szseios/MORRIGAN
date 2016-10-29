@@ -10,7 +10,8 @@
 
 @interface FuntionButton : UIButton
 
-@property(nonatomic,strong)UIImage *buttonImage;
+@property(nonatomic,strong)UIImage *buttonImage;              // 按钮的图标
+@property(nonatomic,assign)CGFloat distanceFromDragButton;   // 计算的与拖动按钮的距离
 
 
 -(instancetype)initWithFrame:(CGRect)frame;
