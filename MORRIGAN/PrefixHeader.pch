@@ -13,8 +13,8 @@
 #import <UIKit/UIKit.h>
 #import "GlobalDefinition.h"
 #import "SZSENetWorking.h"
+#import "UserInfo.h"
 #import "UIView+Extension.h"
-
-
+#import "BasicBarView.h"
 #endif
 

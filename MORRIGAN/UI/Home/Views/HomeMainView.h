@@ -1,13 +1,13 @@
 //
-//  HomeViewController.h
+//  HomeMainView.h
 //  MORRIGAN
 //
-//  Created by mac-jhw on 16/10/9.
+//  Created by azz on 2016/10/23.
 //  Copyright © 2016年 mac-jhw. All rights reserved.
 //
 
 #import <UIKit/UIKit.h>
 
-@interface HomeViewController : UIViewController
+@interface HomeMainView : UIView
 
 @end

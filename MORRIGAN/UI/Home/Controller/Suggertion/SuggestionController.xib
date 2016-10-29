@@ -1,0 +1,47 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.XIB" version="3.0" toolsVersion="11201" systemVersion="16A323" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" colorMatched="YES">
+    <dependencies>
+        <deployment identifier="iOS"/>
+        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="11161"/>
+        <capability name="documents saved in the Xcode 8 format" minToolsVersion="8.0"/>
+    </dependencies>
+    <objects>
+        <placeholder placeholderIdentifier="IBFilesOwner" id="-1" userLabel="File's Owner" customClass="SuggestionController">
+            <connections>
+                <outlet property="holderLabel" destination="OBZ-lT-qbu" id="AVj-SG-qR8"/>
+                <outlet property="suggestTextView" destination="wzo-z0-96Q" id="6CA-AA-sN3"/>
+                <outlet property="view" destination="i5M-Pr-FkT" id="sfx-zR-JGt"/>
+            </connections>
+        </placeholder>
+        <placeholder placeholderIdentifier="IBFirstResponder" id="-2" customClass="UIResponder"/>
+        <view clearsContextBeforeDrawing="NO" contentMode="scaleToFill" id="i5M-Pr-FkT">
+            <rect key="frame" x="0.0" y="0.0" width="375" height="667"/>
+            <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
+            <subviews>
+                <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="请输入您的改善意见和问题反馈" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="OBZ-lT-qbu">
+                    <constraints>
+                        <constraint firstAttribute="height" constant="25" id="Rik-AZ-Mhj"/>
+                    </constraints>
+                    <fontDescription key="fontDescription" type="system" pointSize="15"/>
+                    <color key="textColor" cocoaTouchSystemColor="scrollViewTexturedBackgroundColor"/>
+                    <nil key="highlightedColor"/>
+                </label>
+                <textView clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" textAlignment="natural" translatesAutoresizingMaskIntoConstraints="NO" id="wzo-z0-96Q">
+                    <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="calibratedWhite"/>
+                    <fontDescription key="fontDescription" type="system" pointSize="14"/>
+                    <textInputTraits key="textInputTraits" autocapitalizationType="sentences"/>
+                </textView>
+            </subviews>
+            <color key="backgroundColor" red="1" green="1" blue="1" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+            <constraints>
+                <constraint firstItem="wzo-z0-96Q" firstAttribute="top" secondItem="i5M-Pr-FkT" secondAttribute="top" constant="66" id="1mo-AD-AOM"/>
+                <constraint firstAttribute="trailing" secondItem="wzo-z0-96Q" secondAttribute="trailing" constant="10" id="5y0-dc-Yrl"/>
+                <constraint firstItem="OBZ-lT-qbu" firstAttribute="leading" secondItem="i5M-Pr-FkT" secondAttribute="leading" constant="10" id="Cii-Zz-8Kz"/>
+                <constraint firstAttribute="bottom" secondItem="wzo-z0-96Q" secondAttribute="bottom" constant="30" id="CmL-0U-dt1"/>
+                <constraint firstAttribute="trailing" secondItem="OBZ-lT-qbu" secondAttribute="trailing" constant="10" id="bAy-v9-7eJ"/>
+                <constraint firstItem="wzo-z0-96Q" firstAttribute="leading" secondItem="i5M-Pr-FkT" secondAttribute="leading" constant="10" id="gA0-at-wCN"/>
+                <constraint firstItem="OBZ-lT-qbu" firstAttribute="top" secondItem="i5M-Pr-FkT" secondAttribute="top" constant="66" id="xQv-e5-sZK"/>
+            </constraints>
+        </view>
+    </objects>
+</document>
