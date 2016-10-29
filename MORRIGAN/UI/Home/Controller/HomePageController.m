@@ -96,7 +96,7 @@
     CGFloat bottonX = (bottomViewW - 270) / 3;
     
     _handButton = [[HomePageButton alloc] initWithFrame:CGRectMake(bottonX -10, buttonY, buttonW, buttonW) withImageName:@"handMorrigan"];
-    [_handButton addTarget:self action:@selector(push) forControlEvents:UIControlEventTouchUpInside];
+    [_handButton addTarget:self action:@selector(pushHandlePage) forControlEvents:UIControlEventTouchUpInside];
     UILabel *handLabel = [[UILabel alloc] initWithFrame:CGRectMake(bottonX-10, labelY, buttonW, 30)];
     handLabel.textAlignment = NSTextAlignmentCenter;
     handLabel.text = @"手动按摩";
@@ -104,6 +104,7 @@
     
     CGFloat autoButtonX = CGRectGetMaxX(_handButton.frame);
     _autoButton = [[HomePageButton alloc] initWithFrame:CGRectMake(autoButtonX + 10, buttonY, buttonW, buttonW) withImageName:@"autoMorrigan"];
+    [_autoButton addTarget:self action:@selector(pushAutoPage) forControlEvents:UIControlEventTouchUpInside];
     UILabel *autoLabel = [[UILabel alloc] initWithFrame:CGRectMake(autoButtonX +10, labelY, buttonW, 30)];
     autoLabel.textAlignment = NSTextAlignmentCenter;
     autoLabel.text = @"自动按摩";
@@ -111,6 +112,7 @@
     
     CGFloat musicButtonX = CGRectGetMaxX(_autoButton.frame);
     _musicButton = [[HomePageButton alloc] initWithFrame:CGRectMake(musicButtonX + 10, buttonY, buttonW, buttonW) withImageName:@"music"];
+    [_musicButton addTarget:self action:@selector(pushMusicPage) forControlEvents:UIControlEventTouchUpInside];
     UILabel *musicLabel = [[UILabel alloc] initWithFrame:CGRectMake(musicButtonX +10, labelY, buttonW, 30)];
     musicLabel.textAlignment = NSTextAlignmentCenter;
     musicLabel.text = @"音乐随动";
@@ -125,8 +127,18 @@
     
     
 }
+//手动按摩
+- (void)pushHandlePage{
+    
+}
 
-- (void)push{
+//自动按摩
+- (void)pushAutoPage{
+    
+}
+
+//音乐随动
+- (void)pushMusicPage{
     
 }
 

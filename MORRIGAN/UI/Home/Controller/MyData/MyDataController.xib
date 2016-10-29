@@ -25,16 +25,17 @@
                         <outlet property="delegate" destination="-1" id="Yeu-4n-b8R"/>
                     </connections>
                 </tableView>
-                <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="xCP-Ev-ppJ">
+                <button opaque="NO" clipsSubviews="YES" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="xCP-Ev-ppJ">
                     <constraints>
-                        <constraint firstAttribute="height" constant="60" id="wVW-vw-yfc"/>
+                        <constraint firstAttribute="height" constant="40" id="wVW-vw-yfc"/>
                     </constraints>
+                    <fontDescription key="fontDescription" type="system" pointSize="17"/>
                 </button>
             </subviews>
             <color key="backgroundColor" red="1" green="1" blue="1" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
             <constraints>
                 <constraint firstAttribute="trailing" secondItem="xCP-Ev-ppJ" secondAttribute="trailing" constant="60" id="7Jx-nj-XrD"/>
-                <constraint firstAttribute="bottom" secondItem="cDR-d2-YXi" secondAttribute="bottom" constant="150" id="Dk1-zI-JVh"/>
+                <constraint firstAttribute="bottom" secondItem="cDR-d2-YXi" secondAttribute="bottom" id="Dk1-zI-JVh"/>
                 <constraint firstAttribute="trailing" secondItem="cDR-d2-YXi" secondAttribute="trailing" id="GPr-0M-6ND"/>
                 <constraint firstItem="xCP-Ev-ppJ" firstAttribute="leading" secondItem="i5M-Pr-FkT" secondAttribute="leading" constant="60" id="LcC-Vj-mxP"/>
                 <constraint firstItem="cDR-d2-YXi" firstAttribute="leading" secondItem="i5M-Pr-FkT" secondAttribute="leading" id="PeF-0Y-s4U"/>

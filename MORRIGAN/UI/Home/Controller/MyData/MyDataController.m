@@ -54,8 +54,9 @@ static NSString *cellIdentifier = @"cellIdentifier";
     
     [_logoutButton setTitle:@"退出登录" forState:UIControlStateNormal];
     [_logoutButton setTitleColor:[UIColor whiteColor] forState:UIControlStateNormal];
-    [_logoutButton setBackgroundImage:[UIImage imageNamed:@"upBackgroud"] forState:UIControlStateNormal];
+    [_logoutButton setBackgroundImage:[UIImage imageNamed:@"basicBackground"] forState:UIControlStateNormal];
     [_logoutButton addTarget:self action:@selector(logout) forControlEvents:UIControlEventTouchUpInside];
+    _logoutButton.layer.cornerRadius = 5;
     
     [self setUpBarView];
 }
