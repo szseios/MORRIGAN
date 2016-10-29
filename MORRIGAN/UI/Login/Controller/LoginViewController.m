@@ -14,7 +14,7 @@
 #import "LoginManager.h"
 #import "Utils.h"
 #import "NMOANetWorking.h"
-
+#import "RootViewController.h"
 #import "ForgetPwdViewController.h"
 
 @interface LoginViewController ()
@@ -289,6 +289,10 @@
 - (void)loginButtonClickInLogin:(id)sender
 {
     NSLog(@"loginButtonClickInLogin");
+    // 进入主页
+    RootViewController *homeViewController = [[RootViewController alloc] init];
+    [self.navigationController pushViewController:homeViewController animated:YES];
+    return;
 
     UIButton *button = (UIButton *)sender;
     button.backgroundColor = [UIColor clearColor];
