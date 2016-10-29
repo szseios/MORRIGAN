@@ -11,6 +11,11 @@
 #import "Utils.h"
 
 @interface AutoKneadViewController ()
+{
+    FuntionButton *_dragButton;
+    FuntionButton *_tempButton;
+
+}
 
 @end
 
@@ -189,7 +194,8 @@
     buttonX = margingLeftRight;
     // 轻柔（底部：1行－左）
     FuntionButton *funButton1 = [[FuntionButton alloc] initWithFrame:CGRectMake(buttonX, buttonY, buttonW, buttonH)];
-    [funButton1 setImage:[UIImage imageNamed:@"soft"] forState:UIControlStateNormal];
+    funButton1.buttonImage = [UIImage imageNamed:@"soft"];
+    [funButton1 setImage:funButton1.buttonImage forState:UIControlStateNormal];
     UIPanGestureRecognizer *panGestureRecognizer1 = [[UIPanGestureRecognizer alloc] initWithTarget:self action:@selector(dragReplyButton:)];
     [funButton1 addGestureRecognizer:panGestureRecognizer1];
     [self.view addSubview:funButton1];
@@ -202,7 +208,8 @@
     buttonX = (kScreenWidth-buttonW)/2;
     // 水波（底部：1行－中）
     FuntionButton *funButton2 = [[FuntionButton alloc] initWithFrame:CGRectMake(buttonX, buttonY, buttonW, buttonH)];
-    [funButton2 setImage:[UIImage imageNamed:@"warter"] forState:UIControlStateNormal];
+    funButton2.buttonImage = [UIImage imageNamed:@"warter"];
+    [funButton2 setImage:funButton2.buttonImage forState:UIControlStateNormal];
     UIPanGestureRecognizer *panGestureRecognizer2 = [[UIPanGestureRecognizer alloc] initWithTarget:self action:@selector(dragReplyButton:)];
     [funButton2 addGestureRecognizer:panGestureRecognizer2];
     [self.view addSubview:funButton2];
@@ -215,7 +222,8 @@
     buttonX = kScreenWidth - margingLeftRight - buttonW;
     // 微按（底部：1行－右）
     FuntionButton *funButton3 = [[FuntionButton alloc] initWithFrame:CGRectMake(buttonX, buttonY, buttonW, buttonH)];
-    [funButton3 setImage:[UIImage imageNamed:@"lightPress"] forState:UIControlStateNormal];
+    funButton3.buttonImage = [UIImage imageNamed:@"lightPress"];
+    [funButton3 setImage:funButton3.buttonImage forState:UIControlStateNormal];
     UIPanGestureRecognizer *panGestureRecognizer3 = [[UIPanGestureRecognizer alloc] initWithTarget:self action:@selector(dragReplyButton:)];
     [funButton3 addGestureRecognizer:panGestureRecognizer3];
     [self.view addSubview:funButton3];
@@ -233,7 +241,8 @@
     buttonX = funButton1.frame.origin.x + funButton1.frame.size.width + ((funButton2.frame.origin.x - (funButton1.frame.origin.x + funButton1.frame.size.width))/2 - buttonW/2);
     // 强振（底部：2行－左）
     FuntionButton *funButton4 = [[FuntionButton alloc] initWithFrame:CGRectMake(buttonX, buttonY, buttonW, buttonH)];
-    [funButton4 setImage:[UIImage imageNamed:@"strongShake"] forState:UIControlStateNormal];
+    funButton4.buttonImage = [UIImage imageNamed:@"strongShake"];
+    [funButton4 setImage:funButton4.buttonImage forState:UIControlStateNormal];
     UIPanGestureRecognizer *panGestureRecognizer4 = [[UIPanGestureRecognizer alloc] initWithTarget:self action:@selector(dragReplyButton:)];
     [funButton4 addGestureRecognizer:panGestureRecognizer4];
     [self.view addSubview:funButton4];
@@ -246,7 +255,8 @@
     buttonX = funButton2.frame.origin.x + funButton2.frame.size.width + ((funButton3.frame.origin.x - (funButton2.frame.origin.x + funButton2.frame.size.width))/2 - buttonW/2);
     // 动感（底部：2行－右）
     FuntionButton *funButton5 = [[FuntionButton alloc] initWithFrame:CGRectMake(buttonX, buttonY, buttonW, buttonH)];
-    [funButton5 setImage:[UIImage imageNamed:@"movingFeel"] forState:UIControlStateNormal];
+    funButton5.buttonImage = [UIImage imageNamed:@"movingFeel"];
+    [funButton5 setImage:funButton5.buttonImage forState:UIControlStateNormal];
     UIPanGestureRecognizer *panGestureRecognizer5 = [[UIPanGestureRecognizer alloc] initWithTarget:self action:@selector(dragReplyButton:)];
     [funButton5 addGestureRecognizer:panGestureRecognizer5];
     [self.view addSubview:funButton5];
@@ -255,6 +265,10 @@
     labelFeel.textColor = [Utils stringTOColor:kColor_6911a5];
     labelFeel.textAlignment = NSTextAlignmentCenter;
     [self.view addSubview:labelFeel];
+    
+    // 用于随意拖动的按钮
+    _dragButton = [[FuntionButton alloc] initWithFrame:CGRectMake(50, buttonY, buttonW, buttonH)];
+    [self.view addSubview:_dragButton];
     
     
 }
@@ -266,6 +280,26 @@
     recognizer.view.center = CGPointMake(recognizer.view.center.x + translation.x,
                                          recognizer.view.center.y + translation.y);
     [recognizer setTranslation:CGPointZero inView:self.view];
+    
+    
+    FuntionButton *targetButton = (FuntionButton *)recognizer.view;
+    if(targetButton != _dragButton) {
+        _dragButton.hidden = NO;
+        _dragButton.frame = targetButton.frame;
+        [_dragButton addGestureRecognizer:recognizer];
+        [_dragButton setImage:targetButton.buttonImage forState:UIControlStateNormal];
+        [targetButton removeGestureRecognizer:recognizer];
+        _tempButton = targetButton;
+    }
+    
+    
+    if (recognizer.state == UIGestureRecognizerStateEnded) {
+        [_tempButton addGestureRecognizer:recognizer];
+        [_dragButton removeGestureRecognizer:recognizer];
+        _dragButton.hidden = YES;
+    }
+    
+    
     
 //    if (recognizer.state == UIGestureRecognizerStateBegan) {
 //        
@@ -323,7 +357,6 @@
 //        }
 //    }
 }
-
 
 
 

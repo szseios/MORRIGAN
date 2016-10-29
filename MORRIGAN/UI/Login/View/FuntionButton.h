@@ -10,6 +10,10 @@
 
 @interface FuntionButton : UIButton
 
+@property(nonatomic,strong)UIImage *buttonImage;
+
+
 -(instancetype)initWithFrame:(CGRect)frame;
+
 
 @end
