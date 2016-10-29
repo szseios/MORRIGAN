@@ -48,10 +48,10 @@ static MusicManager *manager = nil;
                 MusicModel *model = [[MusicModel alloc] initWithItem:item];
                 [_musics addObject:model];
             }
-//            MPMediaItem *item = [_musics objectAtIndex:4];
-        
-//            [self playMusicByURL:[item assetURL]];
 //        });
+        
+        NSString *filePath = [[NSBundle mainBundle] pathForResource:@"MusicList" ofType:@"plist"];
+        NSArray *array = [NSArray arrayWithContentsOfFile:filePath];
     }
     return self;
 }
@@ -69,8 +69,24 @@ static MusicManager *manager = nil;
     });
 }
 
+- (NSArray *)musics {
+    return _musics;
+}
+
 - (void)setCurrentTime:(NSTimeInterval)timeInterval {
     [_player setCurrentTime:timeInterval];
+}
+
+- (BOOL)isPlaying {
+    return _player.isPlaying;
+}
+
+- (void)play {
+    [_player play];
+}
+
+- (void)pause {
+    [_player pause];
 }
 
 - (NSTimeInterval)currentTime {
@@ -81,6 +97,17 @@ static MusicManager *manager = nil;
     NSInteger duration = (NSInteger)_player.currentTime;
     NSString *string = [NSString stringWithFormat:@"%02ld:%02ld",duration / 60,duration % 60];
     return string;
+}
+
+#pragma mark - AVAudioPlayerDelegate
+// 播放完成时调用   只有当播放结束时才会调用，循环播放时不会调
+- (void)audioPlayerDidFinishPlaying:(AVAudioPlayer *)player successfully:(BOOL)flag {
+    NSLog(@"audioPlayerDidFinishPlaying");
+}
+
+/* if an error occurs while decoding it will be reported to the delegate. */
+- (void)audioPlayerDecodeErrorDidOccur:(AVAudioPlayer *)player error:(NSError *)error {
+
 }
 
 @end

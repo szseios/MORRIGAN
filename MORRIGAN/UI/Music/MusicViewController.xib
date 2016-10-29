@@ -8,9 +8,13 @@
     <objects>
         <placeholder placeholderIdentifier="IBFilesOwner" id="-1" userLabel="File's Owner" customClass="MusicViewController">
             <connections>
+                <outlet property="musicNameLabel" destination="38h-Y5-j6Z" id="nqN-Zo-4pg"/>
                 <outlet property="musicTopBackgoundView" destination="1DR-4X-eBR" id="PQb-md-AMa"/>
                 <outlet property="musicView" destination="T4n-qb-iG3" id="QR7-lW-hV4"/>
+                <outlet property="nextButton" destination="LOM-vt-x2p" id="Lzu-jP-D6r"/>
                 <outlet property="playingTimeLabel" destination="noF-f2-htB" id="IKG-5n-huc"/>
+                <outlet property="previousButton" destination="H5w-Fx-GGP" id="hRQ-N5-tl3"/>
+                <outlet property="singerLabel" destination="yWV-66-Zg3" id="3Vd-nV-E2x"/>
                 <outlet property="slider" destination="XYt-bf-kWe" id="nEh-E7-afU"/>
                 <outlet property="startButton" destination="vjb-bg-lit" id="JvD-Oi-SOh"/>
                 <outlet property="totalTimeLable" destination="cEJ-aK-Eal" id="Zfo-xO-hiV"/>
@@ -35,8 +39,8 @@
                     <autoresizingMask key="autoresizingMask" widthSizable="YES" flexibleMinY="YES"/>
                     <subviews>
                         <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="music_background_bottom" id="y4y-xe-Rvb">
-                            <frame key="frameInset" minX="1.33%" minY="-4" width="97.60%" height="67"/>
-                            <autoresizingMask key="autoresizingMask" flexibleMinX="YES" widthSizable="YES" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                            <frame key="frameInset" minX="5" minY="-4" height="67" maxX="4"/>
+                            <autoresizingMask key="autoresizingMask" widthSizable="YES" flexibleMaxY="YES"/>
                         </imageView>
                     </subviews>
                     <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="calibratedWhite"/>
@@ -92,11 +96,17 @@
                     <frame key="frameInset" minX="50" minY="77.22%" width="70" height="70"/>
                     <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMinY="YES" flexibleMaxY="YES"/>
                     <state key="normal" backgroundImage="music_previous"/>
+                    <connections>
+                        <action selector="previousMusic:" destination="-1" eventType="touchUpInside" id="3Is-pr-5Wn"/>
+                    </connections>
                 </button>
                 <button opaque="NO" contentMode="scaleToFill" misplaced="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" id="LOM-vt-x2p">
                     <frame key="frameInset" minY="77.22%" width="70" height="70" maxX="50"/>
                     <autoresizingMask key="autoresizingMask" flexibleMinX="YES" flexibleMinY="YES" flexibleMaxY="YES"/>
                     <state key="normal" backgroundImage="music_next"/>
+                    <connections>
+                        <action selector="nextMusic:" destination="-1" eventType="touchUpInside" id="8E2-nS-p3g"/>
+                    </connections>
                 </button>
                 <button opaque="NO" contentMode="scaleToFill" misplaced="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" id="vjb-bg-lit">
                     <frame key="frameInset" minX="50.27%" minY="80.99%" width="98.5" height="99"/>
