@@ -163,13 +163,19 @@
     FuntionButton *button5 = [[FuntionButton alloc] initWithFrame:CGRectMake(buttonX, buttonY, buttonW, buttonH)];
     [button5 setImage:[UIImage imageNamed:@"empty"] forState:UIControlStateNormal];
     [self.view addSubview:button5];
-    _topFiveButtonArray = tempArray;
     
+    
+    button1.arrayIndex = 0;
     [tempArray addObject:button1];
+    button2.arrayIndex = 1;
     [tempArray addObject:button2];
+    button3.arrayIndex = 2;
     [tempArray addObject:button3];
+    button4.arrayIndex = 3;
     [tempArray addObject:button4];
+    button5.arrayIndex = 4;
     [tempArray addObject:button5];
+    _topFiveButtonArray = tempArray;
     
     
     // 开始／停止按钮
@@ -183,6 +189,7 @@
         startBtnY = button5.frame.origin.y + 20.0;
     }
     UIButton *startBtn = [[UIButton alloc] initWithFrame:CGRectMake((kScreenWidth - startBtnW)/2, startBtnY, startBtnW, startBtnW)];
+    [startBtn addTarget:self action:@selector(startBtnHandler) forControlEvents:UIControlEventTouchUpInside];
     [startBtn setImage:[UIImage imageNamed:@"START"] forState:UIControlStateNormal];
     [self.view addSubview:startBtn];
     
@@ -353,7 +360,7 @@
           
             // 1.先计算离谁最近：|(dragButtonY + dragButtonH) - (y + h)|    +    |(dragButtonX + dragButtonW) - (x + w)|
             button.distanceFromDragButton = fabsf((dragButtonY + dragButtonH) - (y + h)) + fabsf((dragButtonX + dragButtonW) - (x + w));
-            NSLog(@"排序前：%f",button.distanceFromDragButton);
+            NSLog(@"排序前：%ld  %f", button.arrayIndex, button.distanceFromDragButton);
             
             
         }
@@ -370,7 +377,7 @@
         }];
 
         for (FuntionButton *button in tempArray) {
-            NSLog(@"排序后：%f",button.distanceFromDragButton);
+            NSLog(@"排序后：%ld  %f", button.arrayIndex, button.distanceFromDragButton);
         }
         
         // 3.判断该dragButton是否可以落到该地：|dragButtonY - y| < h  ||  |dragButtonX - x| < w   = result（YES:可以落地）
@@ -380,38 +387,53 @@
         CGFloat w = button.frame.size.width;
         CGFloat h = button.frame.size.height;
         if(fabsf(dragButtonY - y) < h || fabsf(dragButtonX - x) < w) {
-            button.buttonImage = _dragButton.buttonImage;
-            [button setImage:button.buttonImage forState:UIControlStateNormal];
+            button.tag = _dragButton.tag;
+            FuntionButton *newButton = [[FuntionButton alloc] initWithFrame:button.frame];
+            newButton.arrayIndex = button.arrayIndex;
+            newButton.tag = _dragButton.tag;
+            newButton.buttonImage = _dragButton.buttonImage;
+            [newButton setImage:newButton.buttonImage forState:UIControlStateNormal];
+            UIPanGestureRecognizer *panGestureRecognizer = [[UIPanGestureRecognizer alloc] initWithTarget:self action:@selector(topFiveButtonGesture:)];
+            [newButton addGestureRecognizer:panGestureRecognizer];
+            [self.view addSubview:newButton];
         }
-        
         
     }
 }
 
-
-- (void)setButtonImage:(FuntionButton *)button
-{
-    switch (button.tag) {
-        case kTagOfSoft:
-            
-            break;
-        case kTagOfWater:
-            
-            break;
-        case kTagOfMicroPress:
-            
-            break;
-        case kTagOfStrongVibr:
-            
-            break;
-        case kTagOfFeel:
-            
-            break;
-            
-        default:
-            break;
-    }
+- (void)topFiveButtonGesture:(UIPanGestureRecognizer *)recognizer {
     
+    if (recognizer.state == UIGestureRecognizerStateBegan) {
+        
+    } else if (recognizer.state == UIGestureRecognizerStateChanged) {
+        
+        CGPoint location = [recognizer locationInView:self.view];
+        if (location.y < 0 || location.y > self.view.bounds.size.height) {
+            return;
+        }
+        CGPoint translation = [recognizer translationInView:self.view];
+        recognizer.view.center = CGPointMake(recognizer.view.center.x + translation.x,recognizer.view.center.y + translation.y);
+        [recognizer setTranslation:CGPointZero inView:self.view];
+        
+    } else if (recognizer.state == UIGestureRecognizerStateEnded || recognizer.state == UIGestureRecognizerStateCancelled) {
+        
+        FuntionButton *newButton = (FuntionButton *)recognizer.view;
+        NSLog(@"%ld",newButton.arrayIndex);
+        FuntionButton *button = _topFiveButtonArray[newButton.arrayIndex];
+        if(fabsf(newButton.frame.origin.y - button.frame.origin.y) > newButton.frame.size.height || fabsf(newButton.frame.origin.x - button.frame.origin.x) > newButton.frame.size.width) {
+            [newButton removeFromSuperview];
+        } else {
+            newButton.frame = button.frame;
+        }
+        
+    }
+}
+
+- (void)startBtnHandler
+{
+    for (FuntionButton *button in _topFiveButtonArray) {
+        NSLog(@"-----当前按摩顺序----：：%ld  %ld", button.arrayIndex, button.tag);
+    }
 }
 
 
