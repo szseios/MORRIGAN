@@ -14,7 +14,7 @@
 #import "LoginManager.h"
 #import "Utils.h"
 #import "NMOANetWorking.h"
-#import "HomeViewController.h"
+
 #import "ForgetPwdViewController.h"
 
 @interface LoginViewController ()
@@ -376,8 +376,6 @@
              
              
              // 进入主页
-             HomeViewController *homeViewController = [[HomeViewController alloc] init];
-             [self.navigationController pushViewController:homeViewController animated:YES];
              
          } else {
              

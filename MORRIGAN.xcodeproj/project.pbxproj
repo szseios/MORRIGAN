@@ -11,7 +11,6 @@
 		3E25397A1DAA3DA800CB1EF8 /* HandKneadViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 3E2539781DAA3DA800CB1EF8 /* HandKneadViewController.m */; };
 		3E25397E1DAA3DDA00CB1EF8 /* UserInfo.m in Sources */ = {isa = PBXBuildFile; fileRef = 3E25397D1DAA3DDA00CB1EF8 /* UserInfo.m */; };
 		3E2539811DAA3DE600CB1EF8 /* LoginManager.m in Sources */ = {isa = PBXBuildFile; fileRef = 3E2539801DAA3DE600CB1EF8 /* LoginManager.m */; };
-		3E2539861DAA3DF500CB1EF8 /* HomeViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 3E2539851DAA3DF500CB1EF8 /* HomeViewController.m */; };
 		3EF795841DA9EDFC00E5EBC6 /* MusicTableViewCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 3EF795821DA9EDFC00E5EBC6 /* MusicTableViewCell.m */; };
 		3EF795851DA9EDFC00E5EBC6 /* MusicTableViewCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = 3EF795831DA9EDFC00E5EBC6 /* MusicTableViewCell.xib */; };
 		3EF7958D1DAA0A5E00E5EBC6 /* Common.m in Sources */ = {isa = PBXBuildFile; fileRef = 3EF795881DAA0A5E00E5EBC6 /* Common.m */; };
@@ -66,8 +65,6 @@
 		3E25397D1DAA3DDA00CB1EF8 /* UserInfo.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = UserInfo.m; sourceTree = "<group>"; };
 		3E25397F1DAA3DE600CB1EF8 /* LoginManager.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = LoginManager.h; sourceTree = "<group>"; };
 		3E2539801DAA3DE600CB1EF8 /* LoginManager.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = LoginManager.m; sourceTree = "<group>"; };
-		3E2539841DAA3DF500CB1EF8 /* HomeViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = HomeViewController.h; sourceTree = "<group>"; };
-		3E2539851DAA3DF500CB1EF8 /* HomeViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = HomeViewController.m; sourceTree = "<group>"; };
 		3EF795811DA9EDFC00E5EBC6 /* MusicTableViewCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MusicTableViewCell.h; sourceTree = "<group>"; };
 		3EF795821DA9EDFC00E5EBC6 /* MusicTableViewCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = MusicTableViewCell.m; sourceTree = "<group>"; };
 		3EF795831DA9EDFC00E5EBC6 /* MusicTableViewCell.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = MusicTableViewCell.xib; sourceTree = "<group>"; };
@@ -166,8 +163,6 @@
 		3E2539831DAA3DF500CB1EF8 /* Controller */ = {
 			isa = PBXGroup;
 			children = (
-				3E2539841DAA3DF500CB1EF8 /* HomeViewController.h */,
-				3E2539851DAA3DF500CB1EF8 /* HomeViewController.m */,
 			);
 			path = Controller;
 			sourceTree = "<group>";
@@ -526,7 +521,6 @@
 				EB534AD41DA9D924007AA325 /* MusicViewController.m in Sources */,
 				EBF011AF1DA7920A009E8394 /* Utils.m in Sources */,
 				EB534AD31DA9D924007AA325 /* MusicModel.m in Sources */,
-				3E2539861DAA3DF500CB1EF8 /* HomeViewController.m in Sources */,
 				EBF011741DA755E1009E8394 /* RegisterViewController.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
