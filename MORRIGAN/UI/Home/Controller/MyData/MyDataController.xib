@@ -39,7 +39,7 @@
                 <constraint firstAttribute="trailing" secondItem="cDR-d2-YXi" secondAttribute="trailing" id="GPr-0M-6ND"/>
                 <constraint firstItem="xCP-Ev-ppJ" firstAttribute="leading" secondItem="i5M-Pr-FkT" secondAttribute="leading" constant="60" id="LcC-Vj-mxP"/>
                 <constraint firstItem="cDR-d2-YXi" firstAttribute="leading" secondItem="i5M-Pr-FkT" secondAttribute="leading" id="PeF-0Y-s4U"/>
-                <constraint firstItem="cDR-d2-YXi" firstAttribute="top" secondItem="i5M-Pr-FkT" secondAttribute="top" constant="64" id="YdA-ew-1f9"/>
+                <constraint firstItem="cDR-d2-YXi" firstAttribute="top" secondItem="i5M-Pr-FkT" secondAttribute="top" constant="54" id="YdA-ew-1f9"/>
                 <constraint firstAttribute="bottom" secondItem="xCP-Ev-ppJ" secondAttribute="bottom" constant="80" id="rCb-Sm-rKD"/>
             </constraints>
         </view>

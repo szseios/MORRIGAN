@@ -33,7 +33,7 @@ static NSString *cellID = @"DataCellID";
 
 - (void)viewDidLoad {
     [super viewDidLoad];
-    
+    self.view.backgroundColor = [UIColor whiteColor];
     UIImageView *backImageView = [[UIImageView alloc] initWithFrame:CGRectMake(0, 0, kScreenWidth, 104)];
     backImageView.image = [UIImage imageNamed:@"basicBackground"];
     [self.view addSubview:backImageView];
@@ -42,6 +42,8 @@ static NSString *cellID = @"DataCellID";
     
     [self setUpBarView];
     [self setUpSegmentPageView];
+    [self setUpBarChatView];
+    [self setUpBottomView];
 }
 
 - (void)setUpBarView
@@ -54,7 +56,7 @@ static NSString *cellID = @"DataCellID";
 - (void)setUpSegmentPageView
 {
     _pageSegmente = [[UISegmentedControl alloc] initWithItems:@[@"日",@"周"]];
-    [_pageSegmente setFrame:CGRectMake(10, 64, kScreenWidth - 20, 30)];
+    [_pageSegmente setFrame:CGRectMake(20, 64, kScreenWidth - 40, 30)];
     [self.view addSubview:_pageSegmente];
     [_pageSegmente setTintColor:[UIColor whiteColor]];
     [_pageSegmente setBackgroundImage:[UIImage imageNamed:@"basicBackground"] forState:UIControlStateNormal barMetrics:UIBarMetricsCompact];
@@ -65,24 +67,25 @@ static NSString *cellID = @"DataCellID";
 - (void)setUpBarChatView
 {
     UIView *chatView = [[UIView alloc] initWithFrame:CGRectMake(0, 104, kScreenWidth, 250)];
-    [self.view addSubview:chatView];
-    UIImageView *backImageView = [[UIImageView alloc] initWithFrame:chatView.bounds];
-    backImageView.image = [UIImage imageNamed:@"addDeviceBackgroud"];
-    [chatView addSubview:backImageView];
     
-    UIView *dayView = [[UIView alloc] initWithFrame:chatView.bounds];
+    UIImageView *backImageView = [[UIImageView alloc] initWithFrame:chatView.bounds];
+    backImageView.image = [UIImage imageNamed:@"basicBackground"];
+    [chatView addSubview:backImageView];
+    [self.view addSubview:chatView];
+    
+    UIView *dayView = [[UIView alloc] initWithFrame:chatView.frame];
     dayView.backgroundColor = [UIColor clearColor];
     [self.view addSubview:dayView];
     
-    CGFloat labelY = 20;
-    UILabel *minuteDataLabel = [[UILabel alloc] initWithFrame:CGRectMake(10, labelY, 40, 60)];
+    CGFloat labelY = 0;
+    UILabel *minuteDataLabel = [[UILabel alloc] initWithFrame:CGRectMake(10, labelY, 60, 60)];
     minuteDataLabel.textColor = [UIColor whiteColor];
     minuteDataLabel.textAlignment = NSTextAlignmentRight;
-    minuteDataLabel.font = [UIFont systemFontOfSize:40];
+    minuteDataLabel.font = [UIFont systemFontOfSize:35];
     minuteDataLabel.text = @"88";
     [dayView addSubview:minuteDataLabel];
     
-    UILabel *unitLabel = [[UILabel alloc] initWithFrame:CGRectMake(50, 20, 40, 30)];
+    UILabel *unitLabel = [[UILabel alloc] initWithFrame:CGRectMake(70, 20, 40, 30)];
     unitLabel.textColor = [UIColor whiteColor];
     unitLabel.text = @"分钟";
     [dayView addSubview:unitLabel];
@@ -105,6 +108,8 @@ static NSString *cellID = @"DataCellID";
     _bottomTableView.delegate = self;
     _bottomTableView.dataSource = self;
     [_bottomTableView registerNib:[UINib nibWithNibName:@"HistoryDataCell" bundle:nil] forCellReuseIdentifier:cellID];
+    _bottomTableView.tableFooterView = [UIView new];
+    
     [self.view addSubview:_bottomTableView];
 }
 

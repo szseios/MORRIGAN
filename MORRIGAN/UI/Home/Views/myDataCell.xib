@@ -33,7 +33,7 @@
                         <color key="textColor" white="0.33333333333333331" alpha="1" colorSpace="calibratedWhite"/>
                         <nil key="highlightedColor"/>
                     </label>
-                    <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" translatesAutoresizingMaskIntoConstraints="NO" id="aDA-ra-wJa">
+                    <imageView clipsSubviews="YES" userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" translatesAutoresizingMaskIntoConstraints="NO" id="aDA-ra-wJa">
                         <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                         <constraints>
                             <constraint firstAttribute="height" constant="40" id="Fzw-ZZ-Gkc"/>
@@ -48,7 +48,7 @@
                     <constraint firstAttribute="bottom" secondItem="Xgm-id-gUd" secondAttribute="bottom" constant="5" id="HfJ-Pr-ph7"/>
                     <constraint firstAttribute="trailing" secondItem="Xgm-id-gUd" secondAttribute="trailing" constant="20" id="KZW-yL-fmH"/>
                     <constraint firstItem="aDA-ra-wJa" firstAttribute="top" secondItem="H2p-sc-9uM" secondAttribute="top" constant="1" id="OnQ-2x-2Mz"/>
-                    <constraint firstAttribute="trailing" secondItem="aDA-ra-wJa" secondAttribute="trailing" constant="35" id="OxW-IP-a0V"/>
+                    <constraint firstAttribute="trailing" secondItem="aDA-ra-wJa" secondAttribute="trailing" constant="5" id="OxW-IP-a0V"/>
                     <constraint firstItem="Xgm-id-gUd" firstAttribute="top" secondItem="H2p-sc-9uM" secondAttribute="top" constant="5" id="YfD-gd-kRU"/>
                     <constraint firstItem="A8Q-Jp-CPe" firstAttribute="top" secondItem="H2p-sc-9uM" secondAttribute="top" constant="5" id="mBo-9q-fbg"/>
                 </constraints>

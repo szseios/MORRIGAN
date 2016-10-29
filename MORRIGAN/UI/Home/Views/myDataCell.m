@@ -13,7 +13,7 @@
 
 @property (weak, nonatomic) IBOutlet UILabel *contentLabel;
 
-@property (weak, nonatomic) IBOutlet UIImageView *headerImageView;
+
 
 
 @end
@@ -28,6 +28,7 @@
             case 0:
             {
                 _headerImageView.hidden = NO;
+                _headerImageView.layer.cornerRadius = 20;
                 _headerImageView.image = [UIImage imageNamed:@"defaultHeaderView"];
                 _titleLabel.text = @"更换头像";
                 _contentLabel.text = @"";

@@ -18,7 +18,7 @@
                 <subviews>
                     <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" translatesAutoresizingMaskIntoConstraints="NO" id="dJZ-W3-npM">
                         <constraints>
-                            <constraint firstAttribute="width" constant="40" id="czC-PS-tKM"/>
+                            <constraint firstAttribute="width" constant="30" id="czC-PS-tKM"/>
                         </constraints>
                     </imageView>
                     <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="sGr-Kn-v8L">
@@ -47,8 +47,8 @@
                     </label>
                     <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="icon_noRecord" translatesAutoresizingMaskIntoConstraints="NO" id="7P2-zJ-oZz">
                         <constraints>
-                            <constraint firstAttribute="height" constant="8" id="Bv8-Mt-mLX"/>
-                            <constraint firstAttribute="width" constant="50" id="Jix-ge-eS4"/>
+                            <constraint firstAttribute="height" constant="4" id="Bv8-Mt-mLX"/>
+                            <constraint firstAttribute="width" constant="30" id="Jix-ge-eS4"/>
                         </constraints>
                     </imageView>
                 </subviews>
@@ -56,8 +56,8 @@
                     <constraint firstItem="sGr-Kn-v8L" firstAttribute="top" secondItem="H2p-sc-9uM" secondAttribute="topMargin" constant="3" id="3NN-GP-z1j"/>
                     <constraint firstItem="fXm-2J-3gv" firstAttribute="top" secondItem="H2p-sc-9uM" secondAttribute="top" constant="5" id="3Pt-B1-Z7L"/>
                     <constraint firstAttribute="bottom" secondItem="fXm-2J-3gv" secondAttribute="bottom" constant="5" id="4LK-eb-lFc"/>
-                    <constraint firstItem="dJZ-W3-npM" firstAttribute="top" secondItem="H2p-sc-9uM" secondAttribute="top" id="59v-Xw-LBe"/>
-                    <constraint firstAttribute="bottom" secondItem="dJZ-W3-npM" secondAttribute="bottom" id="N5J-8H-8cv"/>
+                    <constraint firstItem="dJZ-W3-npM" firstAttribute="top" secondItem="H2p-sc-9uM" secondAttribute="top" constant="5" id="59v-Xw-LBe"/>
+                    <constraint firstAttribute="bottom" secondItem="dJZ-W3-npM" secondAttribute="bottom" constant="5" id="N5J-8H-8cv"/>
                     <constraint firstItem="ZiT-w3-phN" firstAttribute="top" secondItem="H2p-sc-9uM" secondAttribute="topMargin" constant="5" id="PLN-hm-8nF"/>
                     <constraint firstItem="fXm-2J-3gv" firstAttribute="leading" secondItem="7P2-zJ-oZz" secondAttribute="trailing" constant="5" id="Sdc-6k-pXX"/>
                     <constraint firstAttribute="bottom" secondItem="7P2-zJ-oZz" secondAttribute="bottom" constant="15" id="X3y-ZS-J6a"/>

@@ -11,8 +11,12 @@
 #import "ChooseDataView.h"
 #import "NickNameController.h"
 #import "BasicBarView.h"
+#import <MobileCoreServices/MobileCoreServices.h>
+#import <AVFoundation/AVFoundation.h>
+#import <MediaPlayer/MediaPlayer.h>
 
-@interface MyDataController ()<UITableViewDelegate,UITableViewDataSource,UIAlertViewDelegate,ChooseDataViewDelegate,BasicBarViewDelegate>
+
+@interface MyDataController ()<UITableViewDelegate,UITableViewDataSource,UIAlertViewDelegate,ChooseDataViewDelegate,BasicBarViewDelegate,UIActionSheetDelegate,UIImagePickerControllerDelegate, UINavigationControllerDelegate>
 
 @property (weak, nonatomic) IBOutlet UIButton *logoutButton;
 
@@ -23,6 +27,10 @@
 @property (nonatomic , strong) myDataCell *selectCell;
 
 @property (nonatomic , strong) BasicBarView *barView;
+
+@property (nonatomic , strong) UIImagePickerController *imagePickerCtl;
+
+@property (nonatomic , strong) myDataCell *headerViewCell;
 
 @end
 
@@ -117,11 +125,8 @@ static NSString *cellIdentifier = @"cellIdentifier";
     if (!cell) {
         cell = [[myDataCell alloc] initWithStyle:UITableViewCellStyleDefault reuseIdentifier:cellIdentifier];
     }
-    if (indexPath.section == 0 && indexPath.row == 0) {
-        cell.accessoryType = UITableViewCellAccessoryNone;
-    }else{
-        cell.accessoryType = UITableViewCellAccessoryDisclosureIndicator;
-    }
+    cell.accessoryType = UITableViewCellAccessoryDisclosureIndicator;
+    
     [cell setTitle:nil content:@"请选择" withIndexPath:indexPath];
     return cell;
 }
@@ -135,7 +140,9 @@ static NSString *cellIdentifier = @"cellIdentifier";
         switch (indexPath.row) {
             case 0:
             {
-                
+                _headerViewCell = [tableView cellForRowAtIndexPath:indexPath];
+                UIActionSheet *sheet = [[UIActionSheet alloc] initWithTitle:@"选择头像" delegate:self cancelButtonTitle:@"取消" destructiveButtonTitle:nil otherButtonTitles:@"拍照",@"从相册中选取", nil];
+                [sheet showInView:self.view];
             }
                 break;
             case 1:
@@ -194,8 +201,11 @@ static NSString *cellIdentifier = @"cellIdentifier";
 
 - (CGFloat)tableView:(UITableView *)tableView heightForHeaderInSection:(NSInteger)section
 {
-    return 10;
-    
+    if (section == 0) {
+        return 0.01;
+    }else{
+        return 10;
+    }
 }
 
 - (CGFloat)tableView:(UITableView *)tableView heightForFooterInSection:(NSInteger)section
@@ -247,7 +257,65 @@ static NSString *cellIdentifier = @"cellIdentifier";
     
 }
 
-#pragma notification
+#pragma mark - UIActionSheetDelegate
+
+- (void)actionSheet:(UIActionSheet *)actionSheet clickedButtonAtIndex:(NSInteger)buttonIndex
+{
+    NSLog(@"%ld",buttonIndex);
+    if (buttonIndex != 2) {
+        _imagePickerCtl = [[UIImagePickerController alloc] init];
+        _imagePickerCtl.delegate = self;
+        _imagePickerCtl.modalTransitionStyle = UIModalTransitionStyleFlipHorizontal;
+        _imagePickerCtl.allowsEditing = YES;
+        if (buttonIndex == 0) {
+            [self selectImageFromCamera];
+        }else{
+            [self selectImageFromAlbum];
+        }
+    }
+}
+
+//拍照
+- (void)selectImageFromCamera
+{
+    _imagePickerCtl.sourceType = UIImagePickerControllerSourceTypeCamera;
+    //相机类型（拍照、录像...）字符串需要做相应的类型转换
+    _imagePickerCtl.mediaTypes = @[(NSString *)kUTTypeMovie,(NSString *)kUTTypeImage];
+    //设置摄像头模式拍照模式
+    _imagePickerCtl.cameraCaptureMode = UIImagePickerControllerCameraCaptureModePhoto;
+    
+    [self presentViewController:_imagePickerCtl animated:YES completion:nil];
+}
+
+//从相册中选择
+- (void)selectImageFromAlbum
+{
+    _imagePickerCtl.sourceType = UIImagePickerControllerSourceTypePhotoLibrary;
+    
+    [self presentViewController:_imagePickerCtl animated:YES completion:nil];
+}
+
+#pragma mark - UIImagePickerControllerDelegate
+
+//该代理方法仅适用于只选取图片时
+- (void)imagePickerController:(UIImagePickerController *)picker didFinishPickingImage:(UIImage *)image editingInfo:(nullable NSDictionary<NSString *,id> *)editingInfo {
+    
+}
+
+//适用获取所有媒体资源，只需判断资源类型
+- (void)imagePickerController:(UIImagePickerController *)picker didFinishPickingMediaWithInfo:(NSDictionary<NSString *,id> *)info{
+    NSString *mediaType=[info objectForKey:UIImagePickerControllerMediaType];
+    //判断资源类型
+    if ([mediaType isEqualToString:(NSString *)kUTTypeImage]){
+        //如果是图片
+        _headerViewCell.headerImageView.image = info[UIImagePickerControllerEditedImage];
+        //压缩图片
+        NSData *fileData = UIImageJPEGRepresentation(_headerViewCell.headerImageView.image, 1.0);
+    }
+    [self dismissViewControllerAnimated:YES completion:nil];
+}
+
+#pragma mark - notification
 
 - (void)changeNickName:(NSNotification *)notice
 {
