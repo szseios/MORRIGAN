@@ -11,6 +11,8 @@
 #import "HomePageController.h"
 #import "HomeMainView.h"
 #import "BasicBarView.h"
+#import "AutoKneadViewController.h"
+#import "HandKneadViewController.h"
 
 @interface UIImageView (backImageMove)
 
@@ -137,12 +139,14 @@
 }
 //手动按摩
 - (void)pushHandlePage{
-    
+    HandKneadViewController *handKneadViewController = [[HandKneadViewController alloc] init];
+    [self.navigationController pushViewController:handKneadViewController animated:YES];
 }
 
 //自动按摩
 - (void)pushAutoPage{
-    
+    AutoKneadViewController *autoKneadViewController = [[AutoKneadViewController alloc] init];
+    [self.navigationController pushViewController:autoKneadViewController animated:YES];
 }
 
 //音乐随动

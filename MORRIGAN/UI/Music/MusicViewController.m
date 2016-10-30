@@ -33,6 +33,15 @@
 
 @implementation MusicViewController
 
+- (instancetype)init
+{
+    self = [super init];
+    if (self) {
+        _musics = [NSMutableArray arrayWithArray:[MusicManager share].musics];
+    }
+    return self;
+}
+
 - (void)viewDidLoad {
     [super viewDidLoad];
     // Do any additional setup after loading the view from its nib.

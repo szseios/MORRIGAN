@@ -39,21 +39,42 @@
 
     // 注册通知
     [self addNotification];
+
 }
 
 
--(void)viewWillAppear:(BOOL)animated
+-(void)viewDidAppear:(BOOL)animated
 {
-    [super viewWillAppear: animated];
+    [super viewDidAppear:animated];
     
-    
-    if([UserInfo share].mobile && [UserInfo share].mobile.length > 0) {
-         _phoneNumbrInputView.text = [UserInfo share].mobile;
-    }
-    if([UserInfo share].password && [UserInfo share].password.length > 0) {
+    if([UserInfo share].mobile && [UserInfo share].mobile.length > 0 && [UserInfo share].password && [UserInfo share].password.length > 0)
+    {
+        // 注册成功返回
+        _phoneNumbrInputView.text = [UserInfo share].mobile;
         _passwordInputView.text = [UserInfo share].password;
+        
+    } else {
+        
+        // 注销登陆成功时调用这个
+        //    NSUserDefaults *defaults = [NSUserDefaults standardUserDefaults];
+        //    [defaults removeObjectForKey:kUserDefaultIdKey];
+        //    [defaults removeObjectForKey:kUserDefaultPasswordKey];
+        
+        
+        
+        // 自动登陆
+        NSUserDefaults *defaults = [NSUserDefaults standardUserDefaults];
+        NSString *phoneNumber = [defaults objectForKey:kUserDefaultIdKey];
+        NSString *password = [defaults objectForKey:kUserDefaultPasswordKey];
+        if(phoneNumber && phoneNumber.length > 0 && password && password.length > 0) {
+            NSLog(@"%@",phoneNumber);
+            NSLog(@"%@",password);
+            _phoneNumbrInputView.text = phoneNumber;
+            _passwordInputView.text = password;
+            [self loginButtonClickInLogin: nil];
+        }
+        
     }
-    
 }
 
 - (void)initView
@@ -289,13 +310,19 @@
 - (void)loginButtonClickInLogin:(id)sender
 {
     NSLog(@"loginButtonClickInLogin");
-    // 进入主页
+    // 进入主页（测试）
     RootViewController *homeViewController = [[RootViewController alloc] init];
     [self.navigationController pushViewController:homeViewController animated:YES];
     return;
 
-    UIButton *button = (UIButton *)sender;
-    button.backgroundColor = [UIColor clearColor];
+    
+    
+    
+    if(sender) {
+        UIButton *button = (UIButton *)sender;
+        button.backgroundColor = [UIColor clearColor];
+    }
+   
     
     NSString *phoneNumber = _phoneNumbrInputView.text;
     NSString *password = _passwordInputView.text;
@@ -346,6 +373,8 @@
     NSDictionary *dictionary = @{@"mobile": phoneNumber,
                                  @"password": password
                                  };
+    __block NSString *phoneNumberBlock = phoneNumber;
+    __block NSString *passwordBlock = password;
     NSString *bodyString = [NMOANetWorking handleHTTPBodyParams:dictionary];
     [[NMOANetWorking share] taskWithTag:ID_LOGIN
                               urlString:URL_LOGIN
@@ -377,10 +406,16 @@
              [UserInfo share].userId = [userInfoDict objectForKey:@"userId"];
              [UserInfo share].weight = [userInfoDict objectForKey:@"weight"];
              
-             
+             // 保存用户名和密码，下次自动登陆
+             NSUserDefaults *defaults = [NSUserDefaults standardUserDefaults];
+             [defaults setObject:phoneNumberBlock forKey:kUserDefaultIdKey];
+             [defaults setObject:passwordBlock forKey:kUserDefaultPasswordKey];
+             [defaults synchronize];
              
              // 进入主页
-             
+             RootViewController *homeViewController = [[RootViewController alloc] init];
+             [self.navigationController pushViewController:homeViewController animated:YES];
+
          } else {
              
              NSLog(@"登陆失败！");
