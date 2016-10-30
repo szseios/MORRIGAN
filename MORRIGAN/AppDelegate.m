@@ -32,9 +32,9 @@
     LoginViewController *loginViewController = [[LoginViewController alloc] init];
     //MusicViewController *loginViewController = [[MusicViewController alloc] init];
     //loginViewController.musics = [MusicManager share].musics;
-    UINavigationController *nav = [[UINavigationController alloc] initWithRootViewController:loginViewController];
-    nav.navigationBarHidden = YES;
-    self.window.rootViewController = nav;
+    //UINavigationController *nav = [[UINavigationController alloc] initWithRootViewController:loginViewController];
+    //nav.navigationBarHidden = YES;
+    self.window.rootViewController = [[UIViewController alloc] init];
     [self.window makeKeyAndVisible];
     
     
@@ -44,8 +44,13 @@
     [self.window addSubview:wellcomeView];
     [self.window bringSubviewToFront:wellcomeView];
     __block UIImageView *wellcomeViewBlock = wellcomeView;
-    dispatch_after(dispatch_time(DISPATCH_TIME_NOW, (int64_t)(2.0 * NSEC_PER_SEC)), dispatch_get_main_queue(), ^{
+    dispatch_after(dispatch_time(DISPATCH_TIME_NOW, (int64_t)(kWelcomePageDelayTime * NSEC_PER_SEC)), dispatch_get_main_queue(), ^{
         [wellcomeViewBlock removeFromSuperview];
+        
+        UINavigationController *nav = [[UINavigationController alloc] initWithRootViewController:loginViewController];
+        nav.navigationBarHidden = YES;
+        self.window.rootViewController = nav;
+        [self.window makeKeyAndVisible];
     });
   
     
