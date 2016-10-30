@@ -34,21 +34,24 @@
                     <frame key="frameInset" height="32.83%"/>
                     <autoresizingMask key="autoresizingMask" widthSizable="YES" flexibleMinY="YES" heightSizable="YES"/>
                 </imageView>
-                <view contentMode="scaleToFill" id="T4n-qb-iG3">
-                    <frame key="frameInset" height="300" maxY="-235"/>
+                <view contentMode="scaleToFill" misplaced="YES" id="T4n-qb-iG3">
+                    <frame key="frameInset" height="439" maxY="-374"/>
                     <autoresizingMask key="autoresizingMask" widthSizable="YES" flexibleMinY="YES"/>
                     <subviews>
-                        <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="music_background_bottom" id="y4y-xe-Rvb">
-                            <frame key="frameInset" minX="5" minY="-4" height="67" maxX="4"/>
+                        <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" misplaced="YES" image="music_background_bottom" id="y4y-xe-Rvb">
+                            <frame key="frameInset" height="67"/>
                             <autoresizingMask key="autoresizingMask" widthSizable="YES" flexibleMaxY="YES"/>
                         </imageView>
                     </subviews>
                     <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="calibratedWhite"/>
                 </view>
-                <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" id="LZ0-tQ-g2X">
-                    <frame key="frameInset" minX="15" minY="26" width="40" height="40"/>
+                <button opaque="NO" contentMode="scaleToFill" misplaced="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" id="LZ0-tQ-g2X">
+                    <frame key="frameInset" minX="-16" minY="23" width="106" height="48"/>
                     <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
-                    <state key="normal" title="Button"/>
+                    <state key="normal" image="ic_backButton"/>
+                    <connections>
+                        <action selector="back:" destination="-1" eventType="touchUpInside" id="AWk-k5-kAY"/>
+                    </connections>
                 </button>
                 <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="音乐随动" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" id="DQF-GJ-lpz">
                     <frame key="frameInset" minX="21.07%" minY="33" width="57.87%" height="2.84%"/>
@@ -122,6 +125,7 @@
         </view>
     </objects>
     <resources>
+        <image name="ic_backButton" width="52" height="48"/>
         <image name="music_background_ middle" width="375" height="218"/>
         <image name="music_background_bottom" width="366" height="66"/>
         <image name="music_background_top" width="375" height="511"/>

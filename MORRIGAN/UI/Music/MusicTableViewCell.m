@@ -55,6 +55,75 @@
     [self hideBars];
 }
 
+- (void)selectedStatus {
+    UIColor *titleColor;
+    UIColor *artistColor;
+    UIColor *timeColor;
+    titleColor = [UIColor colorWithRed:158 / 255.0
+                                 green:95 / 255.0
+                                  blue:247 / 255.0
+                                 alpha:0.9];
+    artistColor = [UIColor colorWithRed:158 / 255.0
+                                  green:95 / 255.0
+                                   blue:247 / 255.0
+                                  alpha:0.6];
+    timeColor = titleColor;
+    
+    NSString *title = [NSString stringWithFormat:@"%@ - %@",_title,_artist];
+    NSMutableAttributedString *attributedString = [[NSMutableAttributedString alloc] initWithString:title];
+    [attributedString addAttribute:NSFontAttributeName
+                             value:[UIFont systemFontOfSize:15]
+                             range:NSMakeRange(0, _title.length)];
+    [attributedString addAttribute:NSForegroundColorAttributeName
+                             value:titleColor
+                             range:NSMakeRange(0, _title.length)];
+    
+    [attributedString addAttribute:NSFontAttributeName
+                             value:[UIFont systemFontOfSize:12]
+                             range:NSMakeRange(_title.length, _artist.length + 3)];
+    [attributedString addAttribute:NSForegroundColorAttributeName
+                             value:artistColor
+                             range:NSMakeRange(_title.length, _artist.length + 3)];
+    
+    _titleLabel.attributedText = attributedString;
+    _timeLabel.text = _time;
+    _timeLabel.textColor = timeColor;
+}
+
+- (void)unselectStatus {
+    
+    UIColor *titleColor;
+    UIColor *artistColor;
+    UIColor *timeColor;
+    titleColor = [UIColor colorWithRed:0 / 255.0
+                                 green:0 / 255.0
+                                  blue:0 / 255.0
+                                 alpha:0.6];
+    artistColor = titleColor;
+    timeColor = titleColor;
+    
+    NSString *title = [NSString stringWithFormat:@"%@ - %@",_title,_artist];
+    NSMutableAttributedString *attributedString = [[NSMutableAttributedString alloc] initWithString:title];
+    [attributedString addAttribute:NSFontAttributeName
+                             value:[UIFont systemFontOfSize:15]
+                             range:NSMakeRange(0, _title.length)];
+    [attributedString addAttribute:NSForegroundColorAttributeName
+                             value:titleColor
+                             range:NSMakeRange(0, _title.length)];
+    
+    [attributedString addAttribute:NSFontAttributeName
+                             value:[UIFont systemFontOfSize:12]
+                             range:NSMakeRange(_title.length, _artist.length + 3)];
+    [attributedString addAttribute:NSForegroundColorAttributeName
+                             value:artistColor
+                             range:NSMakeRange(_title.length, _artist.length + 3)];
+    
+    _titleLabel.attributedText = attributedString;
+    _timeLabel.text = _time;
+    _timeLabel.textColor = timeColor;
+}
+
+
 -(void)ticker{
     
     [UIView animateWithDuration:.2 animations:^{
