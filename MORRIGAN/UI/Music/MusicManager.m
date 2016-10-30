@@ -40,7 +40,7 @@ static MusicManager *manager = nil;
         _musics = [[NSMutableArray alloc] init];
         
         
-//        dispatch_async(dispatch_get_global_queue(0, 0), ^{
+        dispatch_async(dispatch_get_global_queue(0, 0), ^{
             MPMediaQuery *everything = [MPMediaQuery songsQuery];
             NSArray *itemsFromGenericQuery = [everything items];
             
@@ -48,7 +48,7 @@ static MusicManager *manager = nil;
                 MusicModel *model = [[MusicModel alloc] initWithItem:item];
                 [_musics addObject:model];
             }
-//        });
+        });
         
         NSString *filePath = [[NSBundle mainBundle] pathForResource:@"MusicList" ofType:@"plist"];
         NSArray *array = [NSArray arrayWithContentsOfFile:filePath];
