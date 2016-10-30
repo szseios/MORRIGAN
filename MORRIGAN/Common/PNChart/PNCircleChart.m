@@ -118,34 +118,99 @@ displayCountingLabel:(BOOL)displayCountingLabel
     return self;
 }
 
+- (id)initWithFrame:(CGRect)frame
+         startAngle:(CGFloat)startAngle
+           endAngle:(CGFloat)endAngle
+              total:(NSNumber *)total
+            current:(NSNumber *)current
+          clockwise:(BOOL)clockwise
+{
+    self = [super initWithFrame:frame];
+    
+    if (self) {
+        _total = total;
+        _current = current;
+        _strokeColor = PNFreshGreen;
+        _duration = 1.0;
+        _chartType = PNChartFormatTypePercent;
+        _displayAnimated = YES;
+        
+        _displayCountingLabel = YES;
+        
+//        CGFloat startAngle = clockwise ? -90.0f : 270.0f;
+//        CGFloat endAngle = clockwise ? -90.01f : 270.01f;
+        
+        _lineWidth = @10;
+        
+        UIBezierPath *circlePath = [UIBezierPath bezierPathWithArcCenter:CGPointMake(self.frame.size.width/2.0f, self.frame.size.height/2.0f)
+                                                                  radius:(self.frame.size.height * 0.5) - ([_lineWidth floatValue]/2.0f)
+                                                              startAngle:DEGREES_TO_RADIANS(startAngle - 90.0)
+                                                                endAngle:DEGREES_TO_RADIANS(endAngle)
+                                                               clockwise:clockwise];
+        
+        _circle               = [CAShapeLayer layer];
+        _circle.path          = circlePath.CGPath;
+        _circle.lineCap       = kCALineCapRound;
+        _circle.fillColor     = [UIColor clearColor].CGColor;
+        _circle.lineWidth     = [_lineWidth floatValue];
+        _circle.zPosition     = 1;
+        
+        _circleBackground             = [CAShapeLayer layer];
+        _circleBackground.path        = circlePath.CGPath;
+        _circleBackground.lineCap     = kCALineCapRound;
+        _circleBackground.fillColor   = [UIColor clearColor].CGColor;
+        _circleBackground.lineWidth   = [_lineWidth floatValue];
+        _circleBackground.strokeColor = [UIColor clearColor].CGColor;
+        _circleBackground.strokeEnd   = 1.0;
+        _circleBackground.zPosition   = -1;
+        
+        [self.layer addSublayer:_circle];
+        [self.layer addSublayer:_circleBackground];
+        
+//        _countingLabel = [[UICountingLabel alloc] initWithFrame:CGRectMake(0, 0, 100.0, 50.0)];
+//        [_countingLabel setTextAlignment:NSTextAlignmentCenter];
+//        [_countingLabel setFont:[UIFont boldSystemFontOfSize:16.0f]];
+//        [_countingLabel setTextColor:[UIColor grayColor]];
+//        [_countingLabel setBackgroundColor:[UIColor clearColor]];
+//        [_countingLabel setCenter:CGPointMake(self.frame.size.width/2.0f, self.frame.size.height/2.0f)];
+//        _countingLabel.method = UILabelCountingMethodEaseInOut;
+//        if (_displayCountingLabel) {
+//            [self addSubview:_countingLabel];
+//        }
+    }
+    
+    return self;
+
+}
+
 
 - (void)strokeChart
 {
     // Add counting label
 
-    if (_displayCountingLabel) {
-        NSString *format;
-        switch (self.chartType) {
-            case PNChartFormatTypePercent:
-                format = @"%d%%";
-                break;
-            case PNChartFormatTypeDollar:
-                format = @"$%d";
-                break;
-            case PNChartFormatTypeDecimal:
-                format = @"%.1f";
-                break;
-            case PNChartFormatTypeDecimalTwoPlaces:
-                format = @"%.2f";
-                break;
-            case PNChartFormatTypeNone:
-            default:
-                format = @"%d";
-                break;
-        }
-        self.countingLabel.format = format;
-        [self addSubview:self.countingLabel];
-    }
+//    if (_displayCountingLabel) {
+//        NSString *format;
+//        switch (self.chartType) {
+//            case PNChartFormatTypePercent:
+//                format = @"%d%%";
+//                break;
+//            case PNChartFormatTypeDollar:
+//                format = @"$%d";
+//                break;
+//            case PNChartFormatTypeDecimal:
+//                format = @"%.1f";
+//                break;
+//            case PNChartFormatTypeDecimalTwoPlaces:
+//                format = @"%.2f";
+//                break;
+//            case PNChartFormatTypeNone:
+//            default:
+//                format = @"%d";
+//                break;
+//        }
+//        self.countingLabel.format = format;
+//        [self addSubview:self.countingLabel];
+//    }
 
 
     // Add circle params

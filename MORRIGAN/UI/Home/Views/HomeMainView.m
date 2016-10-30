@@ -7,6 +7,7 @@
 //
 
 #import "HomeMainView.h"
+#import "PNChart.h"
 
 @interface HomeMainView ()
 
@@ -28,10 +29,22 @@
 
 @property (nonatomic , strong) UIBezierPath *path;
 
+@property (nonatomic , strong) PNCircleChart *circleChart;
+
+@property (nonatomic , strong) NSArray *haveMorriganArray;
+
 @end
 
 @implementation HomeMainView
 
+- (instancetype)initWithMorriganArray:(NSArray *)array withFarme:(CGRect)frame;
+{
+    self = [super initWithFrame:frame];
+    if (self) {
+        _haveMorriganArray = array;
+    }
+    return self;
+}
 
 // Only override drawRect: if you perform custom drawing.
 // An empty implementation adversely affects performance during animation.
@@ -44,7 +57,7 @@
     imageView.image = [UIImage imageNamed:@"homePageBackgroud"];
     [self addSubview:imageView];
     
-    CGFloat circleX = _viewWidth * 10 / 312.0;
+    CGFloat circleX = _viewWidth * 11 / 312.0;
     CGFloat circleY = _viewHeight * 124 / 860.0;
     CGFloat circleW = _viewWidth * 262/312.0;
     _circleImageView = [[UIImageView alloc] init];
@@ -57,25 +70,14 @@
     [self setUpUpView];
     [self setUpDownView];
     
-    self.userInteractionEnabled = YES;
-    UITapGestureRecognizer *tap = [[UITapGestureRecognizer alloc] initWithTarget:self action:@selector(tapToMove)];
-    [self addGestureRecognizer:tap];
+    if (_haveMorriganArray) {
+        for (NSDictionary *haveDict in _haveMorriganArray) {
+            CGFloat startTime = [[haveDict objectForKey:@"startTime"] floatValue];
+            CGFloat endTime = [[haveDict objectForKey:@"endTime"] floatValue];
+            [self emptyStartTime:startTime toEndTime:endTime];
+        }
+    }
     
-    //    UIBezierPath *path = [UIBezierPath bezierPath];
-    //    [[UIColor redColor] setStroke];
-    //    path.lineWidth = 30;
-    //    CGPoint center = CGPointMake(circleW / 2, circleW / 2);
-    //    [path addArcWithCenter:center radius:circleW / 2 startAngle:M_PI * 3 / 2 endAngle:M_PI * 3 / 2 + M_PI clockwise:YES];
-    //    [path stroke];
-    //    CAShapeLayer *layer = [CAShapeLayer layer];
-    //    layer.frame = _circleImageView.frame;
-    //    layer.position = _circleImageView.center;
-    //    layer.lineWidth = 100;
-    //    layer.shadowPath = path.CGPath;
-    //
-    //    layer.fillColor = [UIColor redColor].CGColor;
-    
-    //    [self.layer addSublayer:layer];
 }
 
 
@@ -206,59 +208,30 @@
 
 - (void)morriganStartTime:(CGFloat)startTime toEndTime:(CGFloat)endTime
 {
-    UIBezierPath *path = [[UIBezierPath alloc] init];
-    [[UIColor colorWithRed:0.8 green:0 blue:0 alpha:0.8] setStroke];
-    path.lineWidth = 8;
-    [path addArcWithCenter:_circleImageView.center radius:_circleImageView.width / 2 startAngle:M_PI * 3 / 2 endAngle:M_PI * 3 / 2 + M_PI / 6 clockwise:YES];
+    PNCircleChart *circleChart = [[PNCircleChart alloc] initWithFrame:CGRectMake(_circleImageView.x+2,_circleImageView.y+4, _circleImageView.width-4, _circleImageView.height-4) startAngle:startTime endAngle:endTime total:@360 current:@(endTime - startTime) clockwise:YES];
     
-    //    CAShapeLayer *layer = [[CAShapeLayer alloc] init];
-    //    layer.shadowPath = path.CGPath;
-    CAKeyframeAnimation *moveAnim = [CAKeyframeAnimation animationWithKeyPath:@"position"];
-    moveAnim.path = path.CGPath;
-    moveAnim.removedOnCompletion = YES;
-    [_circleImageView.layer addAnimation:moveAnim forKey:nil];
-    //    [_circleImageView.layer addSublayer:layer];
-    [self setNeedsDisplay];
+    circleChart.backgroundColor = [UIColor clearColor];
+    
+    [circleChart setStrokeColor:[UIColor whiteColor]];
+    [circleChart setStrokeColorGradientStart:[UIColor redColor]];
+    [circleChart strokeChart];
+    
+    [self addSubview:circleChart];
+    
 }
 
 
-- (void)restTimeFrom:(CGFloat)FromTime toEndTime:(CGFloat)endTime
+- (void)emptyStartTime:(CGFloat)startTime toEndTime:(CGFloat)endTime
 {
-    UIBezierPath *path = [[UIBezierPath alloc] init];
-    [[UIColor colorWithRed:0.8 green:0 blue:0 alpha:0.8] setStroke];
-    path.lineWidth = 3;
-    [path addArcWithCenter:_circleImageView.center radius:_circleImageView.width / 2 startAngle:M_PI * 3 / 2 endAngle:M_PI * 3 / 2 + M_PI clockwise:YES];
+    PNCircleChart *circleChart = [[PNCircleChart alloc] initWithFrame:CGRectMake(_circleImageView.x+2,_circleImageView.y+4, _circleImageView.width-4, _circleImageView.height-4) startAngle:startTime endAngle:endTime total:@360 current:@(endTime - startTime) clockwise:YES];
     
-    CAKeyframeAnimation *moveAnim = [CAKeyframeAnimation animationWithKeyPath:@"position"];
-    moveAnim.path = path.CGPath;
-    moveAnim.removedOnCompletion = YES;
-    [_circleImageView.layer addAnimation:moveAnim forKey:nil];
-    [self setNeedsDisplay];
-}
-
-- (void)tapToMove
-{
-    UIBezierPath *path = [UIBezierPath bezierPath];
-    [[UIColor redColor] setStroke];
-    path.lineWidth = 30;
-    CGPoint center = CGPointMake(_circleImageView.width / 2, _circleImageView.height / 2);
-    [path addArcWithCenter:center radius:_circleImageView.width / 2 startAngle:M_PI * 3 / 2 endAngle:M_PI * 3 / 2 + M_PI clockwise:YES];
-    [path stroke];
-    CAShapeLayer *layer = [CAShapeLayer layer];
-    layer.frame = _circleImageView.frame;
-    layer.position = _circleImageView.center;
-    layer.lineWidth = 100;
-    layer.shadowPath = path.CGPath;
+    circleChart.backgroundColor = [UIColor clearColor];
     
-    layer.fillColor = [UIColor redColor].CGColor;
+    [circleChart setStrokeColor:[UIColor whiteColor]];
+    [circleChart setStrokeColorGradientStart:[UIColor blackColor]];
+    [circleChart strokeChart];
     
-    [self.layer addSublayer:layer];
-    //    CAKeyframeAnimation *moveAnim = [CAKeyframeAnimation animationWithKeyPath:@"rotation"];
-    //    moveAnim.path = path.CGPath;
-    //    moveAnim.removedOnCompletion = YES;
-    //    moveAnim.duration = 10;
-    //    [layer addAnimation:moveAnim forKey:nil];
-    [self setNeedsDisplay];
+    [self addSubview:circleChart];
 }
 
 @end

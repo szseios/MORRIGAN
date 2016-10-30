@@ -10,4 +10,10 @@
 
 @interface HomeMainView : UIView
 
+- (instancetype)initWithMorriganArray:(NSArray *)array withFarme:(CGRect)frame;
+
+- (void)morriganStartTime:(CGFloat)startTime toEndTime:(CGFloat)endTime;
+
+- (void)emptyStartTime:(CGFloat)startTime toEndTime:(CGFloat)endTime;
+
 @end

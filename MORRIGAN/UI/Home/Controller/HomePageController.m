@@ -45,6 +45,8 @@
 
 @property (nonatomic , strong) BasicBarView *barView;
 
+@property (nonatomic , strong) HomeMainView *mainView;
+
 @end
 
 @implementation HomePageController
@@ -67,6 +69,12 @@
     
 }
 
+- (void)viewWillAppear:(BOOL)animated
+{
+    [super viewWillAppear:animated];
+//    [_mainView morriganStartTime:90 toEndTime:180];
+}
+
 - (void)setUpBarView
 {
     _barView = [[BasicBarView alloc] initWithFrame:CGRectMake(0, 20, kScreenWidth, 44) withType:superBarTypeleftItemMove withTitle:@"M O R R I G A N"];
@@ -80,10 +88,22 @@
     CGFloat mainViewH = mainViewW / 624 * 860.0;
     CGFloat mainViewX = (kScreenWidth - mainViewW) /2 + (kScreenWidth > 320 ? 20 : 15); //kScreenWidth > 320 ? 50 : 20;
     
-    HomeMainView *mainView = [[HomeMainView alloc] initWithFrame:CGRectMake(mainViewX, 74, mainViewW, mainViewH)];
-    mainView.backgroundColor = [UIColor clearColor];
-    [self.view addSubview:mainView];
+    NSDictionary *temDic = @{@"startTime":@0,@"endTime":@180};
+    NSDictionary *temDic1 = @{@"startTime":@290,@"endTime":@380};
+    NSArray *array = @[temDic,temDic1];
+    _mainView = [[HomeMainView alloc] initWithMorriganArray:array withFarme:CGRectMake(mainViewX, 74, mainViewW, mainViewH)];
+    _mainView.backgroundColor = [UIColor clearColor];
     
+    [self.view addSubview:_mainView];
+    
+    self.view.userInteractionEnabled = YES;
+    UITapGestureRecognizer *tap = [[UITapGestureRecognizer alloc] initWithTarget:self action:@selector(setUpCircleView)];
+    [_mainView addGestureRecognizer:tap];
+}
+
+- (void)setUpCircleView
+{
+    [_mainView morriganStartTime:90 toEndTime:440];
 }
 
 - (void)setUpBottomView
