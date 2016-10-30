@@ -10,7 +10,7 @@
 #import "FuntionButton.h"
 #import "Utils.h"
 
-
+#define kTagOfDefault       0        // 默认按钮tag
 #define kTagOfSoft          1000     // 轻柔按钮tag
 #define kTagOfWater         1001     // 水波按钮tag
 #define kTagOfMicroPress    1002     // 微按按钮tag
@@ -388,15 +388,21 @@
         CGFloat w = button.frame.size.width;
         CGFloat h = button.frame.size.height;
         if(fabsf(dragButtonY - y) < h || fabsf(dragButtonX - x) < w) {
-            button.tag = _dragButton.tag;
             FuntionButton *newButton = [[FuntionButton alloc] initWithFrame:button.frame];
-            newButton.arrayIndex = button.arrayIndex;
-            newButton.tag = _dragButton.tag;
-            newButton.buttonImage = _dragButton.buttonImage;
-            [newButton setImage:newButton.buttonImage forState:UIControlStateNormal];
-            UIPanGestureRecognizer *panGestureRecognizer = [[UIPanGestureRecognizer alloc] initWithTarget:self action:@selector(topFiveButtonGesture:)];
-            [newButton addGestureRecognizer:panGestureRecognizer];
-            [self.view addSubview:newButton];
+            // 如果该位置已经添加了，不允许重复添加
+            if(button.tag == kTagOfDefault) {
+                newButton.arrayIndex = button.arrayIndex;
+                newButton.tag = _dragButton.tag;
+                newButton.buttonImage = _dragButton.buttonImage;
+                [newButton setImage:newButton.buttonImage forState:UIControlStateNormal];
+                UIPanGestureRecognizer *panGestureRecognizer = [[UIPanGestureRecognizer alloc] initWithTarget:self action:@selector(topFiveButtonGesture:)];
+                [newButton addGestureRecognizer:panGestureRecognizer];
+                [self.view addSubview:newButton];
+                
+                // 将顶部被添加的按钮设置tag，代表了一种按摩模式
+                button.tag = _dragButton.tag;
+            }
+            
         }
         
     }
@@ -423,6 +429,7 @@
         FuntionButton *button = _topFiveButtonArray[newButton.arrayIndex];
         if(fabsf(newButton.frame.origin.y - button.frame.origin.y) > newButton.frame.size.height || fabsf(newButton.frame.origin.x - button.frame.origin.x) > newButton.frame.size.width) {
             [newButton removeFromSuperview];
+            button.tag = kTagOfDefault;
         } else {
             newButton.frame = button.frame;
         }
