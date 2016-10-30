@@ -1,0 +1,108 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.XIB" version="3.0" toolsVersion="11201" systemVersion="16A323" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" colorMatched="YES">
+    <dependencies>
+        <deployment identifier="iOS"/>
+        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="11161"/>
+        <capability name="documents saved in the Xcode 8 format" minToolsVersion="8.0"/>
+    </dependencies>
+    <objects>
+        <placeholder placeholderIdentifier="IBFilesOwner" id="-1" userLabel="File's Owner" customClass="SetTargetController">
+            <connections>
+                <outlet property="achieveButton" destination="cRb-3U-Gpw" id="hHf-Ur-Uzc"/>
+                <outlet property="countLabel" destination="1dU-Xo-VFD" id="2OF-KE-J3w"/>
+                <outlet property="view" destination="i5M-Pr-FkT" id="sfx-zR-JGt"/>
+            </connections>
+        </placeholder>
+        <placeholder placeholderIdentifier="IBFirstResponder" id="-2" customClass="UIResponder"/>
+        <view clearsContextBeforeDrawing="NO" contentMode="scaleToFill" id="i5M-Pr-FkT">
+            <rect key="frame" x="0.0" y="0.0" width="375" height="667"/>
+            <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
+            <subviews>
+                <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="设置您的每日分钟数" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="tY1-0m-yF6">
+                    <constraints>
+                        <constraint firstAttribute="height" constant="30" id="ZBi-PV-F55"/>
+                    </constraints>
+                    <fontDescription key="fontDescription" type="system" pointSize="17"/>
+                    <color key="textColor" cocoaTouchSystemColor="scrollViewTexturedBackgroundColor"/>
+                    <nil key="highlightedColor"/>
+                </label>
+                <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="设置合理的目标进行挑战" textAlignment="center" lineBreakMode="tailTruncation" numberOfLines="0" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="oj2-dw-r4w">
+                    <constraints>
+                        <constraint firstAttribute="height" constant="25" id="7Zr-ja-yZn"/>
+                    </constraints>
+                    <fontDescription key="fontDescription" type="system" pointSize="17"/>
+                    <color key="textColor" cocoaTouchSystemColor="scrollViewTexturedBackgroundColor"/>
+                    <nil key="highlightedColor"/>
+                </label>
+                <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="60" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="1dU-Xo-VFD">
+                    <constraints>
+                        <constraint firstAttribute="width" constant="100" id="28F-zS-Dmu"/>
+                        <constraint firstAttribute="height" constant="80" id="bgd-SL-b6H"/>
+                    </constraints>
+                    <fontDescription key="fontDescription" type="system" pointSize="54"/>
+                    <color key="textColor" red="0.49628456497970463" green="0.19296524925112912" blue="0.70587759067357514" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+                    <nil key="highlightedColor"/>
+                </label>
+                <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="分" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="mKk-Fe-tKT">
+                    <constraints>
+                        <constraint firstAttribute="height" constant="21" id="iug-a3-dOF"/>
+                        <constraint firstAttribute="width" constant="42" id="l6E-Tf-ROw"/>
+                    </constraints>
+                    <fontDescription key="fontDescription" type="system" pointSize="24"/>
+                    <color key="textColor" cocoaTouchSystemColor="scrollViewTexturedBackgroundColor"/>
+                    <nil key="highlightedColor"/>
+                </label>
+                <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="cRb-3U-Gpw">
+                    <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                    <constraints>
+                        <constraint firstAttribute="height" constant="35" id="ZrT-IL-WeG"/>
+                    </constraints>
+                    <fontDescription key="fontDescription" type="system" pointSize="20"/>
+                    <color key="tintColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                    <state key="normal" title="完成" backgroundImage="basicBackground">
+                        <color key="titleColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                    </state>
+                </button>
+                <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="arrowDown" translatesAutoresizingMaskIntoConstraints="NO" id="Ojk-sU-nXC">
+                    <constraints>
+                        <constraint firstAttribute="height" constant="20" id="8lc-yD-Kmq"/>
+                        <constraint firstAttribute="width" constant="20" id="uxX-Kj-coo"/>
+                    </constraints>
+                </imageView>
+                <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="趣味从达到目标开始" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="c81-Bv-yL7">
+                    <constraints>
+                        <constraint firstAttribute="height" constant="25" id="HJi-Ck-hl6"/>
+                    </constraints>
+                    <fontDescription key="fontDescription" type="system" pointSize="17"/>
+                    <color key="textColor" cocoaTouchSystemColor="scrollViewTexturedBackgroundColor"/>
+                    <nil key="highlightedColor"/>
+                </label>
+            </subviews>
+            <color key="backgroundColor" red="1" green="1" blue="1" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+            <constraints>
+                <constraint firstItem="tY1-0m-yF6" firstAttribute="leading" secondItem="i5M-Pr-FkT" secondAttribute="leading" id="4gf-2m-yhf"/>
+                <constraint firstItem="mKk-Fe-tKT" firstAttribute="top" secondItem="tY1-0m-yF6" secondAttribute="bottom" constant="100" id="AWC-be-DEE"/>
+                <constraint firstItem="Ojk-sU-nXC" firstAttribute="top" secondItem="i5M-Pr-FkT" secondAttribute="top" constant="160" id="AWg-dp-vbT"/>
+                <constraint firstItem="c81-Bv-yL7" firstAttribute="leading" secondItem="i5M-Pr-FkT" secondAttribute="leading" id="LAJ-fv-S7L"/>
+                <constraint firstAttribute="trailing" secondItem="c81-Bv-yL7" secondAttribute="trailing" id="LKz-MC-a70"/>
+                <constraint firstItem="c81-Bv-yL7" firstAttribute="top" secondItem="oj2-dw-r4w" secondAttribute="bottom" id="P41-Nl-iDU"/>
+                <constraint firstAttribute="bottom" secondItem="cRb-3U-Gpw" secondAttribute="bottom" constant="80" id="R0V-MS-6C2"/>
+                <constraint firstAttribute="trailing" secondItem="oj2-dw-r4w" secondAttribute="trailing" id="R9u-3c-5q2"/>
+                <constraint firstItem="tY1-0m-yF6" firstAttribute="top" secondItem="i5M-Pr-FkT" secondAttribute="top" constant="84" id="S8S-A5-bqj"/>
+                <constraint firstItem="Ojk-sU-nXC" firstAttribute="centerX" secondItem="i5M-Pr-FkT" secondAttribute="centerX" id="TnZ-jw-9Oz"/>
+                <constraint firstItem="oj2-dw-r4w" firstAttribute="top" secondItem="1dU-Xo-VFD" secondAttribute="bottom" constant="140" id="XnT-h6-L6f"/>
+                <constraint firstItem="1dU-Xo-VFD" firstAttribute="centerX" secondItem="i5M-Pr-FkT" secondAttribute="centerX" id="XpU-vp-Tpe"/>
+                <constraint firstItem="cRb-3U-Gpw" firstAttribute="leading" secondItem="i5M-Pr-FkT" secondAttribute="leading" constant="50" id="cVq-zU-aNW"/>
+                <constraint firstAttribute="trailing" secondItem="cRb-3U-Gpw" secondAttribute="trailing" constant="50" id="eYG-1o-Jjw"/>
+                <constraint firstItem="mKk-Fe-tKT" firstAttribute="leading" secondItem="1dU-Xo-VFD" secondAttribute="trailing" id="g7Z-fp-zN3"/>
+                <constraint firstItem="1dU-Xo-VFD" firstAttribute="top" secondItem="Ojk-sU-nXC" secondAttribute="bottom" id="i9J-Iw-Mme"/>
+                <constraint firstItem="oj2-dw-r4w" firstAttribute="leading" secondItem="i5M-Pr-FkT" secondAttribute="leading" id="lza-BQ-qZM"/>
+                <constraint firstAttribute="trailing" secondItem="tY1-0m-yF6" secondAttribute="trailing" id="rLD-Ku-WJS"/>
+            </constraints>
+        </view>
+    </objects>
+    <resources>
+        <image name="arrowDown" width="16" height="12"/>
+        <image name="basicBackground" width="375" height="667"/>
+    </resources>
+</document>

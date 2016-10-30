@@ -9,13 +9,13 @@
             shouldBeEnabled = "No"
             ignoreCount = "0"
             continueAfterRunningActions = "No"
-            filePath = "MORRIGAN/UI/Music/MusicTableViewCell.m"
-            timestampString = "497678754.76595"
+            filePath = "MORRIGAN/UI/Music/MusicViewController.m"
+            timestampString = "498906493.097564"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "25"
-            endingLineNumber = "25"
-            landmarkName = "-awakeFromNib"
+            startingLineNumber = "159"
+            endingLineNumber = "159"
+            landmarkName = "-startPlayMusic:"
             landmarkType = "7">
          </BreakpointContent>
       </BreakpointProxy>

@@ -8,11 +8,20 @@
 
 #import <UIKit/UIKit.h>
 
-@interface MusicTableViewCell : UITableViewCell
+@interface MusicTableViewCell : UITableViewCell {
+    NSMutableArray *_barArray;
+    NSTimer *_timer;
+}
 
 @property (weak, nonatomic) IBOutlet UILabel *titleLabel;
-@property (strong, nonatomic) UIImageView *animationImageView;
+@property (strong, nonatomic) UIView *animationImageView;
 @property (strong, nonatomic) UILabel *timeLabel;
 
+
+- (void)startAnimation;
+
+- (void)stopAnimation;
+
+- (void)resetBars;
 
 @end
