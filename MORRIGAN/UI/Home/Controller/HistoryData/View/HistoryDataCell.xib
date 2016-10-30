@@ -39,9 +39,9 @@
                     </label>
                     <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="分钟" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="fXm-2J-3gv">
                         <constraints>
-                            <constraint firstAttribute="width" constant="40" id="NYc-Ow-uoQ"/>
+                            <constraint firstAttribute="width" constant="50" id="NYc-Ow-uoQ"/>
                         </constraints>
-                        <fontDescription key="fontDescription" type="system" pointSize="15"/>
+                        <fontDescription key="fontDescription" type="system" pointSize="14"/>
                         <color key="textColor" white="0.33333333333333331" alpha="1" colorSpace="calibratedWhite"/>
                         <nil key="highlightedColor"/>
                     </label>
@@ -74,6 +74,7 @@
                 <outlet property="minuteLabel" destination="ZiT-w3-phN" id="ICi-FN-GIF"/>
                 <outlet property="titleImage" destination="dJZ-W3-npM" id="8oh-ME-d1O"/>
                 <outlet property="titleLabel" destination="sGr-Kn-v8L" id="Isa-Av-KvQ"/>
+                <outlet property="unitLabel" destination="fXm-2J-3gv" id="pw8-y2-R4g"/>
             </connections>
         </tableViewCell>
     </objects>

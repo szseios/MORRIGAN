@@ -17,6 +17,8 @@
 
 - (UIColor *)barColorAtIndex:(NSUInteger)index;
 
+@property (nonatomic , assign) BOOL isNotFirstMax;
+
 @end
 
 @implementation PNBarChart
@@ -48,8 +50,8 @@
     self.backgroundColor = [UIColor whiteColor];
     self.clipsToBounds   = YES;
     _showLabel           = YES;
-    _barBackgroundColor  = PNLightGrey;
-    _labelTextColor      = [UIColor grayColor];
+    _barBackgroundColor  = [UIColor clearColor];
+    _labelTextColor      = [UIColor lightGrayColor];
     _labelFont           = [UIFont systemFontOfSize:11.0f];
     _xChartLabels        = [NSMutableArray array];
     _yChartLabels        = [NSMutableArray array];
@@ -61,9 +63,9 @@
     _chartMarginRight    = 25.0;
     _chartMarginTop      = 25.0;
     _chartMarginBottom   = 25.0;
-    _barRadius           = 2.0;
-    _showChartBorder     = NO;
-    _chartBorderColor    = PNLightGrey;
+    _barRadius           = 1.0;
+    _showChartBorder     = YES;
+    _chartBorderColor    = [UIColor colorWithRed:1 green:1 blue:1 alpha:0.6];
     _showLevelLine       = NO;
     _yChartLabelWidth    = 18;
     _rotateForXAxisText  = false;
@@ -166,8 +168,103 @@
 	_xLabelWidth = (self.frame.size.width - _chartMarginLeft - _chartMarginRight) / [xLabels count];
 
     if (_showLabel) {
+        if (_isShowWeekLabel) {
+            int labelAddCount = 0;
+            for (int index = 0; index < _xLabels.count; index++) {
+                
+                labelAddCount += 1;
+                
+                if (labelAddCount == _xLabelSkip) {
+                    NSString *labelText;
+                    switch (index) {
+                        case 0:
+                        {
+                            labelText = @"周一";
+                        }
+                            break;
+                        case 1:
+                        {
+                            labelText = @"周二";
+                        }
+                            break;
+                        case 2:
+                        {
+                            labelText = @"周三";
+                        }
+                            break;
+                        case 3:
+                        {
+                            labelText = @"周四";
+                        }
+                            break;
+                        case 4:
+                        {
+                            labelText = @"周五";
+                        }
+                            break;
+                        case 5:
+                        {
+                            labelText = @"周六";
+                        }
+                            break;
+                        case 6:
+                        {
+                            labelText = @"周日";
+                        }
+                            break;
+                            
+                        default:
+                            break;
+                    }
+                    PNChartLabel * label = [[PNChartLabel alloc] initWithFrame:CGRectMake(0, 0, _xLabelWidth, kXLabelHeight)];
+                    label.font = _labelFont;
+                    label.textColor = _labelTextColor;
+                    [label setTextAlignment:NSTextAlignmentCenter];
+                    label.text = labelText;
+                    //[label sizeToFit];
+                    CGFloat labelXPosition;
+                    if (_rotateForXAxisText){
+                        label.transform = CGAffineTransformMakeRotation(M_PI / 4);
+                        labelXPosition = (index *  _xLabelWidth + _chartMarginLeft + _xLabelWidth /1.5);
+                    }
+                    else{
+                        labelXPosition = (index *  _xLabelWidth + _chartMarginLeft + _xLabelWidth /2.0 );
+                    }
+                    label.center = CGPointMake(labelXPosition,
+                                               self.frame.size.height - kXLabelHeight - _chartMarginTop + label.frame.size.height /2.0 + _labelMarginTop);
+                    labelAddCount = 0;
+                    
+                    [_xChartLabels addObject:label];
+                    [self addSubview:label];
+                }
+
+            }
+        }else{
         int labelAddCount = 0;
         for (int index = 0; index < _xLabels.count; index++) {
+            if (index == 0) {
+                NSString *labelText = [_xLabels[index] description];
+                PNChartLabel * label = [[PNChartLabel alloc] initWithFrame:CGRectMake(0, 0, _xLabelWidth, kXLabelHeight)];
+                label.font = _labelFont;
+                label.textColor = _labelTextColor;
+                [label setTextAlignment:NSTextAlignmentCenter];
+                label.text = labelText;
+                //[label sizeToFit];
+                CGFloat labelXPosition;
+                if (_rotateForXAxisText){
+                    label.transform = CGAffineTransformMakeRotation(M_PI / 4);
+                    labelXPosition = (index *  _xLabelWidth + _chartMarginLeft + _xLabelWidth /1.5);
+                }
+                else{
+                    labelXPosition = (index *  _xLabelWidth + _chartMarginLeft + _xLabelWidth /2.0 );
+                }
+                label.center = CGPointMake(labelXPosition,
+                                           self.frame.size.height - kXLabelHeight - _chartMarginTop + label.frame.size.height /2.0 + _labelMarginTop);
+                labelAddCount = 0;
+                
+                [_xChartLabels addObject:label];
+                [self addSubview:label];
+            }
             labelAddCount += 1;
 
             if (labelAddCount == _xLabelSkip) {
@@ -193,6 +290,7 @@
                 [_xChartLabels addObject:label];
                 [self addSubview:label];
             }
+        }
         }
     }
 }
@@ -272,7 +370,7 @@
         }
 
         //Height Of Bar
-        float value = [valueString floatValue];
+        float value = [valueString floatValue] +1;
         float grade =fabsf((float)value / (float)_yValueMax);
 
         if (isnan(grade)) {
@@ -280,7 +378,16 @@
         }
         bar.maxDivisor = (float)_yValueMax;
         bar.grade = grade;
-        bar.isShowNumber = self.isShowNumbers;
+        if (value == [[_yValues valueForKeyPath:@"@max.floatValue"] floatValue] + 1) {
+            if (!_isNotFirstMax) {
+              bar.isShowNumber = YES;
+                _isNotFirstMax = YES;
+            }
+            
+        }else{
+          bar.isShowNumber = NO;
+        }
+//        bar.isShowNumber = YES;
         CGRect originalFrame = bar.frame;
         NSString *currentNumber =  [NSString stringWithFormat:@"%f",value];
 
@@ -313,7 +420,7 @@
         _chartBottomLine = [CAShapeLayer layer];
         _chartBottomLine.lineCap      = kCALineCapButt;
         _chartBottomLine.fillColor    = [[UIColor whiteColor] CGColor];
-        _chartBottomLine.lineWidth    = 1.0;
+        _chartBottomLine.lineWidth    = 2.0;
         _chartBottomLine.strokeEnd    = 0.0;
 
         UIBezierPath *progressline = [UIBezierPath bezierPath];
@@ -321,7 +428,7 @@
         [progressline moveToPoint:CGPointMake(_chartMarginLeft, self.frame.size.height - kXLabelHeight - _chartMarginBottom + _chartMarginTop)];
         [progressline addLineToPoint:CGPointMake(self.frame.size.width - _chartMarginRight,  self.frame.size.height - kXLabelHeight - _chartMarginBottom + _chartMarginTop)];
 
-        [progressline setLineWidth:1.0];
+        [progressline setLineWidth:2.0];
         [progressline setLineCapStyle:kCGLineCapSquare];
         _chartBottomLine.path = progressline.CGPath;
         _chartBottomLine.strokeColor = [_chartBorderColor CGColor];;
@@ -334,7 +441,7 @@
         _chartLeftLine = [CAShapeLayer layer];
         _chartLeftLine.lineCap      = kCALineCapButt;
         _chartLeftLine.fillColor    = [[UIColor whiteColor] CGColor];
-        _chartLeftLine.lineWidth    = 1.0;
+        _chartLeftLine.lineWidth    = 0.0;
         _chartLeftLine.strokeEnd    = 0.0;
 
         UIBezierPath *progressLeftline = [UIBezierPath bezierPath];
