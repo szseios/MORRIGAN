@@ -120,4 +120,6 @@ typedef NSString *(^PNYLabelFormatter)(CGFloat yLabelValue);
 /** whether show numbers*/
 @property (nonatomic, assign) BOOL isShowNumbers;
 
+@property (nonatomic , assign) BOOL isShowWeekLabel;  //自己加的X轴下面的日期
+
 @end

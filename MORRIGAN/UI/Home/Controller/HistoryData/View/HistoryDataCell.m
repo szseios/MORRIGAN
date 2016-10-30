@@ -26,6 +26,7 @@
         _minuteLabel.hidden = YES;
     }
     _titleLabel.text = title;
+    _unitLabel.text = @"分钟";
     switch (index.row) {
         case 0:
         {
@@ -45,6 +46,7 @@
         case 3:
         {
             _titleImage.image = [UIImage imageNamed:@"icon_average"];
+            _unitLabel.text = @"分钟/日";
         }
             break;
             

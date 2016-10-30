@@ -76,14 +76,16 @@
 - (void)leftClick
 {
     _rightImageView = [[UIImageView alloc] initWithFrame:self.navigationController.view.bounds];
-    [_rightImageView setViewCopiedImage:self.navigationController.view];
+    if (!_rightImageView.image) {
+       [_rightImageView setViewCopiedImage:self.navigationController.view];
+    }
     [self.navigationController.view addSubview:_rightImageView];
     _personCtl.view.alpha = 1;
     [UIView animateWithDuration:0.3 animations:^{
         
         [_homeCtl.view removeFromSuperview];
         _rightImageView.y = 20;
-        _rightImageView.x = 300;
+        _rightImageView.x = kScreenWidth * 3 / 4;
     } completion:^(BOOL finished) {
         [_personCtl setRightImage:_rightImageView.image];
         _rightImageView.hidden = YES;

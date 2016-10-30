@@ -37,8 +37,8 @@ static NSString *cellIdentifier = @"cellIdentifier";
     backgroudView.image = [UIImage imageNamed:@"basicBackground"];
     [self.view addSubview:backgroudView];
     
-    CGFloat cellWidth = 300;
-    _personalTableView = [[UITableView alloc] initWithFrame:CGRectMake(0, 0,300 ,self.view.height) style:UITableViewStyleGrouped];
+    CGFloat cellWidth = kScreenWidth * 3 / 4;
+    _personalTableView = [[UITableView alloc] initWithFrame:CGRectMake(0, 0,cellWidth ,self.view.height) style:UITableViewStyleGrouped];
     _personalTableView.delegate = self;
     _personalTableView.dataSource = self;
     _personalTableView.backgroundColor = [UIColor clearColor];
@@ -88,7 +88,7 @@ static NSString *cellIdentifier = @"cellIdentifier";
 
 - (void)setRightImage:(UIImage *)rightImage
 {
-    _rightImageView = [[UIImageView alloc] initWithFrame:CGRectMake(300, 20, kScreenWidth, kScreenHeight)];
+    _rightImageView = [[UIImageView alloc] initWithFrame:CGRectMake(kScreenWidth * 3 / 4, 20, kScreenWidth, kScreenHeight)];
     
     _rightImage = rightImage;
     _rightImageView.image = rightImage;

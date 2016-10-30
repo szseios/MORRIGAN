@@ -13,6 +13,8 @@
 #import "BasicBarView.h"
 #import "MusicViewController.h"
 #import "SearchPeripheralViewController.h"
+#import "AutoKneadViewController.h"
+#import "HandKneadViewController.h"
 
 @interface UIImageView (backImageMove)
 
@@ -52,11 +54,11 @@
 - (void)viewDidLoad {
     [super viewDidLoad];
 //    
-    UIImageView *upBackImage = [[UIImageView alloc] initWithFrame:CGRectMake(0, 0, self.view.width, self.view.height - 100)];
+    UIImageView *upBackImage = [[UIImageView alloc] initWithFrame:CGRectMake(0, 0, self.view.width, self.view.height)];
     upBackImage.image = [UIImage imageNamed:@"upBackgroud"];
     [self.view addSubview:upBackImage];
     
-    UIImageView *downBackImage = [[UIImageView alloc] initWithFrame:CGRectMake(0, self.view.height - 220, self.view.width, 220)];
+    UIImageView *downBackImage = [[UIImageView alloc] initWithFrame:CGRectMake(0, self.view.height - 180, self.view.width, 180)];
     downBackImage.image = [UIImage imageNamed:@"downBackgroud"];
     [self.view addSubview:downBackImage];
     
@@ -76,10 +78,11 @@
 
 - (void)setUpHomeMainView
 {
-    CGFloat mainViewX = kScreenWidth > 320 ? 50 : 20;
-    CGFloat mainViewW = kScreenWidth > 320 ? 300 : 260;
+    CGFloat mainViewW = kScreenWidth * 0.75 + (kScreenWidth > 320 ? 30 : 10); //kScreenWidth > 320 ? 300 : 220;
     CGFloat mainViewH = mainViewW / 624 * 860.0;
-    HomeMainView *mainView = [[HomeMainView alloc] initWithFrame:CGRectMake(mainViewX, 64, mainViewW, mainViewH)];
+    CGFloat mainViewX = (kScreenWidth - mainViewW) /2 + (kScreenWidth > 320 ? 20 : 15); //kScreenWidth > 320 ? 50 : 20;
+    
+    HomeMainView *mainView = [[HomeMainView alloc] initWithFrame:CGRectMake(mainViewX, 74, mainViewW, mainViewH)];
     mainView.backgroundColor = [UIColor clearColor];
     [self.view addSubview:mainView];
     
@@ -87,37 +90,44 @@
 
 - (void)setUpBottomView
 {
-    CGFloat bottomViewY = self.view.height - 180;
+    CGFloat bottomViewY = self.view.height - 150;
     CGFloat bottomViewW = self.view.width;
-    _bottomView = [[UIView alloc] initWithFrame:CGRectMake(0, bottomViewY, bottomViewW, 200)];
+    _bottomView = [[UIView alloc] initWithFrame:CGRectMake(0, bottomViewY, bottomViewW, 150)];
     
     
     CGFloat buttonW = 100;
-    CGFloat buttonY = 25;
-    CGFloat labelY = 125;
-    CGFloat bottonX = (bottomViewW - 270) / 3;
+    CGFloat buttonY = 0;
+    CGFloat labelY = 90;
+    CGFloat bottonX = (bottomViewW - 300) / 4;
+    CGFloat labelH = 20;
     
-    _handButton = [[HomePageButton alloc] initWithFrame:CGRectMake(bottonX -10, buttonY, buttonW, buttonW) withImageName:@"handMorrigan"];
+    _handButton = [[HomePageButton alloc] initWithFrame:CGRectMake(bottonX , buttonY, buttonW, buttonW) withImageName:@"handMorrigan"];
     [_handButton addTarget:self action:@selector(pushHandlePage) forControlEvents:UIControlEventTouchUpInside];
-    UILabel *handLabel = [[UILabel alloc] initWithFrame:CGRectMake(bottonX-10, labelY, buttonW, 30)];
+    UILabel *handLabel = [[UILabel alloc] initWithFrame:CGRectMake(bottonX, labelY, buttonW, labelH)];
     handLabel.textAlignment = NSTextAlignmentCenter;
     handLabel.text = @"手动按摩";
+    handLabel.textColor = [UIColor purpleColor];
+    handLabel.font = [UIFont systemFontOfSize:14];
     [_bottomView addSubview:handLabel];
     
-    CGFloat autoButtonX = CGRectGetMaxX(_handButton.frame);
-    _autoButton = [[HomePageButton alloc] initWithFrame:CGRectMake(autoButtonX + 10, buttonY, buttonW, buttonW) withImageName:@"autoMorrigan"];
+    CGFloat autoButtonX = CGRectGetMaxX(_handButton.frame) + bottonX;
+    _autoButton = [[HomePageButton alloc] initWithFrame:CGRectMake(autoButtonX, buttonY, buttonW, buttonW) withImageName:@"autoMorrigan"];
     [_autoButton addTarget:self action:@selector(pushAutoPage) forControlEvents:UIControlEventTouchUpInside];
-    UILabel *autoLabel = [[UILabel alloc] initWithFrame:CGRectMake(autoButtonX +10, labelY, buttonW, 30)];
+    UILabel *autoLabel = [[UILabel alloc] initWithFrame:CGRectMake(autoButtonX, labelY, buttonW, labelH)];
     autoLabel.textAlignment = NSTextAlignmentCenter;
     autoLabel.text = @"自动按摩";
+    autoLabel.textColor = [UIColor purpleColor];
+    autoLabel.font = [UIFont systemFontOfSize:14];
     [_bottomView addSubview:autoLabel];
     
-    CGFloat musicButtonX = CGRectGetMaxX(_autoButton.frame);
-    _musicButton = [[HomePageButton alloc] initWithFrame:CGRectMake(musicButtonX + 10, buttonY, buttonW, buttonW) withImageName:@"music"];
+    CGFloat musicButtonX = CGRectGetMaxX(_autoButton.frame) + bottonX ;
+    _musicButton = [[HomePageButton alloc] initWithFrame:CGRectMake(musicButtonX, buttonY, buttonW, buttonW) withImageName:@"music"];
     [_musicButton addTarget:self action:@selector(pushMusicPage) forControlEvents:UIControlEventTouchUpInside];
-    UILabel *musicLabel = [[UILabel alloc] initWithFrame:CGRectMake(musicButtonX +10, labelY, buttonW, 30)];
+    UILabel *musicLabel = [[UILabel alloc] initWithFrame:CGRectMake(musicButtonX, labelY, buttonW, labelH)];
     musicLabel.textAlignment = NSTextAlignmentCenter;
     musicLabel.text = @"音乐随动";
+    musicLabel.textColor = [UIColor purpleColor];
+    musicLabel.font = [UIFont systemFontOfSize:14];
     [_bottomView addSubview:musicLabel];
     
     [_bottomView addSubview:_handButton];
@@ -131,12 +141,14 @@
 }
 //手动按摩
 - (void)pushHandlePage{
-    
+    HandKneadViewController *handKneadViewController = [[HandKneadViewController alloc] init];
+    [self.navigationController pushViewController:handKneadViewController animated:YES];
 }
 
 //自动按摩
 - (void)pushAutoPage{
-    
+    AutoKneadViewController *autoKneadViewController = [[AutoKneadViewController alloc] init];
+    [self.navigationController pushViewController:autoKneadViewController animated:YES];
 }
 
 //音乐随动
