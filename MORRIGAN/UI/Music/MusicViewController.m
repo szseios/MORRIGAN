@@ -11,6 +11,7 @@
 #import "MusicManager.h"
 #import "MusicTableViewCell.h"
 #import "PCSEQVisualizer.h"
+#import "Utils.h"
 
 @interface MusicViewController () <UITableViewDelegate,UITableViewDataSource,UIGestureRecognizerDelegate> {
     PCSEQVisualizer *_pcseView;
@@ -27,7 +28,9 @@
 @property (weak, nonatomic) IBOutlet UIButton *startButton;
 @property (weak, nonatomic) IBOutlet UIButton *previousButton;
 @property (weak, nonatomic) IBOutlet UIButton *nextButton;
+
 @property (nonatomic,strong) UITableView *tableView;
+@property (nonatomic,strong) UIButton *closeButton;
 
 @end
 
@@ -83,21 +86,40 @@
     
     [hidde requireGestureRecognizerToFail:show];
     
+    _closeButton = [[UIButton alloc] initWithFrame:CGRectMake(0,
+                                                              _musicView.height - 54,
+                                                              kScreenWidth,
+                                                              54)];
+    [_closeButton setTitle:@"关闭"
+                  forState:UIControlStateNormal];
+    [_closeButton setTitleColor:[UIColor colorWithRed:0 / 255.0
+                                                green:0 / 255.0
+                                                 blue:0 / 255.0
+                                                alpha:0.7]
+                       forState:UIControlStateNormal];
+    _closeButton.backgroundColor = [UIColor colorWithRed:232 / 255.0
+                                                   green:223 / 255.0
+                                                    blue:250 / 255.0
+                                                   alpha:1];
+    [_closeButton addTarget:self action:@selector(hiddeMusicView)
+           forControlEvents:UIControlEventTouchUpInside];
+    [_musicView addSubview:_closeButton];
+    
     _tableView = [[UITableView alloc] initWithFrame:CGRectMake(0,
                                                                63,
                                                                kScreenWidth,
-                                                               _musicView.frame.size.height - 63)
+                                                               _musicView.frame.size.height - 63 - _closeButton.height)
                                               style:UITableViewStylePlain];
     _tableView.dataSource = self;
     _tableView.delegate = self;
-//    _tableView.backgroundView = [[UIView alloc] initWithFrame:CGRectMake(0,
-//                                                                         0,
-//                                                                         _tableView.width,
-//                                                                         _tableView.height)];
-//    _tableView.backgroundView.backgroundColor = [UIColor colorWithRed:232 / 255.0
-//                                                                green:223 / 255.0
-//                                                                 blue:250 / 255.0
-//                                                                alpha:1];
+    _tableView.backgroundView = [[UIView alloc] initWithFrame:CGRectMake(0,
+                                                                         0,
+                                                                         _tableView.width,
+                                                                         _tableView.height)];
+    _tableView.backgroundView.backgroundColor = [UIColor colorWithRed:232 / 255.0
+                                                                green:223 / 255.0
+                                                                 blue:250 / 255.0
+                                                                alpha:1];
     
     [_musicView addSubview:_tableView];
     
@@ -113,6 +135,9 @@
     _pcseView.frame = frame;
     [self.view addSubview:_pcseView];
     [self.view bringSubviewToFront:_musicView];
+    
+    UITapGestureRecognizer *hiddenTableView = [[UITapGestureRecognizer alloc] initWithTarget:self action:@selector(hiddeMusicView)];
+    [_pcseView addGestureRecognizer:hiddenTableView];
     
     UIView *shadowView = [[UIView alloc] initWithFrame:CGRectMake(0,
                                                                   0,
@@ -140,20 +165,27 @@
                                                                forIndexPath:indexPath];
     MusicModel *model = [_musics objectAtIndex:indexPath.row];
 
-    NSString *title = [NSString stringWithFormat:@"%@ -%@",model.title,model.artist];
-    cell.titleLabel.text = title;
-    cell.timeLabel.text = [model playBackDurationString];
     [cell stopAnimation];
+    cell.title = model.title;
+    cell.artist = model.artist;
+    cell.time = [model playBackDurationString];
+    
     if (_selectedIndexPath &&
         indexPath.row == _selectedIndexPath.row &&
         [MusicManager share].isPlaying) {
         [cell startAnimation];
+        [cell selectedStatus];
     }
     else if (_selectedIndexPath &&
              indexPath.row == _selectedIndexPath.row &&
              ![MusicManager share].isPlaying) {
         [cell resetBars];
+        [cell selectedStatus];
     }
+    else {
+        [cell unselectStatus];
+    }
+    
     return cell;
 }
 
@@ -238,9 +270,11 @@
     NSArray *cells = [_tableView visibleCells];
     for (MusicTableViewCell *cell in cells) {
         [cell stopAnimation];
+        [cell unselectStatus];
     }
     MusicTableViewCell *cell = [_tableView cellForRowAtIndexPath:_selectedIndexPath];
     [cell startAnimation];
+    [cell selectedStatus];
     
     [self endTiming];
     [self startTiming];
@@ -269,6 +303,10 @@
         [_musicView setFrame:frame];
     }
     NSLog(@"hiddeMusicView");
+}
+
+- (IBAction)back:(id)sender {
+    [self.navigationController popViewControllerAnimated:YES];
 }
 
 //判断是否在底部

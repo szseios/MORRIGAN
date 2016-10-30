@@ -12,6 +12,7 @@
 #import "HandKneadViewController.h"
 #import "AutoKneadViewController.h"
 #import "MusicManager.h"
+#import "BluetoothManager.h"
 #import <AVFoundation/AVFoundation.h>
 
 @interface AppDelegate ()
@@ -25,6 +26,7 @@
     // Override point for customization after application launch.
     
     [MusicManager share];
+    [BluetoothManager share];
     
     self.window = [[UIWindow alloc] initWithFrame:[[UIScreen mainScreen] bounds]];//设置窗口
     //AutoKneadViewController *loginViewController = [[AutoKneadViewController alloc] init];

@@ -11,6 +11,8 @@
 #import "HomePageController.h"
 #import "HomeMainView.h"
 #import "BasicBarView.h"
+#import "MusicViewController.h"
+#import "SearchPeripheralViewController.h"
 
 @interface UIImageView (backImageMove)
 
@@ -139,15 +141,16 @@
 
 //音乐随动
 - (void)pushMusicPage{
-    
+    MusicViewController *music = [[MusicViewController alloc] init];
+    [self.navigationController pushViewController:music animated:YES];
 }
 
 #pragma mark - BasicBarViewDelegate
 
 - (void)clickBingdingDevice
 {
-    NSLog(@"绑定设备");
-    
+    SearchPeripheralViewController *search = [[SearchPeripheralViewController alloc] init];
+    [self.navigationController pushViewController:search animated:YES];
 }
 
 - (void)clickMoveToLeft

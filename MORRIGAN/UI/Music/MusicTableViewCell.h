@@ -17,6 +17,15 @@
 @property (strong, nonatomic) UIView *animationImageView;
 @property (strong, nonatomic) UILabel *timeLabel;
 
+@property (nonatomic, copy) NSString *title;
+@property (nonatomic, copy) NSString *artist;
+@property (nonatomic, copy) NSString *time;
+
+
+- (void)selectedStatus;
+
+- (void)unselectStatus;
+
 
 - (void)startAnimation;
 

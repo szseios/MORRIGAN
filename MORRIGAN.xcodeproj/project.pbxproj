@@ -11,6 +11,20 @@
 		3E25397A1DAA3DA800CB1EF8 /* HandKneadViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 3E2539781DAA3DA800CB1EF8 /* HandKneadViewController.m */; };
 		3E25397E1DAA3DDA00CB1EF8 /* UserInfo.m in Sources */ = {isa = PBXBuildFile; fileRef = 3E25397D1DAA3DDA00CB1EF8 /* UserInfo.m */; };
 		3E2539811DAA3DE600CB1EF8 /* LoginManager.m in Sources */ = {isa = PBXBuildFile; fileRef = 3E2539801DAA3DE600CB1EF8 /* LoginManager.m */; };
+		3E632A4D1DC5A47B00CC2332 /* BabyBluetooth.m in Sources */ = {isa = PBXBuildFile; fileRef = 3E632A3C1DC5A47B00CC2332 /* BabyBluetooth.m */; };
+		3E632A4E1DC5A47B00CC2332 /* BabyCallback.m in Sources */ = {isa = PBXBuildFile; fileRef = 3E632A3E1DC5A47B00CC2332 /* BabyCallback.m */; };
+		3E632A4F1DC5A47B00CC2332 /* BabyCentralManager.m in Sources */ = {isa = PBXBuildFile; fileRef = 3E632A401DC5A47B00CC2332 /* BabyCentralManager.m */; };
+		3E632A501DC5A47B00CC2332 /* BabyDefine.m in Sources */ = {isa = PBXBuildFile; fileRef = 3E632A421DC5A47B00CC2332 /* BabyDefine.m */; };
+		3E632A511DC5A47B00CC2332 /* BabyOptions.m in Sources */ = {isa = PBXBuildFile; fileRef = 3E632A441DC5A47B00CC2332 /* BabyOptions.m */; };
+		3E632A521DC5A47B00CC2332 /* BabyPeripheralManager.m in Sources */ = {isa = PBXBuildFile; fileRef = 3E632A461DC5A47B00CC2332 /* BabyPeripheralManager.m */; };
+		3E632A531DC5A47B00CC2332 /* BabyRhythm.m in Sources */ = {isa = PBXBuildFile; fileRef = 3E632A481DC5A47B00CC2332 /* BabyRhythm.m */; };
+		3E632A541DC5A47B00CC2332 /* BabySpeaker.m in Sources */ = {isa = PBXBuildFile; fileRef = 3E632A4A1DC5A47B00CC2332 /* BabySpeaker.m */; };
+		3E632A551DC5A47B00CC2332 /* BabyToy.m in Sources */ = {isa = PBXBuildFile; fileRef = 3E632A4C1DC5A47B00CC2332 /* BabyToy.m */; };
+		3E632A591DC5A51E00CC2332 /* BluetoothManager.m in Sources */ = {isa = PBXBuildFile; fileRef = 3E632A581DC5A51E00CC2332 /* BluetoothManager.m */; };
+		3E632A5E1DC5CD3200CC2332 /* SearchPeripheralViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 3E632A5C1DC5CD3200CC2332 /* SearchPeripheralViewController.m */; };
+		3E632A5F1DC5CD3200CC2332 /* SearchPeripheralViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = 3E632A5D1DC5CD3200CC2332 /* SearchPeripheralViewController.xib */; };
+		3E632A631DC5E9CA00CC2332 /* PeripheralListViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 3E632A611DC5E9CA00CC2332 /* PeripheralListViewController.m */; };
+		3E632A641DC5E9CA00CC2332 /* PeripheralListViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = 3E632A621DC5E9CA00CC2332 /* PeripheralListViewController.xib */; };
 		3E8A433C1DBF3EAE00DE76A8 /* MusicList.plist in Resources */ = {isa = PBXBuildFile; fileRef = 3E8A433B1DBF3EAE00DE76A8 /* MusicList.plist */; };
 		3EEF45E81DBB3B2900752AD4 /* UIView+Extension.m in Sources */ = {isa = PBXBuildFile; fileRef = 3EEF45E71DBB3B2900752AD4 /* UIView+Extension.m */; };
 		3EF795841DA9EDFC00E5EBC6 /* MusicTableViewCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 3EF795821DA9EDFC00E5EBC6 /* MusicTableViewCell.m */; };
@@ -123,6 +137,32 @@
 		3E25397D1DAA3DDA00CB1EF8 /* UserInfo.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = UserInfo.m; sourceTree = "<group>"; };
 		3E25397F1DAA3DE600CB1EF8 /* LoginManager.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = LoginManager.h; sourceTree = "<group>"; };
 		3E2539801DAA3DE600CB1EF8 /* LoginManager.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = LoginManager.m; sourceTree = "<group>"; };
+		3E632A3B1DC5A47B00CC2332 /* BabyBluetooth.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = BabyBluetooth.h; sourceTree = "<group>"; };
+		3E632A3C1DC5A47B00CC2332 /* BabyBluetooth.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = BabyBluetooth.m; sourceTree = "<group>"; };
+		3E632A3D1DC5A47B00CC2332 /* BabyCallback.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = BabyCallback.h; sourceTree = "<group>"; };
+		3E632A3E1DC5A47B00CC2332 /* BabyCallback.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = BabyCallback.m; sourceTree = "<group>"; };
+		3E632A3F1DC5A47B00CC2332 /* BabyCentralManager.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = BabyCentralManager.h; sourceTree = "<group>"; };
+		3E632A401DC5A47B00CC2332 /* BabyCentralManager.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = BabyCentralManager.m; sourceTree = "<group>"; };
+		3E632A411DC5A47B00CC2332 /* BabyDefine.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = BabyDefine.h; sourceTree = "<group>"; };
+		3E632A421DC5A47B00CC2332 /* BabyDefine.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = BabyDefine.m; sourceTree = "<group>"; };
+		3E632A431DC5A47B00CC2332 /* BabyOptions.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = BabyOptions.h; sourceTree = "<group>"; };
+		3E632A441DC5A47B00CC2332 /* BabyOptions.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = BabyOptions.m; sourceTree = "<group>"; };
+		3E632A451DC5A47B00CC2332 /* BabyPeripheralManager.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = BabyPeripheralManager.h; sourceTree = "<group>"; };
+		3E632A461DC5A47B00CC2332 /* BabyPeripheralManager.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = BabyPeripheralManager.m; sourceTree = "<group>"; };
+		3E632A471DC5A47B00CC2332 /* BabyRhythm.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = BabyRhythm.h; sourceTree = "<group>"; };
+		3E632A481DC5A47B00CC2332 /* BabyRhythm.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = BabyRhythm.m; sourceTree = "<group>"; };
+		3E632A491DC5A47B00CC2332 /* BabySpeaker.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = BabySpeaker.h; sourceTree = "<group>"; };
+		3E632A4A1DC5A47B00CC2332 /* BabySpeaker.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = BabySpeaker.m; sourceTree = "<group>"; };
+		3E632A4B1DC5A47B00CC2332 /* BabyToy.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = BabyToy.h; sourceTree = "<group>"; };
+		3E632A4C1DC5A47B00CC2332 /* BabyToy.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = BabyToy.m; sourceTree = "<group>"; };
+		3E632A571DC5A51E00CC2332 /* BluetoothManager.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = BluetoothManager.h; sourceTree = "<group>"; };
+		3E632A581DC5A51E00CC2332 /* BluetoothManager.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = BluetoothManager.m; sourceTree = "<group>"; };
+		3E632A5B1DC5CD3200CC2332 /* SearchPeripheralViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SearchPeripheralViewController.h; sourceTree = "<group>"; };
+		3E632A5C1DC5CD3200CC2332 /* SearchPeripheralViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = SearchPeripheralViewController.m; sourceTree = "<group>"; };
+		3E632A5D1DC5CD3200CC2332 /* SearchPeripheralViewController.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = SearchPeripheralViewController.xib; sourceTree = "<group>"; };
+		3E632A601DC5E9CA00CC2332 /* PeripheralListViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = PeripheralListViewController.h; sourceTree = "<group>"; };
+		3E632A611DC5E9CA00CC2332 /* PeripheralListViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = PeripheralListViewController.m; sourceTree = "<group>"; };
+		3E632A621DC5E9CA00CC2332 /* PeripheralListViewController.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = PeripheralListViewController.xib; sourceTree = "<group>"; };
 		3E8A433B1DBF3EAE00DE76A8 /* MusicList.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = MusicList.plist; sourceTree = "<group>"; };
 		3EEF45E61DBB3B2900752AD4 /* UIView+Extension.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "UIView+Extension.h"; sourceTree = "<group>"; };
 		3EEF45E71DBB3B2900752AD4 /* UIView+Extension.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "UIView+Extension.m"; sourceTree = "<group>"; };
@@ -340,6 +380,53 @@
 				4728ED361DC485AB0005F9C3 /* RootViewController.m */,
 			);
 			path = Controller;
+			sourceTree = "<group>";
+		};
+		3E632A3A1DC5A47B00CC2332 /* BabyBluetooth */ = {
+			isa = PBXGroup;
+			children = (
+				3E632A3B1DC5A47B00CC2332 /* BabyBluetooth.h */,
+				3E632A3C1DC5A47B00CC2332 /* BabyBluetooth.m */,
+				3E632A3D1DC5A47B00CC2332 /* BabyCallback.h */,
+				3E632A3E1DC5A47B00CC2332 /* BabyCallback.m */,
+				3E632A3F1DC5A47B00CC2332 /* BabyCentralManager.h */,
+				3E632A401DC5A47B00CC2332 /* BabyCentralManager.m */,
+				3E632A411DC5A47B00CC2332 /* BabyDefine.h */,
+				3E632A421DC5A47B00CC2332 /* BabyDefine.m */,
+				3E632A431DC5A47B00CC2332 /* BabyOptions.h */,
+				3E632A441DC5A47B00CC2332 /* BabyOptions.m */,
+				3E632A451DC5A47B00CC2332 /* BabyPeripheralManager.h */,
+				3E632A461DC5A47B00CC2332 /* BabyPeripheralManager.m */,
+				3E632A471DC5A47B00CC2332 /* BabyRhythm.h */,
+				3E632A481DC5A47B00CC2332 /* BabyRhythm.m */,
+				3E632A491DC5A47B00CC2332 /* BabySpeaker.h */,
+				3E632A4A1DC5A47B00CC2332 /* BabySpeaker.m */,
+				3E632A4B1DC5A47B00CC2332 /* BabyToy.h */,
+				3E632A4C1DC5A47B00CC2332 /* BabyToy.m */,
+			);
+			path = BabyBluetooth;
+			sourceTree = "<group>";
+		};
+		3E632A561DC5A50600CC2332 /* BluetoothManager */ = {
+			isa = PBXGroup;
+			children = (
+				3E632A571DC5A51E00CC2332 /* BluetoothManager.h */,
+				3E632A581DC5A51E00CC2332 /* BluetoothManager.m */,
+			);
+			path = BluetoothManager;
+			sourceTree = "<group>";
+		};
+		3E632A5A1DC5CC9900CC2332 /* Binding */ = {
+			isa = PBXGroup;
+			children = (
+				3E632A5B1DC5CD3200CC2332 /* SearchPeripheralViewController.h */,
+				3E632A5C1DC5CD3200CC2332 /* SearchPeripheralViewController.m */,
+				3E632A5D1DC5CD3200CC2332 /* SearchPeripheralViewController.xib */,
+				3E632A601DC5E9CA00CC2332 /* PeripheralListViewController.h */,
+				3E632A611DC5E9CA00CC2332 /* PeripheralListViewController.m */,
+				3E632A621DC5E9CA00CC2332 /* PeripheralListViewController.xib */,
+			);
+			path = Binding;
 			sourceTree = "<group>";
 		};
 		3EF795861DAA0A5E00E5EBC6 /* PCSEQ */ = {
@@ -626,6 +713,7 @@
 		EBF0115E1DA73137009E8394 /* UI */ = {
 			isa = PBXGroup;
 			children = (
+				3E632A5A1DC5CC9900CC2332 /* Binding */,
 				3E2539821DAA3DF500CB1EF8 /* Home */,
 				EBF0115F1DA73137009E8394 /* Login */,
 				EBF011631DA7319F009E8394 /* Setting */,
@@ -655,6 +743,8 @@
 		EBF011681DA73784009E8394 /* Common */ = {
 			isa = PBXGroup;
 			children = (
+				3E632A561DC5A50600CC2332 /* BluetoothManager */,
+				3E632A3A1DC5A47B00CC2332 /* BabyBluetooth */,
 				4728ED831DC4865E0005F9C3 /* PNChart */,
 				4728EDA81DC4865E0005F9C3 /* WebAboutMorrigan */,
 				4728EDB31DC4865E0005F9C3 /* ZHRulerView */,
@@ -846,6 +936,7 @@
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				3E632A641DC5E9CA00CC2332 /* PeripheralListViewController.xib in Resources */,
 				3E8A433C1DBF3EAE00DE76A8 /* MusicList.plist in Resources */,
 				4728EDD11DC4865E0005F9C3 /* service.html in Resources */,
 				4728EDCA1DC4865E0005F9C3 /* about_top_logo.png in Resources */,
@@ -854,6 +945,7 @@
 				4728ED641DC485BA0005F9C3 /* HistoryDataCell.xib in Resources */,
 				EB534AD51DA9D924007AA325 /* MusicViewController.xib in Resources */,
 				4728ED6A1DC485BA0005F9C3 /* RelateDeviceCell.xib in Resources */,
+				3E632A5F1DC5CD3200CC2332 /* SearchPeripheralViewController.xib in Resources */,
 				4728ED6F1DC485BA0005F9C3 /* SetTargetController.xib in Resources */,
 				EBF011841DA7883B009E8394 /* Urls.plist in Resources */,
 				4728EDC91DC4865E0005F9C3 /* about_top.png in Resources */,
@@ -891,15 +983,20 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				3E632A5E1DC5CD3200CC2332 /* SearchPeripheralViewController.m in Sources */,
 				4728EDD31DC4865E0005F9C3 /* ZHRulerView.m in Sources */,
+				3E632A531DC5A47B00CC2332 /* BabyRhythm.m in Sources */,
 				4728EDBB1DC4865E0005F9C3 /* PNCircleChart.m in Sources */,
+				3E632A541DC5A47B00CC2332 /* BabySpeaker.m in Sources */,
 				4728ED631DC485BA0005F9C3 /* HistoryDataCell.m in Sources */,
 				3EF7958D1DAA0A5E00E5EBC6 /* Common.m in Sources */,
 				3E25397E1DAA3DDA00CB1EF8 /* UserInfo.m in Sources */,
 				4728ED671DC485BA0005F9C3 /* NickNameController.m in Sources */,
+				3E632A501DC5A47B00CC2332 /* BabyDefine.m in Sources */,
 				4728ED3A1DC485AB0005F9C3 /* RootViewController.m in Sources */,
 				4728EDC21DC4865E0005F9C3 /* PNPieChartDataItem.m in Sources */,
 				4728EDC31DC4865E0005F9C3 /* PNRadarChart.m in Sources */,
+				3E632A511DC5A47B00CC2332 /* BabyOptions.m in Sources */,
 				3E25397A1DAA3DA800CB1EF8 /* HandKneadViewController.m in Sources */,
 				4728ED7D1DC485F50005F9C3 /* ChooseDataView.m in Sources */,
 				4728ED651DC485BA0005F9C3 /* MyDataController.m in Sources */,
@@ -908,13 +1005,17 @@
 				3EF7958E1DAA0A5E00E5EBC6 /* PCSEQVisualizer.m in Sources */,
 				4728EDB81DC4865E0005F9C3 /* PNBar.m in Sources */,
 				4728EDBA1DC4865E0005F9C3 /* PNChartLabel.m in Sources */,
+				3E632A591DC5A51E00CC2332 /* BluetoothManager.m in Sources */,
 				3EF795841DA9EDFC00E5EBC6 /* MusicTableViewCell.m in Sources */,
 				4728ED381DC485AB0005F9C3 /* HomePageSuperController.m in Sources */,
 				4728ED681DC485BA0005F9C3 /* relateDeviceModel.m in Sources */,
+				3E632A4D1DC5A47B00CC2332 /* BabyBluetooth.m in Sources */,
 				4728ED371DC485AB0005F9C3 /* HomePageController.m in Sources */,
+				3E632A521DC5A47B00CC2332 /* BabyPeripheralManager.m in Sources */,
 				4728ED611DC485BA0005F9C3 /* WebInfoController.m in Sources */,
 				4728EDBC1DC4865E0005F9C3 /* PNColor.m in Sources */,
 				4728ED7E1DC485F50005F9C3 /* HomeMainView.m in Sources */,
+				3E632A551DC5A47B00CC2332 /* BabyToy.m in Sources */,
 				4728EDC61DC4865E0005F9C3 /* PNScatterChartData.m in Sources */,
 				4728ED7C1DC485F50005F9C3 /* BasicBarView.m in Sources */,
 				4728ED5F1DC485BA0005F9C3 /* AboutMorriganController.m in Sources */,
@@ -926,6 +1027,7 @@
 				4728EDB91DC4865E0005F9C3 /* PNBarChart.m in Sources */,
 				4728ED7F1DC485F50005F9C3 /* HomePageButton.m in Sources */,
 				4728ED6E1DC485BA0005F9C3 /* SetTargetController.m in Sources */,
+				3E632A631DC5E9CA00CC2332 /* PeripheralListViewController.m in Sources */,
 				4728EDC11DC4865E0005F9C3 /* PNPieChart.m in Sources */,
 				EB7AD9441DA72FF6001D1DCA /* AppDelegate.m in Sources */,
 				4728EDBF1DC4865E0005F9C3 /* PNLineChartData.m in Sources */,
@@ -939,12 +1041,14 @@
 				4728ED621DC485BA0005F9C3 /* HistoryDataController.m in Sources */,
 				EBF011821DA7883B009E8394 /* NMOANetWorking.m in Sources */,
 				4728EDC01DC4865E0005F9C3 /* PNLineChartDataItem.m in Sources */,
+				3E632A4F1DC5A47B00CC2332 /* BabyCentralManager.m in Sources */,
 				4728EDBD1DC4865E0005F9C3 /* PNGenericChart.m in Sources */,
 				4728EDD21DC4865E0005F9C3 /* ZHRulerScrollView.m in Sources */,
 				EB534AD21DA9D924007AA325 /* MusicManager.m in Sources */,
 				3EF7958F1DAA0A5E00E5EBC6 /* UIImage+Color.m in Sources */,
 				4728ED691DC485BA0005F9C3 /* RelateDeviceCell.m in Sources */,
 				EB534AD41DA9D924007AA325 /* MusicViewController.m in Sources */,
+				3E632A4E1DC5A47B00CC2332 /* BabyCallback.m in Sources */,
 				EBF011AF1DA7920A009E8394 /* Utils.m in Sources */,
 				4728EDC71DC4865E0005F9C3 /* PNScatterChartDataItem.m in Sources */,
 				EB534AD31DA9D924007AA325 /* MusicModel.m in Sources */,
