@@ -63,6 +63,7 @@
     UIButton *backButton = [[UIButton alloc]initWithFrame:CGRectMake(15, 26, backButtonW, backButtonW)];
     [backButton setImage:[UIImage imageNamed:@"ic_backButton"] forState:UIControlStateNormal];
     [backButton setImage:[UIImage imageNamed:@"ic_backButton"] forState:UIControlStateHighlighted];
+    [backButton addTarget:self action:@selector(backButtonHandleInAutokneed) forControlEvents:UIControlEventTouchUpInside];
     [self.view addSubview:backButton];
     
     // 标题
@@ -434,6 +435,11 @@
     for (FuntionButton *button in _topFiveButtonArray) {
         NSLog(@"-----当前按摩顺序----：：%ld  %ld", button.arrayIndex, button.tag);
     }
+}
+
+- (void)backButtonHandleInAutokneed
+{
+    [self.navigationController popViewControllerAnimated:YES];
 }
 
 
