@@ -17,10 +17,10 @@
 //#define isHorizontal (self.frame.size.width>self.frame.size.height)
 
 //刻度距离文字的距离
-static const CGFloat imageSpaceToLable=10;
+static const CGFloat imageSpaceToLable=-15;
 
 //显示刻度的lable的字体大小
-static const CGFloat rulerLableFont=12;
+static const CGFloat rulerLableFont=14;
 @interface ZHRulerScrollView ()
 
 @property(nonatomic,strong)UIImage *rulerImage;
@@ -53,7 +53,7 @@ static const CGFloat rulerLableFont=12;
         self.decelerationRate=0.7;
         self.clipsToBounds=NO;
         if (_showType==rulerViewshowHorizontalType) {//如果水平放置
-            _rulerImage=[UIImage imageNamed:@"ruler_weight"];
+            _rulerImage=[UIImage imageNamed:@"ruler2"];
             self.contentSize=CGSizeMake(_rulerImage.size.width*( BTminus(_maxNuber, _mixNuber)/rulerMultiple+1), self.frame.size.height);
         }else{
             _rulerImage=[UIImage imageNamed:@"ruler_height"];

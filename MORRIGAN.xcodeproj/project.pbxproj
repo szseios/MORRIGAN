@@ -11,7 +11,6 @@
 		3E25397A1DAA3DA800CB1EF8 /* HandKneadViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 3E2539781DAA3DA800CB1EF8 /* HandKneadViewController.m */; };
 		3E25397E1DAA3DDA00CB1EF8 /* UserInfo.m in Sources */ = {isa = PBXBuildFile; fileRef = 3E25397D1DAA3DDA00CB1EF8 /* UserInfo.m */; };
 		3E2539811DAA3DE600CB1EF8 /* LoginManager.m in Sources */ = {isa = PBXBuildFile; fileRef = 3E2539801DAA3DE600CB1EF8 /* LoginManager.m */; };
-		3E2539861DAA3DF500CB1EF8 /* HomeViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 3E2539851DAA3DF500CB1EF8 /* HomeViewController.m */; };
 		3E8A433C1DBF3EAE00DE76A8 /* MusicList.plist in Resources */ = {isa = PBXBuildFile; fileRef = 3E8A433B1DBF3EAE00DE76A8 /* MusicList.plist */; };
 		3EEF45E81DBB3B2900752AD4 /* UIView+Extension.m in Sources */ = {isa = PBXBuildFile; fileRef = 3EEF45E71DBB3B2900752AD4 /* UIView+Extension.m */; };
 		3EF795841DA9EDFC00E5EBC6 /* MusicTableViewCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 3EF795821DA9EDFC00E5EBC6 /* MusicTableViewCell.m */; };
@@ -124,8 +123,6 @@
 		3E25397D1DAA3DDA00CB1EF8 /* UserInfo.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = UserInfo.m; sourceTree = "<group>"; };
 		3E25397F1DAA3DE600CB1EF8 /* LoginManager.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = LoginManager.h; sourceTree = "<group>"; };
 		3E2539801DAA3DE600CB1EF8 /* LoginManager.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = LoginManager.m; sourceTree = "<group>"; };
-		3E2539841DAA3DF500CB1EF8 /* HomeViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = HomeViewController.h; sourceTree = "<group>"; };
-		3E2539851DAA3DF500CB1EF8 /* HomeViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = HomeViewController.m; sourceTree = "<group>"; };
 		3E8A433B1DBF3EAE00DE76A8 /* MusicList.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = MusicList.plist; sourceTree = "<group>"; };
 		3EEF45E61DBB3B2900752AD4 /* UIView+Extension.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "UIView+Extension.h"; sourceTree = "<group>"; };
 		3EEF45E71DBB3B2900752AD4 /* UIView+Extension.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "UIView+Extension.m"; sourceTree = "<group>"; };

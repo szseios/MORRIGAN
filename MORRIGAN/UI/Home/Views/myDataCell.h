@@ -14,4 +14,6 @@
 
 @property (nonatomic , strong) NSString *content;
 
+@property (weak, nonatomic) IBOutlet UIImageView *headerImageView;
+
 @end

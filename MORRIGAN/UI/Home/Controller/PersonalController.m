@@ -13,6 +13,7 @@
 #import "AboutMorriganController.h"
 #import "SuggestionController.h"
 #import "RelateDeviceController.h"
+#import "HistoryDataController.h"
 
 
 @interface PersonalController ()<UITableViewDelegate,UITableViewDataSource,UIAlertViewDelegate>
@@ -54,9 +55,10 @@ static NSString *cellIdentifier = @"cellIdentifier";
     [headerImageView addGestureRecognizer:tap];
     [_headerView addSubview:headerImageView];
     
-    UILabel *nameLabel = [[UILabel alloc] initWithFrame: CGRectMake(120, 0, cellWidth - 120, 120)];
+    CGFloat nameLabelY = headerImageView.height / 2 + 15;
+    UILabel *nameLabel = [[UILabel alloc] initWithFrame: CGRectMake(120, nameLabelY, cellWidth - 120, 40)];
     nameLabel.text = @"昵称";
-    nameLabel.font = [UIFont systemFontOfSize:12];
+    nameLabel.font = [UIFont systemFontOfSize:14];
     nameLabel.textColor = [UIColor whiteColor];
     [_headerView addSubview:nameLabel];
     
@@ -229,7 +231,9 @@ static NSString *cellIdentifier = @"cellIdentifier";
                 
             case 2:
             {
-                
+                HistoryDataController *historyCtl = [[HistoryDataController alloc] init];
+                historyCtl.hidesBottomBarWhenPushed = YES;
+                [self.navigationController pushViewController:historyCtl animated:YES];
             }
                 break;
                 

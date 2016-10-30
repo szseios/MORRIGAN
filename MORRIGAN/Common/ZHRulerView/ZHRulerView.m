@@ -11,7 +11,7 @@
 //rulerView的宽度或高度
 static  CGFloat const rulerViewWOH=1.2;
 //红色指针的高度
-static  CGFloat const pointViewH=23;
+static  CGFloat const pointViewH=60;
 @interface ZHRulerView ()<UIScrollViewDelegate>
 
 @property(nonatomic,assign)NSInteger mixNuber;
@@ -19,6 +19,7 @@ static  CGFloat const pointViewH=23;
 @property(nonatomic,assign)rulerViewShowType showType;
 
 @property(nonatomic,weak)UIView *pointerView;
+@property (nonatomic , strong) UIImageView *arrowImage; //指针下面的箭头
 @property(nonatomic,assign)NSInteger rulerMultiple;
 @end
 
@@ -33,7 +34,7 @@ static  CGFloat const pointViewH=23;
         _maxNuber=maxNuber;
         _showType=showType;
         _rulerMultiple=rulerMultiple;
-        
+        self.backgroundColor = [UIColor clearColor];
         //添加scroollView
         ZHRulerScrollView *rulerView= [[ZHRulerScrollView alloc] initWithMixNuber:_mixNuber maxNuber:_maxNuber showType:_showType rulerMultiple:rulerMultiple];
         rulerView.delegate=self;
@@ -41,16 +42,21 @@ static  CGFloat const pointViewH=23;
       [self addSubview:rulerView];
         //添加指针view
         UIView *pointerView=[[UIView alloc] init];
-        pointerView.backgroundColor=[UIColor redColor];
+        pointerView.backgroundColor=[UIColor purpleColor];
         _pointerView=pointerView;
         [self addSubview:pointerView];
+        
+        _arrowImage = [[UIImageView alloc] init];
+        _arrowImage.backgroundColor = [UIColor clearColor];
+        _arrowImage.image = [UIImage imageNamed:@"arrowUp"];
+        [self addSubview:_arrowImage];
     }
     return self;
 }
 
 -(void)setDefaultVaule:(CGFloat)defaultVaule{
     
-    UIImage *ruleImage=[UIImage imageNamed:@"ruler_weight"];
+    UIImage *ruleImage=[UIImage imageNamed:@"ruler2"];
     CGFloat formlength=ruleImage.size.width/_rulerMultiple;
     CGFloat gapValue=(defaultVaule-_mixNuber+((CGFloat)_rulerMultiple/2))*formlength;
     if (_showType==rulerViewshowHorizontalType) {
@@ -67,6 +73,12 @@ static  CGFloat const pointViewH=23;
         CGFloat pointerViewX=(self.frame.size.width-pointerViewW)/2;
         CGFloat pointerViewY=0;
         _pointerView.frame=CGRectMake(pointerViewX, pointerViewY, pointerViewW, pointerViewH);
+        
+        CGFloat arrowY = CGRectGetMaxY(_pointerView.frame) + 5;
+        CGFloat arrowW = 6;
+        CGFloat arrowH = 6;
+        [_arrowImage setFrame:CGRectMake(pointerViewX - 2, arrowY, arrowW, arrowH)];
+        
         _rulerView.frame=CGRectMake(self.frame.size.width/2, 0, rulerViewWOH, self.frame.size.height);
     }else {
         CGFloat pointerViewW=pointViewH;
@@ -83,7 +95,7 @@ static  CGFloat const pointViewH=23;
 -(void)scrollViewDidScroll:(UIScrollView *)scrollView{
     
     //获取每个表格的长度
-    UIImage *ruleImage=[UIImage imageNamed:@"ruler_weight"];
+    UIImage *ruleImage=[UIImage imageNamed:@"ruler2"];
     
     CGFloat formlength=ruleImage.size.width/(CGFloat)_rulerMultiple;
     //指针指向的刻度

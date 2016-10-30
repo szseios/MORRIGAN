@@ -54,17 +54,17 @@
 {
     CGFloat rulerX = 0;
     CGFloat tempY = kScreenHeight > 480 ? 20 : 10;
-    CGFloat rulerY = CGRectGetMaxY(_countLabel.frame) + tempY;
-    CGFloat rulerWidth = kScreenWidth / 2 - 60;
-    CGFloat rulerHeight = kScreenHeight > 480 ? 350 : 250;
+    CGFloat rulerY = 250 + tempY;
+    CGFloat rulerWidth = kScreenWidth;
+    CGFloat rulerHeight = 250;
     
     CGRect rulerFrame = CGRectMake(rulerX, rulerY, rulerWidth, rulerHeight);
     
-    ZHRulerView *rulerView = [[ZHRulerView alloc] initWithMixNuber:2 maxNuber:85 showType:rulerViewshowVerticalType rulerMultiple:1];
+    ZHRulerView *rulerView = [[ZHRulerView alloc] initWithMixNuber:5 maxNuber:180 showType:rulerViewshowHorizontalType rulerMultiple:10];
     _rulerView = rulerView;
     rulerView.round = YES;
-    rulerView.backgroundColor = [UIColor whiteColor];
-//    rulerView.defaultVaule = [[CurrentUser.stepLong isEqualToString:@"(null)"] ? @"50" : @"60"];
+//    rulerView.backgroundColor = [UIColor whiteColor];
+    rulerView.defaultVaule = 60;
     rulerView.delegate = self;
     rulerView.frame = rulerFrame;
     
@@ -85,6 +85,12 @@
     NSLog(@"绑定设备");
 }
 
+#pragma mark - ZHRulerViewDelegate
+
+-(void)getRulerValue:(CGFloat)rulerValue withScrollRulerView:(ZHRulerView *)rulerView
+{
+    _countLabel.text = [NSString stringWithFormat:@"%.0lf",rulerValue];
+}
 
 - (void)didReceiveMemoryWarning {
     [super didReceiveMemoryWarning];
