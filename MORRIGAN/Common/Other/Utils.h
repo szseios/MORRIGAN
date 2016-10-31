@@ -24,4 +24,18 @@
 + (UIColor *) stringTOColor:(NSString *)str;
 
 
+/**
+ *
+ * nsdata转nsstring
+ *
+ **/
++ (NSString*)hexStringForData:(NSData *)data;
+
+/**
+ *
+ * // nsstring转nsdata
+ *
+ **/
++ (NSData*)dataForHexString:(NSString*)hexString;
+
 @end

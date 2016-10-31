@@ -92,6 +92,8 @@
 		EB21FA1B1DBF2C1100DDD28A /* AutoKneadViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = EB21FA191DBF2C1100DDD28A /* AutoKneadViewController.m */; };
 		EB21FA1E1DBF31A000DDD28A /* FuntionButton.m in Sources */ = {isa = PBXBuildFile; fileRef = EB21FA1D1DBF31A000DDD28A /* FuntionButton.m */; };
 		EB21FA1F1DBF31A000DDD28A /* FuntionButton.m in Sources */ = {isa = PBXBuildFile; fileRef = EB21FA1D1DBF31A000DDD28A /* FuntionButton.m */; };
+		EB22C1191DC6FDDE00F14EDE /* BTTestViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = EB22C1181DC6FDDE00F14EDE /* BTTestViewController.m */; };
+		EB22C11A1DC6FDDE00F14EDE /* BTTestViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = EB22C1181DC6FDDE00F14EDE /* BTTestViewController.m */; };
 		EB534AD21DA9D924007AA325 /* MusicManager.m in Sources */ = {isa = PBXBuildFile; fileRef = EB534ACC1DA9D924007AA325 /* MusicManager.m */; };
 		EB534AD31DA9D924007AA325 /* MusicModel.m in Sources */ = {isa = PBXBuildFile; fileRef = EB534ACE1DA9D924007AA325 /* MusicModel.m */; };
 		EB534AD41DA9D924007AA325 /* MusicViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = EB534AD01DA9D924007AA325 /* MusicViewController.m */; };
@@ -277,6 +279,8 @@
 		EB21FA191DBF2C1100DDD28A /* AutoKneadViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = AutoKneadViewController.m; sourceTree = "<group>"; };
 		EB21FA1C1DBF31A000DDD28A /* FuntionButton.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = FuntionButton.h; sourceTree = "<group>"; };
 		EB21FA1D1DBF31A000DDD28A /* FuntionButton.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = FuntionButton.m; sourceTree = "<group>"; };
+		EB22C1171DC6FDDE00F14EDE /* BTTestViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = BTTestViewController.h; sourceTree = "<group>"; };
+		EB22C1181DC6FDDE00F14EDE /* BTTestViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = BTTestViewController.m; sourceTree = "<group>"; };
 		EB534ACB1DA9D924007AA325 /* MusicManager.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MusicManager.h; sourceTree = "<group>"; };
 		EB534ACC1DA9D924007AA325 /* MusicManager.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = MusicManager.m; sourceTree = "<group>"; };
 		EB534ACD1DA9D924007AA325 /* MusicModel.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MusicModel.h; sourceTree = "<group>"; };
@@ -782,6 +786,8 @@
 				3E2539781DAA3DA800CB1EF8 /* HandKneadViewController.m */,
 				EB21FA181DBF2C1100DDD28A /* AutoKneadViewController.h */,
 				EB21FA191DBF2C1100DDD28A /* AutoKneadViewController.m */,
+				EB22C1171DC6FDDE00F14EDE /* BTTestViewController.h */,
+				EB22C1181DC6FDDE00F14EDE /* BTTestViewController.m */,
 			);
 			path = Controller;
 			sourceTree = "<group>";
@@ -1017,6 +1023,7 @@
 				4728ED7E1DC485F50005F9C3 /* HomeMainView.m in Sources */,
 				3E632A551DC5A47B00CC2332 /* BabyToy.m in Sources */,
 				4728EDC61DC4865E0005F9C3 /* PNScatterChartData.m in Sources */,
+				EB22C1191DC6FDDE00F14EDE /* BTTestViewController.m in Sources */,
 				4728ED7C1DC485F50005F9C3 /* BasicBarView.m in Sources */,
 				4728ED5F1DC485BA0005F9C3 /* AboutMorriganController.m in Sources */,
 				4728EDC81DC4865E0005F9C3 /* UICountingLabel.m in Sources */,
@@ -1065,6 +1072,7 @@
 			files = (
 				EB7AD95A1DA72FF6001D1DCA /* MORRIGANTests.m in Sources */,
 				EB21FA1F1DBF31A000DDD28A /* FuntionButton.m in Sources */,
+				EB22C11A1DC6FDDE00F14EDE /* BTTestViewController.m in Sources */,
 				EBF011B01DA7920A009E8394 /* Utils.m in Sources */,
 				EB21FA1B1DBF2C1100DDD28A /* AutoKneadViewController.m in Sources */,
 			);

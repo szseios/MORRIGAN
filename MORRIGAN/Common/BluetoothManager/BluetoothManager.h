@@ -15,4 +15,9 @@
 
 + (BluetoothManager *)share;
 
+- (void)scanTest;
+- (void)connectTest;
+- (void)unConnectTest;
+- (void)writeValue:(NSData *)data;
+
 @end
