@@ -104,5 +104,146 @@
     return color;
 }
 
+/**
+ *
+ * nsdata转nsstring
+ *
+ **/
++ (NSString*)hexStringForData:(NSData *)data
+{
+    if(data == nil) {
+        return nil;
+    }
+    NSMutableString *hexString = [NSMutableString string];
+    const unsigned char *p = [data bytes];
+    for (int i = 0; i < [data length]; i++) {
+        [hexString appendFormat:@"%02x", *p++];
+    }
+    
+    return hexString;
+}
+
+
+/**
+ *
+ *  nsstring转nsdata
+ *
+ **/
++ (NSData*)dataForHexString:(NSString*)hexString
+{
+    if (hexString == nil) {
+        return nil;
+    }
+    
+    const char* ch = [[hexString lowercaseString] cStringUsingEncoding:NSUTF8StringEncoding];
+    NSMutableData* data = [NSMutableData data];
+    while (*ch) {
+        if (*ch == ' ') {
+            continue;
+        }
+        char byte = 0;
+        if ('0' <= *ch && *ch <= '9') {
+            byte = *ch - '0';
+        }
+        else if ('a' <= *ch && *ch <= 'f') {
+            byte = *ch - 'a' + 10;
+        }
+        else if ('A' <= *ch && *ch <= 'F') {
+            byte = *ch - 'A' + 10;
+        }
+        ch++;
+        byte = byte << 4;
+        if (*ch) {
+            if ('0' <= *ch && *ch <= '9') {
+                byte += *ch - '0';
+            } else if ('a' <= *ch && *ch <= 'f') {
+                byte += *ch - 'a' + 10;
+            }
+            else if('A' <= *ch && *ch <= 'F')
+            {
+                byte += *ch - 'A' + 10;
+            }
+            ch++;
+        }
+        [data appendBytes:&byte length:1];
+    }
+    return data;
+    
+    //    // 另一种方式实现
+    //    + (NSData *)hexToBytes:(NSString *)string {
+    //        NSMutableData* data = [NSMutableData data];
+    //        int idx;
+    //        for (idx = 0; idx+2 <= string.length; idx+=2) {
+    //            NSRange range = NSMakeRange(idx, 2);
+    //            NSString* hexStr = [string substringWithRange:range];
+    //            NSScanner* scanner = [NSScanner scannerWithString:hexStr];
+    //            unsigned int intValue;
+    //            [scanner scanHexInt:&intValue];
+    //            [data appendBytes:&intValue length:1];
+    //        }
+    //        return data;
+    //    }
+    
+}
+
+
+/**
+ *
+ *  十六进制字符串转十进制（如：@"AA" -> 170）
+ *
+ **/
++ (NSInteger)hexToInt:(NSString *)hexString
+{
+    NSString *resultStr = [NSString stringWithFormat:@"%lu",strtoul([hexString UTF8String],0,16)];
+    NSInteger result = [resultStr integerValue];
+    
+    //NSLog(@"hexString: %@  ----->   int: %ld", hexString, result);
+    
+    return result;
+}
+
+
+/**
+ *
+ *  十进制转十六进制字符串（如：170 -> @"AA"）
+ *
+ **/
++ (NSString *)intToHex:(uint16_t)number
+{
+    NSString *nLetterValue;
+    NSString *str =@"";
+    uint16_t ttmpig;
+    for (int i = 0; i<9; i++) {
+        ttmpig=number%16;
+        number=number/16;
+        switch (ttmpig)
+        {
+            case 10:
+                nLetterValue =@"A";break;
+            case 11:
+                nLetterValue =@"B";break;
+            case 12:
+                nLetterValue =@"C";break;
+            case 13:
+                nLetterValue =@"D";break;
+            case 14:
+                nLetterValue =@"E";break;
+            case 15:
+                nLetterValue =@"F";break;
+            default:
+                nLetterValue = [NSString stringWithFormat:@"%u",ttmpig];
+                
+        }
+        str = [nLetterValue stringByAppendingString:str];
+        if (number == 0) {
+            break;
+        }
+        
+    }
+    return str;
+}
+
+
+
 
 @end

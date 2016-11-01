@@ -11,6 +11,7 @@
 #import "MusicViewController.h"
 #import "HandKneadViewController.h"
 #import "AutoKneadViewController.h"
+#import "BTTestViewController.h"
 #import "MusicManager.h"
 #import "BluetoothManager.h"
 #import <AVFoundation/AVFoundation.h>
@@ -29,9 +30,10 @@
     [BluetoothManager share];
     
     self.window = [[UIWindow alloc] initWithFrame:[[UIScreen mainScreen] bounds]];//设置窗口
+    BTTestViewController *loginViewController = [[BTTestViewController alloc] init];
     //AutoKneadViewController *loginViewController = [[AutoKneadViewController alloc] init];
     //HandKneadViewController *loginViewController = [[HandKneadViewController alloc] init];
-    LoginViewController *loginViewController = [[LoginViewController alloc] init];
+    //LoginViewController *loginViewController = [[LoginViewController alloc] init];
     //MusicViewController *loginViewController = [[MusicViewController alloc] init];
     //loginViewController.musics = [MusicManager share].musics;
     //UINavigationController *nav = [[UINavigationController alloc] initWithRootViewController:loginViewController];

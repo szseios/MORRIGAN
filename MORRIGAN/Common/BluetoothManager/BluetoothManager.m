@@ -7,8 +7,24 @@
 //
 
 #import "BluetoothManager.h"
+#import "BtSettingInfo.h"
 
 static BluetoothManager *manager;
+static NSString *SendCharacteristicUUID = @"000033F1-0000-1000-8000-00805F9B34FB";
+static NSString *ReceiveCharacteristicUUID = @"000033F2-0000-1000-8000-00805F9B34FB";
+
+
+
+@interface BluetoothManager ()
+
+@property (nonatomic,strong)CBPeripheral *willConnectPeripheral;     // 将要连接的设备
+@property (nonatomic,strong)CBPeripheral *curConnectPeripheral;      // 当前连接的设备
+@property (nonatomic,strong)CBCharacteristic *sendCharacteristic;    // 写特征
+@property (nonatomic,strong)CBCharacteristic *receiveCharacteristic; // 读特征
+
+
+
+@end
 
 @implementation BluetoothManager
 
@@ -26,7 +42,7 @@ static BluetoothManager *manager;
     if (self) {
         _baby = [BabyBluetooth shareBabyBluetooth];
         [self babyDelegate];
-        [self start];
+        //[self start];
         
     }
     return self;
@@ -44,6 +60,40 @@ static BluetoothManager *manager;
     //设置扫描到设备的委托
     [_baby setBlockOnDiscoverToPeripherals:^(CBCentralManager *central, CBPeripheral *peripheral, NSDictionary *advertisementData, NSNumber *RSSI) {
         NSLog(@"搜索到了设备:%@",peripheral.name);
+        
+        // 测试连接设备
+        if([peripheral.name isEqualToString:@"Morrigan"] && weakSelf.willConnectPeripheral  == nil) {
+            weakSelf.willConnectPeripheral = peripheral;
+            UIAlertView *alert = [[UIAlertView alloc] initWithTitle:@"已搜索到设备" message:nil delegate:nil cancelButtonTitle:nil otherButtonTitles:@"确定", nil];
+            [alert show];
+            [weakSelf stop];
+        }
+        
+        
+    }];
+    
+    //设置设备连接成功的委托
+    [_baby setBlockOnConnected:^(CBCentralManager *central, CBPeripheral *peripheral) {
+        NSLog(@"设备：%@连接成功",peripheral.name);
+        _curConnectPeripheral = peripheral;
+        UIAlertView *alert = [[UIAlertView alloc] initWithTitle:@"连接成功" message:nil delegate:nil cancelButtonTitle:nil otherButtonTitles:@"确定", nil];
+        [alert show];
+    }];
+    
+    
+    //设置设备连接失败的委托
+    [_baby setBlockOnFailToConnect:^(CBCentralManager *central, CBPeripheral *peripheral, NSError *error) {
+        NSLog(@"设备：%@连接失败",peripheral.name);
+        
+    }];
+    
+    //设置设备断开连接的委托
+    [_baby setBlockOnDisconnect:^(CBCentralManager *central, CBPeripheral *peripheral, NSError *error) {
+        NSLog(@"设备：%@断开连接",peripheral.name);
+        weakSelf.curConnectPeripheral = nil;
+        weakSelf.willConnectPeripheral = nil;
+        UIAlertView *alert = [[UIAlertView alloc] initWithTitle:@"已断开连接" message:nil delegate:nil cancelButtonTitle:nil otherButtonTitles:@"确定", nil];
+        [alert show];
     }];
     
     //设置发现设备的Services的委托
@@ -60,12 +110,80 @@ static BluetoothManager *manager;
 //        }
     }];
     
+    __block BabyBluetooth *weakBaby = _baby;
     //设置发现设service的Characteristics的委托
     [_baby setBlockOnDiscoverCharacteristics:^(CBPeripheral *peripheral, CBService *service, NSError *error) {
         NSLog(@"===service name:%@",service.UUID);
         for (CBCharacteristic *c in service.characteristics) {
             NSLog(@"charateristic name is :%@",c.UUID);
+            if ([c.UUID.UUIDString isEqualToString:SendCharacteristicUUID]) {
+                NSLog(@"发现写特征 :%@",c.UUID);
+                weakSelf.sendCharacteristic = c;
+            } else if ([c.UUID.UUIDString isEqualToString:ReceiveCharacteristicUUID]) {
+                NSLog(@"发现读特征 :%@",c.UUID);
+                weakSelf.receiveCharacteristic = c;
+            }
         }
+        
+        if (weakSelf.sendCharacteristic && weakSelf.receiveCharacteristic) {
+            [weakBaby notify:weakSelf.curConnectPeripheral characteristic:weakSelf.receiveCharacteristic block:^(CBPeripheral *peripheral, CBCharacteristic *characteristics, NSError *error) {
+                NSLog(@"receive characteristics : %@",characteristics);
+                
+                // 本次接收的数据
+                NSData *receiveData = [characteristics value];
+                NSLog(@"完整接收：%@ [长度：%ld]", receiveData, receiveData.length);
+                NSString *receiveDataHexString = [Utils hexStringForData:receiveData];
+               
+                // 判断接收的数据是否有效
+                BOOL isValid = [weakSelf isValidOfReceiveData:receiveDataHexString];
+                if(isValid) {
+                    NSLog(@"数据有效");
+                    // 应答处理(不给模块应答，模块会重复发5次数据)
+                    NSString *answerCode = [receiveDataHexString substringWithRange:NSMakeRange(4, 2)];
+                    if([answerCode isEqualToString:@"ee"]) {
+                        // @"ee"是模块给客户端的应答，不处理
+                    } else {
+                        [weakSelf writeValue:[[BtSettingInfo share] getResultDataOfAnswer:answerCode]];
+                    }
+                   
+                    // 有效数据获取返回给Controller处理
+                    
+                    
+                    
+                    
+                    
+                    
+                    
+                    
+                    
+                    
+                    
+                } else {
+                    NSLog(@"数据无效");
+                }
+
+            }];
+            
+        }
+        
+    }];
+    
+    //设置写数据成功的block
+    [_baby setBlockOnDidWriteValueForCharacteristic:^(CBCharacteristic *characteristic, NSError *error) {
+        if (!error) {
+            NSLog(@"发送成功：%@", characteristic.value);
+        } else {
+            NSLog(@"发送失败：%@", characteristic.value);
+        }
+    }];
+    
+    //设置查找设备的过滤器
+    [_baby setFilterOnDiscoverPeripherals:^BOOL(NSString *peripheralName, NSDictionary *advertisementData, NSNumber *RSSI) {
+        //设置查找规则是名称大于0 ， the search rule is peripheral.name length > 0
+        if (peripheralName.length >0) {
+            return YES;
+        }
+        return NO;
     }];
     
     //设置读取characteristics的委托
@@ -97,10 +215,12 @@ static BluetoothManager *manager;
     
     [_baby setBlockOnCancelAllPeripheralsConnectionBlock:^(CBCentralManager *centralManager) {
         NSLog(@"setBlockOnCancelAllPeripheralsConnectionBlock");
+        NSLog(@"成功取消所有外设连接");
     }];
     
     [_baby setBlockOnCancelScanBlock:^(CBCentralManager *centralManager) {
         NSLog(@"setBlockOnCancelScanBlock");
+        NSLog(@"成功取消扫描");
     }];
 
     
@@ -135,6 +255,96 @@ static BluetoothManager *manager;
 
 -(void)connectingBlueTooth:(CBPeripheral *)peripheral {
     _baby.having(peripheral).and.then.connectToPeripherals().discoverServices().discoverCharacteristics().readValueForCharacteristic().discoverDescriptorsForCharacteristic().readValueForDescriptors().begin();
+}
+
+-(void)unConnectingBlueTooth {
+    [_baby cancelAllPeripheralsConnection];
+}
+
+
+
+#pragma mark - 连接／断开设备（测试）
+
+- (void)scanTest
+{
+    [self start];
+}
+
+- (void)connectTest
+{
+    if(self.willConnectPeripheral) {
+        [self connectingBlueTooth:self.willConnectPeripheral];
+    }
+   
+}
+
+- (void)unConnectTest
+{
+    [self unConnectingBlueTooth];
+
+}
+
+
+#pragma mark - 往连接的设备写数据
+- (void)writeValue:(NSData *)data {
+    
+    if(self.curConnectPeripheral == nil || self.sendCharacteristic == nil){
+        NSLog(@"curConnectPeripheral 或 sendCharacteristic 为空，取消发送！");
+        return;
+    }
+    
+    // 如果大于20子节，分次发送
+    for (int i = 0; i < data.length; i+=20) {
+        
+        NSData *sendData = [data subdataWithRange:NSMakeRange(i, data.length - i > 20 ? 20: data.length - i)];
+        
+        NSLog(@"准备发送：%@", sendData);
+        [self.curConnectPeripheral writeValue:sendData
+                        forCharacteristic:self.sendCharacteristic
+                                     type:CBCharacteristicWriteWithResponse];
+        
+    }
+}
+
+
+
+// 获取接收数据的长度
+- (NSInteger)getLength:(NSData *)data
+{
+    NSData *lengthData = [data subdataWithRange:NSMakeRange(1, 2)];
+    unsigned long long result = 0;
+    NSScanner *scanner = [NSScanner scannerWithString:[Utils hexStringForData:lengthData]];
+    [scanner scanHexLongLong:&result];
+    return result;
+}
+
+// 判断接收的数据是否有效
+- (BOOL)isValidOfReceiveData:(NSString *)receiveDataHexString
+{
+    NSLog(@"receiveDataHexString：%@ [长度：%ld]", receiveDataHexString, receiveDataHexString.length);
+    // 检查是否是20字节
+    if(receiveDataHexString.length != 20*2) {
+        return NO;
+    }
+    // 检查前2字节是否是@“aa55”
+    if(![[receiveDataHexString substringToIndex:4] isEqualToString:@"aa55"]) {
+        return NO;
+    }
+    // 检查校验值（0x00~0xff，前面19个无符号数字相加的和，其和对256取余数）
+    NSInteger verifyIntValue = 0;
+    for (NSInteger i = 0; i < 40-2; i += 2) {
+        NSString *str = [receiveDataHexString substringWithRange:NSMakeRange(i, 2)];
+        //NSLog(@"%ld , %@", i, str);
+        verifyIntValue += [Utils hexToInt:str];
+    }
+    verifyIntValue = verifyIntValue % 256;
+    NSInteger receiveVerifyIntValue = [Utils hexToInt:[receiveDataHexString substringWithRange:NSMakeRange(38, 2)]];
+    NSLog(@"verifyIntValue: %ld  ,  receiveVerifyIntValue: %ld", verifyIntValue, receiveVerifyIntValue);
+    if(verifyIntValue != receiveVerifyIntValue) {
+        return NO;
+    }
+    
+    return YES;
 }
 
 @end

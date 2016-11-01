@@ -21,10 +21,6 @@
 		3E632A541DC5A47B00CC2332 /* BabySpeaker.m in Sources */ = {isa = PBXBuildFile; fileRef = 3E632A4A1DC5A47B00CC2332 /* BabySpeaker.m */; };
 		3E632A551DC5A47B00CC2332 /* BabyToy.m in Sources */ = {isa = PBXBuildFile; fileRef = 3E632A4C1DC5A47B00CC2332 /* BabyToy.m */; };
 		3E632A591DC5A51E00CC2332 /* BluetoothManager.m in Sources */ = {isa = PBXBuildFile; fileRef = 3E632A581DC5A51E00CC2332 /* BluetoothManager.m */; };
-		3E632A5E1DC5CD3200CC2332 /* SearchPeripheralViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 3E632A5C1DC5CD3200CC2332 /* SearchPeripheralViewController.m */; };
-		3E632A5F1DC5CD3200CC2332 /* SearchPeripheralViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = 3E632A5D1DC5CD3200CC2332 /* SearchPeripheralViewController.xib */; };
-		3E632A631DC5E9CA00CC2332 /* PeripheralListViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 3E632A611DC5E9CA00CC2332 /* PeripheralListViewController.m */; };
-		3E632A641DC5E9CA00CC2332 /* PeripheralListViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = 3E632A621DC5E9CA00CC2332 /* PeripheralListViewController.xib */; };
 		3E8A433C1DBF3EAE00DE76A8 /* MusicList.plist in Resources */ = {isa = PBXBuildFile; fileRef = 3E8A433B1DBF3EAE00DE76A8 /* MusicList.plist */; };
 		3EEF45E81DBB3B2900752AD4 /* UIView+Extension.m in Sources */ = {isa = PBXBuildFile; fileRef = 3EEF45E71DBB3B2900752AD4 /* UIView+Extension.m */; };
 		3EF795841DA9EDFC00E5EBC6 /* MusicTableViewCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 3EF795821DA9EDFC00E5EBC6 /* MusicTableViewCell.m */; };
@@ -96,6 +92,13 @@
 		EB534AD31DA9D924007AA325 /* MusicModel.m in Sources */ = {isa = PBXBuildFile; fileRef = EB534ACE1DA9D924007AA325 /* MusicModel.m */; };
 		EB534AD41DA9D924007AA325 /* MusicViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = EB534AD01DA9D924007AA325 /* MusicViewController.m */; };
 		EB534AD51DA9D924007AA325 /* MusicViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = EB534AD11DA9D924007AA325 /* MusicViewController.xib */; };
+		EB6DBC861DC8216E005823B2 /* PeripheralListViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = EB6DBC801DC8216E005823B2 /* PeripheralListViewController.m */; };
+		EB6DBC871DC8216E005823B2 /* PeripheralListViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = EB6DBC811DC8216E005823B2 /* PeripheralListViewController.xib */; };
+		EB6DBC881DC8216E005823B2 /* SearchPeripheralViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = EB6DBC831DC8216E005823B2 /* SearchPeripheralViewController.m */; };
+		EB6DBC891DC8216E005823B2 /* SearchPeripheralViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = EB6DBC841DC8216E005823B2 /* SearchPeripheralViewController.xib */; };
+		EB6DBC8D1DC82239005823B2 /* BTTestViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = EB6DBC8C1DC82239005823B2 /* BTTestViewController.m */; };
+		EB6DBC901DC82288005823B2 /* BtSettingInfo.m in Sources */ = {isa = PBXBuildFile; fileRef = EB6DBC8F1DC82288005823B2 /* BtSettingInfo.m */; };
+		EB6DBC911DC82288005823B2 /* BtSettingInfo.m in Sources */ = {isa = PBXBuildFile; fileRef = EB6DBC8F1DC82288005823B2 /* BtSettingInfo.m */; };
 		EB7AD9411DA72FF6001D1DCA /* main.m in Sources */ = {isa = PBXBuildFile; fileRef = EB7AD9401DA72FF6001D1DCA /* main.m */; };
 		EB7AD9441DA72FF6001D1DCA /* AppDelegate.m in Sources */ = {isa = PBXBuildFile; fileRef = EB7AD9431DA72FF6001D1DCA /* AppDelegate.m */; };
 		EB7AD94C1DA72FF6001D1DCA /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = EB7AD94B1DA72FF6001D1DCA /* Assets.xcassets */; };
@@ -157,12 +160,6 @@
 		3E632A4C1DC5A47B00CC2332 /* BabyToy.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = BabyToy.m; sourceTree = "<group>"; };
 		3E632A571DC5A51E00CC2332 /* BluetoothManager.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = BluetoothManager.h; sourceTree = "<group>"; };
 		3E632A581DC5A51E00CC2332 /* BluetoothManager.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = BluetoothManager.m; sourceTree = "<group>"; };
-		3E632A5B1DC5CD3200CC2332 /* SearchPeripheralViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SearchPeripheralViewController.h; sourceTree = "<group>"; };
-		3E632A5C1DC5CD3200CC2332 /* SearchPeripheralViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = SearchPeripheralViewController.m; sourceTree = "<group>"; };
-		3E632A5D1DC5CD3200CC2332 /* SearchPeripheralViewController.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = SearchPeripheralViewController.xib; sourceTree = "<group>"; };
-		3E632A601DC5E9CA00CC2332 /* PeripheralListViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = PeripheralListViewController.h; sourceTree = "<group>"; };
-		3E632A611DC5E9CA00CC2332 /* PeripheralListViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = PeripheralListViewController.m; sourceTree = "<group>"; };
-		3E632A621DC5E9CA00CC2332 /* PeripheralListViewController.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = PeripheralListViewController.xib; sourceTree = "<group>"; };
 		3E8A433B1DBF3EAE00DE76A8 /* MusicList.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = MusicList.plist; sourceTree = "<group>"; };
 		3EEF45E61DBB3B2900752AD4 /* UIView+Extension.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "UIView+Extension.h"; sourceTree = "<group>"; };
 		3EEF45E71DBB3B2900752AD4 /* UIView+Extension.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "UIView+Extension.m"; sourceTree = "<group>"; };
@@ -284,6 +281,16 @@
 		EB534ACF1DA9D924007AA325 /* MusicViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MusicViewController.h; sourceTree = "<group>"; };
 		EB534AD01DA9D924007AA325 /* MusicViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = MusicViewController.m; sourceTree = "<group>"; };
 		EB534AD11DA9D924007AA325 /* MusicViewController.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = MusicViewController.xib; sourceTree = "<group>"; };
+		EB6DBC7F1DC8216E005823B2 /* PeripheralListViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = PeripheralListViewController.h; sourceTree = "<group>"; };
+		EB6DBC801DC8216E005823B2 /* PeripheralListViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = PeripheralListViewController.m; sourceTree = "<group>"; };
+		EB6DBC811DC8216E005823B2 /* PeripheralListViewController.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = PeripheralListViewController.xib; sourceTree = "<group>"; };
+		EB6DBC821DC8216E005823B2 /* SearchPeripheralViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SearchPeripheralViewController.h; sourceTree = "<group>"; };
+		EB6DBC831DC8216E005823B2 /* SearchPeripheralViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = SearchPeripheralViewController.m; sourceTree = "<group>"; };
+		EB6DBC841DC8216E005823B2 /* SearchPeripheralViewController.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = SearchPeripheralViewController.xib; sourceTree = "<group>"; };
+		EB6DBC8B1DC82239005823B2 /* BTTestViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = BTTestViewController.h; sourceTree = "<group>"; };
+		EB6DBC8C1DC82239005823B2 /* BTTestViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = BTTestViewController.m; sourceTree = "<group>"; };
+		EB6DBC8E1DC82288005823B2 /* BtSettingInfo.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = BtSettingInfo.h; sourceTree = "<group>"; };
+		EB6DBC8F1DC82288005823B2 /* BtSettingInfo.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = BtSettingInfo.m; sourceTree = "<group>"; };
 		EB7AD93C1DA72FF6001D1DCA /* MORRIGAN.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = MORRIGAN.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		EB7AD9401DA72FF6001D1DCA /* main.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = main.m; sourceTree = "<group>"; };
 		EB7AD9421DA72FF6001D1DCA /* AppDelegate.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = AppDelegate.h; sourceTree = "<group>"; };
@@ -414,19 +421,6 @@
 				3E632A581DC5A51E00CC2332 /* BluetoothManager.m */,
 			);
 			path = BluetoothManager;
-			sourceTree = "<group>";
-		};
-		3E632A5A1DC5CC9900CC2332 /* Binding */ = {
-			isa = PBXGroup;
-			children = (
-				3E632A5B1DC5CD3200CC2332 /* SearchPeripheralViewController.h */,
-				3E632A5C1DC5CD3200CC2332 /* SearchPeripheralViewController.m */,
-				3E632A5D1DC5CD3200CC2332 /* SearchPeripheralViewController.xib */,
-				3E632A601DC5E9CA00CC2332 /* PeripheralListViewController.h */,
-				3E632A611DC5E9CA00CC2332 /* PeripheralListViewController.m */,
-				3E632A621DC5E9CA00CC2332 /* PeripheralListViewController.xib */,
-			);
-			path = Binding;
 			sourceTree = "<group>";
 		};
 		3EF795861DAA0A5E00E5EBC6 /* PCSEQ */ = {
@@ -649,6 +643,31 @@
 			path = Music;
 			sourceTree = "<group>";
 		};
+		EB6DBC7C1DC8216E005823B2 /* Binding */ = {
+			isa = PBXGroup;
+			children = (
+				EB6DBC8A1DC82239005823B2 /* test */,
+				EB6DBC7F1DC8216E005823B2 /* PeripheralListViewController.h */,
+				EB6DBC801DC8216E005823B2 /* PeripheralListViewController.m */,
+				EB6DBC811DC8216E005823B2 /* PeripheralListViewController.xib */,
+				EB6DBC821DC8216E005823B2 /* SearchPeripheralViewController.h */,
+				EB6DBC831DC8216E005823B2 /* SearchPeripheralViewController.m */,
+				EB6DBC841DC8216E005823B2 /* SearchPeripheralViewController.xib */,
+			);
+			path = Binding;
+			sourceTree = "<group>";
+		};
+		EB6DBC8A1DC82239005823B2 /* test */ = {
+			isa = PBXGroup;
+			children = (
+				EB6DBC8E1DC82288005823B2 /* BtSettingInfo.h */,
+				EB6DBC8F1DC82288005823B2 /* BtSettingInfo.m */,
+				EB6DBC8B1DC82239005823B2 /* BTTestViewController.h */,
+				EB6DBC8C1DC82239005823B2 /* BTTestViewController.m */,
+			);
+			path = test;
+			sourceTree = "<group>";
+		};
 		EB7AD9331DA72FF6001D1DCA = {
 			isa = PBXGroup;
 			children = (
@@ -713,7 +732,7 @@
 		EBF0115E1DA73137009E8394 /* UI */ = {
 			isa = PBXGroup;
 			children = (
-				3E632A5A1DC5CC9900CC2332 /* Binding */,
+				EB6DBC7C1DC8216E005823B2 /* Binding */,
 				3E2539821DAA3DF500CB1EF8 /* Home */,
 				EBF0115F1DA73137009E8394 /* Login */,
 				EBF011631DA7319F009E8394 /* Setting */,
@@ -936,7 +955,6 @@
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				3E632A641DC5E9CA00CC2332 /* PeripheralListViewController.xib in Resources */,
 				3E8A433C1DBF3EAE00DE76A8 /* MusicList.plist in Resources */,
 				4728EDD11DC4865E0005F9C3 /* service.html in Resources */,
 				4728EDCA1DC4865E0005F9C3 /* about_top_logo.png in Resources */,
@@ -945,9 +963,9 @@
 				4728ED641DC485BA0005F9C3 /* HistoryDataCell.xib in Resources */,
 				EB534AD51DA9D924007AA325 /* MusicViewController.xib in Resources */,
 				4728ED6A1DC485BA0005F9C3 /* RelateDeviceCell.xib in Resources */,
-				3E632A5F1DC5CD3200CC2332 /* SearchPeripheralViewController.xib in Resources */,
 				4728ED6F1DC485BA0005F9C3 /* SetTargetController.xib in Resources */,
 				EBF011841DA7883B009E8394 /* Urls.plist in Resources */,
+				EB6DBC891DC8216E005823B2 /* SearchPeripheralViewController.xib in Resources */,
 				4728EDC91DC4865E0005F9C3 /* about_top.png in Resources */,
 				4728ED6D1DC485BA0005F9C3 /* SuggestionController.xib in Resources */,
 				EB7AD94C1DA72FF6001D1DCA /* Assets.xcassets in Resources */,
@@ -956,6 +974,7 @@
 				4728ED811DC485F50005F9C3 /* myDataCell.xib in Resources */,
 				4728EDCB1DC4865E0005F9C3 /* aboutmoli_line.png in Resources */,
 				4728EDCC1DC4865E0005F9C3 /* aboutMoLiImage.png in Resources */,
+				EB6DBC871DC8216E005823B2 /* PeripheralListViewController.xib in Resources */,
 				4728ED601DC485BA0005F9C3 /* AboutMorriganController.xib in Resources */,
 				4728ED661DC485BA0005F9C3 /* MyDataController.xib in Resources */,
 				3EF795851DA9EDFC00E5EBC6 /* MusicTableViewCell.xib in Resources */,
@@ -983,7 +1002,6 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				3E632A5E1DC5CD3200CC2332 /* SearchPeripheralViewController.m in Sources */,
 				4728EDD31DC4865E0005F9C3 /* ZHRulerView.m in Sources */,
 				3E632A531DC5A47B00CC2332 /* BabyRhythm.m in Sources */,
 				4728EDBB1DC4865E0005F9C3 /* PNCircleChart.m in Sources */,
@@ -1008,6 +1026,7 @@
 				3E632A591DC5A51E00CC2332 /* BluetoothManager.m in Sources */,
 				3EF795841DA9EDFC00E5EBC6 /* MusicTableViewCell.m in Sources */,
 				4728ED381DC485AB0005F9C3 /* HomePageSuperController.m in Sources */,
+				EB6DBC881DC8216E005823B2 /* SearchPeripheralViewController.m in Sources */,
 				4728ED681DC485BA0005F9C3 /* relateDeviceModel.m in Sources */,
 				3E632A4D1DC5A47B00CC2332 /* BabyBluetooth.m in Sources */,
 				4728ED371DC485AB0005F9C3 /* HomePageController.m in Sources */,
@@ -1015,8 +1034,10 @@
 				4728ED611DC485BA0005F9C3 /* WebInfoController.m in Sources */,
 				4728EDBC1DC4865E0005F9C3 /* PNColor.m in Sources */,
 				4728ED7E1DC485F50005F9C3 /* HomeMainView.m in Sources */,
+				EB6DBC901DC82288005823B2 /* BtSettingInfo.m in Sources */,
 				3E632A551DC5A47B00CC2332 /* BabyToy.m in Sources */,
 				4728EDC61DC4865E0005F9C3 /* PNScatterChartData.m in Sources */,
+				EB6DBC8D1DC82239005823B2 /* BTTestViewController.m in Sources */,
 				4728ED7C1DC485F50005F9C3 /* BasicBarView.m in Sources */,
 				4728ED5F1DC485BA0005F9C3 /* AboutMorriganController.m in Sources */,
 				4728EDC81DC4865E0005F9C3 /* UICountingLabel.m in Sources */,
@@ -1027,8 +1048,8 @@
 				4728EDB91DC4865E0005F9C3 /* PNBarChart.m in Sources */,
 				4728ED7F1DC485F50005F9C3 /* HomePageButton.m in Sources */,
 				4728ED6E1DC485BA0005F9C3 /* SetTargetController.m in Sources */,
-				3E632A631DC5E9CA00CC2332 /* PeripheralListViewController.m in Sources */,
 				4728EDC11DC4865E0005F9C3 /* PNPieChart.m in Sources */,
+				EB6DBC861DC8216E005823B2 /* PeripheralListViewController.m in Sources */,
 				EB7AD9441DA72FF6001D1DCA /* AppDelegate.m in Sources */,
 				4728EDBF1DC4865E0005F9C3 /* PNLineChartData.m in Sources */,
 				4728EDC41DC4865E0005F9C3 /* PNRadarChartDataItem.m in Sources */,
@@ -1065,6 +1086,7 @@
 			files = (
 				EB7AD95A1DA72FF6001D1DCA /* MORRIGANTests.m in Sources */,
 				EB21FA1F1DBF31A000DDD28A /* FuntionButton.m in Sources */,
+				EB6DBC911DC82288005823B2 /* BtSettingInfo.m in Sources */,
 				EBF011B01DA7920A009E8394 /* Utils.m in Sources */,
 				EB21FA1B1DBF2C1100DDD28A /* AutoKneadViewController.m in Sources */,
 			);
