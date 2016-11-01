@@ -7,6 +7,7 @@
 //
 
 #import "BluetoothManager.h"
+#import "BtSettingInfo.h"
 
 static BluetoothManager *manager;
 static NSString *SendCharacteristicUUID = @"000033F1-0000-1000-8000-00805F9B34FB";
@@ -126,15 +127,41 @@ static NSString *ReceiveCharacteristicUUID = @"000033F2-0000-1000-8000-00805F9B3
         
         if (weakSelf.sendCharacteristic && weakSelf.receiveCharacteristic) {
             [weakBaby notify:weakSelf.curConnectPeripheral characteristic:weakSelf.receiveCharacteristic block:^(CBPeripheral *peripheral, CBCharacteristic *characteristics, NSError *error) {
-               
                 NSLog(@"receive characteristics : %@",characteristics);
+                
                 // 本次接收的数据
                 NSData *receiveData = [characteristics value];
                 NSLog(@"完整接收：%@ [长度：%ld]", receiveData, receiveData.length);
-                
-                
-                
-                
+                NSString *receiveDataHexString = [Utils hexStringForData:receiveData];
+               
+                // 判断接收的数据是否有效
+                BOOL isValid = [weakSelf isValidOfReceiveData:receiveDataHexString];
+                if(isValid) {
+                    NSLog(@"数据有效");
+                    // 应答处理(不给模块应答，模块会重复发5次数据)
+                    NSString *answerCode = [receiveDataHexString substringWithRange:NSMakeRange(4, 2)];
+                    if([answerCode isEqualToString:@"ee"]) {
+                        // @"ee"是模块给客户端的应答，不处理
+                    } else {
+                        [weakSelf writeValue:[[BtSettingInfo share] getResultDataOfAnswer:answerCode]];
+                    }
+                   
+                    // 有效数据获取返回给Controller处理
+                    
+                    
+                    
+                    
+                    
+                    
+                    
+                    
+                    
+                    
+                    
+                } else {
+                    NSLog(@"数据无效");
+                }
+
             }];
             
         }
@@ -289,6 +316,35 @@ static NSString *ReceiveCharacteristicUUID = @"000033F2-0000-1000-8000-00805F9B3
     NSScanner *scanner = [NSScanner scannerWithString:[Utils hexStringForData:lengthData]];
     [scanner scanHexLongLong:&result];
     return result;
+}
+
+// 判断接收的数据是否有效
+- (BOOL)isValidOfReceiveData:(NSString *)receiveDataHexString
+{
+    NSLog(@"receiveDataHexString：%@ [长度：%ld]", receiveDataHexString, receiveDataHexString.length);
+    // 检查是否是20字节
+    if(receiveDataHexString.length != 20*2) {
+        return NO;
+    }
+    // 检查前2字节是否是@“aa55”
+    if(![[receiveDataHexString substringToIndex:4] isEqualToString:@"aa55"]) {
+        return NO;
+    }
+    // 检查校验值（0x00~0xff，前面19个无符号数字相加的和，其和对256取余数）
+    NSInteger verifyIntValue = 0;
+    for (NSInteger i = 0; i < 40-2; i += 2) {
+        NSString *str = [receiveDataHexString substringWithRange:NSMakeRange(i, 2)];
+        //NSLog(@"%ld , %@", i, str);
+        verifyIntValue += [Utils hexToInt:str];
+    }
+    verifyIntValue = verifyIntValue % 256;
+    NSInteger receiveVerifyIntValue = [Utils hexToInt:[receiveDataHexString substringWithRange:NSMakeRange(38, 2)]];
+    NSLog(@"verifyIntValue: %ld  ,  receiveVerifyIntValue: %ld", verifyIntValue, receiveVerifyIntValue);
+    if(verifyIntValue != receiveVerifyIntValue) {
+        return NO;
+    }
+    
+    return YES;
 }
 
 @end

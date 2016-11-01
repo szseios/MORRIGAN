@@ -197,7 +197,7 @@
     NSString *resultStr = [NSString stringWithFormat:@"%lu",strtoul([hexString UTF8String],0,16)];
     NSInteger result = [resultStr integerValue];
     
-    NSLog(@"hexString: %@  ----->   int: %ld", hexString, result);
+    //NSLog(@"hexString: %@  ----->   int: %ld", hexString, result);
     
     return result;
 }

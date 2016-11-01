@@ -111,7 +111,7 @@ static BtSettingInfo *info;
 
 
 /**
- *  获取最终发送的获取点量数据
+ *  获取最终发送的获取电量数据
  */
 - (NSData *)getResultDataOfBattery
 {
@@ -214,6 +214,58 @@ static BtSettingInfo *info;
     return resultData;
 }
 
+
+/**
+ *  获取最终发送的应答数据(answerCode:需要应答的对应数据，从接收到的数据中获取这个值，然后作为参数传进来)
+ */
+- (NSData *)getResultDataOfAnswer:(NSString *)answerCode
+{
+    NSMutableData *resultData = [NSMutableData data];
+    [resultData appendData:[Utils dataForHexString:info.head1HexString]];
+    [resultData appendData:[Utils dataForHexString:info.head2HexString]];
+    [resultData appendData:[Utils dataForHexString:@"EE"]];
+    [resultData appendData:[Utils dataForHexString:@"00"]];
+    [resultData appendData:[Utils dataForHexString:@"00"]];
+    [resultData appendData:[Utils dataForHexString:@"00"]];
+    [resultData appendData:[Utils dataForHexString:@"00"]];
+    [resultData appendData:[Utils dataForHexString:@"00"]];
+    [resultData appendData:[Utils dataForHexString:@"00"]];
+    [resultData appendData:[Utils dataForHexString:@"00"]];
+    [resultData appendData:[Utils dataForHexString:@"00"]];
+    [resultData appendData:[Utils dataForHexString:@"00"]];
+    [resultData appendData:[Utils dataForHexString:@"00"]];
+    [resultData appendData:[Utils dataForHexString:@"00"]];
+    [resultData appendData:[Utils dataForHexString:@"00"]];
+    [resultData appendData:[Utils dataForHexString:@"00"]];
+    [resultData appendData:[Utils dataForHexString:@"00"]];
+    [resultData appendData:[Utils dataForHexString:@"00"]];
+    
+    
+    // 计算校验值
+    NSInteger verifyIntValue = ([Utils hexToInt:info.head1HexString]
+                                + [Utils hexToInt:info.head2HexString]
+                                + [Utils hexToInt:info.cmdNumHexString]
+                                + [Utils hexToInt:info.switchHexString]
+                                + [Utils hexToInt:info.modeHexString]
+                                + [Utils hexToInt:info.gearHexString]
+                                + [Utils hexToInt:info.leftRightHexString]
+                                + [Utils hexToInt:info.group1HexString]
+                                + [Utils hexToInt:info.group2HexString]
+                                + [Utils hexToInt:info.group3HexString]
+                                + [Utils hexToInt:info.group4HexString]
+                                + [Utils hexToInt:info.group5HexString]
+                                + [Utils hexToInt:info.dbHexString]
+                                + [Utils hexToInt:info.retain1HexString]
+                                + [Utils hexToInt:info.retain2HexString]
+                                + [Utils hexToInt:info.retain3HexString]
+                                + [Utils hexToInt:info.retain4HexString]
+                                + [Utils hexToInt:info.retain5HexString]) % 256;
+    info.verifyHexString = [Utils intToHex:verifyIntValue];
+    [resultData appendData:[Utils dataForHexString: info.verifyHexString]];
+    
+    
+    return resultData;
+}
 
 
 

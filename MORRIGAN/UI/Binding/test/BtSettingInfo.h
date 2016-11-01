@@ -34,7 +34,7 @@
 @property(nonatomic, strong)NSString *retain3HexString;   // 保留
 @property(nonatomic, strong)NSString *retain4HexString;   // 保留
 @property(nonatomic, strong)NSString *retain5HexString;   // 保留
-@property(nonatomic, strong)NSString *verifyHexString;    // 校验和（0x00~0xff，前面19个无符号数字相加的和，其和对256取余数）
+@property(nonatomic, strong)NSString *verifyHexString;    // 校验值（0x00~0xff，前面19个无符号数字相加的和，其和对256取余数）
 
 
 + (BtSettingInfo *)share;
@@ -56,4 +56,8 @@
  */
 - (NSData *)getResultDataOfBtEnable;
 
+/**
+ *  获取最终发送的应答数据(answerCode:需要应答的对应数据，从接收到的数据中获取这个值，然后作为参数传进来)
+ */
+- (NSData *)getResultDataOfAnswer:(NSString *)answerCode;
 @end
