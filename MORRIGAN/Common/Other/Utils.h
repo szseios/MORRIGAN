@@ -33,9 +33,27 @@
 
 /**
  *
- * // nsstring转nsdata
+ *  nsstring转nsdata
  *
  **/
 + (NSData*)dataForHexString:(NSString*)hexString;
+
+
+/**
+ *
+ *  十六进制字符串转十进制（如：@"AA" -> 170）
+ *
+ **/
++ (NSInteger)hexToInt:(NSString *)hexString;
+
+
+/**
+ *
+ *  十进制转十六进制字符串（如：170 -> @"AA"）
+ *
+ **/
++ (NSString *)intToHex:(uint16_t)number;
+
+
 
 @end

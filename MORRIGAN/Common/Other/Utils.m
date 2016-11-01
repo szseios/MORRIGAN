@@ -126,7 +126,7 @@
 
 /**
  *
- * // nsstring转nsdata
+ *  nsstring转nsdata
  *
  **/
 + (NSData*)dataForHexString:(NSString*)hexString
@@ -185,6 +185,64 @@
     //    }
     
 }
+
+
+/**
+ *
+ *  十六进制字符串转十进制（如：@"AA" -> 170）
+ *
+ **/
++ (NSInteger)hexToInt:(NSString *)hexString
+{
+    NSString *resultStr = [NSString stringWithFormat:@"%lu",strtoul([hexString UTF8String],0,16)];
+    NSInteger result = [resultStr integerValue];
+    
+    NSLog(@"hexString: %@  ----->   int: %ld", hexString, result);
+    
+    return result;
+}
+
+
+/**
+ *
+ *  十进制转十六进制字符串（如：170 -> @"AA"）
+ *
+ **/
++ (NSString *)intToHex:(uint16_t)number
+{
+    NSString *nLetterValue;
+    NSString *str =@"";
+    uint16_t ttmpig;
+    for (int i = 0; i<9; i++) {
+        ttmpig=number%16;
+        number=number/16;
+        switch (ttmpig)
+        {
+            case 10:
+                nLetterValue =@"A";break;
+            case 11:
+                nLetterValue =@"B";break;
+            case 12:
+                nLetterValue =@"C";break;
+            case 13:
+                nLetterValue =@"D";break;
+            case 14:
+                nLetterValue =@"E";break;
+            case 15:
+                nLetterValue =@"F";break;
+            default:
+                nLetterValue = [NSString stringWithFormat:@"%u",ttmpig];
+                
+        }
+        str = [nLetterValue stringByAppendingString:str];
+        if (number == 0) {
+            break;
+        }
+        
+    }
+    return str;
+}
+
 
 
 

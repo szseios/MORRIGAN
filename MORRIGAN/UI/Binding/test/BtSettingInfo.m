@@ -83,18 +83,33 @@ static BtSettingInfo *info;
     [resultData appendData:info.retain5Data];
     
 
-// 计算校验值(暂时没计算)
-    info.verifyData = [Utils dataForHexString:@"00"];
-    
-    
-    
-    
-    
-    
+   // 计算校验值
+    NSInteger verifyIntValue = ([Utils hexToInt:[Utils hexStringForData:info.head1Data]]
+    + [Utils hexToInt:[Utils hexStringForData:info.head2Data]]
+    + [Utils hexToInt:[Utils hexStringForData:info.cmdNumData]]
+    + [Utils hexToInt:[Utils hexStringForData:info.switchData]]
+    + [Utils hexToInt:[Utils hexStringForData:info.modeData]]
+    + [Utils hexToInt:[Utils hexStringForData:info.gearData]]
+    + [Utils hexToInt:[Utils hexStringForData:info.leftRightData]]
+    + [Utils hexToInt:[Utils hexStringForData:info.group1Data]]
+    + [Utils hexToInt:[Utils hexStringForData:info.group2Data]]
+    + [Utils hexToInt:[Utils hexStringForData:info.group3Data]]
+    + [Utils hexToInt:[Utils hexStringForData:info.group4Data]]
+    + [Utils hexToInt:[Utils hexStringForData:info.group5Data]]
+    + [Utils hexToInt:[Utils hexStringForData:info.dbData]]
+    + [Utils hexToInt:[Utils hexStringForData:info.retain1Data]]
+    + [Utils hexToInt:[Utils hexStringForData:info.retain2Data]]
+    + [Utils hexToInt:[Utils hexStringForData:info.retain3Data]]
+    + [Utils hexToInt:[Utils hexStringForData:info.retain4Data]]
+    + [Utils hexToInt:[Utils hexStringForData:info.retain5Data]]) % 256;
+    NSString *verifyHexString = [Utils intToHex:verifyIntValue];
+    info.verifyData = [Utils dataForHexString:verifyHexString];
     [resultData appendData:info.verifyData];
+    
     
     return resultData;
 }
+
 
 
 
