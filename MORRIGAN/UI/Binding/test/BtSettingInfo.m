@@ -36,25 +36,25 @@ static BtSettingInfo *info;
  */
 -(void)initData
 {
-    info.head1Data      = [Utils dataForHexString:@"AA"];
-    info.head2Data      = [Utils dataForHexString:@"55"];
-    info.cmdNumData     = [Utils dataForHexString:@"01"];
-    info.switchData     = [Utils dataForHexString:@"01"];  // 默认开关开
-    info.modeData       = [Utils dataForHexString:@"01"];  // 默认手动按摩
-    info.gearData       = [Utils dataForHexString:@"01"];  // 默认一档位
-    info.leftRightData  = [Utils dataForHexString:@"00"];  // 默认左右同时按摩
-    info.group1Data     = [Utils dataForHexString:@"00"];
-    info.group2Data     = [Utils dataForHexString:@"00"];
-    info.group3Data     = [Utils dataForHexString:@"00"];
-    info.group4Data     = [Utils dataForHexString:@"00"];
-    info.group5Data     = [Utils dataForHexString:@"00"];
-    info.dbData         = [Utils dataForHexString:@"00"];  // 默认没声
-    info.retain1Data    = [Utils dataForHexString:@"00"];
-    info.retain2Data    = [Utils dataForHexString:@"00"];
-    info.retain3Data    = [Utils dataForHexString:@"00"];
-    info.retain4Data    = [Utils dataForHexString:@"00"];
-    info.retain5Data    = [Utils dataForHexString:@"00"];
-    info.verifyData     = [Utils dataForHexString:@"00"];
+    info.head1HexString      = @"AA";
+    info.head2HexString      = @"55";
+    info.cmdNumHexString     = @"01";
+    info.switchHexString     = @"01";  // 默认开关开
+    info.modeHexString       = @"01";  // 默认手动按摩
+    info.gearHexString       = @"01";  // 默认一档位
+    info.leftRightHexString  = @"00";  // 默认左右同时按摩
+    info.group1HexString     = @"00";
+    info.group2HexString     = @"00";
+    info.group3HexString     = @"00";
+    info.group4HexString     = @"00";
+    info.group5HexString     = @"00";
+    info.dbHexString         = @"00";  // 默认没声
+    info.retain1HexString    = @"00";
+    info.retain2HexString    = @"00";
+    info.retain3HexString    = @"00";
+    info.retain4HexString    = @"00";
+    info.retain5HexString    = @"00";
+    info.verifyHexString     = @"00";
 }
 
 /**
@@ -63,48 +63,47 @@ static BtSettingInfo *info;
 - (NSData *)getResultData
 {
     NSMutableData *resultData = [NSMutableData data];
-    [resultData appendData:info.head1Data];
-    [resultData appendData:info.head2Data];
-    [resultData appendData:info.cmdNumData];
-    [resultData appendData:info.switchData];
-    [resultData appendData:info.modeData];
-    [resultData appendData:info.gearData];
-    [resultData appendData:info.leftRightData];
-    [resultData appendData:info.group1Data];
-    [resultData appendData:info.group2Data];
-    [resultData appendData:info.group3Data];
-    [resultData appendData:info.group4Data];
-    [resultData appendData:info.group5Data];
-    [resultData appendData:info.dbData];
-    [resultData appendData:info.retain1Data];
-    [resultData appendData:info.retain2Data];
-    [resultData appendData:info.retain3Data];
-    [resultData appendData:info.retain4Data];
-    [resultData appendData:info.retain5Data];
+    [resultData appendData:[Utils dataForHexString:info.head1HexString]];
+    [resultData appendData:[Utils dataForHexString:info.head2HexString]];
+    [resultData appendData:[Utils dataForHexString:info.cmdNumHexString]];
+    [resultData appendData:[Utils dataForHexString:info.switchHexString]];
+    [resultData appendData:[Utils dataForHexString:info.modeHexString]];
+    [resultData appendData:[Utils dataForHexString:info.gearHexString]];
+    [resultData appendData:[Utils dataForHexString:info.leftRightHexString]];
+    [resultData appendData:[Utils dataForHexString:info.group1HexString]];
+    [resultData appendData:[Utils dataForHexString:info.group2HexString]];
+    [resultData appendData:[Utils dataForHexString:info.group3HexString]];
+    [resultData appendData:[Utils dataForHexString:info.group4HexString]];
+    [resultData appendData:[Utils dataForHexString:info.group5HexString]];
+    [resultData appendData:[Utils dataForHexString:info.dbHexString]];
+    [resultData appendData:[Utils dataForHexString:info.retain1HexString]];
+    [resultData appendData:[Utils dataForHexString:info.retain2HexString]];
+    [resultData appendData:[Utils dataForHexString:info.retain3HexString]];
+    [resultData appendData:[Utils dataForHexString:info.retain4HexString]];
+    [resultData appendData:[Utils dataForHexString:info.retain5HexString]];
     
 
    // 计算校验值
-    NSInteger verifyIntValue = ([Utils hexToInt:[Utils hexStringForData:info.head1Data]]
-    + [Utils hexToInt:[Utils hexStringForData:info.head2Data]]
-    + [Utils hexToInt:[Utils hexStringForData:info.cmdNumData]]
-    + [Utils hexToInt:[Utils hexStringForData:info.switchData]]
-    + [Utils hexToInt:[Utils hexStringForData:info.modeData]]
-    + [Utils hexToInt:[Utils hexStringForData:info.gearData]]
-    + [Utils hexToInt:[Utils hexStringForData:info.leftRightData]]
-    + [Utils hexToInt:[Utils hexStringForData:info.group1Data]]
-    + [Utils hexToInt:[Utils hexStringForData:info.group2Data]]
-    + [Utils hexToInt:[Utils hexStringForData:info.group3Data]]
-    + [Utils hexToInt:[Utils hexStringForData:info.group4Data]]
-    + [Utils hexToInt:[Utils hexStringForData:info.group5Data]]
-    + [Utils hexToInt:[Utils hexStringForData:info.dbData]]
-    + [Utils hexToInt:[Utils hexStringForData:info.retain1Data]]
-    + [Utils hexToInt:[Utils hexStringForData:info.retain2Data]]
-    + [Utils hexToInt:[Utils hexStringForData:info.retain3Data]]
-    + [Utils hexToInt:[Utils hexStringForData:info.retain4Data]]
-    + [Utils hexToInt:[Utils hexStringForData:info.retain5Data]]) % 256;
-    NSString *verifyHexString = [Utils intToHex:verifyIntValue];
-    info.verifyData = [Utils dataForHexString:verifyHexString];
-    [resultData appendData:info.verifyData];
+    NSInteger verifyIntValue = ([Utils hexToInt:info.head1HexString]
+    + [Utils hexToInt:info.head2HexString]
+    + [Utils hexToInt:info.cmdNumHexString]
+    + [Utils hexToInt:info.switchHexString]
+    + [Utils hexToInt:info.modeHexString]
+    + [Utils hexToInt:info.gearHexString]
+    + [Utils hexToInt:info.leftRightHexString]
+    + [Utils hexToInt:info.group1HexString]
+    + [Utils hexToInt:info.group2HexString]
+    + [Utils hexToInt:info.group3HexString]
+    + [Utils hexToInt:info.group4HexString]
+    + [Utils hexToInt:info.group5HexString]
+    + [Utils hexToInt:info.dbHexString]
+    + [Utils hexToInt:info.retain1HexString]
+    + [Utils hexToInt:info.retain2HexString]
+    + [Utils hexToInt:info.retain3HexString]
+    + [Utils hexToInt:info.retain4HexString]
+    + [Utils hexToInt:info.retain5HexString]) % 256;
+    info.verifyHexString = [Utils intToHex:verifyIntValue];
+    [resultData appendData:[Utils dataForHexString: info.verifyHexString]];
     
     
     return resultData;

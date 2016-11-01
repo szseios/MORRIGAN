@@ -126,7 +126,7 @@
     
     
     // 修改开关值
-    [[BtSettingInfo share] setSwitchData:[Utils dataForHexString:switchStr]];
+    [[BtSettingInfo share] setSwitchHexString:switchStr];
     
     // 写数据
     [[BluetoothManager share] writeValue: [[BtSettingInfo share] getResultData]];
@@ -139,7 +139,7 @@
 - (void)buttonHandKneekHandle
 {
     // 设置为手动模式
-    [[BtSettingInfo share] setModeData:[Utils dataForHexString:@"01"]];
+    [[BtSettingInfo share] setModeHexString:@"01"];
     
     
     // 写数据
@@ -158,7 +158,7 @@
     
     
     // 设置档位值
-    [[BtSettingInfo share] setGearData:[Utils dataForHexString:gearStr]];
+    [[BtSettingInfo share] setGearHexString:gearStr];
     
 
     
@@ -172,13 +172,13 @@
 {
 
     // 设置为自动模式
-    [[BtSettingInfo share] setModeData:[Utils dataForHexString:@"02"]];
+    [[BtSettingInfo share] setModeHexString:@"02"];
     // 设置自动组合
-    [[BtSettingInfo share] setGroup1Data:[Utils dataForHexString:@"01"]];
-    [[BtSettingInfo share] setGroup2Data:[Utils dataForHexString:@"01"]];
-    [[BtSettingInfo share] setGroup3Data:[Utils dataForHexString:@"01"]];
-    [[BtSettingInfo share] setGroup4Data:[Utils dataForHexString:@"01"]];
-    [[BtSettingInfo share] setGroup5Data:[Utils dataForHexString:@"01"]];
+    [[BtSettingInfo share] setGroup1HexString:@"01"];
+    [[BtSettingInfo share] setGroup2HexString:@"01"];
+    [[BtSettingInfo share] setGroup3HexString:@"01"];
+    [[BtSettingInfo share] setGroup4HexString:@"01"];
+    [[BtSettingInfo share] setGroup5HexString:@"01"];
     
     // 写数据
     [[BluetoothManager share] writeValue: [[BtSettingInfo share] getResultData]];
@@ -189,7 +189,7 @@
 - (void)buttonMusicHandle
 {
     // 设置为自动模式
-    [[BtSettingInfo share] setModeData:[Utils dataForHexString:@"03"]];
+    [[BtSettingInfo share] setModeHexString:@"03"];
     
     // 写数据
     [[BluetoothManager share] writeValue: [[BtSettingInfo share] getResultData]];
