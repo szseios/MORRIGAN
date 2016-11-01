@@ -151,6 +151,14 @@
     [sureBtn setTitleColor:[UIColor purpleColor] forState:UIControlStateNormal];
     [_bar addSubview:sureBtn];
     
+    UIView *topLineView = [[UIView alloc] initWithFrame:CGRectMake(0, 0, kScreenWidth, 0.5)];
+    topLineView.backgroundColor = [UIColor colorWithRed:0.9 green:0.9 blue:0.9 alpha:0.8];
+    [_bar addSubview:topLineView];
+    
+    UIView *bottomLineView = [[UIView alloc] initWithFrame:CGRectMake(0, kScreenWidth - 0.5, kScreenWidth, 0.5)];
+    bottomLineView.backgroundColor = [UIColor colorWithRed:0.9 green:0.9 blue:0.9 alpha:0.8];
+    [_bar addSubview:bottomLineView];
+    
     CGFloat pickerY = CGRectGetMaxY(_bar.frame);
     CGFloat pickerH = self.height - 50;
     if (_pickerType == pickerViewTypeAge) {

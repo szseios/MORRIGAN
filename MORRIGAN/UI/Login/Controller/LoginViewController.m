@@ -310,10 +310,10 @@
 - (void)loginButtonClickInLogin:(id)sender
 {
     NSLog(@"loginButtonClickInLogin");
-    // 进入主页（测试）
-    RootViewController *homeViewController = [[RootViewController alloc] init];
-    [self.navigationController pushViewController:homeViewController animated:YES];
-    return;
+//    // 进入主页（测试）
+//    RootViewController *homeViewController = [[RootViewController alloc] init];
+//    [self.navigationController pushViewController:homeViewController animated:YES];
+//    return;
 
     
     
@@ -405,6 +405,7 @@
              [UserInfo share].target = [userInfoDict objectForKey:@"target"];
              [UserInfo share].userId = [userInfoDict objectForKey:@"userId"];
              [UserInfo share].weight = [userInfoDict objectForKey:@"weight"];
+             [UserInfo share].age = [userInfoDict objectForKey:@"age"];
              
              // 保存用户名和密码，下次自动登陆
              NSUserDefaults *defaults = [NSUserDefaults standardUserDefaults];

@@ -32,6 +32,8 @@
 
 @property (nonatomic , strong) myDataCell *headerViewCell;
 
+@property (nonatomic , strong) NSString *imageStr;
+
 @end
 
 @implementation MyDataController
@@ -254,7 +256,39 @@ static NSString *cellIdentifier = @"cellIdentifier";
         default:
             break;
     }
+    [UIView animateWithDuration:0.3 animations:^{
+        self.chooseView.y = kScreenHeight;
+    }];
     
+    [self uploadPersonalData];
+}
+
+- (void)uploadPersonalData
+{
+        NSDictionary *dictionary = @{@"userId": [UserInfo share].userId,
+                                     @"high": [UserInfo share].high,
+                                     @"weight":[UserInfo share].weight,
+                                     @"age":[UserInfo share].age,
+                                     @"nickName":[UserInfo share].nickName,
+                                     @"target":[UserInfo share].target,
+                                     @"emotion":[UserInfo share].emotion,
+                                     };
+        NSString *bodyString = [NMOANetWorking handleHTTPBodyParams:dictionary];
+        [[NMOANetWorking share] taskWithTag:ID_EDIT_USERINFO
+                                  urlString:URL_EDIT_USERINFO
+                                   httpHead:nil
+                                 bodyString:bodyString
+                         objectTaskFinished:^(NSError *error, id obj)
+         {
+             if ([[obj objectForKey:HTTP_KEY_RESULTCODE] isEqualToString:HTTP_RESULTCODE_SUCCESS]) {
+                 [MBProgressHUD showHUDByContent:@"修改个人信息成功！" view:UI_Window afterDelay:2];
+                 NSLog(@"修改个人信息成功！");
+             }else{
+                [MBProgressHUD showHUDByContent:@"修改个人信息失败！" view:UI_Window afterDelay:2];
+             }
+             
+             
+         }];
 }
 
 #pragma mark - UIActionSheetDelegate
@@ -311,9 +345,38 @@ static NSString *cellIdentifier = @"cellIdentifier";
         _headerViewCell.headerImageView.image = info[UIImagePickerControllerEditedImage];
         //压缩图片
         NSData *fileData = UIImageJPEGRepresentation(_headerViewCell.headerImageView.image, 1.0);
+//        _headerViewCell.headerImageView.image = [avatar imageWithImageSimple:avatar scaledToSize:EZSIZE(320, 320)];
+        
+        _imageStr = [fileData base64EncodedStringWithOptions:NSDataBase64Encoding64CharacterLineLength];
+        [self uploadheaderImage];
     }
     [self dismissViewControllerAnimated:YES completion:nil];
 }
+    
+- (void)uploadheaderImage
+    {
+        NSDictionary *dictionary = @{
+                                     @"userId":[UserInfo share].userId,
+                                     @"img":_imageStr
+                                     };
+        NSString *bodyString = [NMOANetWorking handleHTTPBodyParams:dictionary];
+        [[NMOANetWorking share] taskWithTag:ID_UPLOAD_HEADER
+                                  urlString:URL_UPLOAD_HEADER
+                                   httpHead:nil
+                                 bodyString:bodyString
+                         objectTaskFinished:^(NSError *error, id obj)
+         {
+             if ([[obj objectForKey:HTTP_KEY_RESULTCODE] isEqualToString:HTTP_RESULTCODE_SUCCESS]) {
+                 [MBProgressHUD showHUDByContent:@"上传头像成功！" view:UI_Window afterDelay:2];
+                 NSLog(@"修改个人信息成功！");
+             }else{
+                 [MBProgressHUD showHUDByContent:@"上传头像失败！" view:UI_Window afterDelay:2];
+             }
+             
+             
+         }];
+    }
+    
 
 #pragma mark - notification
 

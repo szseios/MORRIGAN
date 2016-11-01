@@ -30,6 +30,8 @@
 
 // ---------------------------------------------------------------------------------------------------------
 
+#define APP_SERVER_URL    @"http://112.74.100.227:8083/"
+
 // 注册
 #define ID_REGISTER             1001
 #define URL_REGISTER            @"http://112.74.100.227:8083/rest/moli/regist"
@@ -43,7 +45,29 @@
 #define ID_RESET_PWD            1004
 #define URL_RESET_PWD           @"http://112.74.100.227:8083/rest/moli/forget-psw"
 
+// 编辑个人信息
+#define ID_EDIT_USERINFO            1005
+#define URL_EDIT_USERINFO        APP_SERVER_URL@"rest/moli/eidt-user-info"
 
+//上传头像
+#define ID_UPLOAD_HEADER            1006
+#define URL_UPLOAD_HEADER           APP_SERVER_URL@"rest/moli/upload-img"
+
+// 绑定设备
+#define ID_BINGDING_DEVICE            1007
+#define URL_BINGDING_DEVICE           APP_SERVER_URL@"rest/moli/bind"
+
+// 解除绑定
+#define ID_UNBINGDING_DEVICE            1008
+#define URL_UNBINGDING_DEVICE           APP_SERVER_URL@"rest/moli/remove-bind"
+
+// 护理记录上传
+#define ID_UPLOAD_RECORD            1009
+#define URL_UPLOAD_RECORD            APP_SERVER_URL@"rest/moli/upload-record-list"
+
+// 护理记录查询
+#define ID_GET_RECORD            1010
+#define URL_GET_RECORD            APP_SERVER_URL@"rest/moli/get-record-list"
 
 // ---------------------------------------------------------------------------------------------------------
 #define kColor_440067  @"#440067"  // 深紫色

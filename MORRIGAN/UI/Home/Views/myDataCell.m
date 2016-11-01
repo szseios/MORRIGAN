@@ -51,7 +51,8 @@
             case 0:
             {
                 _titleLabel.text = @"年龄";
-                _contentLabel.text = [UserInfo share].age;
+                NSString *temp = [UserInfo share].age;
+                _contentLabel.text = temp;
             }
                 break;
             case 1:
@@ -64,14 +65,24 @@
             case 2:
             {
                 _titleLabel.text = @"身高";
-                _contentLabel.text = [UserInfo share].high;
+                if (![[UserInfo share].high isKindOfClass:[NSNull class]]) {
+                    _contentLabel.text = [UserInfo share].high;
+                }else{
+                    _contentLabel.text = @"170";
+                }
+                
             }
                 break;
                 
             case 3:
             {
                 _titleLabel.text = @"体重";
-                _contentLabel.text = [UserInfo share].weight;
+                if (![[UserInfo share].weight isKindOfClass:[NSNull class]]) {
+                    _contentLabel.text = [UserInfo share].weight;
+                }else{
+                    _contentLabel.text = @"50";
+                }
+                
             }
                 break;
                 

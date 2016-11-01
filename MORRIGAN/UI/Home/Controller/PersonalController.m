@@ -57,7 +57,7 @@ static NSString *cellIdentifier = @"cellIdentifier";
     
     CGFloat nameLabelY = headerImageView.height / 2 + 15;
     UILabel *nameLabel = [[UILabel alloc] initWithFrame: CGRectMake(120, nameLabelY, cellWidth - 120, 40)];
-    nameLabel.text = @"昵称";
+    nameLabel.text = [UserInfo share].nickName;
     nameLabel.font = [UIFont systemFontOfSize:14];
     nameLabel.textColor = [UIColor whiteColor];
     [_headerView addSubview:nameLabel];

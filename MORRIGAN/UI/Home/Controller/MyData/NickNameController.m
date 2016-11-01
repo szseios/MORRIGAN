@@ -26,8 +26,9 @@
     backImageView.image = [UIImage imageNamed:@"basicBackground"];
     [self.view addSubview:backImageView];
     
-    _textField = [[UITextField alloc] initWithFrame:CGRectMake(20, 90, kScreenWidth - 50, 30)];
+    _textField = [[UITextField alloc] initWithFrame:CGRectMake(20, 70, kScreenWidth - 50, 30)];
     [self.view addSubview:_textField];
+    _textField.backgroundColor = [UIColor colorWithRed:0.9 green:0.9 blue:0.9 alpha:0.8];
     if ([UserInfo share].nickName.length > 0) {
         _textField.text = [UserInfo share].nickName;
     }else{
@@ -39,7 +40,7 @@
 
 - (void)setUpBarView
 {
-    _barView = [[BasicBarView alloc] initWithFrame:CGRectMake(0, 20, kScreenWidth, 44) withType:superBarTypeLeftItemBackAndRightItemBinding withTitle:@"我的资料"];
+    _barView = [[BasicBarView alloc] initWithFrame:CGRectMake(0, 20, kScreenWidth, 44) withType:superBarTypeLeftItemCancel withTitle:@"我的资料"];
     [self.view addSubview:_barView];
     _barView.delegate = self;
 }
@@ -52,16 +53,42 @@
 
 - (void)clickBingdingDevice
 {
-    NSLog(@"绑定设备");
-}
-
-- (void)rightBarButtonClick
-{
     if (_textField.text.length > 0) {
         [[NSNotificationCenter defaultCenter] postNotificationName:CHANGENICKNAME object:_textField.text];
+        [UserInfo share].nickName = _textField.text;
+        [self uploadPersonalData];
     }
     [self.navigationController popViewControllerAnimated:YES];
 }
+
+
+- (void)uploadPersonalData
+{
+        NSDictionary *dictionary = @{
+                                     @"userId":[UserInfo share].userId,
+                                     @"nickName":[UserInfo share].nickName
+                                     };
+        NSString *bodyString = [NMOANetWorking handleHTTPBodyParams:dictionary];
+        [[NMOANetWorking share] taskWithTag:ID_EDIT_USERINFO
+                                  urlString:URL_EDIT_USERINFO
+                                   httpHead:nil
+                                 bodyString:bodyString
+                         objectTaskFinished:^(NSError *error, id obj)
+         {
+             if ([[obj objectForKey:HTTP_KEY_RESULTCODE] isEqualToString:HTTP_RESULTCODE_SUCCESS]) {
+                 [MBProgressHUD showHUDByContent:@"修改个人信息成功！" view:UI_Window afterDelay:2];
+                 NSLog(@"修改个人信息成功！");
+             }else{
+                 [MBProgressHUD showHUDByContent:@"修改个人信息失败！" view:UI_Window afterDelay:2];
+             }
+             
+             
+         }];
+}
+    
+    
+    
+
 
 - (void)didReceiveMemoryWarning {
     [super didReceiveMemoryWarning];

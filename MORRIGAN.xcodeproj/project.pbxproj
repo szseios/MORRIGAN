@@ -28,6 +28,7 @@
 		3EF7958D1DAA0A5E00E5EBC6 /* Common.m in Sources */ = {isa = PBXBuildFile; fileRef = 3EF795881DAA0A5E00E5EBC6 /* Common.m */; };
 		3EF7958E1DAA0A5E00E5EBC6 /* PCSEQVisualizer.m in Sources */ = {isa = PBXBuildFile; fileRef = 3EF7958A1DAA0A5E00E5EBC6 /* PCSEQVisualizer.m */; };
 		3EF7958F1DAA0A5E00E5EBC6 /* UIImage+Color.m in Sources */ = {isa = PBXBuildFile; fileRef = 3EF7958C1DAA0A5E00E5EBC6 /* UIImage+Color.m */; };
+		4724C2041DC8BF5700B18902 /* MBProgressHUD.m in Sources */ = {isa = PBXBuildFile; fileRef = 4724C2031DC8BF5700B18902 /* MBProgressHUD.m */; };
 		4728ED371DC485AB0005F9C3 /* HomePageController.m in Sources */ = {isa = PBXBuildFile; fileRef = 4728ED301DC485AB0005F9C3 /* HomePageController.m */; };
 		4728ED381DC485AB0005F9C3 /* HomePageSuperController.m in Sources */ = {isa = PBXBuildFile; fileRef = 4728ED321DC485AB0005F9C3 /* HomePageSuperController.m */; };
 		4728ED391DC485AB0005F9C3 /* PersonalController.m in Sources */ = {isa = PBXBuildFile; fileRef = 4728ED341DC485AB0005F9C3 /* PersonalController.m */; };
@@ -172,6 +173,8 @@
 		3EF7958A1DAA0A5E00E5EBC6 /* PCSEQVisualizer.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = PCSEQVisualizer.m; sourceTree = "<group>"; };
 		3EF7958B1DAA0A5E00E5EBC6 /* UIImage+Color.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "UIImage+Color.h"; sourceTree = "<group>"; };
 		3EF7958C1DAA0A5E00E5EBC6 /* UIImage+Color.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "UIImage+Color.m"; sourceTree = "<group>"; };
+		4724C2021DC8BF5700B18902 /* MBProgressHUD.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MBProgressHUD.h; sourceTree = "<group>"; };
+		4724C2031DC8BF5700B18902 /* MBProgressHUD.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = MBProgressHUD.m; sourceTree = "<group>"; };
 		4728ED2F1DC485AB0005F9C3 /* HomePageController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = HomePageController.h; sourceTree = "<group>"; };
 		4728ED301DC485AB0005F9C3 /* HomePageController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = HomePageController.m; sourceTree = "<group>"; };
 		4728ED311DC485AB0005F9C3 /* HomePageSuperController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = HomePageSuperController.h; sourceTree = "<group>"; };
@@ -780,6 +783,8 @@
 				3EEF45E71DBB3B2900752AD4 /* UIView+Extension.m */,
 				4728EDD41DC486A40005F9C3 /* UIView+Extension.h */,
 				4728EDD51DC486A40005F9C3 /* UIView+Extension.m */,
+				4724C2021DC8BF5700B18902 /* MBProgressHUD.h */,
+				4724C2031DC8BF5700B18902 /* MBProgressHUD.m */,
 				EBF0116A1DA737A3009E8394 /* GlobalDefinition.h */,
 				EBF011AD1DA7920A009E8394 /* Utils.h */,
 				EBF011AE1DA7920A009E8394 /* Utils.m */,
@@ -1009,6 +1014,7 @@
 				4728ED631DC485BA0005F9C3 /* HistoryDataCell.m in Sources */,
 				3EF7958D1DAA0A5E00E5EBC6 /* Common.m in Sources */,
 				3E25397E1DAA3DDA00CB1EF8 /* UserInfo.m in Sources */,
+				4724C2041DC8BF5700B18902 /* MBProgressHUD.m in Sources */,
 				4728ED671DC485BA0005F9C3 /* NickNameController.m in Sources */,
 				3E632A501DC5A47B00CC2332 /* BabyDefine.m in Sources */,
 				4728ED3A1DC485AB0005F9C3 /* RootViewController.m in Sources */,

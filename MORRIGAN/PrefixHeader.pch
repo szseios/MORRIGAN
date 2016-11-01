@@ -17,5 +17,8 @@
 #import "UIView+Extension.h"
 #import "BasicBarView.h"
 #import "Utils.h"
+#import "NMOANetWorking.h"
+#import "MBProgressHUD.h"
+
 #endif
 
