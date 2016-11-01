@@ -39,10 +39,21 @@
 
 + (BtSettingInfo *)share;
 
+
 /**
  *  获取最终发送的数据
  */
 - (NSData *)getResultData;
 
+
+/**
+ *  获取最终发送的获取点量数据
+ */
+- (NSData *)getResultDataOfBattery;
+
+/**
+ *  获取最终发送的蓝牙是否可通讯数据
+ */
+- (NSData *)getResultDataOfBtEnable;
 
 @end

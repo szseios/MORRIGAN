@@ -89,6 +89,20 @@
     buttonMusic.backgroundColor = [UIColor orangeColor];
     [buttonMusic addTarget:self action:@selector(buttonMusicHandle) forControlEvents:UIControlEventTouchUpInside];
     [self.view addSubview:buttonMusic];
+    
+    y = y + h+1;
+    UIButton *buttonBattery = [[UIButton alloc] initWithFrame:CGRectMake(0, y, kScreenWidth, h)];
+    [buttonBattery setTitle:@"主动获取🔋" forState:UIControlStateNormal];
+    buttonBattery.backgroundColor = [UIColor orangeColor];
+    [buttonBattery addTarget:self action:@selector(buttonBatteryHandle) forControlEvents:UIControlEventTouchUpInside];
+    [self.view addSubview:buttonBattery];
+    
+    y = y + h+1;
+    UIButton *buttonBtEnable = [[UIButton alloc] initWithFrame:CGRectMake(0, y, kScreenWidth, h)];
+    [buttonBtEnable setTitle:@"确认蓝牙可通讯" forState:UIControlStateNormal];
+    buttonBtEnable.backgroundColor = [UIColor orangeColor];
+    [buttonBtEnable addTarget:self action:@selector(buttonBtEnableHandle) forControlEvents:UIControlEventTouchUpInside];
+    [self.view addSubview:buttonBtEnable];
 
     
 }
@@ -193,6 +207,21 @@
     
     // 写数据
     [[BluetoothManager share] writeValue: [[BtSettingInfo share] getResultData]];
+}
+
+// 主动获取电量
+- (void)buttonBatteryHandle
+{
+    // 写数据
+    [[BluetoothManager share] writeValue: [[BtSettingInfo share] getResultDataOfBattery]];
+}
+
+
+// 确认蓝牙可通讯
+- (void)buttonBtEnableHandle
+{
+    // 写数据
+    [[BluetoothManager share] writeValue: [[BtSettingInfo share] getResultDataOfBtEnable]];
 }
 
 

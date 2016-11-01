@@ -110,6 +110,112 @@ static BtSettingInfo *info;
 }
 
 
+/**
+ *  获取最终发送的获取点量数据
+ */
+- (NSData *)getResultDataOfBattery
+{
+    NSMutableData *resultData = [NSMutableData data];
+    [resultData appendData:[Utils dataForHexString:info.head1HexString]];
+    [resultData appendData:[Utils dataForHexString:info.head2HexString]];
+    [resultData appendData:[Utils dataForHexString:@"03"]];
+    [resultData appendData:[Utils dataForHexString:@"00"]];
+    [resultData appendData:[Utils dataForHexString:@"00"]];
+    [resultData appendData:[Utils dataForHexString:@"00"]];
+    [resultData appendData:[Utils dataForHexString:@"00"]];
+    [resultData appendData:[Utils dataForHexString:@"00"]];
+    [resultData appendData:[Utils dataForHexString:@"00"]];
+    [resultData appendData:[Utils dataForHexString:@"00"]];
+    [resultData appendData:[Utils dataForHexString:@"00"]];
+    [resultData appendData:[Utils dataForHexString:@"00"]];
+    [resultData appendData:[Utils dataForHexString:@"00"]];
+    [resultData appendData:[Utils dataForHexString:@"00"]];
+    [resultData appendData:[Utils dataForHexString:@"00"]];
+    [resultData appendData:[Utils dataForHexString:@"00"]];
+    [resultData appendData:[Utils dataForHexString:@"00"]];
+    [resultData appendData:[Utils dataForHexString:@"00"]];
+    
+    
+    // 计算校验值
+    NSInteger verifyIntValue = ([Utils hexToInt:info.head1HexString]
+                                + [Utils hexToInt:info.head2HexString]
+                                + [Utils hexToInt:info.cmdNumHexString]
+                                + [Utils hexToInt:info.switchHexString]
+                                + [Utils hexToInt:info.modeHexString]
+                                + [Utils hexToInt:info.gearHexString]
+                                + [Utils hexToInt:info.leftRightHexString]
+                                + [Utils hexToInt:info.group1HexString]
+                                + [Utils hexToInt:info.group2HexString]
+                                + [Utils hexToInt:info.group3HexString]
+                                + [Utils hexToInt:info.group4HexString]
+                                + [Utils hexToInt:info.group5HexString]
+                                + [Utils hexToInt:info.dbHexString]
+                                + [Utils hexToInt:info.retain1HexString]
+                                + [Utils hexToInt:info.retain2HexString]
+                                + [Utils hexToInt:info.retain3HexString]
+                                + [Utils hexToInt:info.retain4HexString]
+                                + [Utils hexToInt:info.retain5HexString]) % 256;
+    info.verifyHexString = [Utils intToHex:verifyIntValue];
+    [resultData appendData:[Utils dataForHexString: info.verifyHexString]];
+    
+    
+    return resultData;
+}
+
+/**
+ *  获取最终发送的蓝牙是否可通讯数据
+ */
+- (NSData *)getResultDataOfBtEnable
+{
+    NSMutableData *resultData = [NSMutableData data];
+    [resultData appendData:[Utils dataForHexString:info.head1HexString]];
+    [resultData appendData:[Utils dataForHexString:info.head2HexString]];
+    [resultData appendData:[Utils dataForHexString:@"04"]];
+    [resultData appendData:[Utils dataForHexString:@"00"]];
+    [resultData appendData:[Utils dataForHexString:@"00"]];
+    [resultData appendData:[Utils dataForHexString:@"00"]];
+    [resultData appendData:[Utils dataForHexString:@"00"]];
+    [resultData appendData:[Utils dataForHexString:@"00"]];
+    [resultData appendData:[Utils dataForHexString:@"00"]];
+    [resultData appendData:[Utils dataForHexString:@"00"]];
+    [resultData appendData:[Utils dataForHexString:@"00"]];
+    [resultData appendData:[Utils dataForHexString:@"00"]];
+    [resultData appendData:[Utils dataForHexString:@"00"]];
+    [resultData appendData:[Utils dataForHexString:@"00"]];
+    [resultData appendData:[Utils dataForHexString:@"00"]];
+    [resultData appendData:[Utils dataForHexString:@"00"]];
+    [resultData appendData:[Utils dataForHexString:@"00"]];
+    [resultData appendData:[Utils dataForHexString:@"00"]];
+    
+    
+    // 计算校验值
+    NSInteger verifyIntValue = ([Utils hexToInt:info.head1HexString]
+                                + [Utils hexToInt:info.head2HexString]
+                                + [Utils hexToInt:info.cmdNumHexString]
+                                + [Utils hexToInt:info.switchHexString]
+                                + [Utils hexToInt:info.modeHexString]
+                                + [Utils hexToInt:info.gearHexString]
+                                + [Utils hexToInt:info.leftRightHexString]
+                                + [Utils hexToInt:info.group1HexString]
+                                + [Utils hexToInt:info.group2HexString]
+                                + [Utils hexToInt:info.group3HexString]
+                                + [Utils hexToInt:info.group4HexString]
+                                + [Utils hexToInt:info.group5HexString]
+                                + [Utils hexToInt:info.dbHexString]
+                                + [Utils hexToInt:info.retain1HexString]
+                                + [Utils hexToInt:info.retain2HexString]
+                                + [Utils hexToInt:info.retain3HexString]
+                                + [Utils hexToInt:info.retain4HexString]
+                                + [Utils hexToInt:info.retain5HexString]) % 256;
+    info.verifyHexString = [Utils intToHex:verifyIntValue];
+    [resultData appendData:[Utils dataForHexString: info.verifyHexString]];
+    
+    
+    return resultData;
+}
+
+
+
 
 
 @end
