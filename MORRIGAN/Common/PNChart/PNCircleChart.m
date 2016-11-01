@@ -135,17 +135,20 @@ displayCountingLabel:(BOOL)displayCountingLabel
         _chartType = PNChartFormatTypePercent;
         _displayAnimated = YES;
         
-        _displayCountingLabel = YES;
+        _displayCountingLabel = NO;
         
 //        CGFloat startAngle = clockwise ? -90.0f : 270.0f;
 //        CGFloat endAngle = clockwise ? -90.01f : 270.01f;
         
         _lineWidth = @10;
         
+        CGFloat temp = DEGREES_TO_RADIANS(endAngle);
+        NSLog(@"%lf",temp);
+        
         UIBezierPath *circlePath = [UIBezierPath bezierPathWithArcCenter:CGPointMake(self.frame.size.width/2.0f, self.frame.size.height/2.0f)
                                                                   radius:(self.frame.size.height * 0.5) - ([_lineWidth floatValue]/2.0f)
                                                               startAngle:DEGREES_TO_RADIANS(startAngle - 90.0)
-                                                                endAngle:DEGREES_TO_RADIANS(endAngle)
+                                                                endAngle:DEGREES_TO_RADIANS(endAngle + 90)
                                                                clockwise:clockwise];
         
         _circle               = [CAShapeLayer layer];

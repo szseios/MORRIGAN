@@ -74,7 +74,6 @@
 - (void)viewWillAppear:(BOOL)animated
 {
     [super viewWillAppear:animated];
-//    [_mainView morriganStartTime:90 toEndTime:180];
 }
 
 - (void)setUpBarView
@@ -90,8 +89,8 @@
     CGFloat mainViewH = mainViewW / 624 * 860.0;
     CGFloat mainViewX = (kScreenWidth - mainViewW) /2 + (kScreenWidth > 320 ? 20 : 15); //kScreenWidth > 320 ? 50 : 20;
     
-    NSDictionary *temDic = @{@"startTime":@0,@"endTime":@180};
-    NSDictionary *temDic1 = @{@"startTime":@290,@"endTime":@380};
+    NSDictionary *temDic = @{@"startTime":@90,@"endTime":@180};
+    NSDictionary *temDic1 = @{@"startTime":@270,@"endTime":@310};
     NSArray *array = @[temDic,temDic1];
     _mainView = [[HomeMainView alloc] initWithMorriganArray:array withFarme:CGRectMake(mainViewX, 74, mainViewW, mainViewH)];
     _mainView.backgroundColor = [UIColor clearColor];
@@ -105,7 +104,7 @@
 
 - (void)setUpCircleView
 {
-    [_mainView morriganStartTime:90 toEndTime:440];
+    [_mainView morriganStartTime:90 toEndTime:240];
 }
 
 - (void)setUpBottomView

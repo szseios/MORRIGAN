@@ -80,6 +80,7 @@ static NSString *cellIdentifier = @"cellIdentifier";
     } completion:^(BOOL finished) {
         _rightImageView.hidden = YES;
         _rightImageView = nil;
+        self.view.alpha = 0;
         dispatch_async(dispatch_get_main_queue(), ^{
             [[NSNotificationCenter defaultCenter] postNotificationName:MOVETOHOMEPAGENOTIFICATION object:nil];
         });

@@ -208,7 +208,7 @@
 
 - (void)morriganStartTime:(CGFloat)startTime toEndTime:(CGFloat)endTime
 {
-    PNCircleChart *circleChart = [[PNCircleChart alloc] initWithFrame:CGRectMake(_circleImageView.x+2,_circleImageView.y+4, _circleImageView.width-4, _circleImageView.height-4) startAngle:startTime endAngle:endTime total:@360 current:@(endTime - startTime) clockwise:YES];
+    PNCircleChart *circleChart = [[PNCircleChart alloc] initWithFrame:CGRectMake(_circleImageView.x+2,_circleImageView.y+4, _circleImageView.width-4, _circleImageView.height-4) startAngle:startTime endAngle:endTime total:@360 current:@(360) clockwise:YES];
     
     circleChart.backgroundColor = [UIColor clearColor];
     
@@ -223,12 +223,12 @@
 
 - (void)emptyStartTime:(CGFloat)startTime toEndTime:(CGFloat)endTime
 {
-    PNCircleChart *circleChart = [[PNCircleChart alloc] initWithFrame:CGRectMake(_circleImageView.x+2,_circleImageView.y+4, _circleImageView.width-4, _circleImageView.height-4) startAngle:startTime endAngle:endTime total:@360 current:@(endTime - startTime) clockwise:YES];
+    PNCircleChart *circleChart = [[PNCircleChart alloc] initWithFrame:CGRectMake(_circleImageView.x+2,_circleImageView.y+4, _circleImageView.width-4, _circleImageView.height-4) startAngle:startTime endAngle:endTime total:@360 current:@(180) clockwise:YES];
     
     circleChart.backgroundColor = [UIColor clearColor];
-    
+    circleChart.lineWidth = @2;
     [circleChart setStrokeColor:[UIColor whiteColor]];
-    [circleChart setStrokeColorGradientStart:[UIColor blackColor]];
+    [circleChart setStrokeColorGradientStart:[UIColor redColor]];
     [circleChart strokeChart];
     
     [self addSubview:circleChart];
