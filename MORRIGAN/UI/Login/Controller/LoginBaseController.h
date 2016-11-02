@@ -10,6 +10,11 @@
 
 @interface LoginBaseController : UIViewController
 
-@property(nonatomic, strong) UIScrollView *rootScroolView;
+@property(nonatomic, strong) UIScrollView   *rootScroolView;
+@property(nonatomic, strong) UIView         *rootView;
+@property(nonatomic, strong) UIToolbar      *keyboardTopView;
+
+
+- (void)initView;
 
 @end

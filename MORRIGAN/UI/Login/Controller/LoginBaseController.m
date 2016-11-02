@@ -26,6 +26,37 @@
 }
 
 
+- (void)initView
+{
+    // 键盘收起条
+    self.keyboardTopView = [[UIToolbar alloc]initWithFrame:CGRectMake(0, 0, kScreenWidth, 35)];
+    [self.keyboardTopView setBarStyle:UIBarStyleDefault];
+    self.keyboardTopView.backgroundColor = [UIColor whiteColor];
+    self.keyboardTopView.alpha = 0.9;
+    UIBarButtonItem * btnSpace = [[UIBarButtonItem alloc]initWithBarButtonSystemItem:UIBarButtonSystemItemFlexibleSpace target:self action:nil];
+    UIButton *btn = [UIButton buttonWithType:UIButtonTypeCustom];
+    btn.frame = CGRectMake(2, 1, 50, 28);
+    [btn addTarget:self action:@selector(closeKeyboard) forControlEvents:UIControlEventTouchUpInside];
+    [btn setTitle:@"  收起" forState:UIControlStateNormal];
+    [btn setTitleColor:[UIColor blueColor] forState:UIControlStateNormal];
+    btn.titleLabel.font = [UIFont systemFontOfSize:13.0];
+    btn.alpha = 0.6;
+    // btn.backgroundColor = [UIColor lightGrayColor];
+    UIBarButtonItem *doneBtn = [[UIBarButtonItem alloc]initWithCustomView:btn];
+    NSArray * buttonsArray = [NSArray arrayWithObjects:btnSpace,doneBtn,nil];
+    [self.keyboardTopView setItems:buttonsArray];
+    
+  
+    self.rootView = [[UIView alloc] initWithFrame:CGRectMake(0, 0, kScreenWidth, kScreenHeight)];
+    self.rootView.backgroundColor = [Utils stringTOColor:kColor_6911a5];
+    [self.view addSubview:self.rootView];
+    self.rootScroolView = [[UIScrollView alloc] initWithFrame:CGRectMake(0, 0, kScreenWidth, kScreenHeight)];
+    [self.rootScroolView addSubview:self.rootView];
+    self.rootScroolView.contentSize = CGSizeMake(kScreenWidth, kScreenHeight);
+    self.rootScroolView.scrollEnabled = NO;
+    [self.view addSubview:self.rootScroolView];
+}
+
 
 #pragma mark - 键盘弹出／隐藏
 

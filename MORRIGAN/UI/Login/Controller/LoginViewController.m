@@ -73,38 +73,10 @@
     }
 }
 
+
 - (void)initView
 {
-    
-    // 键盘收起条
-    UIToolbar * keyboardTopView = [[UIToolbar alloc]initWithFrame:CGRectMake(0, 0, kScreenWidth, 35)];
-    [keyboardTopView setBarStyle:UIBarStyleDefault];
-    keyboardTopView.backgroundColor = [UIColor whiteColor];
-    keyboardTopView.alpha = 0.9;
-    UIBarButtonItem * btnSpace = [[UIBarButtonItem alloc]initWithBarButtonSystemItem:UIBarButtonSystemItemFlexibleSpace target:self action:nil];
-    UIButton *btn = [UIButton buttonWithType:UIButtonTypeCustom];
-    btn.frame = CGRectMake(2, 1, 50, 28);
-    [btn addTarget:self action:@selector(closeKeyboard) forControlEvents:UIControlEventTouchUpInside];
-    [btn setTitle:@"  收起" forState:UIControlStateNormal];
-    [btn setTitleColor:[UIColor blueColor] forState:UIControlStateNormal];
-    btn.titleLabel.font = [UIFont systemFontOfSize:13.0];
-    btn.alpha = 0.6;
-    // btn.backgroundColor = [UIColor lightGrayColor];
-    UIBarButtonItem *doneBtn = [[UIBarButtonItem alloc]initWithCustomView:btn];
-    NSArray * buttonsArray = [NSArray arrayWithObjects:btnSpace,doneBtn,nil];
-    [keyboardTopView setItems:buttonsArray];
-    
-
-    
-    
-    UIView *rootView = [[UIView alloc] initWithFrame:CGRectMake(0, 0, kScreenWidth, kScreenHeight)];
-    rootView.backgroundColor = [Utils stringTOColor:kColor_6911a5];
-    [self.view addSubview:rootView];
-    self.rootScroolView = [[UIScrollView alloc] initWithFrame:CGRectMake(0, 0, kScreenWidth, kScreenHeight)];
-    [self.rootScroolView addSubview:rootView];
-    self.rootScroolView.contentSize = CGSizeMake(kScreenWidth, kScreenHeight);
-    self.rootScroolView.scrollEnabled = NO;
-    [self.view addSubview:self.rootScroolView];
+    [super initView];
     
     // 上面的图片
     CGFloat imageViewH = 434/2.0;
@@ -129,7 +101,7 @@
     UIImageView *imageView = [[UIImageView alloc] initWithFrame:CGRectMake(169/2, imageVieY, imageW, imageH)];
     imageView.image = [UIImage imageNamed:@"bg_morrig"];
     [imageViewBg addSubview:imageView];
-    [rootView addSubview:imageViewBg];
+    [self.rootView addSubview:imageViewBg];
     
 
     
@@ -146,7 +118,7 @@
     CGFloat editViewW = kScreenWidth - editViewPaddingLeftRight * 2;
     UIView *phoneNumRootView = [[UIView alloc] initWithFrame:CGRectMake(editViewPaddingLeftRight, imageViewH + editViewPaddingTop, editViewW, editViewH)];
     phoneNumRootView.backgroundColor = [UIColor clearColor];
-    [rootView addSubview:phoneNumRootView];
+    [self.rootView addSubview:phoneNumRootView];
     // 手机图标
     CGFloat iconW = 25.0;
     UIImageView *phoneIconView = [[UIImageView alloc] initWithFrame:CGRectMake(0, (editViewH - iconW)/2, iconW, iconW)];
@@ -158,7 +130,7 @@
     UITextField *phoneInputView = [[UITextField alloc] initWithFrame:CGRectMake(iconW + phoneinputViewPaddingLeft, 0, phoneNumRootView.frame.size.width - iconW - phoneinputViewPaddingLeft, editViewH)];
     //phoneInputView.backgroundColor = [UIColor greenColor];
     phoneInputView.placeholder = @"请填写手机号码";
-    [phoneInputView setInputAccessoryView:keyboardTopView];
+    [phoneInputView setInputAccessoryView:self.keyboardTopView];
     // 注意：先设置phoneInputView.placeholder才有效
     [phoneInputView setValue:inputViewTextColor forKeyPath:@"_placeholderLabel.textColor"];
     phoneInputView.textColor = [UIColor whiteColor];
@@ -176,7 +148,7 @@
     CGFloat PWDeditViewPaddingTop = 20.0;
     UIView *PWDRootView = [[UIView alloc] initWithFrame:CGRectMake(editViewPaddingLeftRight, imageViewH + editViewPaddingTop + editViewH + PWDeditViewPaddingTop, editViewW, editViewH)];
     PWDRootView.backgroundColor = [UIColor clearColor];
-    [rootView addSubview:PWDRootView];
+    [self.rootView addSubview:PWDRootView];
     // 密码图标
     UIImageView *PWDIconView = [[UIImageView alloc] initWithFrame:CGRectMake(0, (editViewH - iconW)/2, iconW, iconW)];
     //PWDIconView.backgroundColor = [UIColor orangeColor];
@@ -194,7 +166,7 @@
     UITextField *PWDInputView = [[UITextField alloc] initWithFrame:CGRectMake(iconW + phoneinputViewPaddingLeft, 0, PWDRootView.frame.size.width - iconW - showPWDViewW - phoneinputViewPaddingLeft, editViewH)];
     //PWDInputView.backgroundColor = [UIColor greenColor];
     PWDInputView.placeholder = @"输入密码";
-    [PWDInputView setInputAccessoryView:keyboardTopView];
+    [PWDInputView setInputAccessoryView:self.keyboardTopView];
     [PWDInputView setValue:inputViewTextColor forKeyPath:@"_placeholderLabel.textColor"];
     PWDInputView.textColor = [UIColor whiteColor];
     PWDInputView.secureTextEntry = YES;
@@ -215,7 +187,7 @@
     [forgetPWDView setTitle:@"忘记密码？" forState:UIControlStateNormal];
     [forgetPWDView setTitleColor:[UIColor colorWithRed:255.0 green:255.0 blue:255.0 alpha:0.6] forState:UIControlStateNormal];
     [forgetPWDView addTarget:self action:@selector(forgetPWDButtonClickInLogin) forControlEvents:UIControlEventTouchUpInside];
-    [rootView addSubview:forgetPWDView];
+    [self.rootView addSubview:forgetPWDView];
     
     
     
@@ -227,7 +199,7 @@
     CGFloat registerAndLoginBtnRootViewY = kScreenHeight - 120.0 - registerAndLoginBtnRootViewH;
     UIView *registerAndLoginBtnRootView = [[UIView alloc]initWithFrame:CGRectMake(registerAndLoginBtnRootViewX, registerAndLoginBtnRootViewY, registerAndLoginBtnRootViewW, registerAndLoginBtnRootViewH)];
     registerAndLoginBtnRootView.backgroundColor = [UIColor clearColor];
-    [rootView addSubview:registerAndLoginBtnRootView];
+    [self.rootView addSubview:registerAndLoginBtnRootView];
     // 注册
     CGFloat buttonW = (registerAndLoginBtnRootViewW - registerAndLoginBtnRootViewSpace)/2;
     UIButton *registerBtnView = [[UIButton alloc] initWithFrame:CGRectMake(0, 0, buttonW, registerAndLoginBtnRootViewH)];
