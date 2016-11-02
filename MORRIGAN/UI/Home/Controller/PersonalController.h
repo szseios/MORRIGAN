@@ -10,8 +10,16 @@
 
 #define MOVETOHOMEPAGENOTIFICATION @"MOVETOHOMEPAGENOTIFICATION"
 
+@protocol PersonalControllerDelegate <NSObject>
+
+- (void)didSelectCellWithIndexPath:(NSIndexPath *)index;
+
+@end
+
 @interface PersonalController : HomePageSuperController
 
 @property (nonatomic , strong) UIImage *rightImage;
+
+@property (nonatomic , assign) id<PersonalControllerDelegate> delegate;
 
 @end

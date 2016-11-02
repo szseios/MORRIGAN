@@ -69,6 +69,10 @@
 #define ID_GET_RECORD            1010
 #define URL_GET_RECORD            APP_SERVER_URL@"rest/moli/get-record-list"
 
+// 注销账户
+#define ID_CANCEL_MOLI            1011
+#define URL_CANCEL_MOLI            APP_SERVER_URL@"rest/moli/cancel"
+
 // ---------------------------------------------------------------------------------------------------------
 #define kColor_440067  @"#440067"  // 深紫色
 #define kColor_6911a5  @"#6911a5"  // 普通紫色

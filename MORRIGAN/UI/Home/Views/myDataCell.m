@@ -29,7 +29,10 @@
             {
                 _headerImageView.hidden = NO;
                 _headerImageView.layer.cornerRadius = 20;
-                _headerImageView.image = [UIImage imageNamed:@"defaultHeaderView"];
+//                _headerImageView.image = [UIImage imageNamed:@"defaultHeaderView"];
+                [_headerImageView sd_setImageWithURL:[NSURL URLWithString:[UserInfo share].imgUrl] placeholderImage:[UIImage imageNamed:@"defaultHeaderView"] options:SDWebImageHandleCookies | SDWebImageRetryFailed completed:^(UIImage *image, NSError *error, SDImageCacheType cacheType, NSURL *imageURL) {
+                    
+                }];
                 _titleLabel.text = @"更换头像";
                 _contentLabel.text = @"";
                 _contentLabel.hidden = YES;
@@ -46,7 +49,7 @@
                 break;
         }
     }
-    else{
+    else if (index.section == 1){
         switch (index.row) {
             case 0:
             {
@@ -58,7 +61,7 @@
             case 1:
             {
                 _titleLabel.text = @"情感";
-                _contentLabel.text = [UserInfo share].emotion;
+                _contentLabel.text = [UserInfo share].emotionStr;
             }
                 break;
                 
@@ -89,6 +92,9 @@
             default:
                 break;
         }
+    }else{
+        _titleLabel.text = @"退出当前账户";
+        _contentLabel.hidden = YES;
     }
 
 }

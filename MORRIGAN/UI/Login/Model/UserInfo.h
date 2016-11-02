@@ -22,7 +22,7 @@
 @property (nonatomic,strong)NSString *target;
 @property (nonatomic,strong)NSString *userId;
 @property (nonatomic,strong)NSString *weight;
-
+@property (nonatomic , strong) NSString *emotionStr;
 
 + (UserInfo *)share;
 

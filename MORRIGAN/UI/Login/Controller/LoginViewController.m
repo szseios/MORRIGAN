@@ -407,6 +407,16 @@
              [UserInfo share].weight = [userInfoDict objectForKey:@"weight"];
              [UserInfo share].age = [userInfoDict objectForKey:@"age"];
              
+             if ([[UserInfo share].emotion isEqualToString:@"B"]) {
+                 [UserInfo share].emotionStr = @"恋爱";
+             }
+             else if ([[UserInfo share].emotion isEqualToString:@"M"]) {
+                 [UserInfo share].emotionStr = @"已婚";
+             }
+             else if ([[UserInfo share].emotion isEqualToString:@"S"]) {
+                 [UserInfo share].emotionStr = @"单身";
+             }
+             
              // 保存用户名和密码，下次自动登陆
              NSUserDefaults *defaults = [NSUserDefaults standardUserDefaults];
              [defaults setObject:phoneNumberBlock forKey:kUserDefaultIdKey];
@@ -429,6 +439,12 @@
 
 
 -(void)remoteAnimation:(NSString *)message{
+    
+//    dispatch_async(dispatch_get_main_queue(), ^{
+//        MBProgressHUD *hud = [MBProgressHUD showHUDAddedTo:UI_Window animated:YES];
+//        hud.labelText = @"登录中...";
+//    });
+   
     
     if (remoteAlertView) {
         remoteAlertView = nil;

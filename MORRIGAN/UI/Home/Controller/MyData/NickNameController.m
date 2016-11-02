@@ -26,9 +26,12 @@
     backImageView.image = [UIImage imageNamed:@"basicBackground"];
     [self.view addSubview:backImageView];
     
-    _textField = [[UITextField alloc] initWithFrame:CGRectMake(20, 70, kScreenWidth - 50, 30)];
+    _textField = [[UITextField alloc] initWithFrame:CGRectMake(20, 84, kScreenWidth - 40, 30)];
     [self.view addSubview:_textField];
     _textField.backgroundColor = [UIColor colorWithRed:0.9 green:0.9 blue:0.9 alpha:0.8];
+    _textField.clipsToBounds = YES;
+    _textField.layer.cornerRadius = 5;
+    
     if ([UserInfo share].nickName.length > 0) {
         _textField.text = [UserInfo share].nickName;
     }else{

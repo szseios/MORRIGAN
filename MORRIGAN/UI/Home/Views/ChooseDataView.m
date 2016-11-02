@@ -139,6 +139,7 @@
 {
     _bar = [[UIView alloc] initWithFrame:CGRectMake(0, 0, kScreenWidth, 50)];
     [self addSubview:_bar];
+    _bar.backgroundColor = [UIColor whiteColor];
     UIButton *cancelBtn = [[UIButton alloc] initWithFrame:CGRectMake(10, 5, 50, 40)];
     [cancelBtn setTitle:@"取消" forState:UIControlStateNormal];
     [cancelBtn setTitleColor:[UIColor blackColor] forState:UIControlStateNormal];
@@ -152,11 +153,11 @@
     [_bar addSubview:sureBtn];
     
     UIView *topLineView = [[UIView alloc] initWithFrame:CGRectMake(0, 0, kScreenWidth, 0.5)];
-    topLineView.backgroundColor = [UIColor colorWithRed:0.9 green:0.9 blue:0.9 alpha:0.8];
+    topLineView.backgroundColor = [UIColor colorWithRed:0.3 green:0.3 blue:0.3 alpha:1];
     [_bar addSubview:topLineView];
     
-    UIView *bottomLineView = [[UIView alloc] initWithFrame:CGRectMake(0, kScreenWidth - 0.5, kScreenWidth, 0.5)];
-    bottomLineView.backgroundColor = [UIColor colorWithRed:0.9 green:0.9 blue:0.9 alpha:0.8];
+    UIView *bottomLineView = [[UIView alloc] initWithFrame:CGRectMake(0, _bar.height - 0.5, kScreenWidth, 0.5)];
+    bottomLineView.backgroundColor = [UIColor colorWithRed:0.3 green:0.3 blue:0.3 alpha:1];
     [_bar addSubview:bottomLineView];
     
     CGFloat pickerY = CGRectGetMaxY(_bar.frame);
