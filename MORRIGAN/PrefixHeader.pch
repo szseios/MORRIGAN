@@ -19,6 +19,6 @@
 #import "Utils.h"
 #import "NMOANetWorking.h"
 #import "MBProgressHUD.h"
-
+#import "UIImageView+WebCache.h"
 #endif
 

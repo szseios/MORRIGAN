@@ -50,7 +50,12 @@ static NSString *cellIdentifier = @"cellIdentifier";
     UIImageView *headerImageView = [[UIImageView alloc] initWithFrame:CGRectMake(20, 35, 80, 80)];
     headerImageView.clipsToBounds = YES;
     headerImageView.layer.cornerRadius = 40;
-    headerImageView.image = [UIImage imageNamed:@"defaultHeaderView"];
+//    headerImageView.image = [UIImage imageNamed:@"defaultHeaderView"];
+    
+    [headerImageView sd_setImageWithURL:[NSURL URLWithString:[UserInfo share].imgUrl] placeholderImage:[UIImage imageNamed:@"defaultHeaderView"] options:SDWebImageHandleCookies | SDWebImageRetryFailed completed:^(UIImage *image, NSError *error, SDImageCacheType cacheType, NSURL *imageURL) {
+        
+    }];
+    
     UITapGestureRecognizer *tap = [[UITapGestureRecognizer alloc] initWithTarget:self action:@selector(selectHeaderImage)];
     [headerImageView addGestureRecognizer:tap];
     [_headerView addSubview:headerImageView];
