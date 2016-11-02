@@ -538,13 +538,6 @@
     UIActivityIndicatorView *aiView = [[UIActivityIndicatorView alloc] initWithFrame:CGRectMake(125.0, 80.0, 30.0, 30.0)];
     aiView.activityIndicatorViewStyle = UIActivityIndicatorViewStyleWhiteLarge;
     aiView.color = [UIColor blackColor];
-    //check if os version is 7 or above. ios7.0及以上UIAlertView弃用了addSubview方法
-    if ([[[UIDevice currentDevice] systemVersion] compare:@"7.0"] != NSOrderedAscending) {
-        [remoteAlertView setValue:aiView forKey:@"accessoryView"];
-    }else{
-        [remoteAlertView addSubview:aiView];
-    }
-    // 不加这句不显示
     [remoteAlertView setValue:aiView forKey:@"accessoryView"];
     [remoteAlertView show];
     [aiView startAnimating];

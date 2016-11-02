@@ -434,17 +434,11 @@
         remoteAlertView = nil;
     }
     remoteAlertView =  [[UIAlertView alloc] initWithTitle:@"提示" message:message delegate:self cancelButtonTitle:nil otherButtonTitles:nil, nil ];
-    UIActivityIndicatorView *aiView = [[UIActivityIndicatorView alloc] initWithFrame:CGRectMake(125.0, 80.0, 30.0, 30.0)];
+    UIActivityIndicatorView *aiView = [[UIActivityIndicatorView alloc] initWithFrame:CGRectMake(125.0, 70.0, 60.0, 60.0)];
+    aiView.layoutMargins = UIEdgeInsetsMake(0, 0, 30, 0);
     aiView.activityIndicatorViewStyle = UIActivityIndicatorViewStyleWhiteLarge;
     aiView.color = [UIColor blackColor];
-    //check if os version is 7 or above. ios7.0及以上UIAlertView弃用了addSubview方法
-    if ([[[UIDevice currentDevice] systemVersion] compare:@"7.0"] != NSOrderedAscending) {
-        [remoteAlertView setValue:aiView forKey:@"accessoryView"];
-    }else{
-        [remoteAlertView addSubview:aiView];
-    }
-    // 不加这句不显示
-//    [remoteAlertView setValue:aiView forKey:@"accessoryView"];
+    [remoteAlertView setValue:aiView forKey:@"accessoryView"];
     [remoteAlertView show];
     [aiView startAnimating];
 }
