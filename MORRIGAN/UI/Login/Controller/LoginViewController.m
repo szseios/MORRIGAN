@@ -22,8 +22,7 @@
     UITextField *_phoneNumbrInputView;
     UITextField *_passwordInputView;
     UIButton *_showPwdButton;
-    
-    UIAlertView *remoteAlertView;
+
 }
 
 @end
@@ -334,7 +333,7 @@
 // 登陆
 - (void)beginLogin:(NSString *)phoneNumber password:(NSString *)password
 {
-    [self remoteAnimation:@"正在登陆, 请稍候..."];
+    [self showRemoteAnimation:@"正在登陆, 请稍候..."];
     
     NSLog(@"登陆，手机：%@, 密码：%@ ", phoneNumber, password);
     
@@ -352,7 +351,7 @@
      {
          
          dispatch_async(dispatch_get_main_queue(), ^{
-             [remoteAlertView dismissWithClickedButtonIndex:0 animated:YES];
+             [self hideRemoteAnimation];
          });
          
          
@@ -395,21 +394,6 @@
      }];
 }
 
-
--(void)remoteAnimation:(NSString *)message{
-    
-    if (remoteAlertView) {
-        remoteAlertView = nil;
-    }
-    remoteAlertView =  [[UIAlertView alloc] initWithTitle:@"提示" message:message delegate:self cancelButtonTitle:nil otherButtonTitles:nil, nil ];
-    UIActivityIndicatorView *aiView = [[UIActivityIndicatorView alloc] initWithFrame:CGRectMake(125.0, 70.0, 60.0, 60.0)];
-    aiView.layoutMargins = UIEdgeInsetsMake(0, 0, 30, 0);
-    aiView.activityIndicatorViewStyle = UIActivityIndicatorViewStyleWhiteLarge;
-    aiView.color = [UIColor blackColor];
-    [remoteAlertView setValue:aiView forKey:@"accessoryView"];
-    [remoteAlertView show];
-    [aiView startAnimating];
-}
 
 
 - (void)didReceiveMemoryWarning {

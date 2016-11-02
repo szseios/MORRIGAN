@@ -34,7 +34,6 @@
     UITextField *_passwordInputView;
     UIButton *_showPwdButton;
     
-    UIAlertView *remoteAlertView;
     NSTimer *_getAuthCodeTimer;
     NSInteger _currentSec;
 }
@@ -460,7 +459,8 @@
 {
     [self stopTimer];
     
-    [self remoteAnimation:@"正在重置密码, 请稍候..."];
+    
+    [self showRemoteAnimation:@"正在重置密码, 请稍候..."];
     
     NSLog(@"重置密码，手机：%@, 验证码：%@, 密码：%@", phoneNumber, authCode, password);
     
@@ -477,7 +477,7 @@
      {
          
          dispatch_async(dispatch_get_main_queue(), ^{
-             [remoteAlertView dismissWithClickedButtonIndex:0 animated:YES];
+             [self hideRemoteAnimation];
          });
          
          
@@ -497,22 +497,6 @@
     
     
 }
-
-
--(void)remoteAnimation:(NSString *)message{
-    
-    if (remoteAlertView) {
-        remoteAlertView = nil;
-    }
-    remoteAlertView =  [[UIAlertView alloc] initWithTitle:@"提示" message:message delegate:self cancelButtonTitle:nil otherButtonTitles:nil, nil ];
-    UIActivityIndicatorView *aiView = [[UIActivityIndicatorView alloc] initWithFrame:CGRectMake(125.0, 80.0, 30.0, 30.0)];
-    aiView.activityIndicatorViewStyle = UIActivityIndicatorViewStyleWhiteLarge;
-    aiView.color = [UIColor blackColor];
-    [remoteAlertView setValue:aiView forKey:@"accessoryView"];
-    [remoteAlertView show];
-    [aiView startAnimating];
-}
-
 
 
 - (void)didReceiveMemoryWarning {

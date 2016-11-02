@@ -39,7 +39,6 @@
     UITextField *_passwordInputView;
     UIButton *_showPwdButton;
     
-    UIAlertView *remoteAlertView;
     NSTimer *_getAuthCodeTimer;
     NSInteger _currentSec;
 }
@@ -563,7 +562,7 @@
 - (void)beginRegister:(NSString *)phoneNumber authCode:(NSString *)authCode password:(NSString *)password sex:(NSString *)sex
 {
     [self stopTimer];
-    [self remoteAnimation:@"正在注册, 请稍候..."];
+    [self showRemoteAnimation:@"正在注册, 请稍候..."];
     
     NSLog(@"注册，手机：%@, 验证码：%@, 密码：%@ , 性别：%@", phoneNumber, authCode, password, sex);
     
@@ -581,7 +580,7 @@
      {
          
          dispatch_async(dispatch_get_main_queue(), ^{
-             [remoteAlertView dismissWithClickedButtonIndex:0 animated:YES];
+             [self hideRemoteAnimation];
          });
          
          
@@ -615,20 +614,6 @@
     [LoginManager share].autoLogin = NO;
     [self.navigationController popViewControllerAnimated:YES];
     
-}
-
--(void)remoteAnimation:(NSString *)message{
-    
-    if (remoteAlertView) {
-        remoteAlertView = nil;
-    }
-    remoteAlertView =  [[UIAlertView alloc] initWithTitle:@"提示" message:message delegate:self cancelButtonTitle:nil otherButtonTitles:nil, nil ];
-    UIActivityIndicatorView *aiView = [[UIActivityIndicatorView alloc] initWithFrame:CGRectMake(125.0, 80.0, 30.0, 30.0)];
-    aiView.activityIndicatorViewStyle = UIActivityIndicatorViewStyleWhiteLarge;
-    aiView.color = [UIColor blackColor];
-    [remoteAlertView setValue:aiView forKey:@"accessoryView"];
-    [remoteAlertView show];
-    [aiView startAnimating];
 }
 
 

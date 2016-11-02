@@ -10,7 +10,7 @@
 
 @interface LoginBaseController ()
 {
-
+    UIAlertView *_remoteAlertView;
 }
 
 @end
@@ -101,7 +101,8 @@
 }
 
 
--(void)closeKeyboard{
+-(void)closeKeyboard
+{
     for (UIWindow *win in [UIApplication sharedApplication].windows) {
         [win endEditing:YES];
     }
@@ -109,7 +110,25 @@
 
 
 
+- (void)showRemoteAnimation:(NSString *)message
+{
+    if (_remoteAlertView) {
+        _remoteAlertView = nil;
+    }
+    _remoteAlertView =  [[UIAlertView alloc] initWithTitle:@"提示" message:message delegate:self cancelButtonTitle:nil otherButtonTitles:nil, nil ];
+    UIActivityIndicatorView *aiView = [[UIActivityIndicatorView alloc] initWithFrame:CGRectMake(125.0, 80.0, 30.0, 30.0)];
+    aiView.activityIndicatorViewStyle = UIActivityIndicatorViewStyleWhiteLarge;
+    aiView.color = [UIColor blackColor];
+    [_remoteAlertView setValue:aiView forKey:@"accessoryView"];
+    [_remoteAlertView show];
+    [aiView startAnimating];
+}
 
+
+- (void)hideRemoteAnimation
+{
+   [_remoteAlertView dismissWithClickedButtonIndex:0 animated:YES];
+}
 
 
 - (void)didReceiveMemoryWarning {

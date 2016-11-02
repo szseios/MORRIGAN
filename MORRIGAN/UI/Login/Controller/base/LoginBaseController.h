@@ -15,6 +15,8 @@
 @property(nonatomic, strong) UIToolbar      *keyboardTopView;
 
 
-- (void)initView;
 
+- (void)initView;
+- (void)showRemoteAnimation:(NSString *)message;
+- (void)hideRemoteAnimation;
 @end
