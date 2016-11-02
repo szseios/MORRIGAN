@@ -444,7 +444,7 @@
         [remoteAlertView addSubview:aiView];
     }
     // 不加这句不显示
-    [remoteAlertView setValue:aiView forKey:@"accessoryView"];
+//    [remoteAlertView setValue:aiView forKey:@"accessoryView"];
     [remoteAlertView show];
     [aiView startAnimating];
 }
