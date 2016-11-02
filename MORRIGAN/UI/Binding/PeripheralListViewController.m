@@ -7,6 +7,10 @@
 //
 
 #import "PeripheralListViewController.h"
+#import "SearchPeripheralTableViewCell.h"
+
+
+#define Identifier @"CellIdentifier"
 
 @interface PeripheralListViewController () <UITableViewDelegate,UITableViewDataSource>
 
@@ -27,8 +31,11 @@
                                               blue:221 / 255.0
                                              alpha:0.8];
     
-//    _tableView.delegate = self;
-//    _tableView.dataSource = self;
+    _tableView.delegate = self;
+    _tableView.dataSource = self;
+    _tableView.separatorStyle = UITableViewCellSeparatorStyleNone;
+    [_tableView registerNib:[UINib nibWithNibName:@"SearchPeripheralTableViewCell" bundle:nil]
+     forCellReuseIdentifier:Identifier];
 }
 
 - (void)didReceiveMemoryWarning {
@@ -40,12 +47,20 @@
     [self.navigationController popViewControllerAnimated:YES];
 }
 
+- (CGFloat)tableView:(UITableView *)tableView heightForRowAtIndexPath:(NSIndexPath *)indexPath {
+    return 127;
+}
+
 - (NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section {
-    return 5;
+//    return [BluetoothManager share].scannedPeripherals.count;
+    return 3;
 }
 
 - (UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath {
-    return nil;
+    SearchPeripheralTableViewCell *cell = [tableView dequeueReusableCellWithIdentifier:Identifier forIndexPath:indexPath];
+    cell.nameLabel.text = [NSString stringWithFormat:@"设备%@",@(indexPath.row).stringValue];
+    cell.uuidLabel.text = @"Morrigan";
+    return cell;
 }
 
 
