@@ -8,7 +8,6 @@
 
 /* Begin PBXBuildFile section */
 		3E2539791DAA3DA800CB1EF8 /* ForgetPwdViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 3E2539761DAA3DA800CB1EF8 /* ForgetPwdViewController.m */; };
-		3E25397A1DAA3DA800CB1EF8 /* HandKneadViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 3E2539781DAA3DA800CB1EF8 /* HandKneadViewController.m */; };
 		3E25397E1DAA3DDA00CB1EF8 /* UserInfo.m in Sources */ = {isa = PBXBuildFile; fileRef = 3E25397D1DAA3DDA00CB1EF8 /* UserInfo.m */; };
 		3E2539811DAA3DE600CB1EF8 /* LoginManager.m in Sources */ = {isa = PBXBuildFile; fileRef = 3E2539801DAA3DE600CB1EF8 /* LoginManager.m */; };
 		3E632A4D1DC5A47B00CC2332 /* BabyBluetooth.m in Sources */ = {isa = PBXBuildFile; fileRef = 3E632A3C1DC5A47B00CC2332 /* BabyBluetooth.m */; };
@@ -103,10 +102,10 @@
 		47FF16701DC9F48B00DBD493 /* UIImageView+WebCache.m in Sources */ = {isa = PBXBuildFile; fileRef = 47FF165F1DC9F48B00DBD493 /* UIImageView+WebCache.m */; };
 		47FF16711DC9F48B00DBD493 /* UIView+WebCacheOperation.m in Sources */ = {isa = PBXBuildFile; fileRef = 47FF16611DC9F48B00DBD493 /* UIView+WebCacheOperation.m */; };
 		47FF16731DC9FAE500DBD493 /* NullSafe.m in Sources */ = {isa = PBXBuildFile; fileRef = 47FF16721DC9FAE500DBD493 /* NullSafe.m */; };
-		EB21FA1A1DBF2C1100DDD28A /* AutoKneadViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = EB21FA191DBF2C1100DDD28A /* AutoKneadViewController.m */; };
-		EB21FA1B1DBF2C1100DDD28A /* AutoKneadViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = EB21FA191DBF2C1100DDD28A /* AutoKneadViewController.m */; };
 		EB21FA1E1DBF31A000DDD28A /* FuntionButton.m in Sources */ = {isa = PBXBuildFile; fileRef = EB21FA1D1DBF31A000DDD28A /* FuntionButton.m */; };
 		EB21FA1F1DBF31A000DDD28A /* FuntionButton.m in Sources */ = {isa = PBXBuildFile; fileRef = EB21FA1D1DBF31A000DDD28A /* FuntionButton.m */; };
+		EB34F3AB1DCA0F0D002B15B1 /* AutoKneadViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = EB34F3A71DCA0F0D002B15B1 /* AutoKneadViewController.m */; };
+		EB34F3AC1DCA0F0D002B15B1 /* HandKneadViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = EB34F3AA1DCA0F0D002B15B1 /* HandKneadViewController.m */; };
 		EB534AD21DA9D924007AA325 /* MusicManager.m in Sources */ = {isa = PBXBuildFile; fileRef = EB534ACC1DA9D924007AA325 /* MusicManager.m */; };
 		EB534AD31DA9D924007AA325 /* MusicModel.m in Sources */ = {isa = PBXBuildFile; fileRef = EB534ACE1DA9D924007AA325 /* MusicModel.m */; };
 		EB534AD41DA9D924007AA325 /* MusicViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = EB534AD01DA9D924007AA325 /* MusicViewController.m */; };
@@ -153,8 +152,6 @@
 /* Begin PBXFileReference section */
 		3E2539751DAA3DA800CB1EF8 /* ForgetPwdViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ForgetPwdViewController.h; sourceTree = "<group>"; };
 		3E2539761DAA3DA800CB1EF8 /* ForgetPwdViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ForgetPwdViewController.m; sourceTree = "<group>"; };
-		3E2539771DAA3DA800CB1EF8 /* HandKneadViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = HandKneadViewController.h; sourceTree = "<group>"; };
-		3E2539781DAA3DA800CB1EF8 /* HandKneadViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = HandKneadViewController.m; sourceTree = "<group>"; };
 		3E25397C1DAA3DDA00CB1EF8 /* UserInfo.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = UserInfo.h; sourceTree = "<group>"; };
 		3E25397D1DAA3DDA00CB1EF8 /* UserInfo.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = UserInfo.m; sourceTree = "<group>"; };
 		3E25397F1DAA3DE600CB1EF8 /* LoginManager.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = LoginManager.h; sourceTree = "<group>"; };
@@ -327,10 +324,12 @@
 		47FF16601DC9F48B00DBD493 /* UIView+WebCacheOperation.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "UIView+WebCacheOperation.h"; sourceTree = "<group>"; };
 		47FF16611DC9F48B00DBD493 /* UIView+WebCacheOperation.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "UIView+WebCacheOperation.m"; sourceTree = "<group>"; };
 		47FF16721DC9FAE500DBD493 /* NullSafe.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = NullSafe.m; sourceTree = "<group>"; };
-		EB21FA181DBF2C1100DDD28A /* AutoKneadViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = AutoKneadViewController.h; sourceTree = "<group>"; };
-		EB21FA191DBF2C1100DDD28A /* AutoKneadViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = AutoKneadViewController.m; sourceTree = "<group>"; };
 		EB21FA1C1DBF31A000DDD28A /* FuntionButton.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = FuntionButton.h; sourceTree = "<group>"; };
 		EB21FA1D1DBF31A000DDD28A /* FuntionButton.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = FuntionButton.m; sourceTree = "<group>"; };
+		EB34F3A61DCA0F0D002B15B1 /* AutoKneadViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = AutoKneadViewController.h; sourceTree = "<group>"; };
+		EB34F3A71DCA0F0D002B15B1 /* AutoKneadViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = AutoKneadViewController.m; sourceTree = "<group>"; };
+		EB34F3A91DCA0F0D002B15B1 /* HandKneadViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = HandKneadViewController.h; sourceTree = "<group>"; };
+		EB34F3AA1DCA0F0D002B15B1 /* HandKneadViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = HandKneadViewController.m; sourceTree = "<group>"; };
 		EB534ACB1DA9D924007AA325 /* MusicManager.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MusicManager.h; sourceTree = "<group>"; };
 		EB534ACC1DA9D924007AA325 /* MusicManager.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = MusicManager.m; sourceTree = "<group>"; };
 		EB534ACD1DA9D924007AA325 /* MusicModel.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MusicModel.h; sourceTree = "<group>"; };
@@ -724,6 +723,24 @@
 			path = SDWebImage;
 			sourceTree = "<group>";
 		};
+		EB34F3A51DCA0F0D002B15B1 /* AutoKnead */ = {
+			isa = PBXGroup;
+			children = (
+				EB34F3A61DCA0F0D002B15B1 /* AutoKneadViewController.h */,
+				EB34F3A71DCA0F0D002B15B1 /* AutoKneadViewController.m */,
+			);
+			path = AutoKnead;
+			sourceTree = "<group>";
+		};
+		EB34F3A81DCA0F0D002B15B1 /* HandKnead */ = {
+			isa = PBXGroup;
+			children = (
+				EB34F3A91DCA0F0D002B15B1 /* HandKneadViewController.h */,
+				EB34F3AA1DCA0F0D002B15B1 /* HandKneadViewController.m */,
+			);
+			path = HandKnead;
+			sourceTree = "<group>";
+		};
 		EB534ACA1DA9D924007AA325 /* Music */ = {
 			isa = PBXGroup;
 			children = (
@@ -831,6 +848,8 @@
 		EBF0115E1DA73137009E8394 /* UI */ = {
 			isa = PBXGroup;
 			children = (
+				EB34F3A51DCA0F0D002B15B1 /* AutoKnead */,
+				EB34F3A81DCA0F0D002B15B1 /* HandKnead */,
 				EB6DBC7C1DC8216E005823B2 /* Binding */,
 				3E2539821DAA3DF500CB1EF8 /* Home */,
 				EBF0115F1DA73137009E8394 /* Login */,
@@ -900,10 +919,6 @@
 				EBF0116E1DA754E6009E8394 /* LoginViewController.m */,
 				3E2539751DAA3DA800CB1EF8 /* ForgetPwdViewController.h */,
 				3E2539761DAA3DA800CB1EF8 /* ForgetPwdViewController.m */,
-				3E2539771DAA3DA800CB1EF8 /* HandKneadViewController.h */,
-				3E2539781DAA3DA800CB1EF8 /* HandKneadViewController.m */,
-				EB21FA181DBF2C1100DDD28A /* AutoKneadViewController.h */,
-				EB21FA191DBF2C1100DDD28A /* AutoKneadViewController.m */,
 			);
 			path = Controller;
 			sourceTree = "<group>";
@@ -1118,9 +1133,9 @@
 				3E632A501DC5A47B00CC2332 /* BabyDefine.m in Sources */,
 				4728ED3A1DC485AB0005F9C3 /* RootViewController.m in Sources */,
 				4728EDC21DC4865E0005F9C3 /* PNPieChartDataItem.m in Sources */,
+				EB34F3AC1DCA0F0D002B15B1 /* HandKneadViewController.m in Sources */,
 				4728EDC31DC4865E0005F9C3 /* PNRadarChart.m in Sources */,
 				3E632A511DC5A47B00CC2332 /* BabyOptions.m in Sources */,
-				3E25397A1DAA3DA800CB1EF8 /* HandKneadViewController.m in Sources */,
 				4728ED7D1DC485F50005F9C3 /* ChooseDataView.m in Sources */,
 				47FF16631DC9F48B00DBD493 /* NSData+ImageContentType.m in Sources */,
 				47FF166F1DC9F48B00DBD493 /* UIImageView+HighlightedWebCache.m in Sources */,
@@ -1156,8 +1171,8 @@
 				4728EDC81DC4865E0005F9C3 /* UICountingLabel.m in Sources */,
 				4728EDBE1DC4865E0005F9C3 /* PNLineChart.m in Sources */,
 				EBF011831DA7883B009E8394 /* SZSEURLSessionDownloadTask.m in Sources */,
+				EB34F3AB1DCA0F0D002B15B1 /* AutoKneadViewController.m in Sources */,
 				4728EDD61DC486A40005F9C3 /* UIView+Extension.m in Sources */,
-				EB21FA1A1DBF2C1100DDD28A /* AutoKneadViewController.m in Sources */,
 				4728EDB91DC4865E0005F9C3 /* PNBarChart.m in Sources */,
 				47FF16701DC9F48B00DBD493 /* UIImageView+WebCache.m in Sources */,
 				4728ED7F1DC485F50005F9C3 /* HomePageButton.m in Sources */,
@@ -1210,7 +1225,6 @@
 				EB21FA1F1DBF31A000DDD28A /* FuntionButton.m in Sources */,
 				EB6DBC911DC82288005823B2 /* BtSettingInfo.m in Sources */,
 				EBF011B01DA7920A009E8394 /* Utils.m in Sources */,
-				EB21FA1B1DBF2C1100DDD28A /* AutoKneadViewController.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
