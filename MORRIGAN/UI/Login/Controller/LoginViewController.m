@@ -19,12 +19,10 @@
 
 @interface LoginViewController ()
 {
-    UIScrollView *_rootScroolView;
     UITextField *_phoneNumbrInputView;
     UITextField *_passwordInputView;
     UIButton *_showPwdButton;
-    
-    UIAlertView *remoteAlertView;
+
 }
 
 @end
@@ -36,9 +34,6 @@
     
     [[UIApplication sharedApplication] setStatusBarStyle:UIStatusBarStyleLightContent animated:NO];
     [self initView];
-
-    // 注册通知
-    [self addNotification];
 
 }
 
@@ -77,38 +72,10 @@
     }
 }
 
+
 - (void)initView
 {
-    
-    // 键盘收起条
-    UIToolbar * keyboardTopView = [[UIToolbar alloc]initWithFrame:CGRectMake(0, 0, kScreenWidth, 35)];
-    [keyboardTopView setBarStyle:UIBarStyleDefault];
-    keyboardTopView.backgroundColor = [UIColor whiteColor];
-    keyboardTopView.alpha = 0.9;
-    UIBarButtonItem * btnSpace = [[UIBarButtonItem alloc]initWithBarButtonSystemItem:UIBarButtonSystemItemFlexibleSpace target:self action:nil];
-    UIButton *btn = [UIButton buttonWithType:UIButtonTypeCustom];
-    btn.frame = CGRectMake(2, 1, 50, 28);
-    [btn addTarget:self action:@selector(closeKeyboard) forControlEvents:UIControlEventTouchUpInside];
-    [btn setTitle:@"  收起" forState:UIControlStateNormal];
-    [btn setTitleColor:[UIColor blueColor] forState:UIControlStateNormal];
-    btn.titleLabel.font = [UIFont systemFontOfSize:13.0];
-    btn.alpha = 0.6;
-    // btn.backgroundColor = [UIColor lightGrayColor];
-    UIBarButtonItem *doneBtn = [[UIBarButtonItem alloc]initWithCustomView:btn];
-    NSArray * buttonsArray = [NSArray arrayWithObjects:btnSpace,doneBtn,nil];
-    [keyboardTopView setItems:buttonsArray];
-    
-
-    
-    
-    UIView *rootView = [[UIView alloc] initWithFrame:CGRectMake(0, 0, kScreenWidth, kScreenHeight)];
-    rootView.backgroundColor = [Utils stringTOColor:kColor_6911a5];
-    [self.view addSubview:rootView];
-    _rootScroolView = [[UIScrollView alloc] initWithFrame:CGRectMake(0, 0, kScreenWidth, kScreenHeight)];
-    [_rootScroolView addSubview:rootView];
-    _rootScroolView.contentSize = CGSizeMake(kScreenWidth, kScreenHeight);
-    _rootScroolView.scrollEnabled = NO;
-    [self.view addSubview:_rootScroolView];
+    [super initView];
     
     // 上面的图片
     CGFloat imageViewH = 434/2.0;
@@ -133,7 +100,7 @@
     UIImageView *imageView = [[UIImageView alloc] initWithFrame:CGRectMake(169/2, imageVieY, imageW, imageH)];
     imageView.image = [UIImage imageNamed:@"bg_morrig"];
     [imageViewBg addSubview:imageView];
-    [rootView addSubview:imageViewBg];
+    [self.rootView addSubview:imageViewBg];
     
 
     
@@ -150,7 +117,7 @@
     CGFloat editViewW = kScreenWidth - editViewPaddingLeftRight * 2;
     UIView *phoneNumRootView = [[UIView alloc] initWithFrame:CGRectMake(editViewPaddingLeftRight, imageViewH + editViewPaddingTop, editViewW, editViewH)];
     phoneNumRootView.backgroundColor = [UIColor clearColor];
-    [rootView addSubview:phoneNumRootView];
+    [self.rootView addSubview:phoneNumRootView];
     // 手机图标
     CGFloat iconW = 25.0;
     UIImageView *phoneIconView = [[UIImageView alloc] initWithFrame:CGRectMake(0, (editViewH - iconW)/2, iconW, iconW)];
@@ -162,7 +129,7 @@
     UITextField *phoneInputView = [[UITextField alloc] initWithFrame:CGRectMake(iconW + phoneinputViewPaddingLeft, 0, phoneNumRootView.frame.size.width - iconW - phoneinputViewPaddingLeft, editViewH)];
     //phoneInputView.backgroundColor = [UIColor greenColor];
     phoneInputView.placeholder = @"请填写手机号码";
-    [phoneInputView setInputAccessoryView:keyboardTopView];
+    [phoneInputView setInputAccessoryView:self.keyboardTopView];
     // 注意：先设置phoneInputView.placeholder才有效
     [phoneInputView setValue:inputViewTextColor forKeyPath:@"_placeholderLabel.textColor"];
     phoneInputView.textColor = [UIColor whiteColor];
@@ -180,7 +147,7 @@
     CGFloat PWDeditViewPaddingTop = 20.0;
     UIView *PWDRootView = [[UIView alloc] initWithFrame:CGRectMake(editViewPaddingLeftRight, imageViewH + editViewPaddingTop + editViewH + PWDeditViewPaddingTop, editViewW, editViewH)];
     PWDRootView.backgroundColor = [UIColor clearColor];
-    [rootView addSubview:PWDRootView];
+    [self.rootView addSubview:PWDRootView];
     // 密码图标
     UIImageView *PWDIconView = [[UIImageView alloc] initWithFrame:CGRectMake(0, (editViewH - iconW)/2, iconW, iconW)];
     //PWDIconView.backgroundColor = [UIColor orangeColor];
@@ -198,7 +165,7 @@
     UITextField *PWDInputView = [[UITextField alloc] initWithFrame:CGRectMake(iconW + phoneinputViewPaddingLeft, 0, PWDRootView.frame.size.width - iconW - showPWDViewW - phoneinputViewPaddingLeft, editViewH)];
     //PWDInputView.backgroundColor = [UIColor greenColor];
     PWDInputView.placeholder = @"输入密码";
-    [PWDInputView setInputAccessoryView:keyboardTopView];
+    [PWDInputView setInputAccessoryView:self.keyboardTopView];
     [PWDInputView setValue:inputViewTextColor forKeyPath:@"_placeholderLabel.textColor"];
     PWDInputView.textColor = [UIColor whiteColor];
     PWDInputView.secureTextEntry = YES;
@@ -219,7 +186,7 @@
     [forgetPWDView setTitle:@"忘记密码？" forState:UIControlStateNormal];
     [forgetPWDView setTitleColor:[UIColor colorWithRed:255.0 green:255.0 blue:255.0 alpha:0.6] forState:UIControlStateNormal];
     [forgetPWDView addTarget:self action:@selector(forgetPWDButtonClickInLogin) forControlEvents:UIControlEventTouchUpInside];
-    [rootView addSubview:forgetPWDView];
+    [self.rootView addSubview:forgetPWDView];
     
     
     
@@ -231,7 +198,7 @@
     CGFloat registerAndLoginBtnRootViewY = kScreenHeight - 120.0 - registerAndLoginBtnRootViewH;
     UIView *registerAndLoginBtnRootView = [[UIView alloc]initWithFrame:CGRectMake(registerAndLoginBtnRootViewX, registerAndLoginBtnRootViewY, registerAndLoginBtnRootViewW, registerAndLoginBtnRootViewH)];
     registerAndLoginBtnRootView.backgroundColor = [UIColor clearColor];
-    [rootView addSubview:registerAndLoginBtnRootView];
+    [self.rootView addSubview:registerAndLoginBtnRootView];
     // 注册
     CGFloat buttonW = (registerAndLoginBtnRootViewW - registerAndLoginBtnRootViewSpace)/2;
     UIButton *registerBtnView = [[UIButton alloc] initWithFrame:CGRectMake(0, 0, buttonW, registerAndLoginBtnRootViewH)];
@@ -366,7 +333,7 @@
 // 登陆
 - (void)beginLogin:(NSString *)phoneNumber password:(NSString *)password
 {
-    [self remoteAnimation:@"正在登陆, 请稍候..."];
+    [self showRemoteAnimation:@"正在登陆, 请稍候..."];
     
     NSLog(@"登陆，手机：%@, 密码：%@ ", phoneNumber, password);
     
@@ -384,7 +351,7 @@
      {
          
          dispatch_async(dispatch_get_main_queue(), ^{
-             [remoteAlertView dismissWithClickedButtonIndex:0 animated:YES];
+             [self hideRemoteAnimation];
          });
          
          
@@ -427,70 +394,6 @@
      }];
 }
 
-
--(void)remoteAnimation:(NSString *)message{
-    
-    if (remoteAlertView) {
-        remoteAlertView = nil;
-    }
-    remoteAlertView =  [[UIAlertView alloc] initWithTitle:@"提示" message:message delegate:self cancelButtonTitle:nil otherButtonTitles:nil, nil ];
-    UIActivityIndicatorView *aiView = [[UIActivityIndicatorView alloc] initWithFrame:CGRectMake(125.0, 70.0, 60.0, 60.0)];
-    aiView.layoutMargins = UIEdgeInsetsMake(0, 0, 30, 0);
-    aiView.activityIndicatorViewStyle = UIActivityIndicatorViewStyleWhiteLarge;
-    aiView.color = [UIColor blackColor];
-    [remoteAlertView setValue:aiView forKey:@"accessoryView"];
-    [remoteAlertView show];
-    [aiView startAnimating];
-}
-
-#pragma mark - 键盘弹出／隐藏
-
-//当键盘出现或改变时调用
-- (void)keyboardWillShow:(NSNotification *)aNotification
-{
-    //获取键盘的高度
-    NSDictionary *userInfo = [aNotification userInfo];
-    NSValue *aValue = [userInfo objectForKey:UIKeyboardFrameEndUserInfoKey];
-    CGRect keyboardRect = [aValue CGRectValue];
-    int height = keyboardRect.size.height;
-    CGRect f = _rootScroolView.frame;
-    f.size.height = kScreenHeight - height;
-    _rootScroolView.frame = f;
-    _rootScroolView.scrollEnabled = YES;
-    
-}
-
-//当键退出时调用
-- (void)keyboardWillHide:(NSNotification *)aNotification
-{
-    CGRect f = _rootScroolView.frame;
-    f.size.height = kScreenHeight;
-    _rootScroolView.frame = f;
-    _rootScroolView.scrollEnabled = NO;
-}
-
-
-- (void)addNotification
-{
-    //增加监听，当键盘出现或改变时收出消息
-    [[NSNotificationCenter defaultCenter] addObserver:self
-                                             selector:@selector(keyboardWillShow:)
-                                                 name:UIKeyboardWillShowNotification
-                                               object:nil];
-    
-    //增加监听，当键退出时收出消息
-    [[NSNotificationCenter defaultCenter] addObserver:self
-                                             selector:@selector(keyboardWillHide:)
-                                                 name:UIKeyboardWillHideNotification
-                                               object:nil];
-}
-
-
--(void)closeKeyboard{
-    for (UIWindow *win in [UIApplication sharedApplication].windows) {
-        [win endEditing:YES];
-    }
-}
 
 
 - (void)didReceiveMemoryWarning {
