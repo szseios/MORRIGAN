@@ -8,10 +8,14 @@
 
 #import <Foundation/Foundation.h>
 #import "BabyBluetooth.h"
+#import "BluetoothOperation.h"
 
 @interface BluetoothManager : NSObject {
     BabyBluetooth *_baby;
 }
+
+@property (nonatomic,assign)BOOL isConnected;
+
 
 + (BluetoothManager *)share;
 

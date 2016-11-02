@@ -22,6 +22,7 @@
 		3E632A551DC5A47B00CC2332 /* BabyToy.m in Sources */ = {isa = PBXBuildFile; fileRef = 3E632A4C1DC5A47B00CC2332 /* BabyToy.m */; };
 		3E632A591DC5A51E00CC2332 /* BluetoothManager.m in Sources */ = {isa = PBXBuildFile; fileRef = 3E632A581DC5A51E00CC2332 /* BluetoothManager.m */; };
 		3E8A433C1DBF3EAE00DE76A8 /* MusicList.plist in Resources */ = {isa = PBXBuildFile; fileRef = 3E8A433B1DBF3EAE00DE76A8 /* MusicList.plist */; };
+		3E9304A81DC9E225001D08A2 /* BluetoothOperation.m in Sources */ = {isa = PBXBuildFile; fileRef = 3E9304A71DC9E225001D08A2 /* BluetoothOperation.m */; };
 		3EEF45E81DBB3B2900752AD4 /* UIView+Extension.m in Sources */ = {isa = PBXBuildFile; fileRef = 3EEF45E71DBB3B2900752AD4 /* UIView+Extension.m */; };
 		3EF795841DA9EDFC00E5EBC6 /* MusicTableViewCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 3EF795821DA9EDFC00E5EBC6 /* MusicTableViewCell.m */; };
 		3EF795851DA9EDFC00E5EBC6 /* MusicTableViewCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = 3EF795831DA9EDFC00E5EBC6 /* MusicTableViewCell.xib */; };
@@ -179,6 +180,8 @@
 		3E632A571DC5A51E00CC2332 /* BluetoothManager.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = BluetoothManager.h; sourceTree = "<group>"; };
 		3E632A581DC5A51E00CC2332 /* BluetoothManager.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = BluetoothManager.m; sourceTree = "<group>"; };
 		3E8A433B1DBF3EAE00DE76A8 /* MusicList.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = MusicList.plist; sourceTree = "<group>"; };
+		3E9304A61DC9E225001D08A2 /* BluetoothOperation.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = BluetoothOperation.h; sourceTree = "<group>"; };
+		3E9304A71DC9E225001D08A2 /* BluetoothOperation.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = BluetoothOperation.m; sourceTree = "<group>"; };
 		3EEF45E61DBB3B2900752AD4 /* UIView+Extension.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "UIView+Extension.h"; sourceTree = "<group>"; };
 		3EEF45E71DBB3B2900752AD4 /* UIView+Extension.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "UIView+Extension.m"; sourceTree = "<group>"; };
 		3EF795811DA9EDFC00E5EBC6 /* MusicTableViewCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MusicTableViewCell.h; sourceTree = "<group>"; };
@@ -473,6 +476,8 @@
 			children = (
 				3E632A571DC5A51E00CC2332 /* BluetoothManager.h */,
 				3E632A581DC5A51E00CC2332 /* BluetoothManager.m */,
+				3E9304A61DC9E225001D08A2 /* BluetoothOperation.h */,
+				3E9304A71DC9E225001D08A2 /* BluetoothOperation.m */,
 			);
 			path = BluetoothManager;
 			sourceTree = "<group>";
@@ -1130,6 +1135,7 @@
 				3EF795841DA9EDFC00E5EBC6 /* MusicTableViewCell.m in Sources */,
 				4728ED381DC485AB0005F9C3 /* HomePageSuperController.m in Sources */,
 				EB6DBC881DC8216E005823B2 /* SearchPeripheralViewController.m in Sources */,
+				3E9304A81DC9E225001D08A2 /* BluetoothOperation.m in Sources */,
 				4728ED681DC485BA0005F9C3 /* relateDeviceModel.m in Sources */,
 				3E632A4D1DC5A47B00CC2332 /* BabyBluetooth.m in Sources */,
 				4728ED371DC485AB0005F9C3 /* HomePageController.m in Sources */,
