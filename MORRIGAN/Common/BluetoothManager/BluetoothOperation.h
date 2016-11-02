@@ -9,6 +9,7 @@
 #import <Foundation/Foundation.h>
 
 
+typedef void(^BluetoothOperationResponse)(NSString *response,long tag,NSError *error);
 
 
 @interface BluetoothOperation : NSObject

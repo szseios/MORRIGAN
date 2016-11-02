@@ -46,9 +46,9 @@
                     <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="calibratedWhite"/>
                 </view>
                 <button opaque="NO" contentMode="scaleToFill" misplaced="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" id="LZ0-tQ-g2X">
-                    <frame key="frameInset" minX="-16" minY="23" width="106" height="48"/>
+                    <frame key="frameInset" minX="15" minY="26" width="32" height="32"/>
                     <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
-                    <state key="normal" image="ic_backButton"/>
+                    <state key="normal" image="back"/>
                     <connections>
                         <action selector="back:" destination="-1" eventType="touchUpInside" id="AWk-k5-kAY"/>
                     </connections>
@@ -125,7 +125,7 @@
         </view>
     </objects>
     <resources>
-        <image name="ic_backButton" width="52" height="48"/>
+        <image name="back" width="32" height="32"/>
         <image name="music_background_ middle" width="375" height="218"/>
         <image name="music_background_bottom" width="366" height="66"/>
         <image name="music_background_top" width="375" height="511"/>
