@@ -7,6 +7,7 @@
 //
 
 #import "SearchPeripheralViewController.h"
+#import "PeripheralListViewController.h"
 
 @interface SearchPeripheralViewController ()
 
@@ -31,6 +32,14 @@
                                                alpha:1]
                       forState:UIControlStateNormal];
     
+    [[BluetoothManager share] start];
+    
+    dispatch_after(dispatch_time(DISPATCH_TIME_NOW, (int64_t)(2 * NSEC_PER_SEC)), dispatch_get_main_queue(), ^{
+        [[BluetoothManager share] stop];
+        PeripheralListViewController *ctl = [[PeripheralListViewController alloc] init];
+        [self.navigationController pushViewController:ctl animated:YES];
+    });
+    
 }
 
 - (void)didReceiveMemoryWarning {
@@ -42,14 +51,5 @@
     [self.navigationController popViewControllerAnimated:YES];
 }
 
-/*
-#pragma mark - Navigation
-
-// In a storyboard-based application, you will often want to do a little preparation before navigation
-- (void)prepareForSegue:(UIStoryboardSegue *)segue sender:(id)sender {
-    // Get the new view controller using [segue destinationViewController].
-    // Pass the selected object to the new view controller.
-}
-*/
 
 @end

@@ -18,7 +18,7 @@
             <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
             <subviews>
                 <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" misplaced="YES" image="morrage" id="ROz-qV-fly">
-                    <frame key="frameInset" height="22.49%"/>
+                    <frame key="frameInset" minY="20" height="23.18%"/>
                     <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES" flexibleMaxY="YES"/>
                 </imageView>
                 <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" misplaced="YES" image="icon_searching" id="mX8-bj-yyv">
@@ -33,6 +33,11 @@
                         <action selector="clickStopButton:" destination="-1" eventType="touchUpInside" id="DXR-Et-asf"/>
                     </connections>
                 </button>
+                <view contentMode="scaleToFill" misplaced="YES" id="tft-UB-Iy1">
+                    <frame key="frameInset" height="20"/>
+                    <autoresizingMask key="autoresizingMask" widthSizable="YES" flexibleMaxY="YES"/>
+                    <color key="backgroundColor" white="0.0" alpha="1" colorSpace="calibratedWhite"/>
+                </view>
             </subviews>
             <color key="backgroundColor" red="1" green="1" blue="1" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
             <point key="canvasLocation" x="24.5" y="52.5"/>
