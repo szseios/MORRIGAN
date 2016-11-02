@@ -9,8 +9,9 @@
 //
 
 #import <UIKit/UIKit.h>
+#import "LoginBaseController.h"
 
 
-@interface ForgetPwdViewController : UIViewController
+@interface ForgetPwdViewController : LoginBaseController
 
 @end

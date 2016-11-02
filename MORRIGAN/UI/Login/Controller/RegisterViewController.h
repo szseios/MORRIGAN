@@ -9,8 +9,9 @@
 //
 
 #import <UIKit/UIKit.h>
+#import "LoginBaseController.h"
 
 
-@interface RegisterViewController : UIViewController
+@interface RegisterViewController : LoginBaseController
 
 @end

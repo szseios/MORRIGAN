@@ -106,6 +106,8 @@
 		EB21FA1F1DBF31A000DDD28A /* FuntionButton.m in Sources */ = {isa = PBXBuildFile; fileRef = EB21FA1D1DBF31A000DDD28A /* FuntionButton.m */; };
 		EB34F3AB1DCA0F0D002B15B1 /* AutoKneadViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = EB34F3A71DCA0F0D002B15B1 /* AutoKneadViewController.m */; };
 		EB34F3AC1DCA0F0D002B15B1 /* HandKneadViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = EB34F3AA1DCA0F0D002B15B1 /* HandKneadViewController.m */; };
+		EB34F3AF1DCA10EF002B15B1 /* LoginBaseController.m in Sources */ = {isa = PBXBuildFile; fileRef = EB34F3AE1DCA10EF002B15B1 /* LoginBaseController.m */; };
+		EB34F3B01DCA10EF002B15B1 /* LoginBaseController.m in Sources */ = {isa = PBXBuildFile; fileRef = EB34F3AE1DCA10EF002B15B1 /* LoginBaseController.m */; };
 		EB534AD21DA9D924007AA325 /* MusicManager.m in Sources */ = {isa = PBXBuildFile; fileRef = EB534ACC1DA9D924007AA325 /* MusicManager.m */; };
 		EB534AD31DA9D924007AA325 /* MusicModel.m in Sources */ = {isa = PBXBuildFile; fileRef = EB534ACE1DA9D924007AA325 /* MusicModel.m */; };
 		EB534AD41DA9D924007AA325 /* MusicViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = EB534AD01DA9D924007AA325 /* MusicViewController.m */; };
@@ -330,6 +332,8 @@
 		EB34F3A71DCA0F0D002B15B1 /* AutoKneadViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = AutoKneadViewController.m; sourceTree = "<group>"; };
 		EB34F3A91DCA0F0D002B15B1 /* HandKneadViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = HandKneadViewController.h; sourceTree = "<group>"; };
 		EB34F3AA1DCA0F0D002B15B1 /* HandKneadViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = HandKneadViewController.m; sourceTree = "<group>"; };
+		EB34F3AD1DCA10EF002B15B1 /* LoginBaseController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = LoginBaseController.h; sourceTree = "<group>"; };
+		EB34F3AE1DCA10EF002B15B1 /* LoginBaseController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = LoginBaseController.m; sourceTree = "<group>"; };
 		EB534ACB1DA9D924007AA325 /* MusicManager.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MusicManager.h; sourceTree = "<group>"; };
 		EB534ACC1DA9D924007AA325 /* MusicManager.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = MusicManager.m; sourceTree = "<group>"; };
 		EB534ACD1DA9D924007AA325 /* MusicModel.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MusicModel.h; sourceTree = "<group>"; };
@@ -913,10 +917,12 @@
 		EBF0116C1DA754E6009E8394 /* Controller */ = {
 			isa = PBXGroup;
 			children = (
-				EBF011721DA755E1009E8394 /* RegisterViewController.h */,
-				EBF011731DA755E1009E8394 /* RegisterViewController.m */,
+				EB34F3AD1DCA10EF002B15B1 /* LoginBaseController.h */,
+				EB34F3AE1DCA10EF002B15B1 /* LoginBaseController.m */,
 				EBF0116D1DA754E6009E8394 /* LoginViewController.h */,
 				EBF0116E1DA754E6009E8394 /* LoginViewController.m */,
+				EBF011721DA755E1009E8394 /* RegisterViewController.h */,
+				EBF011731DA755E1009E8394 /* RegisterViewController.m */,
 				3E2539751DAA3DA800CB1EF8 /* ForgetPwdViewController.h */,
 				3E2539761DAA3DA800CB1EF8 /* ForgetPwdViewController.m */,
 			);
@@ -1154,6 +1160,7 @@
 				4728ED681DC485BA0005F9C3 /* relateDeviceModel.m in Sources */,
 				3E632A4D1DC5A47B00CC2332 /* BabyBluetooth.m in Sources */,
 				4728ED371DC485AB0005F9C3 /* HomePageController.m in Sources */,
+				EB34F3AF1DCA10EF002B15B1 /* LoginBaseController.m in Sources */,
 				3E632A521DC5A47B00CC2332 /* BabyPeripheralManager.m in Sources */,
 				47FF166D1DC9F48B00DBD493 /* UIImage+MultiFormat.m in Sources */,
 				4728ED611DC485BA0005F9C3 /* WebInfoController.m in Sources */,
@@ -1225,6 +1232,7 @@
 				EB21FA1F1DBF31A000DDD28A /* FuntionButton.m in Sources */,
 				EB6DBC911DC82288005823B2 /* BtSettingInfo.m in Sources */,
 				EBF011B01DA7920A009E8394 /* Utils.m in Sources */,
+				EB34F3B01DCA10EF002B15B1 /* LoginBaseController.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

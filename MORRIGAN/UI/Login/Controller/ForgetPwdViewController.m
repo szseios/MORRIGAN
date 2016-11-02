@@ -28,7 +28,6 @@
 
 @interface ForgetPwdViewController () <UIAlertViewDelegate>
 {
-    UIScrollView *_rootScroolView;
     UITextField *_phoneNumbrInputView;
     UITextField *_authCodeInputView;
     UIButton *_getAuthCodeButton;
@@ -50,8 +49,7 @@
     
     // 初始化视图
     [self initView];
-    
-    [self addNotification];
+
 }
 
 
@@ -80,11 +78,11 @@
     UIView *rootView = [[UIView alloc] initWithFrame:CGRectMake(0, 0, kScreenWidth, kScreenHeight)];
     rootView.backgroundColor = [Utils stringTOColor:kColor_6911a5];
     [self.view addSubview:rootView];
-    _rootScroolView = [[UIScrollView alloc] initWithFrame:CGRectMake(0, 0, kScreenWidth, kScreenHeight)];
-    [_rootScroolView addSubview:rootView];
-    _rootScroolView.contentSize = CGSizeMake(kScreenWidth, kScreenHeight);
-    _rootScroolView.scrollEnabled = NO;
-    [self.view addSubview:_rootScroolView];
+    self.rootScroolView = [[UIScrollView alloc] initWithFrame:CGRectMake(0, 0, kScreenWidth, kScreenHeight)];
+    [self.rootScroolView addSubview:rootView];
+    self.rootScroolView.contentSize = CGSizeMake(kScreenWidth, kScreenHeight);
+    self.rootScroolView.scrollEnabled = NO;
+    [self.view addSubview:self.rootScroolView];
     
     
     // 上半部分视图
@@ -543,55 +541,6 @@
     [aiView startAnimating];
 }
 
-
-#pragma mark - 键盘弹出／隐藏
-
-//当键盘出现或改变时调用
-- (void)keyboardWillShow:(NSNotification *)aNotification
-{
-    //获取键盘的高度
-    NSDictionary *userInfo = [aNotification userInfo];
-    NSValue *aValue = [userInfo objectForKey:UIKeyboardFrameEndUserInfoKey];
-    CGRect keyboardRect = [aValue CGRectValue];
-    int height = keyboardRect.size.height;
-    CGRect f = _rootScroolView.frame;
-    f.size.height = kScreenHeight - height;
-    _rootScroolView.frame = f;
-    _rootScroolView.scrollEnabled = YES;
-    
-}
-
-//当键退出时调用
-- (void)keyboardWillHide:(NSNotification *)aNotification
-{
-    CGRect f = _rootScroolView.frame;
-    f.size.height = kScreenHeight;
-    _rootScroolView.frame = f;
-    _rootScroolView.scrollEnabled = NO;
-}
-
-
-- (void)addNotification
-{
-    //增加监听，当键盘出现或改变时收出消息
-    [[NSNotificationCenter defaultCenter] addObserver:self
-                                             selector:@selector(keyboardWillShow:)
-                                                 name:UIKeyboardWillShowNotification
-                                               object:nil];
-    
-    //增加监听，当键退出时收出消息
-    [[NSNotificationCenter defaultCenter] addObserver:self
-                                             selector:@selector(keyboardWillHide:)
-                                                 name:UIKeyboardWillHideNotification
-                                               object:nil];
-}
-
-
--(void)closeKeyboard{
-    for (UIWindow *win in [UIApplication sharedApplication].windows) {
-        [win endEditing:YES];
-    }
-}
 
 
 - (void)didReceiveMemoryWarning {
