@@ -10,6 +10,7 @@
 #import "BtSettingInfo.h"
 
 static BluetoothManager *manager;
+static NSString *ServiceUUID = @"56FF";
 static NSString *SendCharacteristicUUID = @"000033F1-0000-1000-8000-00805F9B34FB";
 static NSString *ReceiveCharacteristicUUID = @"000033F2-0000-1000-8000-00805F9B34FB";
 
@@ -22,6 +23,9 @@ static NSString *ReceiveCharacteristicUUID = @"000033F2-0000-1000-8000-00805F9B3
 @property (nonatomic,strong)CBCharacteristic *sendCharacteristic;    // 写特征
 @property (nonatomic,strong)CBCharacteristic *receiveCharacteristic; // 读特征
 
+@property (nonatomic,strong)NSMutableArray *operationQueue;          //operation队列
+@property (nonatomic,strong)BluetoothOperation *currentOperation;    //正在操作的operation
+@property (nonatomic,assign)BOOL writing;                            //是否正在写数据
 
 
 @end
@@ -41,6 +45,7 @@ static NSString *ReceiveCharacteristicUUID = @"000033F2-0000-1000-8000-00805F9B3
     self = [super init];
     if (self) {
         _baby = [BabyBluetooth shareBabyBluetooth];
+        _operationQueue = [[NSMutableArray alloc] init];
         [self babyDelegate];
         //[self start];
         
@@ -57,46 +62,20 @@ static NSString *ReceiveCharacteristicUUID = @"000033F2-0000-1000-8000-00805F9B3
         }
     }];
     
-    //设置扫描到设备的委托
+    //扫描到设备的委托
     [_baby setBlockOnDiscoverToPeripherals:^(CBCentralManager *central, CBPeripheral *peripheral, NSDictionary *advertisementData, NSNumber *RSSI) {
         NSLog(@"搜索到了设备:%@",peripheral.name);
-        
-        // 测试连接设备
-        if([peripheral.name isEqualToString:@"Morrigan"] && weakSelf.willConnectPeripheral  == nil) {
-            weakSelf.willConnectPeripheral = peripheral;
-            UIAlertView *alert = [[UIAlertView alloc] initWithTitle:@"已搜索到设备" message:nil delegate:nil cancelButtonTitle:nil otherButtonTitles:@"确定", nil];
-            [alert show];
-            [weakSelf stop];
-        }
-        
-        
     }];
     
-    //设置设备连接成功的委托
+    //设备连接成功的委托
     [_baby setBlockOnConnected:^(CBCentralManager *central, CBPeripheral *peripheral) {
         NSLog(@"设备：%@连接成功",peripheral.name);
         _curConnectPeripheral = peripheral;
-        UIAlertView *alert = [[UIAlertView alloc] initWithTitle:@"连接成功" message:nil delegate:nil cancelButtonTitle:nil otherButtonTitles:@"确定", nil];
-        [alert show];
+        _isConnected = YES;
     }];
     
     
-    //设置设备连接失败的委托
-    [_baby setBlockOnFailToConnect:^(CBCentralManager *central, CBPeripheral *peripheral, NSError *error) {
-        NSLog(@"设备：%@连接失败",peripheral.name);
-        
-    }];
-    
-    //设置设备断开连接的委托
-    [_baby setBlockOnDisconnect:^(CBCentralManager *central, CBPeripheral *peripheral, NSError *error) {
-        NSLog(@"设备：%@断开连接",peripheral.name);
-        weakSelf.curConnectPeripheral = nil;
-        weakSelf.willConnectPeripheral = nil;
-        UIAlertView *alert = [[UIAlertView alloc] initWithTitle:@"已断开连接" message:nil delegate:nil cancelButtonTitle:nil otherButtonTitles:@"确定", nil];
-        [alert show];
-    }];
-    
-    //设置发现设备的Services的委托
+    //发现设备的Services的委托
     [_baby setBlockOnDiscoverServices:^(CBPeripheral *peripheral, NSError *error) {
         for (CBService *service in peripheral.services) {
             NSLog(@"搜索到服务:%@",service.UUID.UUIDString);
@@ -111,19 +90,22 @@ static NSString *ReceiveCharacteristicUUID = @"000033F2-0000-1000-8000-00805F9B3
     }];
     
     __block BabyBluetooth *weakBaby = _baby;
-    //设置发现设service的Characteristics的委托
+    //发现设service的Characteristics的委托
     [_baby setBlockOnDiscoverCharacteristics:^(CBPeripheral *peripheral, CBService *service, NSError *error) {
-        NSLog(@"===service name:%@",service.UUID);
-        for (CBCharacteristic *c in service.characteristics) {
-            NSLog(@"charateristic name is :%@",c.UUID);
-            if ([c.UUID.UUIDString isEqualToString:SendCharacteristicUUID]) {
-                NSLog(@"发现写特征 :%@",c.UUID);
-                weakSelf.sendCharacteristic = c;
-            } else if ([c.UUID.UUIDString isEqualToString:ReceiveCharacteristicUUID]) {
-                NSLog(@"发现读特征 :%@",c.UUID);
-                weakSelf.receiveCharacteristic = c;
+        NSLog(@"发现设service的Characteristics service name:%@",service.UUID);
+        //判断服务的UUID是否正确
+        if ([service.UUID.UUIDString isEqualToString:ServiceUUID]) {
+            for (CBCharacteristic *c in service.characteristics) {
+                if ([c.UUID.UUIDString isEqualToString:SendCharacteristicUUID]) {
+                    NSLog(@"发现写特征 :%@",c.UUID);
+                    weakSelf.sendCharacteristic = c;
+                } else if ([c.UUID.UUIDString isEqualToString:ReceiveCharacteristicUUID]) {
+                    NSLog(@"发现读特征 :%@",c.UUID);
+                    weakSelf.receiveCharacteristic = c;
+                }
             }
         }
+        
         
         if (weakSelf.sendCharacteristic && weakSelf.receiveCharacteristic) {
             [weakBaby notify:weakSelf.curConnectPeripheral characteristic:weakSelf.receiveCharacteristic block:^(CBPeripheral *peripheral, CBCharacteristic *characteristics, NSError *error) {
@@ -142,6 +124,12 @@ static NSString *ReceiveCharacteristicUUID = @"000033F2-0000-1000-8000-00805F9B3
                     NSString *answerCode = [receiveDataHexString substringWithRange:NSMakeRange(4, 2)];
                     if([answerCode isEqualToString:@"ee"]) {
                         // @"ee"是模块给客户端的应答，不处理
+                        [weakSelf.operationQueue removeObject:weakSelf.currentOperation];
+                        weakSelf.currentOperation = nil;
+                        if (weakSelf.operationQueue.count > 0) {
+                            weakSelf.currentOperation = weakSelf.operationQueue[0];
+                            [weakSelf writeValueByOperation:weakSelf.currentOperation];
+                        }
                     } else {
                         [weakSelf writeValue:[[BtSettingInfo share] getResultDataOfAnswer:answerCode]];
                     }
@@ -168,7 +156,7 @@ static NSString *ReceiveCharacteristicUUID = @"000033F2-0000-1000-8000-00805F9B3
         
     }];
     
-    //设置写数据成功的block
+    //写数据成功的block
     [_baby setBlockOnDidWriteValueForCharacteristic:^(CBCharacteristic *characteristic, NSError *error) {
         if (!error) {
             NSLog(@"发送成功：%@", characteristic.value);
@@ -177,33 +165,20 @@ static NSString *ReceiveCharacteristicUUID = @"000033F2-0000-1000-8000-00805F9B3
         }
     }];
     
-    //设置查找设备的过滤器
-    [_baby setFilterOnDiscoverPeripherals:^BOOL(NSString *peripheralName, NSDictionary *advertisementData, NSNumber *RSSI) {
-        //设置查找规则是名称大于0 ， the search rule is peripheral.name length > 0
-        if (peripheralName.length >0) {
-            return YES;
-        }
-        return NO;
-    }];
-    
-    //设置读取characteristics的委托
+    //读取characteristics的委托
     [_baby setBlockOnReadValueForCharacteristic:^(CBPeripheral *peripheral, CBCharacteristic *characteristics, NSError *error) {
         NSLog(@"characteristic name:%@ value is:%@",characteristics.UUID,characteristics.value);
     }];
     
-    //设置发现characteristics的descriptors的委托
+    //发现characteristics的descriptors的委托
     [_baby setBlockOnDiscoverDescriptorsForCharacteristic:^(CBPeripheral *peripheral, CBCharacteristic *characteristic, NSError *error) {
         NSLog(@"===characteristic name:%@",characteristic.service.UUID);
         for (CBDescriptor *d in characteristic.descriptors) {
             NSLog(@"CBDescriptor name is :%@",d.UUID);
         }
     }];
-    //设置读取Descriptor的委托
-    [_baby setBlockOnReadValueForDescriptors:^(CBPeripheral *peripheral, CBDescriptor *descriptor, NSError *error) {
-        NSLog(@"Descriptor name:%@ value is:%@",descriptor.characteristic.UUID, descriptor.value);
-    }];
     
-    //设置查找设备的过滤器
+    //查找设备的过滤器
     [_baby setFilterOnDiscoverPeripherals:^BOOL(NSString *peripheralName, NSDictionary *advertisementData, NSNumber *RSSI) {
         //最常用的场景是查找某一个前缀开头的设备
         if ([peripheralName hasPrefix:@"Morrigan"] ) {
@@ -212,10 +187,30 @@ static NSString *ReceiveCharacteristicUUID = @"000033F2-0000-1000-8000-00805F9B3
         return NO;
     }];
     
+    //设备连接失败的委托
+    [_baby setBlockOnFailToConnect:^(CBCentralManager *central, CBPeripheral *peripheral, NSError *error) {
+        NSLog(@"设备：%@连接失败",peripheral.name);
+        _isConnected = NO;
+        
+    }];
+    
+    //设备断开连接的委托
+    [_baby setBlockOnDisconnect:^(CBCentralManager *central, CBPeripheral *peripheral, NSError *error) {
+        NSLog(@"设备：%@断开连接",peripheral.name);
+        weakSelf.currentOperation = nil;
+        weakSelf.curConnectPeripheral = nil;
+        weakSelf.isConnected = NO;
+        weakSelf.writing = NO;
+    }];
+    
     
     [_baby setBlockOnCancelAllPeripheralsConnectionBlock:^(CBCentralManager *centralManager) {
         NSLog(@"setBlockOnCancelAllPeripheralsConnectionBlock");
         NSLog(@"成功取消所有外设连接");
+        weakSelf.currentOperation = nil;
+        weakSelf.curConnectPeripheral = nil;
+        weakSelf.isConnected = NO;
+        weakSelf.writing = NO;
     }];
     
     [_baby setBlockOnCancelScanBlock:^(CBCentralManager *centralManager) {
@@ -254,7 +249,7 @@ static NSString *ReceiveCharacteristicUUID = @"000033F2-0000-1000-8000-00805F9B3
 }
 
 -(void)connectingBlueTooth:(CBPeripheral *)peripheral {
-    _baby.having(peripheral).and.then.connectToPeripherals().discoverServices().discoverCharacteristics().readValueForCharacteristic().discoverDescriptorsForCharacteristic().readValueForDescriptors().begin();
+    _baby.having(peripheral).and.then.connectToPeripherals().discoverServices().discoverCharacteristics().begin();
 }
 
 -(void)unConnectingBlueTooth {
@@ -286,24 +281,25 @@ static NSString *ReceiveCharacteristicUUID = @"000033F2-0000-1000-8000-00805F9B3
 
 
 #pragma mark - 往连接的设备写数据
+
+- (void)writeValueByOperation:(BluetoothOperation *)operation {
+    _currentOperation = operation;
+    [_operationQueue addObject:operation];
+    if (!_writing) {
+        [self writeValue:[operation getData]];
+    }
+}
+
 - (void)writeValue:(NSData *)data {
-    
-    if(self.curConnectPeripheral == nil || self.sendCharacteristic == nil){
+    _writing = YES;
+    if(self.curConnectPeripheral == nil || self.sendCharacteristic == nil || !data){
         NSLog(@"curConnectPeripheral 或 sendCharacteristic 为空，取消发送！");
         return;
     }
-    
-    // 如果大于20子节，分次发送
-    for (int i = 0; i < data.length; i+=20) {
-        
-        NSData *sendData = [data subdataWithRange:NSMakeRange(i, data.length - i > 20 ? 20: data.length - i)];
-        
-        NSLog(@"准备发送：%@", sendData);
-        [self.curConnectPeripheral writeValue:sendData
+    NSLog(@"准备发送：%@", data);
+    [self.curConnectPeripheral writeValue:data
                         forCharacteristic:self.sendCharacteristic
                                      type:CBCharacteristicWriteWithResponse];
-        
-    }
 }
 
 
