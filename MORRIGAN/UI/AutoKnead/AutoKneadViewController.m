@@ -61,8 +61,8 @@
         backButtonW = 35.0;
     }
     UIButton *backButton = [[UIButton alloc]initWithFrame:CGRectMake(15, 26, backButtonW, backButtonW)];
-    [backButton setImage:[UIImage imageNamed:@"ic_backButton"] forState:UIControlStateNormal];
-    [backButton setImage:[UIImage imageNamed:@"ic_backButton"] forState:UIControlStateHighlighted];
+    [backButton setImage:[UIImage imageNamed:@"back"] forState:UIControlStateNormal];
+    [backButton setImage:[UIImage imageNamed:@"back"] forState:UIControlStateHighlighted];
     [backButton addTarget:self action:@selector(backButtonHandleInAutokneed) forControlEvents:UIControlEventTouchUpInside];
     [self.view addSubview:backButton];
     
