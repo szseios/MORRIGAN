@@ -13,7 +13,9 @@
 
 static MusicManager *manager = nil;
 
-@interface MusicManager ()
+@interface MusicManager () {
+    NSTimer *_timer;
+}
 
 @property (nonatomic,strong)AVAudioPlayer *player;
 
@@ -63,10 +65,12 @@ static MusicManager *manager = nil;
             _player = nil;
         }
         _player = [[AVAudioPlayer alloc] initWithContentsOfURL:url error:nil];
+        _player.meteringEnabled = YES;
         [[AVAudioSession sharedInstance] setActive:YES error:nil];
         [[AVAudioSession sharedInstance] setCategory:AVAudioSessionCategoryPlayback error:nil];
         [_player play];
     });
+    [self startGetPeakPower];
 }
 
 - (NSArray *)musics {
@@ -83,10 +87,47 @@ static MusicManager *manager = nil;
 
 - (void)play {
     [_player play];
+    [self startGetPeakPower];
 }
 
 - (void)pause {
     [_player pause];
+    [self pauseGetPeakPower];
+    
+    BluetoothOperation *operation = [[BluetoothOperation alloc] init];
+    [operation setValue:@"01" index:2];
+    [operation setValue:@"00" index:3];
+    [operation setValue:@"03" index:4];
+    [[BluetoothManager share] writeValueByOperation:operation];
+}
+
+- (void)startGetPeakPower {
+    if (_timer) {
+        [_timer invalidate];
+        _timer = nil;
+    }
+    _timer = [NSTimer scheduledTimerWithTimeInterval:3 target:self selector:@selector(getPeakPower) userInfo:nil repeats:YES];
+    [_timer fire];
+}
+
+- (void)pauseGetPeakPower {
+    if (_timer) {
+        [_timer invalidate];
+        _timer = nil;
+    }
+}
+
+- (void)getPeakPower {
+    [_player updateMeters];
+    int16_t peakPower = [_player peakPowerForChannel:0] + 160;
+    NSLog(@"getPeakPower : %@   , chanels : %@",@(peakPower).stringValue,@(peakPower).stringValue);
+    
+    BluetoothOperation *operation = [[BluetoothOperation alloc] init];
+    [operation setValue:@"01" index:2];
+    [operation setValue:@"01" index:3];
+    [operation setValue:@"03" index:4];
+    [operation setNumber:peakPower index:12];
+    [[BluetoothManager share] writeValueByOperation:operation];
 }
 
 - (NSTimeInterval)currentTime {

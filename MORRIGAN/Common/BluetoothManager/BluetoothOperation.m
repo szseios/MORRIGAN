@@ -8,6 +8,7 @@
 
 #import "BluetoothOperation.h"
 
+static NSInteger staticTag = 0;
 static NSString * const BluetoothHead0 = @"AA";
 static NSString * const BluetoothHead1 = @"55";
 
@@ -18,6 +19,7 @@ static NSString * const BluetoothHead1 = @"55";
 {
     self = [super init];
     if (self) {
+        _tag = staticTag ++;
         _datas = [[NSMutableArray alloc] initWithCapacity:20];
         _datas[0] = BluetoothHead0;
         _datas[1] = BluetoothHead1;
@@ -26,6 +28,10 @@ static NSString * const BluetoothHead1 = @"55";
         }
     }
     return self;
+}
+
+- (void)setNumber:(int16_t)number index:(NSInteger)index {
+    _datas[index] = [Utils intToHex:number];
 }
 
 - (void)setValue:(NSString *)value index:(NSInteger)index {

@@ -28,8 +28,8 @@
                 </subviews>
             </tableViewCellContentView>
             <connections>
-                <outlet property="nameView" destination="wS6-Wy-Bwg" id="ror-EV-zMx"/>
-                <outlet property="uuidView" destination="1bQ-hp-Lpv" id="Jt7-kx-fFd"/>
+                <outlet property="nameView" destination="1bQ-hp-Lpv" id="1p2-3n-gzq"/>
+                <outlet property="numberView" destination="wS6-Wy-Bwg" id="XyS-pm-nZB"/>
             </connections>
             <point key="canvasLocation" x="2.5" y="47.5"/>
         </tableViewCell>

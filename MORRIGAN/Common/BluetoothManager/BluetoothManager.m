@@ -10,9 +10,9 @@
 #import "BtSettingInfo.h"
 
 static BluetoothManager *manager;
-static NSString *ServiceUUID = @"56FF";
-static NSString *SendCharacteristicUUID = @"000033F1-0000-1000-8000-00805F9B34FB";
-static NSString *ReceiveCharacteristicUUID = @"000033F2-0000-1000-8000-00805F9B34FB";
+static NSString * const ServiceUUID = @"56FF";
+static NSString * const SendCharacteristicUUID = @"000033F1-0000-1000-8000-00805F9B34FB";
+static NSString * const ReceiveCharacteristicUUID = @"000033F2-0000-1000-8000-00805F9B34FB";
 
 
 
@@ -113,7 +113,7 @@ static NSString *ReceiveCharacteristicUUID = @"000033F2-0000-1000-8000-00805F9B3
         if (weakSelf.sendCharacteristic && weakSelf.receiveCharacteristic) {
             [weakBaby notify:weakSelf.curConnectPeripheral characteristic:weakSelf.receiveCharacteristic block:^(CBPeripheral *peripheral, CBCharacteristic *characteristics, NSError *error) {
                 NSLog(@"receive characteristics : %@",characteristics);
-                
+                weakSelf.writing = NO;
                 // 本次接收的数据
                 NSData *receiveData = [characteristics value];
                 NSLog(@"完整接收：%@ [长度：%ld]", receiveData, receiveData.length);
@@ -121,36 +121,36 @@ static NSString *ReceiveCharacteristicUUID = @"000033F2-0000-1000-8000-00805F9B3
                
                 // 判断接收的数据是否有效
                 BOOL isValid = [weakSelf isValidOfReceiveData:receiveDataHexString];
+                // 指令是否成功
+                BOOL success = NO;
+                NSError *responseError;
+                
                 if(isValid) {
                     NSLog(@"数据有效");
                     // 应答处理(不给模块应答，模块会重复发5次数据)
                     NSString *answerCode = [receiveDataHexString substringWithRange:NSMakeRange(4, 2)];
+
                     if([answerCode isEqualToString:@"ee"]) {
                         // @"ee"是模块给客户端的应答，不处理
-                        [weakSelf.operationQueue removeObject:weakSelf.currentOperation];
-                        weakSelf.currentOperation = nil;
-                        if (weakSelf.operationQueue.count > 0) {
-                            weakSelf.currentOperation = weakSelf.operationQueue[0];
-                            [weakSelf writeValueByOperation:weakSelf.currentOperation];
-                        }
+                        success = YES;
                     } else {
                         [weakSelf writeValue:[[BtSettingInfo share] getResultDataOfAnswer:answerCode]];
                     }
-                   
                     // 有效数据获取返回给Controller处理
-                    
-                    
-                    
-                    
-                    
-                    
-                    
-                    
-                    
-                    
-                    
                 } else {
                     NSLog(@"数据无效");
+                    responseError = [[NSError alloc] initWithDomain:@"" code:-888 userInfo:@{@"message":@"蓝牙设备返回数据无效"}];
+                }
+                
+                if (weakSelf.currentOperation.response) {
+                    weakSelf.currentOperation.response(receiveDataHexString,weakSelf.currentOperation.tag,responseError,success);
+                }
+                
+                [weakSelf.operationQueue removeObject:weakSelf.currentOperation];
+                weakSelf.currentOperation = nil;
+                if (weakSelf.operationQueue.count > 0) {
+                    weakSelf.currentOperation = weakSelf.operationQueue[0];
+                    [weakSelf writeValueByOperation:weakSelf.currentOperation];
                 }
 
             }];
@@ -164,7 +164,7 @@ static NSString *ReceiveCharacteristicUUID = @"000033F2-0000-1000-8000-00805F9B3
         if (!error) {
             NSLog(@"发送成功：%@", characteristic.value);
         } else {
-            NSLog(@"发送失败：%@", characteristic.value);
+            NSLog(@"发送失败：%@   error : %@", characteristic.value,error);
         }
     }];
     

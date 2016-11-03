@@ -25,6 +25,10 @@
 
 - (void)stop;
 
+- (void)connectingBlueTooth:(CBPeripheral *)peripheral;
+
+- (void)writeValueByOperation:(BluetoothOperation *)operation;
+
 - (void)scanTest;
 - (void)connectTest;
 - (void)unConnectTest;

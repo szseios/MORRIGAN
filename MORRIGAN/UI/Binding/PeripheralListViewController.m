@@ -18,6 +18,7 @@
 @property (weak, nonatomic) IBOutlet UITableView *tableView;
 @property (weak, nonatomic) IBOutlet UILabel *connectLabel;
 @property (weak, nonatomic) IBOutlet UILabel *chooseLabel;
+@property (weak, nonatomic) IBOutlet UIView *squareView;
 
 @end
 
@@ -36,6 +37,13 @@
     _tableView.separatorStyle = UITableViewCellSeparatorStyleNone;
     [_tableView registerNib:[UINib nibWithNibName:@"SearchPeripheralTableViewCell" bundle:nil]
      forCellReuseIdentifier:Identifier];
+    
+    _squareView.layer.cornerRadius = 5;
+    _squareView.layer.borderColor = [UIColor colorWithRed:139 / 255.0
+                                                    green:83 / 255.0
+                                                     blue:221 / 255.0
+                                                    alpha:0.8].CGColor;
+    _squareView.layer.borderWidth = 1;
 }
 
 - (void)didReceiveMemoryWarning {
@@ -52,15 +60,21 @@
 }
 
 - (NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section {
-//    return [BluetoothManager share].scannedPeripherals.count;
-    return 3;
+    return [BluetoothManager share].scannedPeripherals.count;
 }
 
 - (UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath {
     SearchPeripheralTableViewCell *cell = [tableView dequeueReusableCellWithIdentifier:Identifier forIndexPath:indexPath];
-    cell.nameLabel.text = [NSString stringWithFormat:@"设备%@",@(indexPath.row).stringValue];
-    cell.uuidLabel.text = @"Morrigan";
+    cell.selectionStyle = UITableViewCellSelectionStyleNone;
+    CBPeripheral *peripheral = [BluetoothManager share].scannedPeripherals[indexPath.row];
+    cell.numberLabel.text = [NSString stringWithFormat:@"设备%@",@(indexPath.row + 1).stringValue];
+    cell.nameLabel.text = peripheral.name;
     return cell;
+}
+
+- (void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath {
+    CBPeripheral *peripheral = [BluetoothManager share].scannedPeripherals[indexPath.row];
+    [[BluetoothManager share] connectingBlueTooth:peripheral];
 }
 
 

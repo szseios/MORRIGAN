@@ -9,7 +9,7 @@
 #import <Foundation/Foundation.h>
 
 
-typedef void(^BluetoothOperationResponse)(NSString *response,long tag,NSError *error);
+typedef void(^BluetoothOperationResponse)(NSString *response,long tag,NSError *error,BOOL success);
 
 
 @interface BluetoothOperation : NSObject
@@ -17,8 +17,10 @@ typedef void(^BluetoothOperationResponse)(NSString *response,long tag,NSError *e
 @property (nonatomic,strong) NSMutableArray *datas;
 @property (nonatomic,assign) NSInteger tag;
 
+@property (nonatomic,copy) BluetoothOperationResponse response;
 
 
+- (void)setNumber:(int16_t)number index:(NSInteger)index;
 - (void)setValue:(NSString *)value index:(NSInteger)index;
 
 - (NSData *)getData;

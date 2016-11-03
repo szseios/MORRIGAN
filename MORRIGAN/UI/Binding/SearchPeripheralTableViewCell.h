@@ -10,10 +10,10 @@
 
 @interface SearchPeripheralTableViewCell : UITableViewCell
 
+@property (weak, nonatomic) IBOutlet UIView *numberView;
 @property (weak, nonatomic) IBOutlet UIView *nameView;
-@property (weak, nonatomic) IBOutlet UIView *uuidView;
 
+@property (nonatomic,strong) UILabel *numberLabel;
 @property (nonatomic,strong) UILabel *nameLabel;
-@property (nonatomic,strong) UILabel *uuidLabel;
 
 @end
