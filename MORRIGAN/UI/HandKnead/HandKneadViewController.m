@@ -50,8 +50,8 @@
     
     // 返回按钮
     UIButton *backButton = [[UIButton alloc]initWithFrame:CGRectMake(15, 26, 42, 40)];
-    [backButton setImage:[UIImage imageNamed:@"ic_backButton"] forState:UIControlStateNormal];
-    [backButton setImage:[UIImage imageNamed:@"ic_backButton"] forState:UIControlStateHighlighted];
+    [backButton setImage:[UIImage imageNamed:@"back"] forState:UIControlStateNormal];
+    [backButton setImage:[UIImage imageNamed:@"back"] forState:UIControlStateHighlighted];
     [backButton addTarget:self action:@selector(backButtonHandleInHandkneed) forControlEvents:UIControlEventTouchUpInside];
     [self.view addSubview:backButton];
     

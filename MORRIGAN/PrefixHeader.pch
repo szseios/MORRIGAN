@@ -20,5 +20,7 @@
 #import "NMOANetWorking.h"
 #import "MBProgressHUD.h"
 #import "UIImageView+WebCache.h"
+#import "BluetoothManager.h"
+#import "BluetoothOperation.h"
 #endif
 

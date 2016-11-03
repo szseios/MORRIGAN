@@ -9,11 +9,12 @@
 //
 
 #import <UIKit/UIKit.h>
+#import "LoginBaseController.h"
 
 #define kUserDefaultIdKey             @"kUserDefaultIdKey"        // 保存用户名key
 #define kUserDefaultPasswordKey       @"kUserDefaultPasswordKey"  // 保存密码key
 
 
-@interface LoginViewController : UIViewController
+@interface LoginViewController : LoginBaseController
 
 @end

@@ -16,8 +16,14 @@
 
 @property (nonatomic,assign)BOOL isConnected;
 
+@property (nonatomic,strong)NSMutableArray *scannedPeripherals;
+
 
 + (BluetoothManager *)share;
+
+- (void)start;
+
+- (void)stop;
 
 - (void)scanTest;
 - (void)connectTest;

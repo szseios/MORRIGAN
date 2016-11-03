@@ -46,8 +46,8 @@ static NSString *ReceiveCharacteristicUUID = @"000033F2-0000-1000-8000-00805F9B3
     if (self) {
         _baby = [BabyBluetooth shareBabyBluetooth];
         _operationQueue = [[NSMutableArray alloc] init];
+        _scannedPeripherals = [[NSMutableArray alloc] init];
         [self babyDelegate];
-        //[self start];
         
     }
     return self;
@@ -65,6 +65,9 @@ static NSString *ReceiveCharacteristicUUID = @"000033F2-0000-1000-8000-00805F9B3
     //扫描到设备的委托
     [_baby setBlockOnDiscoverToPeripherals:^(CBCentralManager *central, CBPeripheral *peripheral, NSDictionary *advertisementData, NSNumber *RSSI) {
         NSLog(@"搜索到了设备:%@",peripheral.name);
+        if (![weakSelf.scannedPeripherals containsObject:peripheral]) {
+            [weakSelf.scannedPeripherals addObject:peripheral];
+        }
     }];
     
     //设备连接成功的委托
@@ -242,6 +245,7 @@ static NSString *ReceiveCharacteristicUUID = @"000033F2-0000-1000-8000-00805F9B3
 
 - (void)start {
     _baby.scanForPeripherals().begin();
+    [_scannedPeripherals removeAllObjects];
 }
 
 - (void)stop {

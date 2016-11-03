@@ -203,10 +203,14 @@
     if ([[MusicManager share] isPlaying]) {
         [[MusicManager share] pause];
         [_pcseView stop];
+        [_startButton setBackgroundImage:[UIImage imageNamed:@"music_play"]
+                                forState:UIControlStateNormal];
     } else {
         [[MusicManager share] play];
         [self startTiming];
         [_pcseView start];
+        [_startButton setBackgroundImage:[UIImage imageNamed:@"music_stop"]
+                                forState:UIControlStateNormal];
     }
 }
 
