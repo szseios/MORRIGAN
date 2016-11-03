@@ -10,14 +10,14 @@
 
 @protocol MusicManagerDelegate <NSObject>
 
-//- (void)
+- (void)audioPlayerDidFinish;
 
 @end
 
 
 @interface MusicManager : NSObject
 
-@property (nonatomic,assign)id delegate;
+@property (nonatomic,assign)id<MusicManagerDelegate> delegate;
 @property (nonatomic,strong)NSMutableArray *musics;
 
 + (MusicManager *)share;

@@ -136,7 +136,7 @@ static MusicManager *manager = nil;
 
 - (NSString *)currentTimeString {
     NSInteger duration = (NSInteger)_player.currentTime;
-    NSString *string = [NSString stringWithFormat:@"%02ld:%02ld",duration / 60,duration % 60];
+    NSString *string = [NSString stringWithFormat:@"%02ld:%02ld",(long)duration / 60,(long)duration % 60];
     return string;
 }
 
@@ -144,6 +144,9 @@ static MusicManager *manager = nil;
 // 播放完成时调用   只有当播放结束时才会调用，循环播放时不会调
 - (void)audioPlayerDidFinishPlaying:(AVAudioPlayer *)player successfully:(BOOL)flag {
     NSLog(@"audioPlayerDidFinishPlaying");
+    if (_delegate && [_delegate respondsToSelector:@selector(audioPlayerDidFinish)]) {
+        [_delegate audioPlayerDidFinish];
+    }
 }
 
 /* if an error occurs while decoding it will be reported to the delegate. */
