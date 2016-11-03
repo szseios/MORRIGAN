@@ -9,6 +9,7 @@
 #import "AutoKneadViewController.h"
 #import "FuntionButton.h"
 #import "Utils.h"
+#import "BluetoothManager.h"
 
 #define kTagOfDefault       0        // 默认按钮tag
 #define kTagOfSoft          1000     // 轻柔按钮tag
@@ -18,12 +19,15 @@
 #define kTagOfFeel          1004     // 动感按钮tag
 
 
+#define kButtonStartTag     1005
+#define kButtonStopTag      1006
 
 
 @interface AutoKneadViewController ()
 {
     NSArray *_topFiveButtonArray;
     
+    UIButton *_buttonStartStop;
     FuntionButton *_dragButton;
     FuntionButton *_tempButton;
 
@@ -190,9 +194,11 @@
         startBtnY = button5.frame.origin.y + 20.0;
     }
     UIButton *startBtn = [[UIButton alloc] initWithFrame:CGRectMake((kScreenWidth - startBtnW)/2, startBtnY, startBtnW, startBtnW)];
-    [startBtn addTarget:self action:@selector(startBtnHandler) forControlEvents:UIControlEventTouchUpInside];
+    [startBtn addTarget:self action:@selector(startBtnHandler:) forControlEvents:UIControlEventTouchUpInside];
+    startBtn.tag = kButtonStopTag;
     [startBtn setImage:[UIImage imageNamed:@"START"] forState:UIControlStateNormal];
     [self.view addSubview:startBtn];
+    _buttonStartStop = startBtn;
     
     // 向上拖动 任意模式按钮
     CGFloat label1H = 18;
@@ -228,6 +234,7 @@
     UIPanGestureRecognizer *panGestureRecognizer1 = [[UIPanGestureRecognizer alloc] initWithTarget:self action:@selector(dragReplyButton:)];
     [funButton1 addGestureRecognizer:panGestureRecognizer1];
     funButton1.tag = kTagOfSoft;
+    funButton1.funCodeString = @"01";
     [self.view addSubview:funButton1];
     UILabel *labelLight = [[UILabel alloc] initWithFrame:CGRectMake(buttonX, buttonY + buttonH + 10, buttonW, 20)];
     labelLight.text = @"轻柔";
@@ -243,6 +250,7 @@
     UIPanGestureRecognizer *panGestureRecognizer2 = [[UIPanGestureRecognizer alloc] initWithTarget:self action:@selector(dragReplyButton:)];
     [funButton2 addGestureRecognizer:panGestureRecognizer2];
     funButton2.tag = kTagOfWater;
+    funButton2.funCodeString = @"02";
     [self.view addSubview:funButton2];
     UILabel *labelWater = [[UILabel alloc] initWithFrame:CGRectMake(buttonX, buttonY + buttonH + 10, buttonW, 20)];
     labelWater.text = @"水波";
@@ -258,6 +266,7 @@
     UIPanGestureRecognizer *panGestureRecognizer3 = [[UIPanGestureRecognizer alloc] initWithTarget:self action:@selector(dragReplyButton:)];
     [funButton3 addGestureRecognizer:panGestureRecognizer3];
     funButton3.tag = kTagOfMicroPress;
+    funButton3.funCodeString = @"03";
     [self.view addSubview:funButton3];
     UILabel *labelLittle = [[UILabel alloc] initWithFrame:CGRectMake(buttonX, buttonY + buttonH + 10, buttonW, 20)];
     labelLittle.text = @"微按";
@@ -278,6 +287,7 @@
     UIPanGestureRecognizer *panGestureRecognizer4 = [[UIPanGestureRecognizer alloc] initWithTarget:self action:@selector(dragReplyButton:)];
     [funButton4 addGestureRecognizer:panGestureRecognizer4];
     funButton4.tag = kTagOfStrongVibr;
+    funButton4.funCodeString = @"04";
     [self.view addSubview:funButton4];
     UILabel *labelStrong = [[UILabel alloc] initWithFrame:CGRectMake(buttonX, buttonY + buttonH + 10, buttonW, 20)];
     labelStrong.text = @"强振";
@@ -293,6 +303,7 @@
     UIPanGestureRecognizer *panGestureRecognizer5 = [[UIPanGestureRecognizer alloc] initWithTarget:self action:@selector(dragReplyButton:)];
     [funButton5 addGestureRecognizer:panGestureRecognizer5];
     funButton5.tag = kTagOfFeel;
+    funButton5.funCodeString = @"05";
     [self.view addSubview:funButton5];
     UILabel *labelFeel = [[UILabel alloc] initWithFrame:CGRectMake(buttonX, buttonY + buttonH + 10, buttonW, 20)];
     labelFeel.text = @"动感";
@@ -317,12 +328,13 @@
         _dragButton.frame = targetButton.frame;
         [_dragButton addGestureRecognizer:recognizer];
         _dragButton.buttonImage = targetButton.buttonImage;
+        _dragButton.funCodeString = targetButton.funCodeString;
         [_dragButton setImage:_dragButton.buttonImage forState:UIControlStateNormal];
         _dragButton.tag = targetButton.tag;
         [targetButton removeGestureRecognizer:recognizer];
         _tempButton = targetButton;
     }
-    
+    NSLog(@"-----%@", _dragButton.funCodeString);
     
     if (recognizer.state == UIGestureRecognizerStateEnded) {
         [_tempButton addGestureRecognizer:recognizer];
@@ -401,6 +413,7 @@
                 
                 // 将顶部被添加的按钮设置tag，代表了一种按摩模式
                 button.tag = _dragButton.tag;
+                button.funCodeString = _dragButton.funCodeString;
             }
             
         }
@@ -437,11 +450,38 @@
     }
 }
 
-- (void)startBtnHandler
+- (void)startBtnHandler:(id)sender
 {
+    BluetoothOperation *operation = [[BluetoothOperation alloc] init];
+    [operation setValue:@"01" index:2];
+    [operation setValue:@"02" index:4];
+    NSInteger index = 7;
     for (FuntionButton *button in _topFiveButtonArray) {
-        NSLog(@"-----当前按摩顺序----：：%ld  %ld", button.arrayIndex, button.tag);
+        NSLog(@"-----当前按摩顺序----：：%ld  %ld  %@", button.arrayIndex, button.tag, button.funCodeString);
+        if(button.funCodeString == nil) {
+            [MBProgressHUD showHUDByContent:@"请添加自动按摩组合" view: self.view];
+            return;
+        }
+        [operation setValue:button.funCodeString index:index];
+        index ++;
     }
+
+    if(_buttonStartStop.tag == kButtonStopTag) {
+        _buttonStartStop.tag = kButtonStartTag;
+        [_buttonStartStop setImage:[UIImage imageNamed:@"STOP"] forState:UIControlStateNormal];
+        [operation setValue:@"01" index:3];
+    } else {
+        _buttonStartStop.tag = kButtonStopTag;
+        [_buttonStartStop setImage:[UIImage imageNamed:@"START"] forState:UIControlStateNormal];
+        [operation setValue:@"00" index:3];
+    }
+
+    
+    operation.response = ^(NSString *response,long tag,NSError *error,BOOL success) {
+        
+    };
+    [[BluetoothManager share] writeValueByOperation:operation];
+    
 }
 
 - (void)backButtonHandleInAutokneed
