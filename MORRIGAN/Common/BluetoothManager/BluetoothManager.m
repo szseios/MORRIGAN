@@ -116,7 +116,7 @@ static NSString * const ReceiveCharacteristicUUID = @"000033F2-0000-1000-8000-00
                 weakSelf.writing = NO;
                 // 本次接收的数据
                 NSData *receiveData = [characteristics value];
-                NSLog(@"完整接收：%@ [长度：%ld]", receiveData, receiveData.length);
+                NSLog(@"完整接收：%@ [长度：%ld]", receiveData, (unsigned long)receiveData.length);
                 NSString *receiveDataHexString = [Utils hexStringForData:receiveData];
                
                 // 判断接收的数据是否有效

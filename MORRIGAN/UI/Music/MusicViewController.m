@@ -13,7 +13,7 @@
 #import "PCSEQVisualizer.h"
 #import "Utils.h"
 
-@interface MusicViewController () <UITableViewDelegate,UITableViewDataSource,UIGestureRecognizerDelegate> {
+@interface MusicViewController () <UITableViewDelegate,UITableViewDataSource,UIGestureRecognizerDelegate,MusicManagerDelegate> {
     PCSEQVisualizer *_pcseView;
     NSTimer *_timer;
     NSIndexPath *_selectedIndexPath;
@@ -41,6 +41,7 @@
     self = [super init];
     if (self) {
         _musics = [NSMutableArray arrayWithArray:[MusicManager share].musics];
+        [MusicManager share].delegate = self;
     }
     return self;
 }
@@ -76,6 +77,9 @@
     imageView.backgroundColor = [UIColor clearColor];
     imageView.userInteractionEnabled = YES;
     [_musicView addSubview:imageView];
+    
+    UIPanGestureRecognizer *panGestureRecognizer = [[UIPanGestureRecognizer alloc] initWithTarget:self action:@selector(dragMusicView:)];
+    [_musicView addGestureRecognizer:panGestureRecognizer];
     
     UITapGestureRecognizer *show = [[UITapGestureRecognizer alloc] initWithTarget:self action:@selector(showMusicView)];
     [imageView addGestureRecognizer:show];
@@ -149,9 +153,6 @@
                                                  alpha:0.2];
     [_pcseView addSubview:shadowView];
     
-//    [_tableView selectRowAtIndexPath:[NSIndexPath indexPathForRow:2 inSection:0]
-//                            animated:YES
-//                      scrollPosition:UITableViewScrollPositionNone];
     
 }
 
@@ -287,6 +288,24 @@
     [_pcseView start];
 }
 
+//音乐播放完成,自动播放下一首音乐
+- (void)audioPlayerDidFinish {
+    if (_selectedIndexPath.row + 1 < _musics.count) {
+        _selectedIndexPath = [NSIndexPath indexPathForRow:_selectedIndexPath.row + 1
+                                                inSection:0];
+        
+        [self playMusicByIndexPath:_selectedIndexPath];
+    }
+}
+
+- (void)dragMusicView:(UIPanGestureRecognizer *)recognizer {
+    CGPoint location = [recognizer locationInView:self.view];
+    NSLog(@"%f",location.y);
+    if (recognizer.state == UIGestureRecognizerStateChanged) {
+        _musicView.y = location.y;
+    }
+}
+
 #pragma mark - MusicView Move
 
 - (void)showMusicView {
@@ -319,6 +338,11 @@
         return YES;
     }
     return NO;
+}
+
+- (void)dealloc
+{
+    [MusicManager share].delegate = nil;
 }
 
 
