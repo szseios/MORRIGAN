@@ -40,14 +40,26 @@
 
 - (void)setUpBarView
 {
-    _barView = [[BasicBarView alloc] initWithFrame:CGRectMake(0, 20, kScreenWidth, 44) withType:superBarTypeLeftItemBackAndRightItemBinding withTitle:@"设定目标"];
+    _barView = [[BasicBarView alloc] initWithFrame:CGRectMake(0, 20, kScreenWidth, 44) withType:superBarTypeLeftItemCancel withTitle:@"设定目标"];
     [self.view addSubview:_barView];
     _barView.delegate = self;
 }
 
 - (void)targetAchieve
 {
-    
+    NSDictionary *dictionary = @{@"userId": [UserInfo share].userId,
+                                 @"target": [UserInfo share].target,
+                                 };
+    NSString *bodyString = [NMOANetWorking handleHTTPBodyParams:dictionary];
+    [[NMOANetWorking share] taskWithTag:ID_EDIT_USERINFO urlString:URL_EDIT_USERINFO httpHead:nil bodyString:bodyString objectTaskFinished:^(NSError *error, id obj) {
+        
+        if ([[obj objectForKey:HTTP_KEY_RESULTCODE] isEqualToString:HTTP_RESULTCODE_SUCCESS]) {
+            [MBProgressHUD showHUDByContent:@"修改目标成功！" view:UI_Window afterDelay:2];
+            NSLog(@"修改目标成功！");
+        }else{
+            [MBProgressHUD showHUDByContent:@"修改目标失败！" view:UI_Window afterDelay:2];
+        }
+    }];
 }
 
 - (void)setUpRulerView
@@ -63,8 +75,7 @@
     ZHRulerView *rulerView = [[ZHRulerView alloc] initWithMixNuber:5 maxNuber:180 showType:rulerViewshowHorizontalType rulerMultiple:10];
     _rulerView = rulerView;
     rulerView.round = YES;
-//    rulerView.backgroundColor = [UIColor whiteColor];
-    rulerView.defaultVaule = 60;
+    rulerView.defaultVaule = [[UserInfo share].target integerValue];
     rulerView.delegate = self;
     rulerView.frame = rulerFrame;
     
@@ -90,6 +101,7 @@
 -(void)getRulerValue:(CGFloat)rulerValue withScrollRulerView:(ZHRulerView *)rulerView
 {
     _countLabel.text = [NSString stringWithFormat:@"%.0lf",rulerValue];
+    [UserInfo share].target = _countLabel.text;
 }
 
 - (void)didReceiveMemoryWarning {

@@ -106,6 +106,27 @@
     return cell;
 }
 
+- (void)collectionView:(UICollectionView *)collectionView didSelectItemAtIndexPath:(NSIndexPath *)indexPath
+{
+    if (indexPath.row == 0) {
+        
+        NSDictionary *dictionary = @{@"userId": [UserInfo share].userId,
+//                                     @"deviceName": @"测试设备",
+                                     @"mac":@"aasfa_Asdasad_a3eqa"
+                                     };
+        NSString *bodyString = [NMOANetWorking handleHTTPBodyParams:dictionary];
+        [[NMOANetWorking share] taskWithTag:ID_UNBINGDING_DEVICE urlString:URL_UNBINGDING_DEVICE httpHead:nil bodyString:bodyString objectTaskFinished:^(NSError *error, id obj) {
+            
+            if ([[obj objectForKey:HTTP_KEY_RESULTCODE] isEqualToString:HTTP_RESULTCODE_SUCCESS]) {
+                [MBProgressHUD showHUDByContent:@"解除绑定成功！" view:UI_Window afterDelay:2];
+                NSLog(@"解除绑定成功！");
+            }else{
+                [MBProgressHUD showHUDByContent:@"绑定失败！" view:UI_Window afterDelay:2];
+            }
+        }];
+    }
+}
+
 #pragma mark - RelateDeviceCellDelegate
 
 - (void)editDevice:(relateDeviceModel *)model withIndePath:(NSIndexPath *)index

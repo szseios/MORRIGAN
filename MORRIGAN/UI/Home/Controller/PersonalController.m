@@ -14,6 +14,7 @@
 #import "SuggestionController.h"
 #import "RelateDeviceController.h"
 #import "HistoryDataController.h"
+#import "LoginViewController.h"
 
 
 @interface PersonalController ()<UITableViewDelegate,UITableViewDataSource,UIAlertViewDelegate>
@@ -217,6 +218,11 @@ static NSString *cellIdentifier = @"cellIdentifier";
 - (void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath
 {
     [tableView deselectRowAtIndexPath:indexPath animated:YES];
+    if (self.delegate && [self.delegate respondsToSelector:@selector(didSelectCellWithIndexPath:)]) {
+        [self.delegate didSelectCellWithIndexPath:indexPath];
+        return;
+    }
+    
     [[NSNotificationCenter defaultCenter] postNotificationName:@"move" object:nil];
     if (indexPath.section == 0) {
         switch (indexPath.row) {
@@ -284,6 +290,16 @@ static NSString *cellIdentifier = @"cellIdentifier";
         }
     }
 
+}
+
+- (void)alertView:(UIAlertView *)alertView clickedButtonAtIndex:(NSInteger)buttonIndex
+{
+    if (buttonIndex == 1) {
+        LoginViewController *loginViewController = [[LoginViewController alloc] init];
+        [self presentViewController:loginViewController animated:YES completion:^{
+            
+        }];
+    }
 }
 
 - (void)didReceiveMemoryWarning {

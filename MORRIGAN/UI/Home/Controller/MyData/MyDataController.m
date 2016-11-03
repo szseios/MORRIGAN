@@ -14,7 +14,7 @@
 #import <MobileCoreServices/MobileCoreServices.h>
 #import <AVFoundation/AVFoundation.h>
 #import <MediaPlayer/MediaPlayer.h>
-
+#import "LoginViewController.h"
 
 @interface MyDataController ()<UITableViewDelegate,UITableViewDataSource,UIAlertViewDelegate,ChooseDataViewDelegate,BasicBarViewDelegate,UIActionSheetDelegate,UIImagePickerControllerDelegate, UINavigationControllerDelegate>
 
@@ -33,6 +33,8 @@
 @property (nonatomic , strong) myDataCell *headerViewCell;
 
 @property (nonatomic , strong) NSString *imageStr;
+
+@property (nonatomic , strong) UIView *pickerBackgroudView;
 
 @end
 
@@ -62,11 +64,12 @@ static NSString *cellIdentifier = @"cellIdentifier";
     
     [_dataTableView registerNib:[UINib nibWithNibName:@"myDataCell" bundle:nil] forCellReuseIdentifier:cellIdentifier];
     
-    [_logoutButton setTitle:@"退出登录" forState:UIControlStateNormal];
-    [_logoutButton setTitleColor:[UIColor whiteColor] forState:UIControlStateNormal];
-    [_logoutButton setBackgroundImage:[UIImage imageNamed:@"basicBackground"] forState:UIControlStateNormal];
-    [_logoutButton addTarget:self action:@selector(logout) forControlEvents:UIControlEventTouchUpInside];
-    _logoutButton.layer.cornerRadius = 5;
+//    [_logoutButton setTitle:@"退出登录" forState:UIControlStateNormal];
+//    [_logoutButton setTitleColor:[UIColor whiteColor] forState:UIControlStateNormal];
+//    [_logoutButton setBackgroundImage:[UIImage imageNamed:@"basicBackground"] forState:UIControlStateNormal];
+//    [_logoutButton addTarget:self action:@selector(logout) forControlEvents:UIControlEventTouchUpInside];
+//    _logoutButton.layer.cornerRadius = 5;
+    _logoutButton.hidden = YES;
     
     [self setUpBarView];
 }
@@ -88,7 +91,10 @@ static NSString *cellIdentifier = @"cellIdentifier";
 - (void)alertView:(UIAlertView *)alertView clickedButtonAtIndex:(NSInteger)buttonIndex
 {
     if (buttonIndex == 1) {
-        NSLog(@"退出登录");
+        LoginViewController *loginViewController = [[LoginViewController alloc] init];
+        [self presentViewController:loginViewController animated:YES completion:^{
+            
+        }];
     }
 }
 
@@ -108,7 +114,7 @@ static NSString *cellIdentifier = @"cellIdentifier";
 
 - (NSInteger)numberOfSectionsInTableView:(UITableView *)tableView
 {
-    return 2;
+    return 3;
     
 }
 
@@ -116,8 +122,10 @@ static NSString *cellIdentifier = @"cellIdentifier";
 {
     if (section == 0) {
         return 2;
-    }else{
+    }else if (section == 1){
         return 4;
+    }else{
+        return 1;
     }
 }
 
@@ -160,8 +168,17 @@ static NSString *cellIdentifier = @"cellIdentifier";
                 break;
         }
     }
-    else{
+    else if (indexPath.section == 1){
         _selectCell = [tableView cellForRowAtIndexPath:indexPath];
+        _pickerBackgroudView = [[UIView alloc] initWithFrame:CGRectMake(0, kScreenHeight, kScreenWidth, kScreenHeight)];
+        _pickerBackgroudView.backgroundColor = [UIColor colorWithRed:0.6 green:0.6 blue:0.6 alpha:0.7];
+        [self.view addSubview:_pickerBackgroudView];
+        _chooseView = [[ChooseDataView alloc] initWithType:pickerViewTypeAge withFrame:CGRectMake(0, kScreenHeight - 250, kScreenWidth, 250)];
+        _chooseView.delegate = self;
+        [_pickerBackgroudView addSubview:_chooseView];
+        [UIView animateWithDuration:0.2 animations:^{
+            _pickerBackgroudView.y = 0;
+        }];
         switch (indexPath.row) {
             case 0:
             {
@@ -192,12 +209,8 @@ static NSString *cellIdentifier = @"cellIdentifier";
                 break;
         }
         
-        if (self.chooseView.y == kScreenHeight) {
-            [UIView animateWithDuration:0.3 animations:^{
-                self.chooseView.y -= 250;
-            }];
-
-        }
+    }else{
+        [self logout];
     }
 }
 
@@ -219,10 +232,14 @@ static NSString *cellIdentifier = @"cellIdentifier";
 
 - (void)cancelSelectData
 {
-        [UIView animateWithDuration:0.3 animations:^{
-            self.chooseView.y = kScreenHeight;
-        }];
-    
+//        [UIView animateWithDuration:0.3 animations:^{
+//            self.chooseView.y = kScreenHeight;
+//        }];
+    [UIView animateWithDuration:0.2 animations:^{
+        _pickerBackgroudView.y = kScreenHeight;
+    }];
+    [_pickerBackgroudView removeFromSuperview];
+    _pickerBackgroudView = nil;
 }
 
 - (void)sureToSelectData:(NSString *)selectData
@@ -256,15 +273,25 @@ static NSString *cellIdentifier = @"cellIdentifier";
         default:
             break;
     }
-    [UIView animateWithDuration:0.3 animations:^{
-        self.chooseView.y = kScreenHeight;
+    [UIView animateWithDuration:0.2 animations:^{
+        self.pickerBackgroudView.y = kScreenHeight;
     }];
-    
+    [self.pickerBackgroudView removeFromSuperview];
+    _pickerBackgroudView = nil;
     [self uploadPersonalData];
 }
 
 - (void)uploadPersonalData
 {
+    if ([[UserInfo share].emotionStr isEqualToString:@"恋爱"]) {
+        [UserInfo share].emotion = @"B";
+    }
+    else if ([[UserInfo share].emotionStr isEqualToString:@"已婚"]) {
+        [UserInfo share].emotion = @"M";
+    }
+    else if ([[UserInfo share].emotionStr isEqualToString:@"单身"]) {
+        [UserInfo share].emotion = @"S";
+    }
         NSDictionary *dictionary = @{@"userId": [UserInfo share].userId,
                                      @"high": [UserInfo share].high,
                                      @"weight":[UserInfo share].weight,
@@ -385,11 +412,34 @@ static NSString *cellIdentifier = @"cellIdentifier";
     myDataCell *cell = [_dataTableView cellForRowAtIndexPath:[NSIndexPath indexPathForRow:1 inSection:0]];
     cell.content = notice.object;
     [UserInfo share].nickName = notice.object;
+    NSDictionary *dictionary = @{@"userId": [UserInfo share].userId,
+                                 @"nickName": [UserInfo share].nickName,
+                                 };
+    NSString *bodyString = [NMOANetWorking handleHTTPBodyParams:dictionary];
+    [[NMOANetWorking share] taskWithTag:ID_EDIT_USERINFO urlString:URL_EDIT_USERINFO httpHead:nil bodyString:bodyString objectTaskFinished:^(NSError *error, id obj) {
+        
+        if ([[obj objectForKey:HTTP_KEY_RESULTCODE] isEqualToString:HTTP_RESULTCODE_SUCCESS]) {
+            [MBProgressHUD showHUDByContent:@"修改昵称成功！" view:UI_Window afterDelay:2];
+            NSLog(@"修改昵称成功！");
+        }else{
+            [MBProgressHUD showHUDByContent:@"修改昵称失败！" view:UI_Window afterDelay:2];
+        }
+    }];
+}
+
+- (void)touchesBegan:(NSSet<UITouch *> *)touches withEvent:(UIEvent *)event
+{
+    [_pickerBackgroudView removeFromSuperview];
 }
 
 - (void)didReceiveMemoryWarning {
     [super didReceiveMemoryWarning];
     // Dispose of any resources that can be recreated.
+}
+
+- (void)dealloc
+{
+    [[NSNotificationCenter defaultCenter] removeObserver:self];
 }
 
 /*

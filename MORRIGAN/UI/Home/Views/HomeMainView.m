@@ -57,9 +57,9 @@
     imageView.image = [UIImage imageNamed:@"homePageBackgroud"];
     [self addSubview:imageView];
     
-    CGFloat circleX = _viewWidth * 11 / 312.0;
-    CGFloat circleY = _viewHeight * 124 / 860.0;
-    CGFloat circleW = _viewWidth * 262/312.0;
+    CGFloat circleX = _viewWidth * 12 / 312.0;
+    CGFloat circleY = _viewHeight * 128 / 860.0;
+    CGFloat circleW = _viewWidth * 261/312.0;
     _circleImageView = [[UIImageView alloc] init];
     [_circleImageView setFrame:CGRectMake(circleX, circleY, circleW, circleW)];
     _circleImageView.backgroundColor = [UIColor clearColor];
@@ -223,7 +223,7 @@
 
 - (void)emptyStartTime:(CGFloat)startTime toEndTime:(CGFloat)endTime
 {
-    PNCircleChart *circleChart = [[PNCircleChart alloc] initWithFrame:CGRectMake(_circleImageView.x+2,_circleImageView.y+4, _circleImageView.width-4, _circleImageView.height-4) startAngle:startTime endAngle:endTime total:@360 current:@(180) clockwise:YES];
+    PNCircleChart *circleChart = [[PNCircleChart alloc] initWithFrame:CGRectMake(_circleImageView.x+2,_circleImageView.y+2, _circleImageView.width-4, _circleImageView.height-4) startAngle:startTime endAngle:endTime total:@360 current:@(180) clockwise:YES];
     
     circleChart.backgroundColor = [UIColor clearColor];
     circleChart.lineWidth = @2;

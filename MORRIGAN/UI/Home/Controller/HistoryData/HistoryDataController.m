@@ -37,6 +37,8 @@
 
 @property (nonatomic , strong) UILabel *weekDateLabel;
 
+@property (nonatomic , strong) NSMutableArray *weekDataArray;
+
 @end
 
 @implementation HistoryDataController
@@ -46,10 +48,10 @@ static NSString *cellID = @"DataCellID";
 - (void)viewDidLoad {
     [super viewDidLoad];
     self.view.backgroundColor = [UIColor whiteColor];
-    UIImageView *backImageView = [[UIImageView alloc] initWithFrame:CGRectMake(0, 0, kScreenWidth, 104)];
+    UIImageView *backImageView = [[UIImageView alloc] initWithFrame:CGRectMake(0, 0, kScreenWidth, 114)];
     backImageView.image = [UIImage imageNamed:@"basicBackground"];
     [self.view addSubview:backImageView];
-    
+    [self getDataFromService];
     _titleArray = @[@"今日目标",@"今日护养",@"剩余目标值"];
     
     [self setUpBarView];
@@ -57,6 +59,31 @@ static NSString *cellID = @"DataCellID";
     [self setUpDayBarChatView];
     [self setUpWeekBarChatView];
     [self setUpBottomView];
+}
+
+- (void)getDataFromService
+{
+    _weekDataArray = [NSMutableArray array];
+    
+    __weak HistoryDataController *blockSelf = self;
+    NSDictionary *dictionary = @{@"userId": [UserInfo share].userId,
+                                 };
+    NSString *bodyString = [NMOANetWorking handleHTTPBodyParams:dictionary];
+    [[NMOANetWorking share] taskWithTag:ID_GET_RECORD urlString:URL_GET_RECORD httpHead:nil bodyString:bodyString objectTaskFinished:^(NSError *error, id obj) {
+        
+        if ([[obj objectForKey:HTTP_KEY_RESULTCODE] isEqualToString:HTTP_RESULTCODE_SUCCESS]) {
+            NSArray *hlarray = [obj objectForKey:@"hlInfo"];
+            if (hlarray) {
+                for (NSDictionary *dict in hlarray) {
+                    NSString *timeLong = [dict objectForKey:@"timeLong"];
+                    [blockSelf.weekDataArray addObject:timeLong];
+                }
+            }
+        }else{
+            [MBProgressHUD showHUDByContent:[obj objectForKey:@"retMsg"] view:UI_Window afterDelay:2];
+        }
+    }];
+
 }
 
 - (void)setUpBarView
@@ -69,7 +96,7 @@ static NSString *cellID = @"DataCellID";
 - (void)setUpSegmentPageView
 {
     _pageSegmente = [[UISegmentedControl alloc] initWithItems:@[@"日",@"周"]];
-    [_pageSegmente setFrame:CGRectMake(20, 64, kScreenWidth - 40, 30)];
+    [_pageSegmente setFrame:CGRectMake(40, 74, kScreenWidth - 80, 30)];
     [self.view addSubview:_pageSegmente];
     [_pageSegmente setTintColor:[UIColor whiteColor]];
     [_pageSegmente setBackgroundImage:[UIImage imageNamed:@"basicBackground"] forState:UIControlStateNormal barMetrics:UIBarMetricsCompact];
@@ -79,7 +106,7 @@ static NSString *cellID = @"DataCellID";
 
 - (void)setUpDayBarChatView
 {
-    UIView *chatView = [[UIView alloc] initWithFrame:CGRectMake(0, 104, kScreenWidth, 250)];
+    UIView *chatView = [[UIView alloc] initWithFrame:CGRectMake(0, 114, kScreenWidth, 250)];
     
     UIImageView *backImageView = [[UIImageView alloc] initWithFrame:chatView.bounds];
     backImageView.image = [UIImage imageNamed:@"basicBackground"];
@@ -196,7 +223,11 @@ static NSString *cellID = @"DataCellID";
     _weekBarChat.isShowWeekLabel = YES;
     _weekBarChat.yMaxValue = 60;
     [_weekBarChat setXLabels:@[@1,@2,@3,@4,@5,@6,@7]];
-    [_weekBarChat setYValues:@[@0,@0,@0,@0,@0,@0,@0]];
+    if (_weekDataArray.count > 0) {
+       [_weekBarChat setYValues:_weekDataArray];
+    }else{
+        [_weekBarChat setYValues:@[@0,@0,@0,@0,@0,@0,@0]];
+    }
     [_weekBarChat setStrokeColor:PNWhite];
     [_weekBarChat strokeChart];
     

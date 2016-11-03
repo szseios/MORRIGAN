@@ -49,6 +49,10 @@
 
 @property (nonatomic , strong) HomeMainView *mainView;
 
+@property (nonatomic , assign) BOOL isLeft;
+
+
+
 @end
 
 @implementation HomePageController
@@ -68,6 +72,10 @@
     
     [self setUpHomeMainView];
     [self setUpBottomView];
+    
+    UITapGestureRecognizer *tap = [[UITapGestureRecognizer alloc] initWithTarget:self action:@selector(moveBack)];
+    self.view.userInteractionEnabled = YES;
+    [self.view addGestureRecognizer:tap];
     
 }
 
@@ -97,9 +105,9 @@
     
     [self.view addSubview:_mainView];
     
-    self.view.userInteractionEnabled = YES;
-    UITapGestureRecognizer *tap = [[UITapGestureRecognizer alloc] initWithTarget:self action:@selector(setUpCircleView)];
-    [_mainView addGestureRecognizer:tap];
+//    self.view.userInteractionEnabled = YES;
+//    UITapGestureRecognizer *tap = [[UITapGestureRecognizer alloc] initWithTarget:self action:@selector(setUpCircleView)];
+//    [_mainView addGestureRecognizer:tap];
 }
 
 - (void)setUpCircleView
@@ -160,8 +168,10 @@
 }
 //手动按摩
 - (void)pushHandlePage{
-    HandKneadViewController *handKneadViewController = [[HandKneadViewController alloc] init];
-    [self.navigationController pushViewController:handKneadViewController animated:YES];
+    if (!_isLeft) {
+        HandKneadViewController *handKneadViewController = [[HandKneadViewController alloc] init];
+        [self.navigationController pushViewController:handKneadViewController animated:YES];
+    }
 }
 
 //自动按摩
@@ -186,9 +196,29 @@
 
 - (void)clickMoveToLeft
 {
-    if (self.delegate && [self.delegate respondsToSelector:@selector(leftClick)]) {
-        [self.delegate leftClick];
+    if (!_isLeft) {
+        _isLeft = YES;
+        if (self.delegate && [self.delegate respondsToSelector:@selector(leftClick)]) {
+            [self.delegate leftClick];
+        }
+    }else{
+        _isLeft = NO;
+        if (self.delegate && [self.delegate respondsToSelector:@selector(rightClick)]) {
+            [self.delegate rightClick];
+        }
     }
+    
+}
+
+- (void)moveBack
+{
+    if (_isLeft) {
+        _isLeft = NO;
+        if (self.delegate && [self.delegate respondsToSelector:@selector(rightClick)]) {
+            [self.delegate rightClick];
+        }
+    }
+    
 }
 
 
