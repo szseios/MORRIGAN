@@ -19,6 +19,11 @@
 #define kButtonStopTag          2000
 
 @interface HandKneadViewController ()
+{
+    NSInteger _currentGear;            // 当前档位（0x01~0x03，手动模式有效）
+    NSInteger _currentLeftRight;       // 当前左右（0x00:左右同时  0x01:左  0x02:右， 手动模式有效）
+    BOOL isStarting;
+}
 
 @end
 
@@ -292,6 +297,33 @@
 - (void)addButtonClick
 {
     NSLog(@"addButtonClick");
+    
+    if(isStarting == NO) {
+        return;
+    }
+    
+    _currentGear ++;
+    if(_currentGear > 3) {
+        _currentGear = 3;
+    }
+    NSString *gearStr = [NSString stringWithFormat:@"0%ld", _currentGear];
+    
+    
+    NSString *leftRightStr = [NSString stringWithFormat:@"0%ld", _currentLeftRight];
+    
+    
+    BluetoothOperation *operation = [[BluetoothOperation alloc] init];
+    [operation setValue:@"01" index:2];
+    [operation setValue:@"01" index:3];
+    [operation setValue:@"01" index:4];
+    [operation setValue:gearStr index:5];
+    [operation setValue:leftRightStr index:6];
+    operation.response = ^(NSString *response,long tag,NSError *error,BOOL success) {
+        
+    };
+    [[BluetoothManager share] writeValueByOperation:operation];
+    
+    
 }
 
 
@@ -299,6 +331,32 @@
 - (void)subtractButtonClick
 {
     NSLog(@"subtractButtonClick");
+    
+    
+    if(isStarting == NO) {
+        return;
+    }
+    
+    if(_currentGear <= 0) {
+        _currentGear = 0;
+    } else {
+        _currentGear --;
+    }
+    NSString *gearStr = [NSString stringWithFormat:@"0%ld", _currentGear];
+
+    NSString *leftRightStr = [NSString stringWithFormat:@"0%ld", _currentLeftRight];
+    
+    
+    BluetoothOperation *operation = [[BluetoothOperation alloc] init];
+    [operation setValue:@"01" index:2];
+    [operation setValue:@"01" index:3];
+    [operation setValue:@"01" index:4];
+    [operation setValue:gearStr index:5];
+    [operation setValue:leftRightStr index:6];
+    operation.response = ^(NSString *response,long tag,NSError *error,BOOL success) {
+        
+    };
+    [[BluetoothManager share] writeValueByOperation:operation];
 }
 
 // START 按钮点击
@@ -310,11 +368,32 @@
     if(button.tag == kButtonStartTag) {
         button.tag = kButtonStopTag;
         [button setImage:[UIImage imageNamed:@"STOP"] forState:UIControlStateNormal];
+        isStarting = YES;
         
     } else if(button.tag == kButtonStopTag) {
         button.tag = kButtonStartTag;
         [button setImage:[UIImage imageNamed:@"start"] forState:UIControlStateNormal];
+        isStarting = NO;
     }
+    
+    if(_currentGear == 0) {
+        _currentGear = 1;
+    }
+
+    NSString *gearStr = [NSString stringWithFormat:@"0%ld", _currentGear];
+    NSString *leftRightStr = [NSString stringWithFormat:@"0%ld", _currentLeftRight];
+
+    BluetoothOperation *operation = [[BluetoothOperation alloc] init];
+    [operation setValue:@"01" index:2];
+    [operation setValue:@"01" index:3];
+    [operation setValue:isStarting ? @"01" : @"00" index:4];
+    [operation setValue:gearStr index:5];
+    [operation setValue:leftRightStr index:6];
+    operation.response = ^(NSString *response,long tag,NSError *error,BOOL success) {
+        
+    };
+    [[BluetoothManager share] writeValueByOperation:operation];
+    
 }
 
 // 左胸按钮点击
