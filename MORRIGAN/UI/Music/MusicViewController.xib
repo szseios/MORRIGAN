@@ -12,6 +12,7 @@
                 <outlet property="musicTopBackgoundView" destination="1DR-4X-eBR" id="PQb-md-AMa"/>
                 <outlet property="musicView" destination="T4n-qb-iG3" id="QR7-lW-hV4"/>
                 <outlet property="nextButton" destination="LOM-vt-x2p" id="Lzu-jP-D6r"/>
+                <outlet property="panGestureView" destination="y4y-xe-Rvb" id="b23-Ac-4xl"/>
                 <outlet property="playingTimeLabel" destination="noF-f2-htB" id="IKG-5n-huc"/>
                 <outlet property="previousButton" destination="H5w-Fx-GGP" id="hRQ-N5-tl3"/>
                 <outlet property="singerLabel" destination="yWV-66-Zg3" id="3Vd-nV-E2x"/>

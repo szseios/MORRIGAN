@@ -17,6 +17,7 @@
     PCSEQVisualizer *_pcseView;
     NSTimer *_timer;
     NSIndexPath *_selectedIndexPath;
+    CGFloat _beganY;
 }
 @property (weak, nonatomic) IBOutlet UIImageView *musicTopBackgoundView;
 @property (weak, nonatomic) IBOutlet UIView *musicView;
@@ -28,6 +29,7 @@
 @property (weak, nonatomic) IBOutlet UIButton *startButton;
 @property (weak, nonatomic) IBOutlet UIButton *previousButton;
 @property (weak, nonatomic) IBOutlet UIButton *nextButton;
+@property (weak, nonatomic) IBOutlet UIImageView *panGestureView;
 
 @property (nonatomic,strong) UITableView *tableView;
 @property (nonatomic,strong) UIButton *closeButton;
@@ -70,25 +72,19 @@
     }
     
     
-    UIImageView *imageView = [[UIImageView alloc] initWithFrame:CGRectMake(0,
-                                                                           0,
-                                                                           self.view.frame.size.width,
-                                                                           60)];
-    imageView.backgroundColor = [UIColor clearColor];
-    imageView.userInteractionEnabled = YES;
-    [_musicView addSubview:imageView];
-    
     UIPanGestureRecognizer *panGestureRecognizer = [[UIPanGestureRecognizer alloc] initWithTarget:self action:@selector(dragMusicView:)];
-    [_musicView addGestureRecognizer:panGestureRecognizer];
+    _panGestureView.userInteractionEnabled = YES;
+    [_panGestureView addGestureRecognizer:panGestureRecognizer];
     
     UITapGestureRecognizer *show = [[UITapGestureRecognizer alloc] initWithTarget:self action:@selector(showMusicView)];
-    [imageView addGestureRecognizer:show];
+    [_panGestureView addGestureRecognizer:show];
     
     UITapGestureRecognizer *hidde = [[UITapGestureRecognizer alloc] initWithTarget:self action:@selector(hiddeMusicView)];
     _musicTopBackgoundView.userInteractionEnabled = YES;
     [_musicTopBackgoundView addGestureRecognizer:hidde];
     
     [hidde requireGestureRecognizerToFail:show];
+    [panGestureRecognizer requireGestureRecognizerToFail:show];
     
     _closeButton = [[UIButton alloc] initWithFrame:CGRectMake(0,
                                                               _musicView.height - 54,
@@ -302,7 +298,33 @@
     CGPoint location = [recognizer locationInView:self.view];
     NSLog(@"%f",location.y);
     if (recognizer.state == UIGestureRecognizerStateChanged) {
-        _musicView.y = location.y;
+        if (location.y >= kScreenHeight - _musicView.frame.size.height &&
+            location.y <= kScreenHeight - 65) {
+            _musicView.y = location.y;
+        }
+    }
+    else if (recognizer.state == UIGestureRecognizerStateBegan) {
+        _beganY = location.y;
+    }
+    else if (recognizer.state == UIGestureRecognizerStateEnded) {
+        if (location.y > _beganY) {
+            [UIView animateWithDuration:0.25 animations:^{
+                
+                CGRect frame = _musicView.frame;
+                frame.origin.y = kScreenHeight - 65;
+                [_musicView setFrame:frame];
+                
+            }];
+        }
+        else {
+            [UIView animateWithDuration:0.25 animations:^{
+                
+                CGRect frame = _musicView.frame;
+                frame.origin.y = kScreenHeight - _musicView.frame.size.height;
+                [_musicView setFrame:frame];
+                
+            }];
+        }
     }
 }
 
@@ -310,10 +332,17 @@
 
 - (void)showMusicView {
     if ([self musicViewOnBottom]) {
-        CGRect frame = _musicView.frame;
-        frame.origin.y = kScreenHeight - _musicView.frame.size.height;
-        [_musicView setFrame:frame];
         [_tableView reloadData];
+        [UIView animateWithDuration:0.25 animations:^{
+            
+            CGRect frame = _musicView.frame;
+            frame.origin.y = kScreenHeight - _musicView.frame.size.height;
+            [_musicView setFrame:frame];
+            
+        } completion:^(BOOL finished) {
+            
+        }];
+        
     }
     NSLog(@"moveMusicView");
 }
@@ -321,9 +350,13 @@
 
 - (void)hiddeMusicView {
     if (![self musicViewOnBottom]) {
-        CGRect frame = _musicView.frame;
-        frame.origin.y = kScreenHeight - 65;
-        [_musicView setFrame:frame];
+        [UIView animateWithDuration:0.25 animations:^{
+            
+            CGRect frame = _musicView.frame;
+            frame.origin.y = kScreenHeight - 65;
+            [_musicView setFrame:frame];
+            
+        }];
     }
     NSLog(@"hiddeMusicView");
 }
