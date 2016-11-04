@@ -20,9 +20,17 @@
 
 @interface HandKneadViewController ()
 {
+    UILabel *_gearNumLabel;            // 档位显示label
+    UILabel *_timeLabel;               // 计时显示label
+    UIButton *_leftChestButton;        // 左胸按钮
+    UIButton *_rightChestButton;       // 右胸按钮
+    
+    NSInteger _currentStartStop;       // 当前开关（01：开  00:关）
     NSInteger _currentGear;            // 当前档位（0x01~0x03，手动模式有效）
-    NSInteger _currentLeftRight;       // 当前左右（0x00:左右同时  0x01:左  0x02:右， 手动模式有效）
-    BOOL isStarting;
+    NSInteger _currentLeftRightChest;  // 当前左右（0x00:左右同时  0x01:左  0x02:右， 手动模式有效）
+    
+    NSTimer *_timer;                    // 计时器
+    NSInteger _currentTime;             // 当前计时时间
 }
 
 @end
@@ -33,6 +41,11 @@
 
 - (void)viewDidLoad {
     [super viewDidLoad];
+    
+    // 设置默认值
+    _currentStartStop = 0;
+    _currentGear = 1;
+    _currentLeftRightChest = 1;
     
     
     [self viewInit];
@@ -69,11 +82,11 @@
     titleLabel.textAlignment = NSTextAlignmentCenter;
     [self.view addSubview:titleLabel];
     
-    // 连接蓝牙按钮
-    UIButton *linkButton = [[UIButton alloc]initWithFrame:CGRectMake(kScreenWidth - 15 - 40, 26, 45, 45)];
-    [linkButton setImage:[UIImage imageNamed:@"icon_rightItem_link"] forState:UIControlStateNormal];
-    [linkButton setImage:[UIImage imageNamed:@"icon_rightItem_link"] forState:UIControlStateHighlighted];
-    [self.view addSubview:linkButton];
+//    // 连接蓝牙按钮
+//    UIButton *linkButton = [[UIButton alloc]initWithFrame:CGRectMake(kScreenWidth - 15 - 40, 26, 45, 45)];
+//    [linkButton setImage:[UIImage imageNamed:@"icon_rightItem_link"] forState:UIControlStateNormal];
+//    [linkButton setImage:[UIImage imageNamed:@"icon_rightItem_link"] forState:UIControlStateHighlighted];
+//    [self.view addSubview:linkButton];
     
     
     
@@ -139,7 +152,7 @@
         gearNumLabelY = bigCircleRootViewW/2 - gearNumLabelH + 15;
     }
     UILabel *gearNumLabel = [[UILabel alloc] initWithFrame:CGRectMake(gearNumLabelX, gearNumLabelY, gearNumLabelW, gearNumLabelH)];
-    gearNumLabel.text = @"3";
+    gearNumLabel.text = @"1";
     gearNumLabel.textColor = [UIColor whiteColor];
     gearNumLabel.font = [UIFont italicSystemFontOfSize:100.0];
     if(kScreenHeight < 570) {
@@ -147,6 +160,7 @@
         gearNumLabel.font = [UIFont italicSystemFontOfSize:70.0];
     }
     [bigCircleRootView addSubview:gearNumLabel];
+    _gearNumLabel = gearNumLabel;
     // gear
     CGFloat gearLabelW = 80;
     CGFloat gearLabelH = 40;
@@ -161,6 +175,7 @@
     gearLabel.textColor = [UIColor whiteColor];
     gearLabel.font = [UIFont italicSystemFontOfSize:25.0];
     [bigCircleRootView addSubview:gearLabel];
+    
     // 时间（55:55）
     CGFloat timeLabelW = 100;
     CGFloat timeLabelH = 40;
@@ -171,11 +186,12 @@
         timeLabelY = bigCircleRootViewH - 15 - timeLabelH;
     }
     UILabel *timeLabel = [[UILabel alloc] initWithFrame:CGRectMake(timeLabelX, timeLabelY, timeLabelW, timeLabelH)];
-    timeLabel.text = @"55:55";
+    timeLabel.text = @"00:00";
     timeLabel.textAlignment = NSTextAlignmentCenter;
     timeLabel.textColor = [UIColor whiteColor];
     timeLabel.font = [UIFont boldSystemFontOfSize:25.0];
     [bigCircleRootView addSubview:timeLabel];
+    _timeLabel = timeLabel;
     
     
     // ＋／START/－ 根视图
@@ -263,11 +279,12 @@
     CGFloat chestButtonY = kScreenHeight - chestLabelH - chestButtonH - 10;
     UIButton *leftChestButton = [[UIButton alloc] initWithFrame:CGRectMake(chestButtonMargingLeftRight, chestButtonY, chestButtonW, chestButtonH)];
     //leftChestButton.backgroundColor = [UIColor orangeColor];
-    leftChestButton.tag = kButtonUnselectedTag;
-    [leftChestButton setImage:[UIImage imageNamed:@"leftBreast"] forState:UIControlStateNormal];
-    [leftChestButton setImage:[UIImage imageNamed:@"leftBreast_highlight"] forState:UIControlStateHighlighted];
+    leftChestButton.tag = kButtonSelectedTag;
+    [leftChestButton setImage:[UIImage imageNamed:@"leftBreast_highlight"] forState:UIControlStateNormal];
+    [leftChestButton setImage:[UIImage imageNamed:@"leftBreast"] forState:UIControlStateHighlighted];
     [leftChestButton  addTarget:self action:@selector(leftChestButtonClick:) forControlEvents: UIControlEventTouchUpInside];
     [self.view addSubview: leftChestButton];
+    _leftChestButton = leftChestButton;
     UILabel *leftChestLabel = [[UILabel alloc] initWithFrame:CGRectMake(chestButtonMargingLeftRight, kScreenHeight - chestLabelH - 10, chestLabelW, chestLabelH)];
     leftChestLabel.textAlignment = NSTextAlignmentCenter;
     leftChestLabel.text = @"左胸";
@@ -282,6 +299,7 @@
     [rightChestButton setImage:[UIImage imageNamed:@"rightBreast_highlight"] forState:UIControlStateHighlighted];
     [rightChestButton  addTarget:self action:@selector(rightChestButtonClick:) forControlEvents: UIControlEventTouchUpInside];
     [self.view addSubview: rightChestButton];
+    _rightChestButton = rightChestButton;
     UILabel *rightChestLabel = [[UILabel alloc] initWithFrame:CGRectMake(kScreenWidth - chestButtonMargingLeftRight - chestButtonW, kScreenHeight - chestLabelH - 10, chestLabelW, chestLabelH)];
     rightChestLabel.textAlignment = NSTextAlignmentCenter;
     rightChestLabel.text = @"右胸";
@@ -298,31 +316,15 @@
 {
     NSLog(@"addButtonClick");
     
-    if(isStarting == NO) {
-        return;
-    }
-    
+
     _currentGear ++;
     if(_currentGear > 3) {
         _currentGear = 3;
     }
-    NSString *gearStr = [NSString stringWithFormat:@"0%ld", _currentGear];
+    _gearNumLabel.text = [NSString stringWithFormat:@"%ld", _currentGear];
     
     
-    NSString *leftRightStr = [NSString stringWithFormat:@"0%ld", _currentLeftRight];
-    
-    
-    BluetoothOperation *operation = [[BluetoothOperation alloc] init];
-    [operation setValue:@"01" index:2];
-    [operation setValue:@"01" index:3];
-    [operation setValue:@"01" index:4];
-    [operation setValue:gearStr index:5];
-    [operation setValue:leftRightStr index:6];
-    operation.response = ^(NSString *response,long tag,NSError *error,BOOL success) {
-        
-    };
-    [[BluetoothManager share] writeValueByOperation:operation];
-    
+    [self sendData];
     
 }
 
@@ -332,31 +334,13 @@
 {
     NSLog(@"subtractButtonClick");
     
-    
-    if(isStarting == NO) {
-        return;
-    }
-    
+    _currentGear --;
     if(_currentGear <= 0) {
-        _currentGear = 0;
-    } else {
-        _currentGear --;
+        _currentGear = 1;
     }
-    NSString *gearStr = [NSString stringWithFormat:@"0%ld", _currentGear];
-
-    NSString *leftRightStr = [NSString stringWithFormat:@"0%ld", _currentLeftRight];
+    _gearNumLabel.text = [NSString stringWithFormat:@"%ld", _currentGear];
     
-    
-    BluetoothOperation *operation = [[BluetoothOperation alloc] init];
-    [operation setValue:@"01" index:2];
-    [operation setValue:@"01" index:3];
-    [operation setValue:@"01" index:4];
-    [operation setValue:gearStr index:5];
-    [operation setValue:leftRightStr index:6];
-    operation.response = ^(NSString *response,long tag,NSError *error,BOOL success) {
-        
-    };
-    [[BluetoothManager share] writeValueByOperation:operation];
+    [self sendData];
 }
 
 // START 按钮点击
@@ -364,35 +348,9 @@
 {
     NSLog(@"startButtonClick");
     
-    UIButton *button = (UIButton *)sender;
-    if(button.tag == kButtonStartTag) {
-        button.tag = kButtonStopTag;
-        [button setImage:[UIImage imageNamed:@"STOP"] forState:UIControlStateNormal];
-        isStarting = YES;
-        
-    } else if(button.tag == kButtonStopTag) {
-        button.tag = kButtonStartTag;
-        [button setImage:[UIImage imageNamed:@"start"] forState:UIControlStateNormal];
-        isStarting = NO;
-    }
-    
-    if(_currentGear == 0) {
-        _currentGear = 1;
-    }
-
-    NSString *gearStr = [NSString stringWithFormat:@"0%ld", _currentGear];
-    NSString *leftRightStr = [NSString stringWithFormat:@"0%ld", _currentLeftRight];
-
-    BluetoothOperation *operation = [[BluetoothOperation alloc] init];
-    [operation setValue:@"01" index:2];
-    [operation setValue:@"01" index:3];
-    [operation setValue:isStarting ? @"01" : @"00" index:4];
-    [operation setValue:gearStr index:5];
-    [operation setValue:leftRightStr index:6];
-    operation.response = ^(NSString *response,long tag,NSError *error,BOOL success) {
-        
-    };
-    [[BluetoothManager share] writeValueByOperation:operation];
+    [self updateStartStopState:(UIButton *)sender];
+   
+    [self sendData];
     
 }
 
@@ -400,37 +358,172 @@
 - (void)leftChestButtonClick:(id)sender
 {
     NSLog(@"leftChestButtonClick");
+
     
-    UIButton *button = (UIButton *)sender;
-    if(button.tag == kButtonUnselectedTag) {
-        button.tag = kButtonSelectedTag;
-        [button setImage:[UIImage imageNamed:@"leftBreast_highlight"] forState:UIControlStateNormal];
-        [button setImage:[UIImage imageNamed:@"leftBreast"] forState:UIControlStateHighlighted];
-        
-    } else if(button.tag == kButtonSelectedTag) {
-        button.tag = kButtonUnselectedTag;
-        [button setImage:[UIImage imageNamed:@"leftBreast"] forState:UIControlStateNormal];
-        [button setImage:[UIImage imageNamed:@"leftBreast_highlight"] forState:UIControlStateHighlighted];
-    }
+    [self updateLeftRightChestState:YES button:(UIButton *)sender];
+    
+    [self sendData];
+
 }
 
 // 左胸按钮点击
 - (void)rightChestButtonClick:(id)sender
 {
     NSLog(@"rightChestButtonClick");
-    
-    UIButton *button = (UIButton *)sender;
-    if(button.tag == kButtonUnselectedTag) {
-        button.tag = kButtonSelectedTag;
-        [button setImage:[UIImage imageNamed:@"rightBreast_higlight"] forState:UIControlStateNormal];
-        [button setImage:[UIImage imageNamed:@"rightBreast"] forState:UIControlStateHighlighted];
 
-    } else if(button.tag == kButtonSelectedTag) {
-        button.tag = kButtonUnselectedTag;
-        [button setImage:[UIImage imageNamed:@"rightBreast"] forState:UIControlStateNormal];
-        [button setImage:[UIImage imageNamed:@"rightBreast_higlight"] forState:UIControlStateHighlighted];
+    [self updateLeftRightChestState:NO button:(UIButton *)sender];
+    
+    if(_currentGear == 0) {
+        _currentGear = 1;
     }
     
+    NSString *startStopStr = [NSString stringWithFormat:@"0%ld", _currentStartStop];
+    NSString *gearStr = [NSString stringWithFormat:@"0%ld", _currentGear];
+    NSString *leftRightChestStr = [NSString stringWithFormat:@"0%ld", _currentLeftRightChest];
+    
+    BluetoothOperation *operation = [[BluetoothOperation alloc] init];
+    [operation setValue:@"01" index:2];
+    [operation setValue:startStopStr index:3];
+    [operation setValue:@"01" index:4];
+    [operation setValue:gearStr index:5];
+    [operation setValue:leftRightChestStr index:6];
+    operation.response = ^(NSString *response,long tag,NSError *error,BOOL success) {
+        
+    };
+    [[BluetoothManager share] writeValueByOperation:operation];
+
+    
+    
+}
+
+- (void)updateStartStopState:(UIButton *)button
+{
+    if(button.tag == kButtonStartTag) {
+        button.tag = kButtonStopTag;
+        [button setImage:[UIImage imageNamed:@"STOP"] forState:UIControlStateNormal];
+        _currentStartStop = 1;
+        
+        // 重启定时器
+        [self startTimer];
+        
+    } else if(button.tag == kButtonStopTag) {
+        button.tag = kButtonStartTag;
+        [button setImage:[UIImage imageNamed:@"start"] forState:UIControlStateNormal];
+        _currentStartStop = 0;
+        
+        // 停止计时
+        [self stopTimer];
+    }
+
+}
+
+- (void)updateLeftRightChestState:(BOOL)isLeftChest button:(UIButton *)button
+{
+    if(isLeftChest) {
+        // 左胸
+        if(button.tag == kButtonUnselectedTag) {
+            button.tag = kButtonSelectedTag;
+            [button setImage:[UIImage imageNamed:@"leftBreast_highlight"] forState:UIControlStateNormal];
+            [button setImage:[UIImage imageNamed:@"leftBreast"] forState:UIControlStateHighlighted];
+            
+        } else if(button.tag == kButtonSelectedTag) {
+            if(_rightChestButton.tag == kButtonUnselectedTag) {
+                [MBProgressHUD showHUDByContent:@"左胸和右胸必须选中一个" view:self.view];
+                return;
+            }
+            button.tag = kButtonUnselectedTag;
+            [button setImage:[UIImage imageNamed:@"leftBreast"] forState:UIControlStateNormal];
+            [button setImage:[UIImage imageNamed:@"leftBreast_highlight"] forState:UIControlStateHighlighted];
+        }
+    } else {
+        // 右胸
+        if(button.tag == kButtonUnselectedTag) {
+            button.tag = kButtonSelectedTag;
+            [button setImage:[UIImage imageNamed:@"rightBreast_higlight"] forState:UIControlStateNormal];
+            [button setImage:[UIImage imageNamed:@"rightBreast"] forState:UIControlStateHighlighted];
+            
+        } else if(button.tag == kButtonSelectedTag) {
+            if(_leftChestButton.tag == kButtonUnselectedTag) {
+                [MBProgressHUD showHUDByContent:@"左胸和右胸必须选中一个" view:self.view];
+                return;
+            }
+            button.tag = kButtonUnselectedTag;
+            [button setImage:[UIImage imageNamed:@"rightBreast"] forState:UIControlStateNormal];
+            [button setImage:[UIImage imageNamed:@"rightBreast_higlight"] forState:UIControlStateHighlighted];
+        }
+        
+    }
+    
+    
+    if(_leftChestButton.tag == kButtonSelectedTag && _rightChestButton.tag == kButtonSelectedTag) {
+        _currentLeftRightChest = 0;
+    } else if(_leftChestButton.tag == kButtonSelectedTag) {
+        _currentLeftRightChest = 1;
+    } else if(_rightChestButton.tag == kButtonSelectedTag) {
+        _currentLeftRightChest = 2;
+    }
+}
+
+- (void)sendData
+{
+    
+    NSString *startStopStr = [NSString stringWithFormat:@"0%ld", _currentStartStop];
+    NSString *gearStr = [NSString stringWithFormat:@"0%ld", _currentGear];
+    NSString *leftRightChestStr = [NSString stringWithFormat:@"0%ld", _currentLeftRightChest];
+    
+    BluetoothOperation *operation = [[BluetoothOperation alloc] init];
+    [operation setValue:@"01" index:2];
+    [operation setValue:startStopStr index:3];
+    [operation setValue:@"01" index:4];
+    [operation setValue:gearStr index:5];
+    [operation setValue:leftRightChestStr index:6];
+    operation.response = ^(NSString *response,long tag,NSError *error,BOOL success) {
+        
+    };
+    [[BluetoothManager share] writeValueByOperation:operation];
+}
+
+
+- (void)startTimer
+{
+    if(_timer) {
+        [_timer invalidate];
+        _timer = nil;
+    }
+    _timer = [NSTimer scheduledTimerWithTimeInterval:1 target:self selector:@selector(timerHandler) userInfo:nil repeats:YES];
+    [_timer fire];
+}
+
+- (void)stopTimer
+{
+    if(_timer) {
+        [_timer invalidate];
+        _timer = nil;
+    }
+}
+
+-(void)timerHandler
+{
+    _currentTime ++;
+    
+    NSString *minStr = @"";
+    NSString *secStr = @"";
+    NSInteger min = _currentTime / 60;
+    NSInteger sec = _currentTime % 60;
+    if(min < 10) {
+        minStr = [NSString stringWithFormat:@"0%ld",min];
+    } else if(min < 60) {
+        minStr = [NSString stringWithFormat:@"%ld",min];
+    }
+    if(sec < 10) {
+        secStr = [NSString stringWithFormat:@"0%ld",sec];
+    } else if(sec < 60) {
+        secStr = [NSString stringWithFormat:@"%ld",sec];
+    }
+    
+    
+    NSString *timeStr = [NSString stringWithFormat:@"%@:%@", minStr, secStr];
+    _timeLabel.text = timeStr;
 }
 
 
