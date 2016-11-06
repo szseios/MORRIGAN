@@ -55,7 +55,7 @@
     // Do any additional setup after loading the view.
     
     UIImageView *backgroudView = [[UIImageView alloc] initWithFrame:self.navigationController.view.bounds];
-    backgroudView.image = [UIImage imageNamed:@"背景"];
+    backgroudView.image = [UIImage imageNamed:@"basicBackground"];
     [self.view addSubview:backgroudView];
     
     [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(moveToHomePage) name:MOVETOHOMEPAGENOTIFICATION object:nil];
@@ -66,25 +66,17 @@
     
     _personCtl = [[PersonalController alloc] init];
     _personCtl.delegate = self;
-    _personCtl.view.x = -kScreenWidth * 3 / 4;
+//    _personCtl.view.x = -kScreenWidth * 3 / 4;
     [self addChildViewController:_personCtl];
     
     [self.view addSubview:_personCtl.view];
     [self.view addSubview:_homeCtl.view];
+    
 }
 
 - (void)viewWillAppear:(BOOL)animated
 {
     [super viewWillAppear:animated];
-//    if (_rightImageView) {
-//        _rightImageView.alpha = 1;
-//        [UIView animateWithDuration:0.2 animations:^{
-//           
-//            _rightImageView.y = 20;
-//            _rightImageView.x = kScreenWidth * 3 / 4;
-//        }];
-//        
-//    }
 }
 
 - (void)moveToHomePage
@@ -97,42 +89,23 @@
 
 - (void)leftClick
 {
-//    _rightImageView = [[UIImageView alloc] initWithFrame:self.navigationController.view.bounds];
-//    if (!_rightImageView.image) {
-//       [_rightImageView setViewCopiedImage:self.navigationController.view];
-//    }
-//    UITapGestureRecognizer *tap = [[UITapGestureRecognizer alloc] initWithTarget:self action:@selector(back)];
-//    _rightImageView.userInteractionEnabled = YES;
-//    [_rightImageView addGestureRecognizer:tap];
-//    [self.navigationController.view addSubview:_rightImageView];
-//    _personCtl.view.alpha = 1;
     [UIView animateWithDuration:0.3 animations:^{
         
-//        [_homeCtl.view removeFromSuperview];
         _homeCtl.view.x = kScreenWidth * 3 / 4;
-        _personCtl.view.x = 0;
+//        _personCtl.view.x = 0;
     } completion:^(BOOL finished) {
-//        [_personCtl setRightImage:_rightImageView.image];
-//        _rightImageView.hidden = YES;
-//        _rightImageView = nil;
-//        [_rightImageView removeFromSuperview];
-//        [_homeCtl.view removeFromSuperview];
+
     }];
 }
 
 - (void)back
 {
     [UIView animateWithDuration:0.3 animations:^{
-        _homeCtl.view.x = 0;
+//        _homeCtl.view.x = 0;
         _personCtl.view.x = -kScreenWidth * 3 / 4;
     } completion:^(BOOL finished) {
         _rightImageView.hidden = YES;
         _rightImageView = nil;
-//        [self.view addSubview:_homeCtl.view];
-//        self.view.alpha = 0;
-//        dispatch_async(dispatch_get_main_queue(), ^{
-//            [[NSNotificationCenter defaultCenter] postNotificationName:MOVETOHOMEPAGENOTIFICATION object:nil];
-//        });
     }];
 }
 
@@ -141,15 +114,10 @@
 {
     [UIView animateWithDuration:0.3 animations:^{
         _homeCtl.view.x = 0;
-        _personCtl.view.x = -kScreenWidth * 3 / 4;
+//        _personCtl.view.x = -kScreenWidth * 3 / 4;
     } completion:^(BOOL finished) {
         _rightImageView.hidden = YES;
         _rightImageView = nil;
-        //        [self.view addSubview:_homeCtl.view];
-        //        self.view.alpha = 0;
-        //        dispatch_async(dispatch_get_main_queue(), ^{
-        //            [[NSNotificationCenter defaultCenter] postNotificationName:MOVETOHOMEPAGENOTIFICATION object:nil];
-        //        });
     }];
 }
 
@@ -157,9 +125,6 @@
 
 - (void)didSelectCellWithIndexPath:(NSIndexPath *)index
 {
-//    _rightImageView.alpha = 0;
-//    _rightImageView.x = 0;
-//    _rightImageView.y = 0;
     if (index.section == 0) {
         switch (index.row) {
             case 0:

@@ -36,8 +36,14 @@ typedef enum : NSUInteger {
 @property (nonatomic,assign)BOOL showRightButton;
 @property (nonatomic , assign) BOOL showRightButtonView;
 
+@property (nonatomic , strong) UIButton *backButton;
+
+@property (nonatomic , strong) UIButton *rightButton;
+
 @property (nonatomic , weak) id<BasicBarViewDelegate> delegate;
 
 - (instancetype)initWithFrame:(CGRect)frame withType:(superBarType)type withTitle:(NSString *)title;
+
+- (void)setRightButtonEnable:(BOOL)enable;
 
 @end

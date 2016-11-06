@@ -223,72 +223,72 @@ static NSString *cellIdentifier = @"cellIdentifier";
         return;
     }
     
-    [[NSNotificationCenter defaultCenter] postNotificationName:@"move" object:nil];
-    if (indexPath.section == 0) {
-        switch (indexPath.row) {
-            case 0:
-            {
-                MyDataController *myDataCtl = [[MyDataController alloc] init];
-                myDataCtl.hidesBottomBarWhenPushed = YES;
-                [self.navigationController pushViewController:myDataCtl animated:YES];
-            }
-                break;
-            case 1:
-            {
-                SetTargetController *targetCtl = [[SetTargetController alloc] init];
-                targetCtl.hidesBottomBarWhenPushed = YES;
-                [self.navigationController pushViewController:targetCtl animated:YES];
-            }
-                break;
-                
-            case 2:
-            {
-                HistoryDataController *historyCtl = [[HistoryDataController alloc] init];
-                historyCtl.hidesBottomBarWhenPushed = YES;
-                [self.navigationController pushViewController:historyCtl animated:YES];
-            }
-                break;
-                
-            case 3:
-            {
-                RelateDeviceController *relateCtl = [[RelateDeviceController alloc] init];
-                relateCtl.hidesBottomBarWhenPushed = YES;
-                [self.navigationController pushViewController:relateCtl animated:YES];
-            }
-                break;
-                
-                
-            default:
-                break;
-        }
-    }
-    else{
-        switch (indexPath.row) {
-            case 0:
-            {
-                AboutMorriganController *aboutCtl = [[AboutMorriganController alloc] initWithTitle:@"关于MORRIGAN" showBackButton:YES showRightButton:YES rightButtonImageName:@"icon_rightItem_link" backButtonImageName:@"icon_rightArrow"];
-                [self.navigationController pushViewController:aboutCtl animated:YES];
-            }
-                break;
-            case 1:
-            {
-                SuggestionController *suggestCtl = [[SuggestionController alloc] initWithTitle:@"意见反馈" showBackButton:YES showRightButton:YES rightButtonText:@"确定" backButtonText:@"取消"];
-                [self.navigationController pushViewController:suggestCtl animated:YES];
-            }
-                break;
-                
-            case 2:
-            {
-                UIAlertView *alert = [[UIAlertView alloc] initWithTitle:@"注销用户信息" message:@"注销后此账号将删除所有有关信息，只能通过重新注册才能登陆" delegate:self cancelButtonTitle:@"取消" otherButtonTitles:@"注销", nil];
-                [alert show];
-            }
-                break;
-                
-                
-            default:
-                break;
-        }
-    }
+//    [[NSNotificationCenter defaultCenter] postNotificationName:@"move" object:nil];
+//    if (indexPath.section == 0) {
+//        switch (indexPath.row) {
+//            case 0:
+//            {
+//                MyDataController *myDataCtl = [[MyDataController alloc] init];
+//                myDataCtl.hidesBottomBarWhenPushed = YES;
+//                [self.navigationController pushViewController:myDataCtl animated:YES];
+//            }
+//                break;
+//            case 1:
+//            {
+//                SetTargetController *targetCtl = [[SetTargetController alloc] init];
+//                targetCtl.hidesBottomBarWhenPushed = YES;
+//                [self.navigationController pushViewController:targetCtl animated:YES];
+//            }
+//                break;
+//                
+//            case 2:
+//            {
+//                HistoryDataController *historyCtl = [[HistoryDataController alloc] init];
+//                historyCtl.hidesBottomBarWhenPushed = YES;
+//                [self.navigationController pushViewController:historyCtl animated:YES];
+//            }
+//                break;
+//                
+//            case 3:
+//            {
+//                RelateDeviceController *relateCtl = [[RelateDeviceController alloc] init];
+//                relateCtl.hidesBottomBarWhenPushed = YES;
+//                [self.navigationController pushViewController:relateCtl animated:YES];
+//            }
+//                break;
+//                
+//                
+//            default:
+//                break;
+//        }
+//    }
+//    else{
+//        switch (indexPath.row) {
+//            case 0:
+//            {
+//                AboutMorriganController *aboutCtl = [[AboutMorriganController alloc] initWithTitle:@"关于MORRIGAN" showBackButton:YES showRightButton:YES rightButtonImageName:@"icon_rightItem_link" backButtonImageName:@"icon_rightArrow"];
+//                [self.navigationController pushViewController:aboutCtl animated:YES];
+//            }
+//                break;
+//            case 1:
+//            {
+//                SuggestionController *suggestCtl = [[SuggestionController alloc] initWithTitle:@"意见反馈" showBackButton:YES showRightButton:YES rightButtonText:@"确定" backButtonText:@"取消"];
+//                [self.navigationController pushViewController:suggestCtl animated:YES];
+//            }
+//                break;
+//                
+//            case 2:
+//            {
+//                UIAlertView *alert = [[UIAlertView alloc] initWithTitle:@"注销用户信息" message:@"注销后此账号将删除所有有关信息，只能通过重新注册才能登陆" delegate:self cancelButtonTitle:@"取消" otherButtonTitles:@"注销", nil];
+//                [alert show];
+//            }
+//                break;
+//                
+//                
+//            default:
+//                break;
+//        }
+//    }
 
 }
 

@@ -73,6 +73,10 @@
 #define ID_CANCEL_MOLI            1011
 #define URL_CANCEL_MOLI            APP_SERVER_URL@"rest/moli/cancel"
 
+//意见反馈
+#define ID_FEEDBACK_MOLI            1012
+#define URL_FEEDBACK_MOLI            APP_SERVER_URL@"rest/moli/feedback"
+
 // ---------------------------------------------------------------------------------------------------------
 #define kColor_440067  @"#440067"  // 深紫色
 #define kColor_6911a5  @"#6911a5"  // 普通紫色
