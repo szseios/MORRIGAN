@@ -44,6 +44,10 @@
     
     [self setUpCollectionView];
     
+    if (self.connectBottomView) {
+        [self.view bringSubviewToFront:self.connectBottomView];
+    }
+    
 }
 
 - (void)setUpCollectionView
@@ -86,7 +90,8 @@
 
 - (void)clickBingdingDevice
 {
-    NSLog(@"绑定设备");
+    SearchPeripheralViewController *search = [[SearchPeripheralViewController alloc] init];
+    [self.navigationController pushViewController:search animated:YES];
 }
 
 

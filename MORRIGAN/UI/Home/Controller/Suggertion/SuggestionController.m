@@ -30,6 +30,9 @@
     [self.view addSubview:backImageView];
     
     [self setUpBarView];
+    if (self.connectBottomView) {
+        [self.view bringSubviewToFront:self.connectBottomView];
+    }
 }
 
 - (void)setUpBarView

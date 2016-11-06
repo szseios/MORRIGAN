@@ -129,7 +129,6 @@
         [_rightButton setTitleColor:[UIColor whiteColor] forState:UIControlStateNormal];
     }
     _rightButton.enabled = enable;
-//    [self setNeedsDisplay];
 }
 /*
 // Only override drawRect: if you perform custom drawing.

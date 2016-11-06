@@ -10,14 +10,11 @@
 
 #import <UIKit/UIKit.h>
 #import "LoginBaseController.h"
-#import "RootViewController.h"
 
 #define kUserDefaultIdKey             @"kUserDefaultIdKey"        // 保存用户名key
 #define kUserDefaultPasswordKey       @"kUserDefaultPasswordKey"  // 保存密码key
 
 
 @interface LoginViewController : LoginBaseController
-
-@property (nonatomic , weak) RootViewController *homePageController;
 
 @end

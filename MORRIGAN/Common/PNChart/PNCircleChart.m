@@ -128,8 +128,8 @@ displayCountingLabel:(BOOL)displayCountingLabel
     self = [super initWithFrame:frame];
     
     if (self) {
-        _total = total;
-        _current = current;
+        _total = @72;
+        _current = @((NSInteger)(endAngle - startAngle) / 10);
         _strokeColor = PNFreshGreen;
         _duration = 1.0;
         _chartType = PNChartFormatTypePercent;
@@ -148,7 +148,7 @@ displayCountingLabel:(BOOL)displayCountingLabel
         UIBezierPath *circlePath = [UIBezierPath bezierPathWithArcCenter:CGPointMake(self.frame.size.width/2.0f, self.frame.size.height/2.0f)
                                                                   radius:(self.frame.size.height * 0.5) - ([_lineWidth floatValue]/2.0f)
                                                               startAngle:DEGREES_TO_RADIANS(startAngle - 90.0)
-                                                                endAngle:DEGREES_TO_RADIANS(endAngle + 90)
+                                                                endAngle:DEGREES_TO_RADIANS(startAngle + 269.9)
                                                                clockwise:clockwise];
         
         _circle               = [CAShapeLayer layer];

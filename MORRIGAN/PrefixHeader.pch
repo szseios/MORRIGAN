@@ -22,5 +22,7 @@
 #import "UIImageView+WebCache.h"
 #import "BluetoothManager.h"
 #import "BluetoothOperation.h"
+#import "SearchPeripheralViewController.h"
+
 #endif
 

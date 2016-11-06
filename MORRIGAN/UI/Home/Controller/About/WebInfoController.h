@@ -6,9 +6,9 @@
 //  Copyright © 2016年 mac-jhw. All rights reserved.
 //
 
-#import <UIKit/UIKit.h>
+#import "HomePageSuperController.h"
 
-@interface WebInfoController : UIViewController
+@interface WebInfoController : HomePageSuperController
 
 - (instancetype)initWithTitle:(NSString *)title webURL:(NSString *)urlString;
 

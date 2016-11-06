@@ -30,7 +30,11 @@ static NSString *cellID = @"cellID";
     
     // Do any additional setup after loading the view from its nib.
     [_aboutTableView registerClass:[UITableViewCell class] forCellReuseIdentifier:cellID];
+    _aboutTableView.tableFooterView = [UIView new];
     [self setUpBarView];
+    if (self.connectBottomView) {
+        [self.view bringSubviewToFront:self.connectBottomView];
+    }
 }
 
 - (void)setUpBarView
@@ -50,7 +54,8 @@ static NSString *cellID = @"cellID";
 
 - (void)clickBingdingDevice
 {
-    NSLog(@"绑定设备");
+    SearchPeripheralViewController *search = [[SearchPeripheralViewController alloc] init];
+    [self.navigationController pushViewController:search animated:YES];
 }
 
 

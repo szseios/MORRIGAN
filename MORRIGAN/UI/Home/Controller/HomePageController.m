@@ -16,25 +16,7 @@
 #import "AutoKneadViewController.h"
 #import "HandKneadViewController.h"
 
-@interface UIImageView (backImageMove)
-
-- (void)setViewCopiedImage:(UIView *)view;
-
-@end
-
-@implementation UIImageView (backImageMove)
-
-- (void)setViewCopiedImage:(UIView *)view {
-    UIGraphicsBeginImageContextWithOptions(view.bounds.size, NO, 4);
-    [view.layer renderInContext:UIGraphicsGetCurrentContext()];
-    UIImage *image = UIGraphicsGetImageFromCurrentImageContext();
-    UIGraphicsEndImageContext();
-    self.image = image;
-}
-
-@end
-
-@interface HomePageController () <BasicBarViewDelegate>
+@interface HomePageController () <BasicBarViewDelegate,UIAlertViewDelegate>
 
 @property (nonatomic , strong) HomePageButton *handButton;
 
@@ -65,24 +47,33 @@
     upBackImage.image = [UIImage imageNamed:@"upBackgroud"];
     [self.view addSubview:upBackImage];
     
-    UIImageView *downBackImage = [[UIImageView alloc] initWithFrame:CGRectMake(0, self.view.height - 180, self.view.width, 180)];
+    UIImageView *downBackImage = [[UIImageView alloc] initWithFrame:CGRectMake(0, self.view.height - (kScreenHeight > 568 ? 180 : 170), self.view.width, (kScreenHeight > 568 ? 180 : 170))];
     downBackImage.image = [UIImage imageNamed:@"downBackgroud"];
     [self.view addSubview:downBackImage];
     
     [self setUpBarView];
     
-    [self setUpHomeMainView];
+    
     [self setUpBottomView];
     
     UITapGestureRecognizer *tap = [[UITapGestureRecognizer alloc] initWithTarget:self action:@selector(moveBack)];
     self.view.userInteractionEnabled = YES;
     [self.view addGestureRecognizer:tap];
     
+    if (self.connectBottomView) {
+        
+        [self.view bringSubviewToFront:self.connectBottomView];
+        
+       UIAlertView *alert = [[UIAlertView alloc] initWithTitle:@"还未连接设备" message:nil delegate:self cancelButtonTitle:@"取消" otherButtonTitles:@"连接", nil];
+        [alert show];
+    }
+    
 }
 
 - (void)viewWillAppear:(BOOL)animated
 {
     [super viewWillAppear:animated];
+    [self setUpHomeMainView];
 }
 
 - (void)setUpBarView
@@ -100,7 +91,8 @@
     
     NSDictionary *temDic = @{@"startTime":@90,@"endTime":@180};
     NSDictionary *temDic1 = @{@"startTime":@270,@"endTime":@310};
-    NSArray *array = @[temDic,temDic1];
+    NSDictionary *temDic3 = @{@"startTime":@200,@"endTime":@260};
+    NSArray *array = @[temDic,temDic1,temDic3];
     _mainView = [[HomeMainView alloc] initWithMorriganArray:array withFarme:CGRectMake(mainViewX, 74, mainViewW, mainViewH)];
     _mainView.backgroundColor = [UIColor clearColor];
     
@@ -115,7 +107,7 @@
 
 - (void)setUpBottomView
 {
-    CGFloat bottomViewY = self.view.height - 150;
+    CGFloat bottomViewY = self.view.height - (kScreenHeight > 568 ? 150 : 140);
     CGFloat bottomViewW = self.view.width;
     _bottomView = [[UIView alloc] initWithFrame:CGRectMake(0, bottomViewY, bottomViewW, 150)];
     
@@ -167,7 +159,7 @@
 //手动按摩
 - (void)pushHandlePage{
     if (!_isLeft) {
-        _handButton.enabled = NO;
+        _handButton.enabled = YES;
         HandKneadViewController *handKneadViewController = [[HandKneadViewController alloc] init];
         [self.navigationController pushViewController:handKneadViewController animated:YES];
     }
@@ -215,11 +207,18 @@
 {
     if (_isLeft) {
         _isLeft = NO;
+         _handButton.enabled = YES;
         if (self.delegate && [self.delegate respondsToSelector:@selector(rightClick)]) {
             [self.delegate rightClick];
         }
     }
-    
+}
+
+- (void)alertView:(UIAlertView *)alertView clickedButtonAtIndex:(NSInteger)buttonIndex
+{
+    if (buttonIndex == 1) {
+        [self clickBingdingDevice];
+    }
 }
 
 

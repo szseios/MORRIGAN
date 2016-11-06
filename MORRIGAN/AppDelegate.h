@@ -9,7 +9,7 @@
 #import <UIKit/UIKit.h>
 
 // 欢迎界面等待时间
-#define kWelcomePageDelayTime   2.0
+#define kWelcomePageDelayTime   1.0
 
 
 

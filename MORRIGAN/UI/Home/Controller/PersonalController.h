@@ -16,7 +16,7 @@
 
 @end
 
-@interface PersonalController : HomePageSuperController
+@interface PersonalController : UIViewController
 
 @property (nonatomic , strong) UIImage *rightImage;
 

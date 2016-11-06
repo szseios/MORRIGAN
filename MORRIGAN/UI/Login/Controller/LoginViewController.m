@@ -393,13 +393,6 @@
              // 进入主页
              RootViewController *homeViewController = [[RootViewController alloc] init];
              [self.navigationController pushViewController:homeViewController animated:YES];
-//             dispatch_async(dispatch_get_main_queue(), ^{
-//                 UINavigationController *nav = [[UINavigationController alloc] initWithRootViewController:homeViewController];
-//                 nav.navigationBarHidden = YES;
-//                 [UIApplication sharedApplication].keyWindow.rootViewController = nav;
-//                 
-//             });
-//
 
          } else {
              
@@ -409,15 +402,6 @@
          }
          
      }];
-}
-
-- (RootViewController *)homeNavigationController
-{
-    if (!_homePageController) {
-        RootViewController *homeViewController = [[RootViewController alloc] init];
-        return homeViewController;
-    }
-    return _homePageController;
 }
 
 

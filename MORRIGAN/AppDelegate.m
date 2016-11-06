@@ -56,7 +56,7 @@
         UINavigationController *nav = [[UINavigationController alloc] initWithRootViewController:loginViewController];
         nav.navigationBarHidden = YES;
         self.window.rootViewController = nav;
-        [self.window makeKeyAndVisible];
+//        [self.window makeKeyAndVisible];
     });
   
     

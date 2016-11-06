@@ -72,6 +72,10 @@ static NSString *cellIdentifier = @"cellIdentifier";
     _logoutButton.hidden = YES;
     
     [self setUpBarView];
+    
+    if (self.connectBottomView) {
+        [self.view bringSubviewToFront:self.connectBottomView];
+    }
 }
 
 - (void)setUpBarView
@@ -107,7 +111,8 @@ static NSString *cellIdentifier = @"cellIdentifier";
 
 - (void)clickBingdingDevice
 {
-    NSLog(@"绑定设备");
+    SearchPeripheralViewController *search = [[SearchPeripheralViewController alloc] init];
+    [self.navigationController pushViewController:search animated:YES];
 }
 
 #pragma mark - UITableViewDataSource
@@ -157,7 +162,7 @@ static NSString *cellIdentifier = @"cellIdentifier";
                 break;
             case 1:
             {
-                NickNameController *nickNameCtl = [[NickNameController alloc] initWithTitle:@"修改昵称" showBackButton:YES showRightButton:YES rightButtonText:@"确定" backButtonText:@"取消"];
+                NickNameController *nickNameCtl = [[NickNameController alloc] init];
                 [self.navigationController pushViewController:nickNameCtl animated:YES];
             }
                 break;
@@ -171,7 +176,7 @@ static NSString *cellIdentifier = @"cellIdentifier";
     else if (indexPath.section == 1){
         _selectCell = [tableView cellForRowAtIndexPath:indexPath];
         _pickerBackgroudView = [[UIView alloc] initWithFrame:CGRectMake(0, kScreenHeight, kScreenWidth, kScreenHeight)];
-        _pickerBackgroudView.backgroundColor = [UIColor colorWithRed:0.6 green:0.6 blue:0.6 alpha:0.7];
+        _pickerBackgroudView.backgroundColor = [UIColor clearColor]; //[UIColor colorWithRed:0.6 green:0.6 blue:0.6 alpha:0.7];
         [self.view addSubview:_pickerBackgroudView];
         _chooseView = [[ChooseDataView alloc] initWithType:pickerViewTypeAge withFrame:CGRectMake(0, kScreenHeight - 250, kScreenWidth, 250)];
         _chooseView.delegate = self;

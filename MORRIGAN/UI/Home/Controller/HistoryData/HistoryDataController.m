@@ -59,6 +59,10 @@ static NSString *cellID = @"DataCellID";
     [self setUpDayBarChatView];
     [self setUpWeekBarChatView];
     [self setUpBottomView];
+    
+    if (self.connectBottomView) {
+        [self.view bringSubviewToFront:self.connectBottomView];
+    }
 }
 
 - (void)getDataFromService
@@ -349,7 +353,8 @@ static NSString *cellID = @"DataCellID";
 
 - (void)clickBingdingDevice
 {
-    NSLog(@"绑定设备");
+    SearchPeripheralViewController *search = [[SearchPeripheralViewController alloc] init];
+    [self.navigationController pushViewController:search animated:YES];
 }
 
 #pragma mark - UITableViewDelegate,UITableViewDataSource

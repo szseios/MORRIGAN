@@ -16,7 +16,7 @@
 
 @end
 
-@interface HomePageController : UIViewController
+@interface HomePageController : HomePageSuperController
 
 @property (nonatomic , weak) id<HomePageControllerDelegate> delegate;
 

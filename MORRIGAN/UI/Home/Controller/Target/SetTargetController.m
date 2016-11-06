@@ -32,10 +32,15 @@
     _achieveButton.clipsToBounds = YES;
     _achieveButton.layer.cornerRadius = 5;
     [_achieveButton addTarget:self action:@selector(targetAchieve) forControlEvents:UIControlEventTouchUpInside];
+    _countLabel.text = [UserInfo share].target;
     
     [self setUpBarView];
     
     [self setUpRulerView];
+    
+    if (self.connectBottomView) {
+        [self.view bringSubviewToFront:self.connectBottomView];
+    }
 }
 
 - (void)setUpBarView
@@ -91,9 +96,10 @@
     [self.navigationController popViewControllerAnimated:YES];
 }
 
-- (void)clickBingdingDevice
+- (void)clickEnsure
 {
-    NSLog(@"绑定设备");
+    SearchPeripheralViewController *search = [[SearchPeripheralViewController alloc] init];
+    [self.navigationController pushViewController:search animated:YES];
 }
 
 #pragma mark - ZHRulerViewDelegate

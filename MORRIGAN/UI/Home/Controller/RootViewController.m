@@ -51,9 +51,7 @@
 @implementation RootViewController
 
 - (void)viewDidLoad {
-    [super viewDidLoad];
-    // Do any additional setup after loading the view.
-    
+    [super viewDidLoad];    
     UIImageView *backgroudView = [[UIImageView alloc] initWithFrame:self.navigationController.view.bounds];
     backgroudView.image = [UIImage imageNamed:@"basicBackground"];
     [self.view addSubview:backgroudView];
@@ -167,13 +165,13 @@
         switch (index.row) {
             case 0:
             {
-                AboutMorriganController *aboutCtl = [[AboutMorriganController alloc] initWithTitle:@"关于MORRIGAN" showBackButton:YES showRightButton:YES rightButtonImageName:@"icon_rightItem_link" backButtonImageName:@"icon_rightArrow"];
+                AboutMorriganController *aboutCtl = [[AboutMorriganController alloc] init];
                 [self.navigationController pushViewController:aboutCtl animated:YES];
             }
                 break;
             case 1:
             {
-                SuggestionController *suggestCtl = [[SuggestionController alloc] initWithTitle:@"意见反馈" showBackButton:YES showRightButton:YES rightButtonText:@"确定" backButtonText:@"取消"];
+                SuggestionController *suggestCtl = [[SuggestionController alloc] init];
                 [self.navigationController pushViewController:suggestCtl animated:YES];
             }
                 break;
