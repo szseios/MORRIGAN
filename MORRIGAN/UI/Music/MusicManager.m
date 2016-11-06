@@ -132,7 +132,8 @@ static MusicManager *manager = nil;
 - (void)getPeakPower {
     [_player updateMeters];
     int16_t peakPower = [_player peakPowerForChannel:0] + 160;
-    NSLog(@"getPeakPower : %@   , chanels : %@",@(peakPower).stringValue,@(peakPower).stringValue);
+    int16_t peakPower2 = [_player peakPowerForChannel:1] + 160;
+    NSLog(@"getPeakPower1 : %@   , 2 : %@",@(peakPower).stringValue,@(peakPower2).stringValue);
     
     BluetoothOperation *operation = [[BluetoothOperation alloc] init];
     [operation setValue:@"01" index:2];

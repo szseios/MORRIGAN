@@ -83,7 +83,6 @@
 }
 
 - (IBAction)back:(id)sender {
-//    [self.navigationController popViewControllerAnimated:YES];
     NSArray *array = [self.navigationController viewControllers];
     for (UIViewController *ctl in array) {
         if ([ctl isKindOfClass:[RootViewController class]]) {
