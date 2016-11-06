@@ -37,6 +37,7 @@
     _barView = [[BasicBarView alloc] initWithFrame:CGRectMake(0, 20, kScreenWidth, 44) withType:superBarTypeLeftItemCancel withTitle:@"意见反馈"];
     [self.view addSubview:_barView];
     _barView.delegate = self;
+    [_barView setRightButtonEnable:NO];
 }
 
 - (void)hiddenLabel
@@ -51,9 +52,21 @@
     [self.navigationController popViewControllerAnimated:YES];
 }
 
-- (void)clickBingdingDevice
+- (void)clickEnsure
 {
-    NSLog(@"绑定设备");
+    NSDictionary *dictionary = @{@"userId": [UserInfo share].userId,
+                                 @"content": _suggestTextView.text,
+                                 };
+    NSString *bodyString = [NMOANetWorking handleHTTPBodyParams:dictionary];
+    [[NMOANetWorking share] taskWithTag:ID_FEEDBACK_MOLI urlString:URL_FEEDBACK_MOLI httpHead:nil bodyString:bodyString objectTaskFinished:^(NSError *error, id obj) {
+        
+        if ([[obj objectForKey:HTTP_KEY_RESULTCODE] isEqualToString:HTTP_RESULTCODE_SUCCESS]) {
+            [MBProgressHUD showHUDByContent:@"反馈成功！" view:UI_Window afterDelay:2];
+            NSLog(@"修改目标成功！");
+        }else{
+            [MBProgressHUD showHUDByContent:@"反馈失败！" view:UI_Window afterDelay:2];
+        }
+    }];
 }
 
 
@@ -61,7 +74,11 @@
 #pragma mark - UITextViewDelegate
 -(void)textViewDidChange:(UITextView *)textView
 {
-    
+    if (textView.text.length > 70 || textView.text.length == 0) {
+        [_barView setRightButtonEnable:NO];
+    }else{
+        [_barView setRightButtonEnable:YES];
+    }
 }
 
 - (BOOL)textViewShouldBeginEditing:(UITextView *)textView

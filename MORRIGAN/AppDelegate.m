@@ -15,6 +15,7 @@
 #import "MusicManager.h"
 #import "BluetoothManager.h"
 #import <AVFoundation/AVFoundation.h>
+#import "RootViewController.h"
 
 @interface AppDelegate ()
 
@@ -48,6 +49,7 @@
     [self.window addSubview:wellcomeView];
     [self.window bringSubviewToFront:wellcomeView];
     __block UIImageView *wellcomeViewBlock = wellcomeView;
+    
     dispatch_after(dispatch_time(DISPATCH_TIME_NOW, (int64_t)(kWelcomePageDelayTime * NSEC_PER_SEC)), dispatch_get_main_queue(), ^{
         [wellcomeViewBlock removeFromSuperview];
         

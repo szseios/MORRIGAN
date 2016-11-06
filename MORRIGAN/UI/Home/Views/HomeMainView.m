@@ -89,6 +89,17 @@
     _scrollView.backgroundColor = [UIColor clearColor];
     [self addSubview:_scrollView];
     
+    UIView *backView = [[UIView alloc] init];
+    [backView setCenter:_scrollView.center];
+    [backView setSize:CGSizeMake(_scrollView.width - 30, _scrollView.width - 30)];
+    backView.clipsToBounds = YES;
+    backView.layer.cornerRadius = backView.width / 2;
+    [_scrollView addSubview:backView];
+    
+    UIImageView *waveImage = [[UIImageView alloc] initWithFrame:backView.frame];
+    waveImage.image = [UIImage imageNamed:@"wave"];
+    [backView addSubview:waveImage];
+    
     CGFloat timeLabelY = (_scrollView.frame.size.width / 2) - 80;
     CGFloat timeLabelW = CGRectGetWidth(_scrollView.frame);
     CGFloat timeLabelH = 100;
@@ -102,7 +113,7 @@
     [_scrollView addSubview:_timeLabel];
     
     NSDateFormatter *formatter = [[NSDateFormatter alloc] init];
-    [formatter setDateFormat:@"yyyy年MM月dd日"];
+    [formatter setDateFormat:@"yyyy年MM月dd日 aa"];
     NSString *dateStr = [formatter stringFromDate:[NSDate date]];
     
     CGFloat dateLabelY = CGRectGetMaxY(_timeLabel.frame);

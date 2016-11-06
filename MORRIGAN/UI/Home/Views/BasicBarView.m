@@ -10,10 +10,6 @@
 
 @interface BasicBarView ()
 
-@property (nonatomic , strong) UIButton *backButton;
-
-@property (nonatomic , strong) UIButton *rightButton;
-
 @property (nonatomic , assign) superBarType type;
 
 @property (nonatomic , strong) UILabel *titleLabel;
@@ -82,7 +78,7 @@
         case superBarTypeLeftItemBackAndRightItemBinding:
         {
             [_backButton addTarget:self action:@selector(backClick) forControlEvents:UIControlEventTouchUpInside];
-            [_backButton setImage:[UIImage imageNamed:@"Menu_icon"] forState:UIControlStateNormal];
+            [_backButton setImage:[UIImage imageNamed:@"back"] forState:UIControlStateNormal];
             
             [_rightButton addTarget:self action:@selector(bindingDevice) forControlEvents:UIControlEventTouchUpInside];
             [_rightButton setImage:[UIImage imageNamed:@"icon_rightItem_link"] forState:UIControlStateNormal];
@@ -125,6 +121,16 @@
     }
 }
 
+- (void)setRightButtonEnable:(BOOL)enable
+{
+    if (!enable) {
+        [_rightButton setTitleColor:[UIColor lightGrayColor] forState:UIControlStateNormal];
+    }else{
+        [_rightButton setTitleColor:[UIColor whiteColor] forState:UIControlStateNormal];
+    }
+    _rightButton.enabled = enable;
+//    [self setNeedsDisplay];
+}
 /*
 // Only override drawRect: if you perform custom drawing.
 // An empty implementation adversely affects performance during animation.
