@@ -13,7 +13,7 @@
 
 static MusicManager *manager = nil;
 
-@interface MusicManager () {
+@interface MusicManager () <AVAudioPlayerDelegate> {
     NSTimer *_timer;
 }
 
@@ -65,6 +65,7 @@ static MusicManager *manager = nil;
             _player = nil;
         }
         _player = [[AVAudioPlayer alloc] initWithContentsOfURL:url error:nil];
+        _player.delegate = self;
         _player.meteringEnabled = YES;
         [[AVAudioSession sharedInstance] setActive:YES error:nil];
         [[AVAudioSession sharedInstance] setCategory:AVAudioSessionCategoryPlayback error:nil];

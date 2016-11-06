@@ -190,6 +190,8 @@
     [tableView deselectRowAtIndexPath:indexPath animated:YES];
     _selectedIndexPath = indexPath;
     [self playMusicByIndexPath:indexPath];
+    [_startButton setBackgroundImage:[UIImage imageNamed:@"music_stop"]
+                            forState:UIControlStateNormal];
 }
 
 
@@ -247,6 +249,8 @@
         _selectedIndexPath = [NSIndexPath indexPathForRow:_selectedIndexPath.row - 1
                                                 inSection:0];
         [self playMusicByIndexPath:_selectedIndexPath];
+        [_startButton setBackgroundImage:[UIImage imageNamed:@"music_stop"]
+                                forState:UIControlStateNormal];
     }
 }
 
@@ -256,6 +260,8 @@
                                                 inSection:0];
         
         [self playMusicByIndexPath:_selectedIndexPath];
+        [_startButton setBackgroundImage:[UIImage imageNamed:@"music_stop"]
+                                forState:UIControlStateNormal];
     }
 }
 
@@ -284,6 +290,9 @@
     [_pcseView start];
 }
 
+
+#pragma mark - MusicManager Delegate
+
 //音乐播放完成,自动播放下一首音乐
 - (void)audioPlayerDidFinish {
     if (_selectedIndexPath.row + 1 < _musics.count) {
@@ -293,6 +302,9 @@
         [self playMusicByIndexPath:_selectedIndexPath];
     }
 }
+
+
+#pragma mark - MusicView Move
 
 - (void)dragMusicView:(UIPanGestureRecognizer *)recognizer {
     CGPoint location = [recognizer locationInView:self.view];
@@ -327,8 +339,6 @@
         }
     }
 }
-
-#pragma mark - MusicView Move
 
 - (void)showMusicView {
     if ([self musicViewOnBottom]) {

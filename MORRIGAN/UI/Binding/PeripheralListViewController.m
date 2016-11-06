@@ -16,9 +16,9 @@
 
 @property (weak, nonatomic) IBOutlet UIButton *backButton;
 @property (weak, nonatomic) IBOutlet UITableView *tableView;
-@property (weak, nonatomic) IBOutlet UILabel *connectLabel;
 @property (weak, nonatomic) IBOutlet UILabel *chooseLabel;
 @property (weak, nonatomic) IBOutlet UIView *squareView;
+@property (weak, nonatomic) IBOutlet UILabel *connectingLabel;
 
 @end
 
@@ -38,12 +38,18 @@
     [_tableView registerNib:[UINib nibWithNibName:@"SearchPeripheralTableViewCell" bundle:nil]
      forCellReuseIdentifier:Identifier];
     
+    _connectingLabel.textColor = [UIColor colorWithRed:139 / 255.0
+                                                 green:83 / 255.0
+                                                  blue:221 / 255.0
+                                                 alpha:0.8];
+    
     _squareView.layer.cornerRadius = 5;
     _squareView.layer.borderColor = [UIColor colorWithRed:139 / 255.0
                                                     green:83 / 255.0
                                                      blue:221 / 255.0
                                                     alpha:0.8].CGColor;
     _squareView.layer.borderWidth = 1;
+    _squareView.hidden = YES;
 }
 
 - (void)didReceiveMemoryWarning {
@@ -75,6 +81,8 @@
 - (void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath {
     CBPeripheral *peripheral = [BluetoothManager share].scannedPeripherals[indexPath.row];
     [[BluetoothManager share] connectingBlueTooth:peripheral];
+    _squareView.hidden = NO;
+    self.view.userInteractionEnabled = NO;
 }
 
 
