@@ -43,6 +43,7 @@
 @property (nonatomic , strong) HomePageButton *musicButton;
 
 @property (nonatomic , strong) UIView *bottomView;
+
 @property (nonatomic , strong) UIImageView *rightImageView;
 
 @property (nonatomic , strong) BasicBarView *barView;
@@ -105,9 +106,6 @@
     
     [self.view addSubview:_mainView];
     
-//    self.view.userInteractionEnabled = YES;
-//    UITapGestureRecognizer *tap = [[UITapGestureRecognizer alloc] initWithTarget:self action:@selector(setUpCircleView)];
-//    [_mainView addGestureRecognizer:tap];
 }
 
 - (void)setUpCircleView
@@ -169,6 +167,7 @@
 //手动按摩
 - (void)pushHandlePage{
     if (!_isLeft) {
+        _handButton.enabled = NO;
         HandKneadViewController *handKneadViewController = [[HandKneadViewController alloc] init];
         [self.navigationController pushViewController:handKneadViewController animated:YES];
     }
@@ -201,11 +200,13 @@
         if (self.delegate && [self.delegate respondsToSelector:@selector(leftClick)]) {
             [self.delegate leftClick];
         }
+        _handButton.enabled = NO;
     }else{
         _isLeft = NO;
         if (self.delegate && [self.delegate respondsToSelector:@selector(rightClick)]) {
             [self.delegate rightClick];
         }
+        _handButton.enabled = YES;
     }
     
 }

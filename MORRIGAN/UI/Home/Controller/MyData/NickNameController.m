@@ -54,7 +54,7 @@
     [self.navigationController popViewControllerAnimated:YES];
 }
 
-- (void)clickBingdingDevice
+- (void)clickEnsure
 {
     if (_textField.text.length > 0) {
         [[NSNotificationCenter defaultCenter] postNotificationName:CHANGENICKNAME object:_textField.text];

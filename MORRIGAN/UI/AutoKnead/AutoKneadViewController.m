@@ -114,6 +114,7 @@
     // 顶部一个按钮：按钮3
     FuntionButton *button3 = [[FuntionButton alloc] initWithFrame:CGRectMake(buttonX, buttonY, buttonW, buttonH)];
     [button3 setImage:[UIImage imageNamed:@"empty"] forState:UIControlStateNormal];
+    button3.funCodeString = @"00";
     [self.view addSubview:button3];
 
     buttonX = 60.0;
@@ -128,6 +129,7 @@
     // 第二行左边按钮：按钮2
     FuntionButton *button2 = [[FuntionButton alloc] initWithFrame:CGRectMake(buttonX, buttonY, buttonW, buttonH)];
     [button2 setImage:[UIImage imageNamed:@"empty"] forState:UIControlStateNormal];
+    button2.funCodeString = @"00";
     [self.view addSubview:button2];
     
     buttonX = kScreenWidth - 60.0 - buttonW;
@@ -141,6 +143,7 @@
     // 第二行右边按钮：按钮4
     FuntionButton *button4 = [[FuntionButton alloc] initWithFrame:CGRectMake(buttonX, buttonY, buttonW, buttonH)];
     [button4 setImage:[UIImage imageNamed:@"empty"] forState:UIControlStateNormal];
+    button4.funCodeString = @"00";
     [self.view addSubview:button4];
     
     buttonX = 30.0;
@@ -157,6 +160,7 @@
     // 第三行左边按钮：按钮1
     FuntionButton *button1 = [[FuntionButton alloc] initWithFrame:CGRectMake(buttonX, buttonY, buttonW, buttonH)];
     [button1 setImage:[UIImage imageNamed:@"empty"] forState:UIControlStateNormal];
+    button1.funCodeString = @"00";
     [self.view addSubview:button1];
     
     buttonX = kScreenWidth - 30.0 - buttonW;
@@ -167,6 +171,7 @@
     // 第三行右边按钮：按钮5
     FuntionButton *button5 = [[FuntionButton alloc] initWithFrame:CGRectMake(buttonX, buttonY, buttonW, buttonH)];
     [button5 setImage:[UIImage imageNamed:@"empty"] forState:UIControlStateNormal];
+    button5.funCodeString = @"00";
     [self.view addSubview:button5];
     
     
@@ -322,6 +327,11 @@
 - (void)dragReplyButton:(UIPanGestureRecognizer *)recognizer {
     
     
+    if(_buttonStartStop.tag == kButtonStartTag) {
+        [MBProgressHUD showHUDByContent:@"正在按摩，不能拖动！" view: self.view];
+        return;
+    }
+    
     FuntionButton *targetButton = (FuntionButton *)recognizer.view;
     if(targetButton != _dragButton) {
         _dragButton.hidden = NO;
@@ -443,6 +453,7 @@
         if(fabsf(newButton.frame.origin.y - button.frame.origin.y) > newButton.frame.size.height || fabsf(newButton.frame.origin.x - button.frame.origin.x) > newButton.frame.size.width) {
             [newButton removeFromSuperview];
             button.tag = kTagOfDefault;
+            button.funCodeString = @"00";
         } else {
             newButton.frame = button.frame;
         }
@@ -456,16 +467,30 @@
     [operation setValue:@"01" index:2];
     [operation setValue:@"02" index:4];
     NSInteger index = 7;
+    BOOL hasSelected = NO;
     for (FuntionButton *button in _topFiveButtonArray) {
         NSLog(@"-----当前按摩顺序----：：%ld  %ld  %@", button.arrayIndex, button.tag, button.funCodeString);
-        if(button.funCodeString == nil) {
-            [MBProgressHUD showHUDByContent:@"请添加自动按摩组合" view: self.view];
-            return;
+        if(button.funCodeString == nil || [button.funCodeString isEqualToString:@"00"]) {
+            button.funCodeString = @"00";
+            //[MBProgressHUD showHUDByContent:@"请添加自动按摩组合" view: self.view];
+            //return;
+        }
+        if(![button.funCodeString isEqualToString:@"00"]){
+            hasSelected = YES;
         }
         [operation setValue:button.funCodeString index:index];
         index ++;
     }
 
+
+    // 必须选择一个
+    if(hasSelected == NO) {
+        [MBProgressHUD showHUDByContent:@"请选择组合模式！" view: self.view];
+        return;
+    }
+    
+    
+    
     if(_buttonStartStop.tag == kButtonStopTag) {
         _buttonStartStop.tag = kButtonStartTag;
         [_buttonStartStop setImage:[UIImage imageNamed:@"STOP"] forState:UIControlStateNormal];
@@ -486,6 +511,15 @@
 
 - (void)backButtonHandleInAutokneed
 {
+    // 退出时停止
+    BluetoothOperation *operation = [[BluetoothOperation alloc] init];
+    [operation setValue:@"00" index:3];
+    operation.response = ^(NSString *response,long tag,NSError *error,BOOL success) {
+        
+    };
+    [[BluetoothManager share] writeValueByOperation:operation];
+    
+    
     [self.navigationController popViewControllerAnimated:YES];
 }
 
