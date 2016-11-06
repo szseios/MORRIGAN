@@ -12,6 +12,7 @@
 		3E2539811DAA3DE600CB1EF8 /* LoginManager.m in Sources */ = {isa = PBXBuildFile; fileRef = 3E2539801DAA3DE600CB1EF8 /* LoginManager.m */; };
 		3E2AC85C1DCEF7DC00961883 /* PeripheralBindingFinishedViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 3E2AC85A1DCEF7DC00961883 /* PeripheralBindingFinishedViewController.m */; };
 		3E2AC85D1DCEF7DC00961883 /* PeripheralBindingFinishedViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = 3E2AC85B1DCEF7DC00961883 /* PeripheralBindingFinishedViewController.xib */; };
+		3E2AC8601DCF01D000961883 /* BindingCustomButton.m in Sources */ = {isa = PBXBuildFile; fileRef = 3E2AC85F1DCF01D000961883 /* BindingCustomButton.m */; };
 		3E632A4D1DC5A47B00CC2332 /* BabyBluetooth.m in Sources */ = {isa = PBXBuildFile; fileRef = 3E632A3C1DC5A47B00CC2332 /* BabyBluetooth.m */; };
 		3E632A4E1DC5A47B00CC2332 /* BabyCallback.m in Sources */ = {isa = PBXBuildFile; fileRef = 3E632A3E1DC5A47B00CC2332 /* BabyCallback.m */; };
 		3E632A4F1DC5A47B00CC2332 /* BabyCentralManager.m in Sources */ = {isa = PBXBuildFile; fileRef = 3E632A401DC5A47B00CC2332 /* BabyCentralManager.m */; };
@@ -164,6 +165,8 @@
 		3E2AC8591DCEF7DC00961883 /* PeripheralBindingFinishedViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = PeripheralBindingFinishedViewController.h; sourceTree = "<group>"; };
 		3E2AC85A1DCEF7DC00961883 /* PeripheralBindingFinishedViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = PeripheralBindingFinishedViewController.m; sourceTree = "<group>"; };
 		3E2AC85B1DCEF7DC00961883 /* PeripheralBindingFinishedViewController.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = PeripheralBindingFinishedViewController.xib; sourceTree = "<group>"; };
+		3E2AC85E1DCF01D000961883 /* BindingCustomButton.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = BindingCustomButton.h; sourceTree = "<group>"; };
+		3E2AC85F1DCF01D000961883 /* BindingCustomButton.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = BindingCustomButton.m; sourceTree = "<group>"; };
 		3E632A3B1DC5A47B00CC2332 /* BabyBluetooth.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = BabyBluetooth.h; sourceTree = "<group>"; };
 		3E632A3C1DC5A47B00CC2332 /* BabyBluetooth.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = BabyBluetooth.m; sourceTree = "<group>"; };
 		3E632A3D1DC5A47B00CC2332 /* BabyCallback.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = BabyCallback.h; sourceTree = "<group>"; };
@@ -785,6 +788,8 @@
 			isa = PBXGroup;
 			children = (
 				EB6DBC8A1DC82239005823B2 /* test */,
+				3E2AC85E1DCF01D000961883 /* BindingCustomButton.h */,
+				3E2AC85F1DCF01D000961883 /* BindingCustomButton.m */,
 				EB6DBC7F1DC8216E005823B2 /* PeripheralListViewController.h */,
 				EB6DBC801DC8216E005823B2 /* PeripheralListViewController.m */,
 				EB6DBC811DC8216E005823B2 /* PeripheralListViewController.xib */,
@@ -1228,6 +1233,7 @@
 				4728EDC01DC4865E0005F9C3 /* PNLineChartDataItem.m in Sources */,
 				47FF16681DC9F48B00DBD493 /* SDWebImageDownloaderOperation.m in Sources */,
 				3E632A4F1DC5A47B00CC2332 /* BabyCentralManager.m in Sources */,
+				3E2AC8601DCF01D000961883 /* BindingCustomButton.m in Sources */,
 				4728EDBD1DC4865E0005F9C3 /* PNGenericChart.m in Sources */,
 				4728EDD21DC4865E0005F9C3 /* ZHRulerScrollView.m in Sources */,
 				47FF16711DC9F48B00DBD493 /* UIView+WebCacheOperation.m in Sources */,

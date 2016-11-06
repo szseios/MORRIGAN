@@ -10,4 +10,6 @@
 
 @interface PeripheralBindingFinishedViewController : UIViewController
 
+@property (nonatomic,assign) BOOL connectSuccess;
+
 @end

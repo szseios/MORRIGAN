@@ -8,6 +8,7 @@
 
 #import "PeripheralListViewController.h"
 #import "SearchPeripheralTableViewCell.h"
+#import "PeripheralBindingFinishedViewController.h"
 
 
 #define Identifier @"CellIdentifier"
@@ -82,7 +83,11 @@
     CBPeripheral *peripheral = [BluetoothManager share].scannedPeripherals[indexPath.row];
     [[BluetoothManager share] connectingBlueTooth:peripheral];
     _squareView.hidden = NO;
-    self.view.userInteractionEnabled = NO;
+//    self.view.userInteractionEnabled = NO;
+    PeripheralBindingFinishedViewController *ctl = [[PeripheralBindingFinishedViewController alloc] init];
+    ctl.connectSuccess = NO;
+    [self.navigationController pushViewController:ctl animated:YES];
+    
 }
 
 
