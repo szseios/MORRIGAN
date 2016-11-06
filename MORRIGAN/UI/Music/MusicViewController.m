@@ -44,6 +44,8 @@
     if (self) {
         _musics = [NSMutableArray arrayWithArray:[MusicManager share].musics];
         [MusicManager share].delegate = self;
+        _selectedIndexPath = [NSIndexPath indexPathForRow:[MusicManager share].currentSelectedIndex
+                                                inSection:0];
     }
     return self;
 }
@@ -150,6 +152,12 @@
     [_pcseView addSubview:shadowView];
     
     
+    MusicModel *model = [_musics objectAtIndex:_selectedIndexPath.row];
+    if (model) {
+        _musicNameLabel.text = model.title;
+        _singerLabel.text = model.artist;
+        _totalTimeLable.text = [model playBackDurationString];
+    }
 }
 
 - (NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section {
@@ -192,6 +200,7 @@
     [self playMusicByIndexPath:indexPath];
     [_startButton setBackgroundImage:[UIImage imageNamed:@"music_stop"]
                             forState:UIControlStateNormal];
+    [MusicManager share].currentSelectedIndex = _selectedIndexPath.row;
 }
 
 
@@ -199,7 +208,12 @@
     if (!_selectedIndexPath) {
         return;
     }
-    if ([[MusicManager share] isPlaying]) {
+    if (![[MusicManager share] prepareToPlay]) {
+        [self playMusicByIndexPath:_selectedIndexPath];
+        [_startButton setBackgroundImage:[UIImage imageNamed:@"music_stop"]
+                                forState:UIControlStateNormal];
+    }
+    else if ([[MusicManager share] isPlaying]) {
         [[MusicManager share] pause];
         [_pcseView stop];
         [_startButton setBackgroundImage:[UIImage imageNamed:@"music_play"]
@@ -226,7 +240,7 @@
 }
 
 - (void)endTiming {
-    if (!_timer.isValid) {
+    if (_timer.isValid) {
         [_timer invalidate];
         _timer = nil;
     }
@@ -248,10 +262,15 @@
     if (_selectedIndexPath.row - 1 >= 0) {
         _selectedIndexPath = [NSIndexPath indexPathForRow:_selectedIndexPath.row - 1
                                                 inSection:0];
-        [self playMusicByIndexPath:_selectedIndexPath];
-        [_startButton setBackgroundImage:[UIImage imageNamed:@"music_stop"]
-                                forState:UIControlStateNormal];
     }
+    else {
+        _selectedIndexPath = [NSIndexPath indexPathForRow:_musics.count - 1
+                                                inSection:0];
+    }
+    [self playMusicByIndexPath:_selectedIndexPath];
+    [_startButton setBackgroundImage:[UIImage imageNamed:@"music_stop"]
+                            forState:UIControlStateNormal];
+    [MusicManager share].currentSelectedIndex = _selectedIndexPath.row;
 }
 
 - (IBAction)nextMusic:(id)sender {
@@ -259,10 +278,15 @@
         _selectedIndexPath = [NSIndexPath indexPathForRow:_selectedIndexPath.row + 1
                                                 inSection:0];
         
-        [self playMusicByIndexPath:_selectedIndexPath];
-        [_startButton setBackgroundImage:[UIImage imageNamed:@"music_stop"]
-                                forState:UIControlStateNormal];
     }
+    else {
+        _selectedIndexPath = [NSIndexPath indexPathForRow:0
+                                                inSection:0];
+    }
+    [self playMusicByIndexPath:_selectedIndexPath];
+    [_startButton setBackgroundImage:[UIImage imageNamed:@"music_stop"]
+                            forState:UIControlStateNormal];
+    [MusicManager share].currentSelectedIndex = _selectedIndexPath.row;
 }
 
 - (void)playMusicByIndexPath:(NSIndexPath *)indexPath {
@@ -301,6 +325,12 @@
         
         [self playMusicByIndexPath:_selectedIndexPath];
     }
+    else {
+        _selectedIndexPath = [NSIndexPath indexPathForRow:0
+                                                inSection:0];
+        [self playMusicByIndexPath:_selectedIndexPath];
+    }
+    [MusicManager share].currentSelectedIndex = _selectedIndexPath.row;
 }
 
 
@@ -372,6 +402,7 @@
 }
 
 - (IBAction)back:(id)sender {
+    [self endTiming];
     [self.navigationController popViewControllerAnimated:YES];
 }
 
@@ -386,6 +417,7 @@
 - (void)dealloc
 {
     [MusicManager share].delegate = nil;
+    [[MusicManager share] stop];
 }
 
 

@@ -10,6 +10,10 @@
 #import "BabyBluetooth.h"
 #import "BluetoothOperation.h"
 
+extern NSString * const ConnectPeripheralSuccess;
+extern NSString * const ConnectPeripheralError;
+extern NSString * const DisconnectPeripheral;
+
 @interface BluetoothManager : NSObject {
     BabyBluetooth *_baby;
 }

@@ -19,6 +19,7 @@
 
 @property (nonatomic,assign)id<MusicManagerDelegate> delegate;
 @property (nonatomic,strong)NSMutableArray *musics;
+@property (nonatomic,assign)NSInteger currentSelectedIndex;         //当前选中的歌曲下标
 
 + (MusicManager *)share;
 
@@ -28,9 +29,13 @@
 
 - (BOOL)isPlaying;
 
+- (BOOL)prepareToPlay;
+
 - (void)play;
 
 - (void)pause;
+
+- (void)stop;
 
 - (void)setCurrentTime:(NSTimeInterval)timeInterval;
 

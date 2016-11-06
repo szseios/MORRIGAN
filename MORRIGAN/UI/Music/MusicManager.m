@@ -40,7 +40,7 @@ static MusicManager *manager = nil;
     if (self) {
         
         _musics = [[NSMutableArray alloc] init];
-        
+        _currentSelectedIndex = 0;
         
         dispatch_async(dispatch_get_global_queue(0, 0), ^{
             MPMediaQuery *everything = [MPMediaQuery songsQuery];
@@ -86,9 +86,20 @@ static MusicManager *manager = nil;
     return _player.isPlaying;
 }
 
+- (BOOL)prepareToPlay {
+    return [_player prepareToPlay];
+}
+
+
 - (void)play {
     [_player play];
     [self startGetPeakPower];
+}
+
+- (void)stop {
+    [_player stop];
+    _player = nil;
+    [self pauseGetPeakPower];
 }
 
 - (void)pause {

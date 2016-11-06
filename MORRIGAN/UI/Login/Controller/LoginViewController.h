@@ -18,6 +18,6 @@
 
 @interface LoginViewController : LoginBaseController
 
-@property (nonatomic , weak) RootViewController *homePageController;
+@property (nonatomic , strong) RootViewController *homePageController;
 
 @end

@@ -8,6 +8,9 @@
 
 #import "PeripheralBindingFinishedViewController.h"
 #import "BindingCustomButton.h"
+#import "RootViewController.h"
+#import "SearchPeripheralViewController.h"
+#import "RootViewController.h"
 
 @interface PeripheralBindingFinishedViewController ()
 
@@ -35,7 +38,7 @@
 
         _bottomButton.hidden = YES;
         _button = [[BindingCustomButton alloc] initWithFrame:CGRectMake(30,
-                                                                        kScreenWidth - 96,
+                                                                        kScreenHeight - 96,
                                                                         kScreenWidth - 60,
                                                                         _bottomButton.height - 20)];
         _button.layer.cornerRadius = 5;
@@ -64,17 +67,35 @@
 }
 
 - (IBAction)back:(id)sender {
-    
+    NSArray *array = [self.navigationController viewControllers];
+    for (UIViewController *ctl in array) {
+        if ([ctl isKindOfClass:[RootViewController class]]) {
+            [self.navigationController popToViewController:ctl animated:YES];
+            break;
+        }
+    }
 }
 
 //点击开始养护
 - (IBAction)startConserve:(id)sender {
-    
+    NSArray *array = [self.navigationController viewControllers];
+    for (UIViewController *ctl in array) {
+        if ([ctl isKindOfClass:[RootViewController class]]) {
+            [self.navigationController popToViewController:ctl animated:YES];
+            break;
+        }
+    }
 }
 
 //点击重新搜索
 - (void)searchAgain {
-    
+    NSArray *array = [self.navigationController viewControllers];
+    for (UIViewController *ctl in array) {
+        if ([ctl isKindOfClass:[SearchPeripheralViewController class]]) {
+            [self.navigationController popToViewController:ctl animated:YES];
+            break;
+        }
+    }
 }
 
 /*

@@ -12,6 +12,7 @@
         <placeholder placeholderIdentifier="IBFilesOwner" id="-1" userLabel="File's Owner" customClass="PeripheralListViewController">
             <connections>
                 <outlet property="backButton" destination="XsX-Ad-cWP" id="xg8-T6-92V"/>
+                <outlet property="bottomView" destination="zRk-Fg-UgV" id="E98-6r-82S"/>
                 <outlet property="chooseLabel" destination="zlo-a8-IAv" id="6rS-n5-j1i"/>
                 <outlet property="connectingLabel" destination="OBa-qy-J6G" id="Jtx-gu-A6W"/>
                 <outlet property="squareView" destination="4GC-Tc-zEL" id="9m6-yJ-La7"/>
@@ -42,7 +43,7 @@
                     </connections>
                 </button>
                 <tableView clipsSubviews="YES" contentMode="scaleToFill" fixedFrame="YES" alwaysBounceVertical="YES" style="plain" separatorStyle="default" rowHeight="44" sectionHeaderHeight="28" sectionFooterHeight="28" translatesAutoresizingMaskIntoConstraints="NO" id="bjv-WF-nyc">
-                    <rect key="frame" x="0.0" y="248" width="375" height="347"/>
+                    <rect key="frame" x="0.0" y="248" width="375" height="419"/>
                     <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES" flexibleMaxY="YES"/>
                     <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                 </tableView>
@@ -53,6 +54,11 @@
                     <color key="textColor" red="0.40000000000000002" green="0.20000000000000001" blue="1" alpha="1" colorSpace="calibratedRGB"/>
                     <nil key="highlightedColor"/>
                 </label>
+                <view contentMode="scaleToFill" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="zRk-Fg-UgV">
+                    <rect key="frame" x="0.0" y="584" width="376" height="82"/>
+                    <autoresizingMask key="autoresizingMask" widthSizable="YES" flexibleMinY="YES"/>
+                    <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                </view>
                 <view contentMode="scaleToFill" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="4GC-Tc-zEL">
                     <rect key="frame" x="50" y="603" width="274" height="44"/>
                     <autoresizingMask key="autoresizingMask" flexibleMinX="YES" flexibleMaxX="YES" flexibleMinY="YES"/>

@@ -9,6 +9,7 @@
 #import "PeripheralListViewController.h"
 #import "SearchPeripheralTableViewCell.h"
 #import "PeripheralBindingFinishedViewController.h"
+#import "RootViewController.h"
 
 
 #define Identifier @"CellIdentifier"
@@ -20,10 +21,32 @@
 @property (weak, nonatomic) IBOutlet UILabel *chooseLabel;
 @property (weak, nonatomic) IBOutlet UIView *squareView;
 @property (weak, nonatomic) IBOutlet UILabel *connectingLabel;
+@property (weak, nonatomic) IBOutlet UIView *bottomView;
 
 @end
 
 @implementation PeripheralListViewController
+
+- (void)viewWillAppear:(BOOL)animated {
+    [super viewWillAppear:animated];
+    [[NSNotificationCenter defaultCenter] addObserver:self
+                                             selector:@selector(connectPeripheralSuccess)
+                                                 name:ConnectPeripheralSuccess
+                                               object:nil];
+    [[NSNotificationCenter defaultCenter] addObserver:self
+                                             selector:@selector(connectPeripheralError)
+                                                 name:ConnectPeripheralError
+                                               object:nil];
+    [[NSNotificationCenter defaultCenter] addObserver:self
+                                             selector:@selector(connectPeripheralError)
+                                                 name:DisconnectPeripheral
+                                               object:nil];
+}
+
+- (void)viewWillDisappear:(BOOL)animated {
+    [super viewWillDisappear:animated];
+    
+}
 
 - (void)viewDidLoad {
     [super viewDidLoad];
@@ -51,6 +74,7 @@
                                                     alpha:0.8].CGColor;
     _squareView.layer.borderWidth = 1;
     _squareView.hidden = YES;
+    _bottomView.hidden = YES;
 }
 
 - (void)didReceiveMemoryWarning {
@@ -59,7 +83,14 @@
 }
 
 - (IBAction)back:(id)sender {
-    [self.navigationController popViewControllerAnimated:YES];
+//    [self.navigationController popViewControllerAnimated:YES];
+    NSArray *array = [self.navigationController viewControllers];
+    for (UIViewController *ctl in array) {
+        if ([ctl isKindOfClass:[RootViewController class]]) {
+            [self.navigationController popToViewController:ctl animated:YES];
+            break;
+        }
+    }
 }
 
 - (CGFloat)tableView:(UITableView *)tableView heightForRowAtIndexPath:(NSIndexPath *)indexPath {
@@ -82,12 +113,22 @@
 - (void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath {
     CBPeripheral *peripheral = [BluetoothManager share].scannedPeripherals[indexPath.row];
     [[BluetoothManager share] connectingBlueTooth:peripheral];
+    _bottomView.hidden = NO;
     _squareView.hidden = NO;
-//    self.view.userInteractionEnabled = NO;
+    self.view.userInteractionEnabled = NO;
+
+}
+
+- (void)connectPeripheralSuccess {
+    PeripheralBindingFinishedViewController *ctl = [[PeripheralBindingFinishedViewController alloc] init];
+    ctl.connectSuccess = YES;
+    [self.navigationController pushViewController:ctl animated:YES];
+}
+
+- (void)connectPeripheralError {
     PeripheralBindingFinishedViewController *ctl = [[PeripheralBindingFinishedViewController alloc] init];
     ctl.connectSuccess = NO;
     [self.navigationController pushViewController:ctl animated:YES];
-    
 }
 
 
