@@ -14,6 +14,9 @@ static NSString * const ServiceUUID = @"56FF";
 static NSString * const SendCharacteristicUUID = @"000033F1-0000-1000-8000-00805F9B34FB";
 static NSString * const ReceiveCharacteristicUUID = @"000033F2-0000-1000-8000-00805F9B34FB";
 
+NSString * const ConnectPeripheralSuccess = @"ConnectPeripheralSuccess";
+NSString * const ConnectPeripheralError = @"ConnectPeripheralError";
+NSString * const DisconnectPeripheral = @"DisconnectPeripheral";
 
 
 @interface BluetoothManager ()
@@ -75,6 +78,9 @@ static NSString * const ReceiveCharacteristicUUID = @"000033F2-0000-1000-8000-00
         NSLog(@"设备：%@连接成功",peripheral.name);
         _curConnectPeripheral = peripheral;
         _isConnected = YES;
+        //通知连接蓝牙设备成功
+        [[NSNotificationCenter defaultCenter] postNotificationName:ConnectPeripheralSuccess
+                                                            object:nil];
     }];
     
     
@@ -194,6 +200,9 @@ static NSString * const ReceiveCharacteristicUUID = @"000033F2-0000-1000-8000-00
     [_baby setBlockOnFailToConnect:^(CBCentralManager *central, CBPeripheral *peripheral, NSError *error) {
         NSLog(@"设备：%@连接失败",peripheral.name);
         _isConnected = NO;
+        //通知连接蓝牙设备失败
+        [[NSNotificationCenter defaultCenter] postNotificationName:ConnectPeripheralError
+                                                            object:nil];
         
     }];
     
@@ -204,6 +213,9 @@ static NSString * const ReceiveCharacteristicUUID = @"000033F2-0000-1000-8000-00
         weakSelf.curConnectPeripheral = nil;
         weakSelf.isConnected = NO;
         weakSelf.writing = NO;
+        //通知断开蓝牙设备
+        [[NSNotificationCenter defaultCenter] postNotificationName:DisconnectPeripheral
+                                                            object:nil];
     }];
     
     
@@ -266,7 +278,7 @@ static NSString * const ReceiveCharacteristicUUID = @"000033F2-0000-1000-8000-00
 
 - (void)scanTest
 {
-    [self start];
+//    [self start];
 }
 
 - (void)connectTest

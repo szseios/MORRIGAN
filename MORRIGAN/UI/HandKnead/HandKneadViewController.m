@@ -45,7 +45,7 @@
     // 设置默认值
     _currentStartStop = 0;
     _currentGear = 1;
-    _currentLeftRightChest = 1;
+    _currentLeftRightChest = 0;
     
     
     [self viewInit];
@@ -92,7 +92,7 @@
     
     // 圆环1
     UIImageView *circle1 = [[UIImageView alloc] initWithFrame:CGRectMake(-10, 70, kScreenWidth+20, kScreenWidth+20)];
-    circle1.image = [UIImage imageNamed:@"line_circle_4"];
+    circle1.image = [UIImage imageNamed:@"line_circle_3"];
     [self.view addSubview:circle1];
     // 圆环2
     UIImageView *circle2 = [[UIImageView alloc] initWithFrame:CGRectMake(-10 + 20, 70 + 20, kScreenWidth-20, kScreenWidth-20)];
@@ -100,13 +100,14 @@
     [self.view addSubview:circle2];
     // 圆环3
     UIImageView *circle3 = [[UIImageView alloc] initWithFrame:CGRectMake(-10 + 20 + 20, 70 + 20 + 20, kScreenWidth-20 - 20*2, kScreenWidth-20-20*2)];
-    circle3.image = [UIImage imageNamed:@"line_circle_2"];
+    circle3.image = [UIImage imageNamed:@"line_circle_3"];
     [self.view addSubview:circle3];
     // 圆环4
     UIImageView *circle4 = [[UIImageView alloc] initWithFrame:CGRectMake(-10 + 20 + 20 + 20, 70 + 20 + 20 + 20, kScreenWidth-20 - 20*2 - 20*2, kScreenWidth-20-20*2 - 20*2)];
-    circle4.image = [UIImage imageNamed:@"line_circle_1"];
+    circle4.image = [UIImage imageNamed:@"line_circle_3"];
     [self.view addSubview:circle4];
 
+    
     
     // 波纹动画
 //    CABasicAnimation *theAnimation;
@@ -294,9 +295,9 @@
     // 右胸
     UIButton *rightChestButton = [[UIButton alloc] initWithFrame:CGRectMake(kScreenWidth - chestButtonMargingLeftRight - chestButtonW, chestButtonY, chestButtonW, chestButtonH)];
     //rightChestButton.backgroundColor = [UIColor orangeColor];
-    rightChestButton.tag = kButtonUnselectedTag;
-    [rightChestButton setImage:[UIImage imageNamed:@"rightBreast"] forState:UIControlStateNormal];
-    [rightChestButton setImage:[UIImage imageNamed:@"rightBreast_highlight"] forState:UIControlStateHighlighted];
+    rightChestButton.tag = kButtonSelectedTag;
+    [rightChestButton setImage:[UIImage imageNamed:@"rightBreast_higlight"] forState:UIControlStateNormal];
+    [rightChestButton setImage:[UIImage imageNamed:@"rightBreast"] forState:UIControlStateHighlighted];
     [rightChestButton  addTarget:self action:@selector(rightChestButtonClick:) forControlEvents: UIControlEventTouchUpInside];
     [self.view addSubview: rightChestButton];
     _rightChestButton = rightChestButton;
@@ -305,6 +306,59 @@
     rightChestLabel.text = @"右胸";
     rightChestLabel.textColor = [Utils stringTOColor:kColor_6911a5];
     [self.view addSubview:rightChestLabel];
+    
+    
+    
+    
+    
+    
+    
+    
+    CGFloat delayTime = 1.5;
+    CGRect frame1 = circle1.frame;
+    CGRect frame2 = circle2.frame;
+    CGRect frame3 = circle3.frame;
+    CGRect frame4 = circle4.frame;
+    circle4.alpha = 0;
+    circle4.frame = bigCircleRootView.frame;
+    circle3.frame = bigCircleRootView.frame;
+    circle2.frame = bigCircleRootView.frame;
+    circle1.frame = bigCircleRootView.frame;
+    
+    dispatch_after(dispatch_time(DISPATCH_TIME_NOW, (int64_t)(0.5 * NSEC_PER_SEC)), dispatch_get_main_queue(), ^{
+        [UIView animateWithDuration:delayTime animations:^{
+            circle4.alpha = 1.0;
+            circle4.frame = frame4;
+        }];
+    });
+    
+    dispatch_after(dispatch_time(DISPATCH_TIME_NOW, (int64_t)((0.5 + delayTime) * NSEC_PER_SEC)), dispatch_get_main_queue(), ^{
+        circle4.alpha = 0;
+        circle3.frame = frame4;
+        [UIView animateWithDuration:delayTime animations:^{
+            circle3.frame = frame3;
+        }];
+    });
+    
+    dispatch_after(dispatch_time(DISPATCH_TIME_NOW, (int64_t)((0.5 + delayTime * 2) * NSEC_PER_SEC)), dispatch_get_main_queue(), ^{
+        circle3.alpha = 0;
+        circle2.frame = frame3;
+        [UIView animateWithDuration:delayTime animations:^{
+            circle2.frame = frame2;
+        }];
+    });
+    
+    dispatch_after(dispatch_time(DISPATCH_TIME_NOW, (int64_t)((0.5 + delayTime * 3) * NSEC_PER_SEC)), dispatch_get_main_queue(), ^{
+        circle2.alpha = 0;
+        circle1.frame = frame2;
+        [UIView animateWithDuration:delayTime animations:^{
+            circle1.frame = frame1;
+        }];
+    });
+    
+    
+   
+
     
 }
 
@@ -529,6 +583,10 @@
 
 - (void)backButtonHandleInHandkneed
 {
+    // 退出时停止
+    _currentStartStop = 0;
+    [self sendData];
+    
     [self.navigationController popViewControllerAnimated:YES];
 }
 

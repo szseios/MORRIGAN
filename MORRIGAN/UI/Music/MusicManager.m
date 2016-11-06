@@ -13,7 +13,7 @@
 
 static MusicManager *manager = nil;
 
-@interface MusicManager () {
+@interface MusicManager () <AVAudioPlayerDelegate> {
     NSTimer *_timer;
 }
 
@@ -40,7 +40,7 @@ static MusicManager *manager = nil;
     if (self) {
         
         _musics = [[NSMutableArray alloc] init];
-        
+        _currentSelectedIndex = 0;
         
         dispatch_async(dispatch_get_global_queue(0, 0), ^{
             MPMediaQuery *everything = [MPMediaQuery songsQuery];
@@ -65,6 +65,7 @@ static MusicManager *manager = nil;
             _player = nil;
         }
         _player = [[AVAudioPlayer alloc] initWithContentsOfURL:url error:nil];
+        _player.delegate = self;
         _player.meteringEnabled = YES;
         [[AVAudioSession sharedInstance] setActive:YES error:nil];
         [[AVAudioSession sharedInstance] setCategory:AVAudioSessionCategoryPlayback error:nil];
@@ -85,9 +86,20 @@ static MusicManager *manager = nil;
     return _player.isPlaying;
 }
 
+- (BOOL)prepareToPlay {
+    return [_player prepareToPlay];
+}
+
+
 - (void)play {
     [_player play];
     [self startGetPeakPower];
+}
+
+- (void)stop {
+    [_player stop];
+    _player = nil;
+    [self pauseGetPeakPower];
 }
 
 - (void)pause {
@@ -120,7 +132,8 @@ static MusicManager *manager = nil;
 - (void)getPeakPower {
     [_player updateMeters];
     int16_t peakPower = [_player peakPowerForChannel:0] + 160;
-    NSLog(@"getPeakPower : %@   , chanels : %@",@(peakPower).stringValue,@(peakPower).stringValue);
+    int16_t peakPower2 = [_player peakPowerForChannel:1] + 160;
+    NSLog(@"getPeakPower1 : %@   , 2 : %@",@(peakPower).stringValue,@(peakPower2).stringValue);
     
     BluetoothOperation *operation = [[BluetoothOperation alloc] init];
     [operation setValue:@"01" index:2];
