@@ -105,6 +105,9 @@
     CGFloat timeLabelH = 100;
     _timeLabel = [[UILabel alloc] initWithFrame:CGRectMake(0, timeLabelY, timeLabelW, timeLabelH)];
     NSString *time = [UserInfo share].target;
+    if (!time) {
+        time = @"60";
+    }
     NSMutableAttributedString *attributeString = [[NSMutableAttributedString alloc] initWithString:[NSString stringWithFormat:@"%@min",time]];
     [attributeString setAttributes:@{NSFontAttributeName:[UIFont systemFontOfSize:60]} range:NSMakeRange(0, time.length)];
     _timeLabel.attributedText = attributeString;
@@ -121,6 +124,7 @@
     dateLabel.text = dateStr;
     dateLabel.textColor = [UIColor whiteColor];
     dateLabel.textAlignment = NSTextAlignmentCenter;
+    dateLabel.font = [UIFont systemFontOfSize:(kScreenWidth > 320 ? 17 : 15)];
     [_scrollView addSubview:dateLabel];
     
     
