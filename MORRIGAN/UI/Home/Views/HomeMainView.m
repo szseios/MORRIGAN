@@ -9,13 +9,15 @@
 #import "HomeMainView.h"
 #import "PNChart.h"
 
-@interface HomeMainView ()
+@interface HomeMainView ()<UIScrollViewDelegate>
 
 @property (nonatomic , strong) UIImageView *circleImageView;
 
-@property (nonatomic , strong) UIScrollView *scrollView;
+@property (nonatomic , strong) UIScrollView *scrollView;   //中间scrollview
 
-@property (nonatomic , strong) UILabel *timeLabel;
+@property (nonatomic , strong) UIView *centerView;   //中间view
+
+@property (nonatomic , strong) UILabel *timeLabel;  //目标时间
 
 @property (nonatomic , strong) UIView *upView;
 
@@ -27,15 +29,17 @@
 
 @property (nonatomic , strong) UIImageView *upBackgroundView;
 
-@property (nonatomic , strong) UIBezierPath *path;
+@property (nonatomic , strong) PNCircleChart *circleChart;  //时间划线
 
-@property (nonatomic , strong) PNCircleChart *circleChart;
+@property (nonatomic , strong) NSArray *haveMorriganArray;   //按摩时间数组，里面是字典，key:startTime,endTime Value:
 
-@property (nonatomic , strong) NSArray *haveMorriganArray;
+@property (nonatomic , strong) UILabel *electricityLabel;  //电量
 
-@property (nonatomic , strong) UILabel *electricityLabel;
+@property (nonatomic , strong) UILabel *starLabel;  //星星
 
-@property (nonatomic , strong) UILabel *starLabel;
+@property (nonatomic , strong) UILabel *dateLabel;   //日期
+
+@property (nonatomic , strong) UIImageView *horizImageView; //日期下面的横杆
 
 @end
 
@@ -61,8 +65,8 @@
     imageView.image = [UIImage imageNamed:@"homePageBackgroud"];
     [self addSubview:imageView];
     
-    CGFloat circleX = _viewWidth * 12 / 312.0;
-    CGFloat circleY = _viewHeight * 128 / 860.0;
+    CGFloat circleX = _viewWidth * 11.5 / 312.0;
+    CGFloat circleY = _viewHeight * 127.5 / 860.0;
     CGFloat circleW = _viewWidth * 261/312.0;
     _circleImageView = [[UIImageView alloc] init];
     [_circleImageView setFrame:CGRectMake(circleX, circleY, circleW, circleW)];
@@ -70,7 +74,7 @@
     _circleImageView.image = [UIImage imageNamed:@"round_scale_all"];
     [self addSubview:_circleImageView];
     
-    [self setUpSrollView];
+    [self setUpCenterView];
     [self setUpUpView];
     [self setUpDownView];
     
@@ -82,16 +86,18 @@
         }
     }
     
+    [self setUpSrollView];
+    
 }
 
 
-- (void)setUpSrollView
+- (void)setUpCenterView
 {
-    _scrollView = [[UIScrollView alloc] initWithFrame:_circleImageView.frame];
-    _scrollView.clipsToBounds = YES;
-    _scrollView.layer.cornerRadius = _scrollView.frame.size.width / 2;
-    _scrollView.backgroundColor = [UIColor clearColor];
-    [self addSubview:_scrollView];
+    _centerView = [[UIView alloc] initWithFrame:_circleImageView.frame];
+    _centerView.clipsToBounds = YES;
+    _centerView.layer.cornerRadius = _centerView.frame.size.width / 2;
+    _centerView.backgroundColor = [UIColor clearColor];
+    [self addSubview:_centerView];
     
     CGFloat waveX = _viewWidth * 46 / 623.0;
     
@@ -100,8 +106,8 @@
 //    waveImage.image = [UIImage imageNamed:@"wave"];
 //    [backView addSubview:waveImage];
     
-    CGFloat timeLabelY = (_scrollView.frame.size.width / 2) - 70;
-    CGFloat timeLabelW = CGRectGetWidth(_scrollView.frame);
+    CGFloat timeLabelY = (_centerView.frame.size.width / 2) - 70;
+    CGFloat timeLabelW = CGRectGetWidth(_centerView.frame);
     CGFloat timeLabelH = 100;
     _timeLabel = [[UILabel alloc] initWithFrame:CGRectMake(0, timeLabelY, timeLabelW, timeLabelH)];
     NSString *time = [UserInfo share].target;
@@ -113,21 +119,45 @@
     _timeLabel.attributedText = attributeString;
     _timeLabel.textColor = [UIColor whiteColor];
     _timeLabel.textAlignment = NSTextAlignmentCenter;
-    [_scrollView addSubview:_timeLabel];
+    [_centerView addSubview:_timeLabel];
     
     NSDateFormatter *formatter = [[NSDateFormatter alloc] init];
     [formatter setDateFormat:@"yyyy年MM月dd日 aa"];
     NSString *dateStr = [formatter stringFromDate:[NSDate date]];
     
     CGFloat dateLabelY = CGRectGetMaxY(_timeLabel.frame);
-    UILabel *dateLabel = [[UILabel alloc] initWithFrame:CGRectMake(0, dateLabelY, timeLabelW, 25)];
-    dateLabel.text = dateStr;
-    dateLabel.textColor = [UIColor whiteColor];
-    dateLabel.textAlignment = NSTextAlignmentCenter;
-    dateLabel.font = [UIFont systemFontOfSize:(kScreenWidth > 320 ? 17 : 15)];
-    [_scrollView addSubview:dateLabel];
+    _dateLabel = [[UILabel alloc] initWithFrame:CGRectMake(0, dateLabelY, timeLabelW, 25)];
+    _dateLabel.text = dateStr;
+    _dateLabel.textColor = [UIColor whiteColor];
+    _dateLabel.textAlignment = NSTextAlignmentCenter;
+    _dateLabel.font = [UIFont systemFontOfSize:(kScreenWidth > 320 ? 17 : 15)];
+    [_centerView addSubview:_dateLabel];
     
+    CGFloat horizY = CGRectGetMaxY(_dateLabel.frame) + 10;
+    _horizImageView = [[UIImageView alloc] initWithFrame:CGRectMake(10, horizY, (_centerView.width - 20)/2, 8)];
+    _horizImageView.image = [UIImage imageNamed:@"icon_noRecord"];
+    _horizImageView.center = CGPointMake(CGRectGetMidX(_dateLabel.frame), horizY + 6);
+    _horizImageView.contentMode = UIViewContentModeCenter;
+    [_centerView addSubview:_horizImageView];
     
+}
+
+- (void)setUpSrollView
+{
+    _scrollView = [[UIScrollView alloc] initWithFrame:_centerView.frame];
+    _scrollView.backgroundColor = [UIColor clearColor];
+    _scrollView.contentSize = CGSizeMake(_centerView.width * 2, _centerView.height);
+    NSLog(@"%lf",_scrollView.contentSize.width);
+    _scrollView.clipsToBounds = YES;
+    _scrollView.layer.cornerRadius = _scrollView.width / 2;
+    _scrollView.userInteractionEnabled = YES;
+    _scrollView.delegate = self;
+    _scrollView.showsHorizontalScrollIndicator = NO;
+    _scrollView.scrollEnabled = YES;
+    _scrollView.bounces = NO;
+    _scrollView.pagingEnabled = YES;
+    [self addSubview:_scrollView];
+    [self bringSubviewToFront:_scrollView];
 }
 
 - (void)setUpUpView
@@ -237,6 +267,27 @@
     [circleChart strokeChart];
     
     [self addSubview:circleChart];
+}
+
+#pragma mark - UIScrollViewDelegate
+
+- (void)scrollViewDidEndDecelerating:(UIScrollView *)scrollView
+{
+    CGFloat offsetX =  _centerView.width;
+    CGFloat offsetXX = scrollView.contentOffset.x;
+    
+    if ( offsetXX >= offsetX / 2) {
+        if ([_dateLabel.text rangeOfString:@"A"].location != NSNotFound) {
+            
+        }
+        _horizImageView.image = [UIImage imageNamed:@"icon_star_0"];
+        
+    }else{
+        if ([_dateLabel.text rangeOfString:@"P"].location != NSNotFound) {
+            
+        }
+        _horizImageView.image = [UIImage imageNamed:@"icon_noRecord"];
+    }
 }
 
 
