@@ -10,4 +10,8 @@
 
 @interface SearchPeripheralViewController : UIViewController
 
+- (void)startSearchPeripheral;
+
+- (void)stopSearchPeripheral;
+
 @end

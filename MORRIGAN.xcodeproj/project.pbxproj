@@ -28,6 +28,8 @@
 		3E9304AC1DCA1081001D08A2 /* SearchPeripheralTableViewCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 3E9304AA1DCA1081001D08A2 /* SearchPeripheralTableViewCell.m */; };
 		3E9304AD1DCA1081001D08A2 /* SearchPeripheralTableViewCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = 3E9304AB1DCA1081001D08A2 /* SearchPeripheralTableViewCell.xib */; };
 		3EEF45E81DBB3B2900752AD4 /* UIView+Extension.m in Sources */ = {isa = PBXBuildFile; fileRef = 3EEF45E71DBB3B2900752AD4 /* UIView+Extension.m */; };
+		3EF4DFF31DD091E70003BD7C /* music01.mp3 in Resources */ = {isa = PBXBuildFile; fileRef = 3EF4DFF11DD091E70003BD7C /* music01.mp3 */; };
+		3EF4DFF41DD091E70003BD7C /* music02.mp3 in Resources */ = {isa = PBXBuildFile; fileRef = 3EF4DFF21DD091E70003BD7C /* music02.mp3 */; };
 		3EF795841DA9EDFC00E5EBC6 /* MusicTableViewCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 3EF795821DA9EDFC00E5EBC6 /* MusicTableViewCell.m */; };
 		3EF795851DA9EDFC00E5EBC6 /* MusicTableViewCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = 3EF795831DA9EDFC00E5EBC6 /* MusicTableViewCell.xib */; };
 		3EF7958D1DAA0A5E00E5EBC6 /* Common.m in Sources */ = {isa = PBXBuildFile; fileRef = 3EF795881DAA0A5E00E5EBC6 /* Common.m */; };
@@ -195,6 +197,8 @@
 		3E9304AB1DCA1081001D08A2 /* SearchPeripheralTableViewCell.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = SearchPeripheralTableViewCell.xib; sourceTree = "<group>"; };
 		3EEF45E61DBB3B2900752AD4 /* UIView+Extension.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "UIView+Extension.h"; sourceTree = "<group>"; };
 		3EEF45E71DBB3B2900752AD4 /* UIView+Extension.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "UIView+Extension.m"; sourceTree = "<group>"; };
+		3EF4DFF11DD091E70003BD7C /* music01.mp3 */ = {isa = PBXFileReference; lastKnownFileType = audio.mp3; path = music01.mp3; sourceTree = "<group>"; };
+		3EF4DFF21DD091E70003BD7C /* music02.mp3 */ = {isa = PBXFileReference; lastKnownFileType = audio.mp3; path = music02.mp3; sourceTree = "<group>"; };
 		3EF795811DA9EDFC00E5EBC6 /* MusicTableViewCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MusicTableViewCell.h; sourceTree = "<group>"; };
 		3EF795821DA9EDFC00E5EBC6 /* MusicTableViewCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = MusicTableViewCell.m; sourceTree = "<group>"; };
 		3EF795831DA9EDFC00E5EBC6 /* MusicTableViewCell.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = MusicTableViewCell.xib; sourceTree = "<group>"; };
@@ -495,6 +499,15 @@
 				3E9304A71DC9E225001D08A2 /* BluetoothOperation.m */,
 			);
 			path = BluetoothManager;
+			sourceTree = "<group>";
+		};
+		3EF4DFF01DD091E70003BD7C /* Music */ = {
+			isa = PBXGroup;
+			children = (
+				3EF4DFF11DD091E70003BD7C /* music01.mp3 */,
+				3EF4DFF21DD091E70003BD7C /* music02.mp3 */,
+			);
+			path = Music;
 			sourceTree = "<group>";
 		};
 		3EF795861DAA0A5E00E5EBC6 /* PCSEQ */ = {
@@ -913,6 +926,7 @@
 		EBF011681DA73784009E8394 /* Common */ = {
 			isa = PBXGroup;
 			children = (
+				3EF4DFF01DD091E70003BD7C /* Music */,
 				47FF16401DC9F48B00DBD493 /* SDWebImage */,
 				3E632A561DC5A50600CC2332 /* BluetoothManager */,
 				3E632A3A1DC5A47B00CC2332 /* BabyBluetooth */,
@@ -1114,6 +1128,8 @@
 				4728EDCD1DC4865E0005F9C3 /* microsoftblack.ttf in Resources */,
 				4728EDD01DC4865E0005F9C3 /* product-team.html in Resources */,
 				4728ED641DC485BA0005F9C3 /* HistoryDataCell.xib in Resources */,
+				3EF4DFF41DD091E70003BD7C /* music02.mp3 in Resources */,
+				3EF4DFF31DD091E70003BD7C /* music01.mp3 in Resources */,
 				EB534AD51DA9D924007AA325 /* MusicViewController.xib in Resources */,
 				4728ED6A1DC485BA0005F9C3 /* RelateDeviceCell.xib in Resources */,
 				4728ED6F1DC485BA0005F9C3 /* SetTargetController.xib in Resources */,

@@ -3,16 +3,24 @@
 <plist version="1.0">
 <array>
 	<dict>
+		<key>artist</key>
+		<string>邓紫棋</string>
+		<key>duration</key>
+		<integer>239</integer>
 		<key>fileName</key>
-		<string>平凡之路.MP3</string>
+		<string>music01</string>
 		<key>name</key>
-		<string>平凡之路</string>
+		<string>G.E.M. 邓紫棋-喜欢你</string>
 	</dict>
 	<dict>
+		<key>artist</key>
+		<string>卡农</string>
+		<key>duration</key>
+		<integer>202</integer>
 		<key>fileName</key>
-		<string>海阔天空.MP3</string>
+		<string>music02</string>
 		<key>name</key>
-		<string>海阔天空</string>
+		<string>卡农</string>
 	</dict>
 </array>
 </plist>
