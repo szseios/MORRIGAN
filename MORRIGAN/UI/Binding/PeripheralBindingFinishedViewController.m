@@ -92,6 +92,8 @@
     NSArray *array = [self.navigationController viewControllers];
     for (UIViewController *ctl in array) {
         if ([ctl isKindOfClass:[SearchPeripheralViewController class]]) {
+            SearchPeripheralViewController *searchCtl = (SearchPeripheralViewController *)ctl;
+            [searchCtl startSearchPeripheral];
             [self.navigationController popToViewController:ctl animated:YES];
             break;
         }

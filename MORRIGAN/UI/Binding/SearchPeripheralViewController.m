@@ -19,6 +19,10 @@
 
 @implementation SearchPeripheralViewController
 
+- (void)viewWillDisappear:(BOOL)animated {
+    [self stopSearchPeripheral];
+}
+
 - (void)viewDidLoad {
     [super viewDidLoad];
     // Do any additional setup after loading the view from its nib.
@@ -33,17 +37,22 @@
                                                 blue:221 / 255.0
                                                alpha:1]
                       forState:UIControlStateNormal];
-    
+    [self startSearchPeripheral];
+}
+
+- (void)startSearchPeripheral {
     [[BluetoothManager share] start];
     [self startAnimating];
     
     dispatch_after(dispatch_time(DISPATCH_TIME_NOW, (int64_t)(5 * NSEC_PER_SEC)), dispatch_get_main_queue(), ^{
-        [[BluetoothManager share] stop];
-        [self stopAnimating];
         PeripheralListViewController *ctl = [[PeripheralListViewController alloc] init];
         [self.navigationController pushViewController:ctl animated:YES];
     });
-    
+}
+
+- (void)stopSearchPeripheral {
+    [[BluetoothManager share] stop];
+    [self stopAnimating];
 }
 
 - (void)didReceiveMemoryWarning {

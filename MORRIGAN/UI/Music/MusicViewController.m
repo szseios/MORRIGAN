@@ -12,6 +12,7 @@
 #import "MusicTableViewCell.h"
 #import "PCSEQVisualizer.h"
 #import "Utils.h"
+#import "SearchPeripheralViewController.h"
 
 @interface MusicViewController () <UITableViewDelegate,UITableViewDataSource,UIGestureRecognizerDelegate,MusicManagerDelegate> {
     PCSEQVisualizer *_pcseView;
@@ -30,6 +31,7 @@
 @property (weak, nonatomic) IBOutlet UIButton *previousButton;
 @property (weak, nonatomic) IBOutlet UIButton *nextButton;
 @property (weak, nonatomic) IBOutlet UIImageView *panGestureView;
+@property (weak, nonatomic) IBOutlet UIButton *connectButton;
 
 @property (nonatomic,strong) UITableView *tableView;
 @property (nonatomic,strong) UIButton *closeButton;
@@ -157,6 +159,10 @@
         _musicNameLabel.text = model.title;
         _singerLabel.text = model.artist;
         _totalTimeLable.text = [model playBackDurationString];
+    }
+    
+    if (self.connectBottomView) {
+        [self.view bringSubviewToFront:self.connectBottomView];
     }
 }
 
@@ -412,6 +418,11 @@
         return YES;
     }
     return NO;
+}
+
+- (IBAction)connectPeripheral:(id)sender {
+    SearchPeripheralViewController *ctl = [[SearchPeripheralViewController alloc] init];
+    [self.navigationController pushViewController:ctl animated:YES];
 }
 
 - (void)dealloc
