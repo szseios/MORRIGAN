@@ -18,8 +18,16 @@
 #define kButtonStartTag         1000
 #define kButtonStopTag          2000
 
+#define kDelayTime              4.0
+#define kDelayTimeEnd           1.5
+
 @interface HandKneadViewController ()
 {
+    UIImageView *_circle1;
+    UIImageView *_circle2;
+    UIImageView *_circle3;
+    UIImageView *_circle4;
+    UIImageView *_bigCircleRootView;
     UILabel *_gearNumLabel;            // 档位显示label
     UILabel *_timeLabel;               // 计时显示label
     UIButton *_leftChestButton;        // 左胸按钮
@@ -94,18 +102,22 @@
     UIImageView *circle1 = [[UIImageView alloc] initWithFrame:CGRectMake(-10, 70, kScreenWidth+20, kScreenWidth+20)];
     circle1.image = [UIImage imageNamed:@"line_circle_3"];
     [self.view addSubview:circle1];
+    _circle1 = circle1;
     // 圆环2
     UIImageView *circle2 = [[UIImageView alloc] initWithFrame:CGRectMake(-10 + 20, 70 + 20, kScreenWidth-20, kScreenWidth-20)];
     circle2.image = [UIImage imageNamed:@"line_circle_3"];
     [self.view addSubview:circle2];
+    _circle2 = circle2;
     // 圆环3
     UIImageView *circle3 = [[UIImageView alloc] initWithFrame:CGRectMake(-10 + 20 + 20, 70 + 20 + 20, kScreenWidth-20 - 20*2, kScreenWidth-20-20*2)];
     circle3.image = [UIImage imageNamed:@"line_circle_3"];
     [self.view addSubview:circle3];
+    _circle3 = circle3;
     // 圆环4
     UIImageView *circle4 = [[UIImageView alloc] initWithFrame:CGRectMake(-10 + 20 + 20 + 20, 70 + 20 + 20 + 20, kScreenWidth-20 - 20*2 - 20*2, kScreenWidth-20-20*2 - 20*2)];
     circle4.image = [UIImage imageNamed:@"line_circle_3"];
     [self.view addSubview:circle4];
+    _circle4 = circle4;
 
     
     
@@ -137,6 +149,7 @@
     //bigCircleRootView.backgroundColor = [UIColor redColor];
     bigCircleRootView.image = [UIImage imageNamed:@"roundCircleBackgroud"];
     [self.view addSubview:bigCircleRootView];
+    _bigCircleRootView = bigCircleRootView;
     // gear大数字
     CGFloat gearNumLabelW = 70;
     CGFloat gearNumLabelH = 90;
@@ -308,59 +321,116 @@
     [self.view addSubview:rightChestLabel];
     
     
-    
-    
-    
-    
-    
-    
-    CGFloat delayTime = 1.5;
-    CGRect frame1 = circle1.frame;
-    CGRect frame2 = circle2.frame;
-    CGRect frame3 = circle3.frame;
-    CGRect frame4 = circle4.frame;
-    circle4.alpha = 0;
-    circle4.frame = bigCircleRootView.frame;
-    circle3.frame = bigCircleRootView.frame;
-    circle2.frame = bigCircleRootView.frame;
-    circle1.frame = bigCircleRootView.frame;
-    
-    dispatch_after(dispatch_time(DISPATCH_TIME_NOW, (int64_t)(0.5 * NSEC_PER_SEC)), dispatch_get_main_queue(), ^{
-        [UIView animateWithDuration:delayTime animations:^{
-            circle4.alpha = 1.0;
-            circle4.frame = frame4;
-        }];
+    _circle1.alpha = 0;
+    _circle2.alpha = 0;
+    _circle3.alpha = 0;
+    _circle4.alpha = 0;
+    CGFloat tempTime = (kDelayTime - kDelayTimeEnd) / 4;
+    dispatch_after(dispatch_time(DISPATCH_TIME_NOW, (int64_t)(0.1 * NSEC_PER_SEC)), dispatch_get_main_queue(), ^{
+        [self startAnimation1];
+    });
+    dispatch_after(dispatch_time(DISPATCH_TIME_NOW, (int64_t)(tempTime * NSEC_PER_SEC)), dispatch_get_main_queue(), ^{
+        [self startAnimation2];
+    });
+    dispatch_after(dispatch_time(DISPATCH_TIME_NOW, (int64_t)(tempTime * 2 * NSEC_PER_SEC)), dispatch_get_main_queue(), ^{
+        [self startAnimation3];
+    });
+    dispatch_after(dispatch_time(DISPATCH_TIME_NOW, (int64_t)(tempTime * 3 * NSEC_PER_SEC)), dispatch_get_main_queue(), ^{
+        [self startAnimation4];
     });
     
-    dispatch_after(dispatch_time(DISPATCH_TIME_NOW, (int64_t)((0.5 + delayTime) * NSEC_PER_SEC)), dispatch_get_main_queue(), ^{
-        circle4.alpha = 0;
-        circle3.frame = frame4;
-        [UIView animateWithDuration:delayTime animations:^{
-            circle3.frame = frame3;
-        }];
-    });
-    
-    dispatch_after(dispatch_time(DISPATCH_TIME_NOW, (int64_t)((0.5 + delayTime * 2) * NSEC_PER_SEC)), dispatch_get_main_queue(), ^{
-        circle3.alpha = 0;
-        circle2.frame = frame3;
-        [UIView animateWithDuration:delayTime animations:^{
-            circle2.frame = frame2;
-        }];
-    });
-    
-    dispatch_after(dispatch_time(DISPATCH_TIME_NOW, (int64_t)((0.5 + delayTime * 3) * NSEC_PER_SEC)), dispatch_get_main_queue(), ^{
-        circle2.alpha = 0;
-        circle1.frame = frame2;
-        [UIView animateWithDuration:delayTime animations:^{
-            circle1.frame = frame1;
-        }];
-    });
-    
-    
-   
-
     
 }
+
+
+- (void)startAnimation1 {
+    
+    __weak HandKneadViewController *weakSelf = self;
+    CGRect frame1 = _circle1.frame;
+    _circle1.alpha = 0;
+    _circle1.frame = _bigCircleRootView.frame;
+    
+   
+    [UIView animateWithDuration:kDelayTime animations:^{
+        _circle1.alpha = 1.0;
+        _circle1.frame = frame1;
+    } completion:^(BOOL finished) {
+        [UIView animateWithDuration:kDelayTimeEnd animations:^{
+            _circle1.alpha = 0;
+        } completion:^(BOOL finished) {
+            [weakSelf startAnimation1];
+        }];
+        
+    }];
+
+}
+
+- (void)startAnimation2 {
+    
+    __weak HandKneadViewController *weakSelf = self;
+    CGRect frame1 = _circle1.frame;
+    _circle2.alpha = 0;
+    _circle2.frame = _bigCircleRootView.frame;
+
+
+    [UIView animateWithDuration:kDelayTime animations:^{
+        _circle2.alpha = 1.0;
+        _circle2.frame = frame1;
+    } completion:^(BOOL finished) {
+        [UIView animateWithDuration:kDelayTimeEnd animations:^{
+            _circle2.alpha = 0;
+        } completion:^(BOOL finished) {
+            [weakSelf startAnimation2];
+        }];
+        
+    }];
+
+}
+
+- (void)startAnimation3 {
+    
+    __weak HandKneadViewController *weakSelf = self;
+    CGRect frame1 = _circle1.frame;
+    _circle3.alpha = 0;
+    _circle3.frame = _bigCircleRootView.frame;
+    
+    [UIView animateWithDuration:kDelayTime animations:^{
+        _circle3.alpha = 1.0;
+        _circle3.frame = frame1;
+    } completion:^(BOOL finished) {
+        [UIView animateWithDuration:kDelayTimeEnd animations:^{
+            _circle3.alpha = 0;
+        } completion:^(BOOL finished) {
+            [weakSelf startAnimation3];
+        }];
+        
+    }];
+    
+    
+}
+
+
+- (void)startAnimation4 {
+    
+    __weak HandKneadViewController *weakSelf = self;
+    CGRect frame1 = _circle1.frame;
+    _circle4.alpha = 0;
+    _circle4.frame = _bigCircleRootView.frame;
+        
+    [UIView animateWithDuration:kDelayTime animations:^{
+        _circle4.alpha = 1.0;
+        _circle4.frame = frame1;
+    } completion:^(BOOL finished) {
+        [UIView animateWithDuration:kDelayTimeEnd animations:^{
+            _circle4.alpha = 0;
+        } completion:^(BOOL finished) {
+            [weakSelf startAnimation4];
+        }];
+        
+    }];
+    
+}
+
 
 
 #pragma mark - 按钮点击事件
