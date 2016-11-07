@@ -23,6 +23,19 @@
     return self;
 }
 
+- (instancetype)initWithDictionary:(NSDictionary *)dictionary url:(NSURL *)url
+{
+    self = [super init];
+    if (self) {
+        _title = [dictionary objectForKey:@"name"];
+        _playbackDuration = [[dictionary objectForKey:@"duration"] doubleValue];
+        _artist = [dictionary objectForKey:@"artist"];
+        _url = url;
+    }
+    return self;
+}
+
+
 - (NSString *)playBackDurationString {
     NSInteger duration = (NSInteger)_playbackDuration;
     NSString *string = [NSString stringWithFormat:@"%02ld:%02ld",duration / 60,duration % 60];

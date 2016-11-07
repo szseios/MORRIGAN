@@ -43,6 +43,16 @@ static MusicManager *manager = nil;
         _currentSelectedIndex = 0;
         
         dispatch_async(dispatch_get_global_queue(0, 0), ^{
+            
+            NSString *filePath = [[NSBundle mainBundle] pathForResource:@"MusicList" ofType:@"plist"];
+            NSArray *array = [NSArray arrayWithContentsOfFile:filePath];
+            for (NSDictionary *dictionary in array) {
+                NSString *name = [dictionary objectForKey:@"fileName"];
+                NSURL *url = [[NSBundle mainBundle] URLForResource:name withExtension:@"mp3"];
+                MusicModel *model = [[MusicModel alloc] initWithDictionary:dictionary url:url];
+                [_musics addObject:model];
+            }
+            
             MPMediaQuery *everything = [MPMediaQuery songsQuery];
             NSArray *itemsFromGenericQuery = [everything items];
             
@@ -51,9 +61,6 @@ static MusicManager *manager = nil;
                 [_musics addObject:model];
             }
         });
-        
-        NSString *filePath = [[NSBundle mainBundle] pathForResource:@"MusicList" ofType:@"plist"];
-        NSArray *array = [NSArray arrayWithContentsOfFile:filePath];
     }
     return self;
 }

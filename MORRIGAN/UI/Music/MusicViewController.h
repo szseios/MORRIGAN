@@ -7,8 +7,9 @@
 //
 
 #import <UIKit/UIKit.h>
+#import "HomePageSuperController.h"
 
-@interface MusicViewController : UIViewController
+@interface MusicViewController : HomePageSuperController
 
 @property (nonatomic,strong) NSMutableArray *musics;
 

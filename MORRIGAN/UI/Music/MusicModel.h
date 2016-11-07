@@ -21,6 +21,9 @@
 
 - (instancetype)initWithItem:(MPMediaItem *)item;
 
+- (instancetype)initWithDictionary:(NSDictionary *)dictionary
+                               url:(NSURL *)url;
+
 - (NSString *)playBackDurationString;
 
 
