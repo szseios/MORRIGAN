@@ -12,6 +12,7 @@
 
 @property (weak, nonatomic) IBOutlet UIView *numberView;
 @property (weak, nonatomic) IBOutlet UIView *nameView;
+@property (weak, nonatomic) IBOutlet UIImageView *linkedIcon;
 
 @property (nonatomic,strong) UILabel *numberLabel;
 @property (nonatomic,strong) UILabel *nameLabel;

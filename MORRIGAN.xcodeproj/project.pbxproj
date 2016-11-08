@@ -27,9 +27,17 @@
 		3E9304A81DC9E225001D08A2 /* BluetoothOperation.m in Sources */ = {isa = PBXBuildFile; fileRef = 3E9304A71DC9E225001D08A2 /* BluetoothOperation.m */; };
 		3E9304AC1DCA1081001D08A2 /* SearchPeripheralTableViewCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 3E9304AA1DCA1081001D08A2 /* SearchPeripheralTableViewCell.m */; };
 		3E9304AD1DCA1081001D08A2 /* SearchPeripheralTableViewCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = 3E9304AB1DCA1081001D08A2 /* SearchPeripheralTableViewCell.xib */; };
+		3E9ED0D91DD16BAA00A6F665 /* PeripheralModel.m in Sources */ = {isa = PBXBuildFile; fileRef = 3E9ED0D81DD16BAA00A6F665 /* PeripheralModel.m */; };
 		3EEF45E81DBB3B2900752AD4 /* UIView+Extension.m in Sources */ = {isa = PBXBuildFile; fileRef = 3EEF45E71DBB3B2900752AD4 /* UIView+Extension.m */; };
 		3EF4DFF31DD091E70003BD7C /* music01.mp3 in Resources */ = {isa = PBXBuildFile; fileRef = 3EF4DFF11DD091E70003BD7C /* music01.mp3 */; };
 		3EF4DFF41DD091E70003BD7C /* music02.mp3 in Resources */ = {isa = PBXBuildFile; fileRef = 3EF4DFF21DD091E70003BD7C /* music02.mp3 */; };
+		3EF4E0011DD0A26B0003BD7C /* FMDatabase.m in Sources */ = {isa = PBXBuildFile; fileRef = 3EF4DFF71DD0A26B0003BD7C /* FMDatabase.m */; };
+		3EF4E0021DD0A26B0003BD7C /* FMDatabaseAdditions.m in Sources */ = {isa = PBXBuildFile; fileRef = 3EF4DFF91DD0A26B0003BD7C /* FMDatabaseAdditions.m */; };
+		3EF4E0031DD0A26B0003BD7C /* FMDatabasePool.m in Sources */ = {isa = PBXBuildFile; fileRef = 3EF4DFFB1DD0A26B0003BD7C /* FMDatabasePool.m */; };
+		3EF4E0041DD0A26B0003BD7C /* FMDatabaseQueue.m in Sources */ = {isa = PBXBuildFile; fileRef = 3EF4DFFD1DD0A26B0003BD7C /* FMDatabaseQueue.m */; };
+		3EF4E0051DD0A26B0003BD7C /* FMResultSet.m in Sources */ = {isa = PBXBuildFile; fileRef = 3EF4E0001DD0A26B0003BD7C /* FMResultSet.m */; };
+		3EF4E0081DD0A27B0003BD7C /* libsqlite3.0.tbd in Frameworks */ = {isa = PBXBuildFile; fileRef = 3EF4E0071DD0A27B0003BD7C /* libsqlite3.0.tbd */; };
+		3EF4E00C1DD0A2B60003BD7C /* DBManager.m in Sources */ = {isa = PBXBuildFile; fileRef = 3EF4E00B1DD0A2B60003BD7C /* DBManager.m */; };
 		3EF795841DA9EDFC00E5EBC6 /* MusicTableViewCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 3EF795821DA9EDFC00E5EBC6 /* MusicTableViewCell.m */; };
 		3EF795851DA9EDFC00E5EBC6 /* MusicTableViewCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = 3EF795831DA9EDFC00E5EBC6 /* MusicTableViewCell.xib */; };
 		3EF7958D1DAA0A5E00E5EBC6 /* Common.m in Sources */ = {isa = PBXBuildFile; fileRef = 3EF795881DAA0A5E00E5EBC6 /* Common.m */; };
@@ -195,10 +203,26 @@
 		3E9304A91DCA1081001D08A2 /* SearchPeripheralTableViewCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SearchPeripheralTableViewCell.h; sourceTree = "<group>"; };
 		3E9304AA1DCA1081001D08A2 /* SearchPeripheralTableViewCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = SearchPeripheralTableViewCell.m; sourceTree = "<group>"; };
 		3E9304AB1DCA1081001D08A2 /* SearchPeripheralTableViewCell.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = SearchPeripheralTableViewCell.xib; sourceTree = "<group>"; };
+		3E9ED0D71DD16BAA00A6F665 /* PeripheralModel.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = PeripheralModel.h; sourceTree = "<group>"; };
+		3E9ED0D81DD16BAA00A6F665 /* PeripheralModel.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = PeripheralModel.m; sourceTree = "<group>"; };
 		3EEF45E61DBB3B2900752AD4 /* UIView+Extension.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "UIView+Extension.h"; sourceTree = "<group>"; };
 		3EEF45E71DBB3B2900752AD4 /* UIView+Extension.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "UIView+Extension.m"; sourceTree = "<group>"; };
 		3EF4DFF11DD091E70003BD7C /* music01.mp3 */ = {isa = PBXFileReference; lastKnownFileType = audio.mp3; path = music01.mp3; sourceTree = "<group>"; };
 		3EF4DFF21DD091E70003BD7C /* music02.mp3 */ = {isa = PBXFileReference; lastKnownFileType = audio.mp3; path = music02.mp3; sourceTree = "<group>"; };
+		3EF4DFF61DD0A26B0003BD7C /* FMDatabase.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = FMDatabase.h; sourceTree = "<group>"; };
+		3EF4DFF71DD0A26B0003BD7C /* FMDatabase.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = FMDatabase.m; sourceTree = "<group>"; };
+		3EF4DFF81DD0A26B0003BD7C /* FMDatabaseAdditions.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = FMDatabaseAdditions.h; sourceTree = "<group>"; };
+		3EF4DFF91DD0A26B0003BD7C /* FMDatabaseAdditions.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = FMDatabaseAdditions.m; sourceTree = "<group>"; };
+		3EF4DFFA1DD0A26B0003BD7C /* FMDatabasePool.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = FMDatabasePool.h; sourceTree = "<group>"; };
+		3EF4DFFB1DD0A26B0003BD7C /* FMDatabasePool.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = FMDatabasePool.m; sourceTree = "<group>"; };
+		3EF4DFFC1DD0A26B0003BD7C /* FMDatabaseQueue.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = FMDatabaseQueue.h; sourceTree = "<group>"; };
+		3EF4DFFD1DD0A26B0003BD7C /* FMDatabaseQueue.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = FMDatabaseQueue.m; sourceTree = "<group>"; };
+		3EF4DFFE1DD0A26B0003BD7C /* FMDB.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = FMDB.h; sourceTree = "<group>"; };
+		3EF4DFFF1DD0A26B0003BD7C /* FMResultSet.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = FMResultSet.h; sourceTree = "<group>"; };
+		3EF4E0001DD0A26B0003BD7C /* FMResultSet.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = FMResultSet.m; sourceTree = "<group>"; };
+		3EF4E0071DD0A27B0003BD7C /* libsqlite3.0.tbd */ = {isa = PBXFileReference; lastKnownFileType = "sourcecode.text-based-dylib-definition"; name = libsqlite3.0.tbd; path = usr/lib/libsqlite3.0.tbd; sourceTree = SDKROOT; };
+		3EF4E00A1DD0A2B60003BD7C /* DBManager.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = DBManager.h; sourceTree = "<group>"; };
+		3EF4E00B1DD0A2B60003BD7C /* DBManager.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = DBManager.m; sourceTree = "<group>"; };
 		3EF795811DA9EDFC00E5EBC6 /* MusicTableViewCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MusicTableViewCell.h; sourceTree = "<group>"; };
 		3EF795821DA9EDFC00E5EBC6 /* MusicTableViewCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = MusicTableViewCell.m; sourceTree = "<group>"; };
 		3EF795831DA9EDFC00E5EBC6 /* MusicTableViewCell.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = MusicTableViewCell.xib; sourceTree = "<group>"; };
@@ -404,6 +428,7 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				3EF4E0081DD0A27B0003BD7C /* libsqlite3.0.tbd in Frameworks */,
 				EBF011811DA7883B009E8394 /* libSZSENetLibrary.a in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -501,6 +526,15 @@
 			path = BluetoothManager;
 			sourceTree = "<group>";
 		};
+		3E9ED0D61DD16B9B00A6F665 /* Model */ = {
+			isa = PBXGroup;
+			children = (
+				3E9ED0D71DD16BAA00A6F665 /* PeripheralModel.h */,
+				3E9ED0D81DD16BAA00A6F665 /* PeripheralModel.m */,
+			);
+			path = Model;
+			sourceTree = "<group>";
+		};
 		3EF4DFF01DD091E70003BD7C /* Music */ = {
 			isa = PBXGroup;
 			children = (
@@ -508,6 +542,41 @@
 				3EF4DFF21DD091E70003BD7C /* music02.mp3 */,
 			);
 			path = Music;
+			sourceTree = "<group>";
+		};
+		3EF4DFF51DD0A26B0003BD7C /* FMDB */ = {
+			isa = PBXGroup;
+			children = (
+				3EF4DFF61DD0A26B0003BD7C /* FMDatabase.h */,
+				3EF4DFF71DD0A26B0003BD7C /* FMDatabase.m */,
+				3EF4DFF81DD0A26B0003BD7C /* FMDatabaseAdditions.h */,
+				3EF4DFF91DD0A26B0003BD7C /* FMDatabaseAdditions.m */,
+				3EF4DFFA1DD0A26B0003BD7C /* FMDatabasePool.h */,
+				3EF4DFFB1DD0A26B0003BD7C /* FMDatabasePool.m */,
+				3EF4DFFC1DD0A26B0003BD7C /* FMDatabaseQueue.h */,
+				3EF4DFFD1DD0A26B0003BD7C /* FMDatabaseQueue.m */,
+				3EF4DFFE1DD0A26B0003BD7C /* FMDB.h */,
+				3EF4DFFF1DD0A26B0003BD7C /* FMResultSet.h */,
+				3EF4E0001DD0A26B0003BD7C /* FMResultSet.m */,
+			);
+			path = FMDB;
+			sourceTree = "<group>";
+		};
+		3EF4E0061DD0A27A0003BD7C /* Frameworks */ = {
+			isa = PBXGroup;
+			children = (
+				3EF4E0071DD0A27B0003BD7C /* libsqlite3.0.tbd */,
+			);
+			name = Frameworks;
+			sourceTree = "<group>";
+		};
+		3EF4E0091DD0A28E0003BD7C /* DBManager */ = {
+			isa = PBXGroup;
+			children = (
+				3EF4E00A1DD0A2B60003BD7C /* DBManager.h */,
+				3EF4E00B1DD0A2B60003BD7C /* DBManager.m */,
+			);
+			path = DBManager;
 			sourceTree = "<group>";
 		};
 		3EF795861DAA0A5E00E5EBC6 /* PCSEQ */ = {
@@ -837,6 +906,7 @@
 				EB7AD9581DA72FF6001D1DCA /* MORRIGANTests */,
 				EB7AD9631DA72FF6001D1DCA /* MORRIGANUITests */,
 				EB7AD93D1DA72FF6001D1DCA /* Products */,
+				3EF4E0061DD0A27A0003BD7C /* Frameworks */,
 			);
 			sourceTree = "<group>";
 		};
@@ -926,6 +996,9 @@
 		EBF011681DA73784009E8394 /* Common */ = {
 			isa = PBXGroup;
 			children = (
+				3E9ED0D61DD16B9B00A6F665 /* Model */,
+				3EF4E0091DD0A28E0003BD7C /* DBManager */,
+				3EF4DFF51DD0A26B0003BD7C /* FMDB */,
 				3EF4DFF01DD091E70003BD7C /* Music */,
 				47FF16401DC9F48B00DBD493 /* SDWebImage */,
 				3E632A561DC5A50600CC2332 /* BluetoothManager */,
@@ -1181,6 +1254,7 @@
 				3E25397E1DAA3DDA00CB1EF8 /* UserInfo.m in Sources */,
 				4724C2041DC8BF5700B18902 /* MBProgressHUD.m in Sources */,
 				47FF16641DC9F48B00DBD493 /* SDImageCache.m in Sources */,
+				3EF4E0051DD0A26B0003BD7C /* FMResultSet.m in Sources */,
 				4728ED671DC485BA0005F9C3 /* NickNameController.m in Sources */,
 				3E632A501DC5A47B00CC2332 /* BabyDefine.m in Sources */,
 				4728ED3A1DC485AB0005F9C3 /* RootViewController.m in Sources */,
@@ -1237,9 +1311,11 @@
 				4728EDC41DC4865E0005F9C3 /* PNRadarChartDataItem.m in Sources */,
 				4728ED6C1DC485BA0005F9C3 /* SuggestionController.m in Sources */,
 				47FF16731DC9FAE500DBD493 /* NullSafe.m in Sources */,
+				3EF4E0041DD0A26B0003BD7C /* FMDatabaseQueue.m in Sources */,
 				EB7AD9411DA72FF6001D1DCA /* main.m in Sources */,
 				47FF16691DC9F48B00DBD493 /* SDWebImageManager.m in Sources */,
 				3E2539791DAA3DA800CB1EF8 /* ForgetPwdViewController.m in Sources */,
+				3E9ED0D91DD16BAA00A6F665 /* PeripheralModel.m in Sources */,
 				47FF16651DC9F48B00DBD493 /* SDWebImageCompat.m in Sources */,
 				3EEF45E81DBB3B2900752AD4 /* UIView+Extension.m in Sources */,
 				EBF011711DA754E6009E8394 /* LoginViewController.m in Sources */,
@@ -1247,9 +1323,12 @@
 				4728ED621DC485BA0005F9C3 /* HistoryDataController.m in Sources */,
 				EBF011821DA7883B009E8394 /* NMOANetWorking.m in Sources */,
 				4728EDC01DC4865E0005F9C3 /* PNLineChartDataItem.m in Sources */,
+				3EF4E0011DD0A26B0003BD7C /* FMDatabase.m in Sources */,
 				47FF16681DC9F48B00DBD493 /* SDWebImageDownloaderOperation.m in Sources */,
 				3E632A4F1DC5A47B00CC2332 /* BabyCentralManager.m in Sources */,
 				3E2AC8601DCF01D000961883 /* BindingCustomButton.m in Sources */,
+				3EF4E0031DD0A26B0003BD7C /* FMDatabasePool.m in Sources */,
+				3EF4E0021DD0A26B0003BD7C /* FMDatabaseAdditions.m in Sources */,
 				4728EDBD1DC4865E0005F9C3 /* PNGenericChart.m in Sources */,
 				4728EDD21DC4865E0005F9C3 /* ZHRulerScrollView.m in Sources */,
 				47FF16711DC9F48B00DBD493 /* UIView+WebCacheOperation.m in Sources */,
@@ -1270,6 +1349,7 @@
 				4728ED801DC485F50005F9C3 /* myDataCell.m in Sources */,
 				4728EDC51DC4865E0005F9C3 /* PNScatterChart.m in Sources */,
 				3E9304AC1DCA1081001D08A2 /* SearchPeripheralTableViewCell.m in Sources */,
+				3EF4E00C1DD0A2B60003BD7C /* DBManager.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

@@ -23,6 +23,6 @@
 #import "BluetoothManager.h"
 #import "BluetoothOperation.h"
 #import "SearchPeripheralViewController.h"
-
+#import "DBManager.h"
 #endif
 

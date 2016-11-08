@@ -81,6 +81,10 @@ NSString * const DisconnectPeripheral = @"DisconnectPeripheral";
         //通知连接蓝牙设备成功
         [[NSNotificationCenter defaultCenter] postNotificationName:ConnectPeripheralSuccess
                                                             object:nil];
+        //连接成功后保存为已绑定设备信息
+        if (![DBManager insertPeripheral:peripheral]) {
+            NSLog(@"保存已绑定设备信息失败.  peripheral.name : %@",peripheral.name);
+        }
     }];
     
     
