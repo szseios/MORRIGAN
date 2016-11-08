@@ -39,6 +39,7 @@
     
     NSTimer *_timer;                    // 计时器
     NSInteger _currentTime;             // 当前计时时间
+    BOOL _animationStarting;            // 动画已启动
 }
 
 @end
@@ -100,22 +101,26 @@
     
     // 圆环1
     UIImageView *circle1 = [[UIImageView alloc] initWithFrame:CGRectMake(-10, 70, kScreenWidth+20, kScreenWidth+20)];
+    circle1.alpha = 0;
     circle1.image = [UIImage imageNamed:@"line_circle_3"];
     [self.view addSubview:circle1];
     _circle1 = circle1;
     // 圆环2
     UIImageView *circle2 = [[UIImageView alloc] initWithFrame:CGRectMake(-10 + 20, 70 + 20, kScreenWidth-20, kScreenWidth-20)];
     circle2.image = [UIImage imageNamed:@"line_circle_3"];
+    circle2.alpha = 0;
     [self.view addSubview:circle2];
     _circle2 = circle2;
     // 圆环3
     UIImageView *circle3 = [[UIImageView alloc] initWithFrame:CGRectMake(-10 + 20 + 20, 70 + 20 + 20, kScreenWidth-20 - 20*2, kScreenWidth-20-20*2)];
     circle3.image = [UIImage imageNamed:@"line_circle_3"];
+    circle3.alpha = 0;
     [self.view addSubview:circle3];
     _circle3 = circle3;
     // 圆环4
     UIImageView *circle4 = [[UIImageView alloc] initWithFrame:CGRectMake(-10 + 20 + 20 + 20, 70 + 20 + 20 + 20, kScreenWidth-20 - 20*2 - 20*2, kScreenWidth-20-20*2 - 20*2)];
     circle4.image = [UIImage imageNamed:@"line_circle_3"];
+    circle4.alpha = 0;
     [self.view addSubview:circle4];
     _circle4 = circle4;
 
@@ -319,12 +324,16 @@
     rightChestLabel.text = @"右胸";
     rightChestLabel.textColor = [Utils stringTOColor:kColor_6911a5];
     [self.view addSubview:rightChestLabel];
+
+    
+}
+
+
+- (void)startAnimation
+{
+    _animationStarting = YES;
     
     
-    _circle1.alpha = 0;
-    _circle2.alpha = 0;
-    _circle3.alpha = 0;
-    _circle4.alpha = 0;
     CGFloat tempTime = (kDelayTime - kDelayTimeEnd) / 4;
     dispatch_after(dispatch_time(DISPATCH_TIME_NOW, (int64_t)(0.1 * NSEC_PER_SEC)), dispatch_get_main_queue(), ^{
         [self startAnimation1];
@@ -338,8 +347,11 @@
     dispatch_after(dispatch_time(DISPATCH_TIME_NOW, (int64_t)(tempTime * 3 * NSEC_PER_SEC)), dispatch_get_main_queue(), ^{
         [self startAnimation4];
     });
-    
-    
+
+}
+
+- (void)stopAnimation {
+    _animationStarting = NO;
 }
 
 
@@ -358,7 +370,7 @@
         [UIView animateWithDuration:kDelayTimeEnd animations:^{
             _circle1.alpha = 0;
         } completion:^(BOOL finished) {
-            [weakSelf startAnimation1];
+            if(_animationStarting) [weakSelf startAnimation1];
         }];
         
     }];
@@ -380,7 +392,7 @@
         [UIView animateWithDuration:kDelayTimeEnd animations:^{
             _circle2.alpha = 0;
         } completion:^(BOOL finished) {
-            [weakSelf startAnimation2];
+            if(_animationStarting) [weakSelf startAnimation2];
         }];
         
     }];
@@ -401,7 +413,7 @@
         [UIView animateWithDuration:kDelayTimeEnd animations:^{
             _circle3.alpha = 0;
         } completion:^(BOOL finished) {
-            [weakSelf startAnimation3];
+            if(_animationStarting) [weakSelf startAnimation3];
         }];
         
     }];
@@ -424,7 +436,7 @@
         [UIView animateWithDuration:kDelayTimeEnd animations:^{
             _circle4.alpha = 0;
         } completion:^(BOOL finished) {
-            [weakSelf startAnimation4];
+            if(_animationStarting) [weakSelf startAnimation4];
         }];
         
     }];
@@ -534,6 +546,8 @@
         
         // 重启定时器
         [self startTimer];
+        // 开启动画
+        [self startAnimation];
         
     } else if(button.tag == kButtonStopTag) {
         button.tag = kButtonStartTag;
@@ -542,6 +556,8 @@
         
         // 停止计时
         [self stopTimer];
+        // 取消动画
+        [self stopAnimation];
     }
 
 }
