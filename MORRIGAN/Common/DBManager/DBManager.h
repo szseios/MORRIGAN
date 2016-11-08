@@ -7,29 +7,23 @@
 //
 
 #import <Foundation/Foundation.h>
+#import "PeripheralModel.h"
 #import "FMDB.h"
 
 @interface DBManager : NSObject
 
-/*!
- *  获取数据库队列
- *
- *  @return
- */
 + (FMDatabaseQueue *)dbQueue;
 
-/*!
- *  创建相关DB
- *
- *  @return 成功或失败
- */
 + (BOOL)initApplicationsDB;
 
-/*!
- *  删除相关DB文件
- *
- *  @return 成功或失败
- */
-+ (BOOL)deleteApplicationsDB;
++ (BOOL)insertPeripheral:(CBPeripheral *)peripheral;
+
++ (BOOL)deletePeripheral:(NSString *)uuid;
+
++ (BOOL)updatePeripheralName:(PeripheralModel *)model ;
+
++ (NSArray *)selectPeripherals;
+
++ (NSDictionary *)selectLinkedPeripherals;
 
 @end

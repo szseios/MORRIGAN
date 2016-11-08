@@ -27,6 +27,7 @@
 		3E9304A81DC9E225001D08A2 /* BluetoothOperation.m in Sources */ = {isa = PBXBuildFile; fileRef = 3E9304A71DC9E225001D08A2 /* BluetoothOperation.m */; };
 		3E9304AC1DCA1081001D08A2 /* SearchPeripheralTableViewCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 3E9304AA1DCA1081001D08A2 /* SearchPeripheralTableViewCell.m */; };
 		3E9304AD1DCA1081001D08A2 /* SearchPeripheralTableViewCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = 3E9304AB1DCA1081001D08A2 /* SearchPeripheralTableViewCell.xib */; };
+		3E9ED0D91DD16BAA00A6F665 /* PeripheralModel.m in Sources */ = {isa = PBXBuildFile; fileRef = 3E9ED0D81DD16BAA00A6F665 /* PeripheralModel.m */; };
 		3EEF45E81DBB3B2900752AD4 /* UIView+Extension.m in Sources */ = {isa = PBXBuildFile; fileRef = 3EEF45E71DBB3B2900752AD4 /* UIView+Extension.m */; };
 		3EF4DFF31DD091E70003BD7C /* music01.mp3 in Resources */ = {isa = PBXBuildFile; fileRef = 3EF4DFF11DD091E70003BD7C /* music01.mp3 */; };
 		3EF4DFF41DD091E70003BD7C /* music02.mp3 in Resources */ = {isa = PBXBuildFile; fileRef = 3EF4DFF21DD091E70003BD7C /* music02.mp3 */; };
@@ -202,6 +203,8 @@
 		3E9304A91DCA1081001D08A2 /* SearchPeripheralTableViewCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SearchPeripheralTableViewCell.h; sourceTree = "<group>"; };
 		3E9304AA1DCA1081001D08A2 /* SearchPeripheralTableViewCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = SearchPeripheralTableViewCell.m; sourceTree = "<group>"; };
 		3E9304AB1DCA1081001D08A2 /* SearchPeripheralTableViewCell.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = SearchPeripheralTableViewCell.xib; sourceTree = "<group>"; };
+		3E9ED0D71DD16BAA00A6F665 /* PeripheralModel.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = PeripheralModel.h; sourceTree = "<group>"; };
+		3E9ED0D81DD16BAA00A6F665 /* PeripheralModel.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = PeripheralModel.m; sourceTree = "<group>"; };
 		3EEF45E61DBB3B2900752AD4 /* UIView+Extension.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "UIView+Extension.h"; sourceTree = "<group>"; };
 		3EEF45E71DBB3B2900752AD4 /* UIView+Extension.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "UIView+Extension.m"; sourceTree = "<group>"; };
 		3EF4DFF11DD091E70003BD7C /* music01.mp3 */ = {isa = PBXFileReference; lastKnownFileType = audio.mp3; path = music01.mp3; sourceTree = "<group>"; };
@@ -521,6 +524,15 @@
 				3E9304A71DC9E225001D08A2 /* BluetoothOperation.m */,
 			);
 			path = BluetoothManager;
+			sourceTree = "<group>";
+		};
+		3E9ED0D61DD16B9B00A6F665 /* Model */ = {
+			isa = PBXGroup;
+			children = (
+				3E9ED0D71DD16BAA00A6F665 /* PeripheralModel.h */,
+				3E9ED0D81DD16BAA00A6F665 /* PeripheralModel.m */,
+			);
+			path = Model;
 			sourceTree = "<group>";
 		};
 		3EF4DFF01DD091E70003BD7C /* Music */ = {
@@ -984,6 +996,7 @@
 		EBF011681DA73784009E8394 /* Common */ = {
 			isa = PBXGroup;
 			children = (
+				3E9ED0D61DD16B9B00A6F665 /* Model */,
 				3EF4E0091DD0A28E0003BD7C /* DBManager */,
 				3EF4DFF51DD0A26B0003BD7C /* FMDB */,
 				3EF4DFF01DD091E70003BD7C /* Music */,
@@ -1302,6 +1315,7 @@
 				EB7AD9411DA72FF6001D1DCA /* main.m in Sources */,
 				47FF16691DC9F48B00DBD493 /* SDWebImageManager.m in Sources */,
 				3E2539791DAA3DA800CB1EF8 /* ForgetPwdViewController.m in Sources */,
+				3E9ED0D91DD16BAA00A6F665 /* PeripheralModel.m in Sources */,
 				47FF16651DC9F48B00DBD493 /* SDWebImageCompat.m in Sources */,
 				3EEF45E81DBB3B2900752AD4 /* UIView+Extension.m in Sources */,
 				EBF011711DA754E6009E8394 /* LoginViewController.m in Sources */,

@@ -10,11 +10,14 @@
 #import "SearchPeripheralTableViewCell.h"
 #import "PeripheralBindingFinishedViewController.h"
 #import "RootViewController.h"
+#import "PeripheralModel.h"
 
 
 #define Identifier @"CellIdentifier"
 
-@interface PeripheralListViewController () <UITableViewDelegate,UITableViewDataSource>
+@interface PeripheralListViewController () <UITableViewDelegate,UITableViewDataSource> {
+    NSDictionary *_linkedPeripherals;            //已绑定的设备
+}
 
 @property (weak, nonatomic) IBOutlet UIButton *backButton;
 @property (weak, nonatomic) IBOutlet UITableView *tableView;
@@ -26,6 +29,7 @@
 @end
 
 @implementation PeripheralListViewController
+
 
 - (void)viewWillAppear:(BOOL)animated {
     [super viewWillAppear:animated];
@@ -51,6 +55,8 @@
 - (void)viewDidLoad {
     [super viewDidLoad];
     // Do any additional setup after loading the view from its nib.
+    _linkedPeripherals = [DBManager selectLinkedPeripherals];
+    
     _chooseLabel.textColor = [UIColor colorWithRed:139 / 255.0
                                              green:83 / 255.0
                                               blue:221 / 255.0
@@ -103,9 +109,15 @@
 - (UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath {
     SearchPeripheralTableViewCell *cell = [tableView dequeueReusableCellWithIdentifier:Identifier forIndexPath:indexPath];
     cell.selectionStyle = UITableViewCellSelectionStyleNone;
+    cell.linkedIcon.hidden = YES;
+    
     CBPeripheral *peripheral = [BluetoothManager share].scannedPeripherals[indexPath.row];
     cell.numberLabel.text = [NSString stringWithFormat:@"设备%@",@(indexPath.row + 1).stringValue];
     cell.nameLabel.text = peripheral.name;
+    PeripheralModel *model = [_linkedPeripherals objectForKey:peripheral.identifier.UUIDString];
+    if (model) {
+        cell.linkedIcon.hidden = NO;
+    }
     return cell;
 }
 
