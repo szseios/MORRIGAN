@@ -40,6 +40,7 @@
     
     if (self.connectBottomView) {
         [self.view bringSubviewToFront:self.connectBottomView];
+        [self.view bringSubviewToFront:_achieveButton];
     }
 }
 
@@ -61,6 +62,7 @@
         if ([[obj objectForKey:HTTP_KEY_RESULTCODE] isEqualToString:HTTP_RESULTCODE_SUCCESS]) {
             [MBProgressHUD showHUDByContent:@"修改目标成功！" view:UI_Window afterDelay:2];
             NSLog(@"修改目标成功！");
+            [self.navigationController popViewControllerAnimated:YES];
         }else{
             [MBProgressHUD showHUDByContent:@"修改目标失败！" view:UI_Window afterDelay:2];
         }
@@ -71,9 +73,9 @@
 {
     CGFloat rulerX = 0;
     CGFloat tempY = kScreenHeight > 480 ? 20 : 10;
-    CGFloat rulerY = 250 + tempY;
+    CGFloat rulerY = 235 + tempY;
     CGFloat rulerWidth = kScreenWidth;
-    CGFloat rulerHeight = 250;
+    CGFloat rulerHeight = 235;
     
     CGRect rulerFrame = CGRectMake(rulerX, rulerY, rulerWidth, rulerHeight);
     
@@ -98,8 +100,7 @@
 
 - (void)clickEnsure
 {
-    SearchPeripheralViewController *search = [[SearchPeripheralViewController alloc] init];
-    [self.navigationController pushViewController:search animated:YES];
+    [self targetAchieve];
 }
 
 #pragma mark - ZHRulerViewDelegate
