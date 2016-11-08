@@ -15,6 +15,7 @@
                 <outlet property="bottomView" destination="zRk-Fg-UgV" id="E98-6r-82S"/>
                 <outlet property="chooseLabel" destination="zlo-a8-IAv" id="6rS-n5-j1i"/>
                 <outlet property="connectingLabel" destination="OBa-qy-J6G" id="Jtx-gu-A6W"/>
+                <outlet property="runloopImageView" destination="OEV-53-VtA" id="hka-8G-1wJ"/>
                 <outlet property="squareView" destination="4GC-Tc-zEL" id="9m6-yJ-La7"/>
                 <outlet property="tableView" destination="bjv-WF-nyc" id="dcr-U5-oDF"/>
                 <outlet property="view" destination="i5M-Pr-FkT" id="sfx-zR-JGt"/>
@@ -70,6 +71,10 @@
                             <nil key="textColor"/>
                             <nil key="highlightedColor"/>
                         </label>
+                        <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" image="runloop" translatesAutoresizingMaskIntoConstraints="NO" id="OEV-53-VtA">
+                            <rect key="frame" x="65" y="10" width="30.5" height="23.5"/>
+                            <autoresizingMask key="autoresizingMask" flexibleMinX="YES" widthSizable="YES" flexibleMaxX="YES" flexibleMinY="YES" heightSizable="YES" flexibleMaxY="YES"/>
+                        </imageView>
                     </subviews>
                     <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                 </view>
@@ -80,6 +85,7 @@
     </objects>
     <resources>
         <image name="icon_remove" width="44" height="44"/>
+        <image name="runloop" width="30" height="23"/>
         <image name="upImage" width="375" height="226"/>
     </resources>
 </document>
