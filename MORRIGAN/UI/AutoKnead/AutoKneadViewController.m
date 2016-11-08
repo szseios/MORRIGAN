@@ -329,7 +329,9 @@
     
     
     if(_buttonStartStop.tag == kButtonStartTag) {
-        [MBProgressHUD showHUDByContent:@"正在按摩，不能拖动！" view: self.view];
+        // [MBProgressHUD showHUDByContent:@"正在按摩，不能拖动！" view: self.view];
+        UIAlertView *alert = [[UIAlertView alloc] initWithTitle:@"正在按摩，不能拖动！" message:nil delegate:self cancelButtonTitle:nil otherButtonTitles:@"确定", nil];
+        [alert show];
         return;
     }
     
@@ -486,7 +488,9 @@
 
     // 必须选择一个
     if(hasSelected == NO) {
-        [MBProgressHUD showHUDByContent:@"请选择组合模式！" view: self.view];
+        //[MBProgressHUD showHUDByContent:@"请选择组合模式！" view: self.view];
+        UIAlertView *alert = [[UIAlertView alloc] initWithTitle:@"请选择组合模式！" message:nil delegate:self cancelButtonTitle:nil otherButtonTitles:@"确定", nil];
+        [alert show];
         return;
     }
     
