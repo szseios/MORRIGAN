@@ -466,6 +466,13 @@
 
 - (void)startBtnHandler:(id)sender
 {
+    
+    if (![BluetoothManager share].isConnected) {
+        UIAlertView *alert = [[UIAlertView alloc] initWithTitle:@"还未连接设备！" message:nil delegate:self cancelButtonTitle:nil otherButtonTitles:@"确定", nil];
+        [alert show];
+        return;
+    }
+    
     BluetoothOperation *operation = [[BluetoothOperation alloc] init];
     [operation setValue:@"01" index:2];
     [operation setValue:@"02" index:4];
