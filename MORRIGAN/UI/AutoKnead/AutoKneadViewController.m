@@ -38,9 +38,10 @@
 @implementation AutoKneadViewController
 
 - (void)viewDidLoad {
-    [super viewDidLoad];
+    
     
     [self viewInit];
+    [super viewDidLoad];
 }
 
 
@@ -88,11 +89,11 @@
     titleLabel.textAlignment = NSTextAlignmentCenter;
     [self.view addSubview:titleLabel];
     
-//    // 连接蓝牙按钮
-//    UIButton *linkButton = [[UIButton alloc]initWithFrame:CGRectMake(kScreenWidth - 15 - 40, 26, backButtonW, backButtonW)];
-//    [linkButton setImage:[UIImage imageNamed:@"icon_rightItem_link"] forState:UIControlStateNormal];
-//    [linkButton setImage:[UIImage imageNamed:@"icon_rightItem_link"] forState:UIControlStateHighlighted];
-//    [self.view addSubview:linkButton];
+    // 连接蓝牙按钮
+    UIButton *linkButton = [[UIButton alloc]initWithFrame:CGRectMake(kScreenWidth - 15 - 40, 26, backButtonW, backButtonW)];
+    [linkButton setImage:[UIImage imageNamed:@"icon_rightItem_link"] forState:UIControlStateNormal];
+    [linkButton addTarget:self action:@selector(bindingDeviceInAutoKnead) forControlEvents:UIControlEventTouchUpInside];
+    [self.view addSubview:linkButton];
     
     
     CGFloat buttonW = 60.0;
@@ -507,6 +508,12 @@
     };
     [[BluetoothManager share] writeValueByOperation:operation];
     
+}
+
+- (void)bindingDeviceInAutoKnead
+{
+    SearchPeripheralViewController *search = [[SearchPeripheralViewController alloc] init];
+    [self.navigationController pushViewController:search animated:YES];
 }
 
 - (void)backButtonHandleInAutokneed
