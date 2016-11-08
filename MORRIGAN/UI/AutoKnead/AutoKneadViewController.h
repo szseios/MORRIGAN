@@ -9,7 +9,8 @@
 //
 
 #import <UIKit/UIKit.h>
+#import "HomePageSuperController.h"
 
-@interface AutoKneadViewController : UIViewController
+@interface AutoKneadViewController : HomePageSuperController
 
 @end

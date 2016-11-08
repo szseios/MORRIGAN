@@ -48,7 +48,6 @@
 @implementation HandKneadViewController
 
 - (void)viewDidLoad {
-    [super viewDidLoad];
     
     // 设置默认值
     _currentStartStop = 0;
@@ -57,6 +56,7 @@
     
     
     [self viewInit];
+    [super viewDidLoad];
     
 }
 
@@ -90,11 +90,11 @@
     titleLabel.textAlignment = NSTextAlignmentCenter;
     [self.view addSubview:titleLabel];
     
-//    // 连接蓝牙按钮
-//    UIButton *linkButton = [[UIButton alloc]initWithFrame:CGRectMake(kScreenWidth - 15 - 40, 26, 45, 45)];
-//    [linkButton setImage:[UIImage imageNamed:@"icon_rightItem_link"] forState:UIControlStateNormal];
-//    [linkButton setImage:[UIImage imageNamed:@"icon_rightItem_link"] forState:UIControlStateHighlighted];
-//    [self.view addSubview:linkButton];
+    // 连接蓝牙按钮
+    UIButton *linkButton = [[UIButton alloc]initWithFrame:CGRectMake(kScreenWidth - 15 - 40, 26, 45, 45)];
+    [linkButton setImage:[UIImage imageNamed:@"icon_rightItem_link"] forState:UIControlStateNormal];
+    [linkButton addTarget:self action:@selector(bindingDeviceInHandkneed) forControlEvents:UIControlEventTouchUpInside];
+    [self.view addSubview:linkButton];
     
     
     
@@ -211,10 +211,10 @@
     // ＋／START/－ 根视图
     CGFloat addStartSubtractRootViewMargingLeftRight = 40;
     CGFloat addStartSubtractRootViewX = addStartSubtractRootViewMargingLeftRight;
-    CGFloat addStartSubtractRootViewY = bigCircleRootViewY + bigCircleRootViewH + 80;
+    CGFloat addStartSubtractRootViewY = bigCircleRootViewY + bigCircleRootViewH + 75;
     if(kScreenHeight < 570) {
         // 5s
-       addStartSubtractRootViewY = bigCircleRootViewY + bigCircleRootViewH + 72;
+       addStartSubtractRootViewY = bigCircleRootViewY + bigCircleRootViewH + 67;
     }
     CGFloat addStartSubtractRootViewW = kScreenWidth - 2*addStartSubtractRootViewMargingLeftRight;
     CGFloat addStartSubtractRootViewH = 120;
@@ -289,8 +289,8 @@
     }
     CGFloat chestButtonH = chestButtonW;
     CGFloat chestLabelW = chestButtonW;
-    CGFloat chestLabelH = 30;
-    CGFloat chestButtonY = kScreenHeight - chestLabelH - chestButtonH - 10;
+    CGFloat chestLabelH = 20;
+    CGFloat chestButtonY = kScreenHeight - chestLabelH - chestButtonH - 30;
     UIButton *leftChestButton = [[UIButton alloc] initWithFrame:CGRectMake(chestButtonMargingLeftRight, chestButtonY, chestButtonW, chestButtonH)];
     //leftChestButton.backgroundColor = [UIColor orangeColor];
     leftChestButton.tag = kButtonSelectedTag;
@@ -299,7 +299,7 @@
     [leftChestButton  addTarget:self action:@selector(leftChestButtonClick:) forControlEvents: UIControlEventTouchUpInside];
     [self.view addSubview: leftChestButton];
     _leftChestButton = leftChestButton;
-    UILabel *leftChestLabel = [[UILabel alloc] initWithFrame:CGRectMake(chestButtonMargingLeftRight, kScreenHeight - chestLabelH - 10, chestLabelW, chestLabelH)];
+    UILabel *leftChestLabel = [[UILabel alloc] initWithFrame:CGRectMake(chestButtonMargingLeftRight, kScreenHeight - chestLabelH - 30, chestLabelW, chestLabelH)];
     leftChestLabel.textAlignment = NSTextAlignmentCenter;
     leftChestLabel.text = @"左胸";
     leftChestLabel.textColor = [Utils stringTOColor:kColor_6911a5];
@@ -314,7 +314,7 @@
     [rightChestButton  addTarget:self action:@selector(rightChestButtonClick:) forControlEvents: UIControlEventTouchUpInside];
     [self.view addSubview: rightChestButton];
     _rightChestButton = rightChestButton;
-    UILabel *rightChestLabel = [[UILabel alloc] initWithFrame:CGRectMake(kScreenWidth - chestButtonMargingLeftRight - chestButtonW, kScreenHeight - chestLabelH - 10, chestLabelW, chestLabelH)];
+    UILabel *rightChestLabel = [[UILabel alloc] initWithFrame:CGRectMake(kScreenWidth - chestButtonMargingLeftRight - chestButtonW, kScreenHeight - chestLabelH - 30, chestLabelW, chestLabelH)];
     rightChestLabel.textAlignment = NSTextAlignmentCenter;
     rightChestLabel.text = @"右胸";
     rightChestLabel.textColor = [Utils stringTOColor:kColor_6911a5];
@@ -471,6 +471,11 @@
 - (void)startButtonClick:(id)sender
 {
     NSLog(@"startButtonClick");
+    if (![BluetoothManager share].isConnected) {
+        UIAlertView *alert = [[UIAlertView alloc] initWithTitle:@"还未连接设备！" message:nil delegate:self cancelButtonTitle:nil otherButtonTitles:@"确定", nil];
+        [alert show];
+        return;
+    }
     
     [self updateStartStopState:(UIButton *)sender];
    
@@ -552,7 +557,9 @@
             
         } else if(button.tag == kButtonSelectedTag) {
             if(_rightChestButton.tag == kButtonUnselectedTag) {
-                [MBProgressHUD showHUDByContent:@"左胸和右胸必须选中一个" view:self.view];
+                //[MBProgressHUD showHUDByContent:@"左胸和右胸必须选中一个" view:self.view];
+                UIAlertView *alert = [[UIAlertView alloc] initWithTitle:@"左胸和右胸必须选中一个!" message:nil delegate:self cancelButtonTitle:nil otherButtonTitles:@"确定", nil];
+                [alert show];
                 return;
             }
             button.tag = kButtonUnselectedTag;
@@ -568,7 +575,9 @@
             
         } else if(button.tag == kButtonSelectedTag) {
             if(_leftChestButton.tag == kButtonUnselectedTag) {
-                [MBProgressHUD showHUDByContent:@"左胸和右胸必须选中一个" view:self.view];
+                //[MBProgressHUD showHUDByContent:@"左胸和右胸必须选中一个" view:self.view];
+                UIAlertView *alert = [[UIAlertView alloc] initWithTitle:@"左胸和右胸必须选中一个!" message:nil delegate:self cancelButtonTitle:nil otherButtonTitles:@"确定", nil];
+                [alert show];
                 return;
             }
             button.tag = kButtonUnselectedTag;
@@ -650,6 +659,11 @@
     _timeLabel.text = timeStr;
 }
 
+- (void)bindingDeviceInHandkneed
+{
+    SearchPeripheralViewController *search = [[SearchPeripheralViewController alloc] init];
+    [self.navigationController pushViewController:search animated:YES];
+}
 
 - (void)backButtonHandleInHandkneed
 {

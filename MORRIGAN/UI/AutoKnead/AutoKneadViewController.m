@@ -38,9 +38,10 @@
 @implementation AutoKneadViewController
 
 - (void)viewDidLoad {
-    [super viewDidLoad];
+    
     
     [self viewInit];
+    [super viewDidLoad];
 }
 
 
@@ -88,11 +89,11 @@
     titleLabel.textAlignment = NSTextAlignmentCenter;
     [self.view addSubview:titleLabel];
     
-//    // 连接蓝牙按钮
-//    UIButton *linkButton = [[UIButton alloc]initWithFrame:CGRectMake(kScreenWidth - 15 - 40, 26, backButtonW, backButtonW)];
-//    [linkButton setImage:[UIImage imageNamed:@"icon_rightItem_link"] forState:UIControlStateNormal];
-//    [linkButton setImage:[UIImage imageNamed:@"icon_rightItem_link"] forState:UIControlStateHighlighted];
-//    [self.view addSubview:linkButton];
+    // 连接蓝牙按钮
+    UIButton *linkButton = [[UIButton alloc]initWithFrame:CGRectMake(kScreenWidth - 15 - 40, 26, backButtonW, backButtonW)];
+    [linkButton setImage:[UIImage imageNamed:@"icon_rightItem_link"] forState:UIControlStateNormal];
+    [linkButton addTarget:self action:@selector(bindingDeviceInAutoKnead) forControlEvents:UIControlEventTouchUpInside];
+    [self.view addSubview:linkButton];
     
     
     CGFloat buttonW = 60.0;
@@ -328,7 +329,9 @@
     
     
     if(_buttonStartStop.tag == kButtonStartTag) {
-        [MBProgressHUD showHUDByContent:@"正在按摩，不能拖动！" view: self.view];
+        // [MBProgressHUD showHUDByContent:@"正在按摩，不能拖动！" view: self.view];
+        UIAlertView *alert = [[UIAlertView alloc] initWithTitle:@"正在按摩，不能拖动！" message:nil delegate:self cancelButtonTitle:nil otherButtonTitles:@"确定", nil];
+        [alert show];
         return;
     }
     
@@ -463,6 +466,13 @@
 
 - (void)startBtnHandler:(id)sender
 {
+    
+    if (![BluetoothManager share].isConnected) {
+        UIAlertView *alert = [[UIAlertView alloc] initWithTitle:@"还未连接设备！" message:nil delegate:self cancelButtonTitle:nil otherButtonTitles:@"确定", nil];
+        [alert show];
+        return;
+    }
+    
     BluetoothOperation *operation = [[BluetoothOperation alloc] init];
     [operation setValue:@"01" index:2];
     [operation setValue:@"02" index:4];
@@ -485,7 +495,9 @@
 
     // 必须选择一个
     if(hasSelected == NO) {
-        [MBProgressHUD showHUDByContent:@"请选择组合模式！" view: self.view];
+        //[MBProgressHUD showHUDByContent:@"请选择组合模式！" view: self.view];
+        UIAlertView *alert = [[UIAlertView alloc] initWithTitle:@"请选择组合模式！" message:nil delegate:self cancelButtonTitle:nil otherButtonTitles:@"确定", nil];
+        [alert show];
         return;
     }
     
@@ -507,6 +519,12 @@
     };
     [[BluetoothManager share] writeValueByOperation:operation];
     
+}
+
+- (void)bindingDeviceInAutoKnead
+{
+    SearchPeripheralViewController *search = [[SearchPeripheralViewController alloc] init];
+    [self.navigationController pushViewController:search animated:YES];
 }
 
 - (void)backButtonHandleInAutokneed
