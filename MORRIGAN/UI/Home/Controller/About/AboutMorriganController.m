@@ -137,6 +137,12 @@ static NSString *cellID = @"cellID";
     // Dispose of any resources that can be recreated.
 }
 
+- (void)dealloc
+{
+    [[NSNotificationCenter defaultCenter] removeObserver:self];
+    NSLog(@"dealloc:AboutMorriganController");
+}
+
 /*
 #pragma mark - Navigation
 

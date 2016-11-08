@@ -57,8 +57,8 @@
 
 - (void)clickEnsure
 {
-    NSDictionary *dictionary = @{@"userId": [UserInfo share].userId,
-                                 @"content": _suggestTextView.text,
+    NSDictionary *dictionary = @{@"userId": [UserInfo share].userId ? [UserInfo share].userId : @"",
+                                 @"content": _suggestTextView.text ? _suggestTextView.text : @"",
                                  };
     NSString *bodyString = [NMOANetWorking handleHTTPBodyParams:dictionary];
     [[NMOANetWorking share] taskWithTag:ID_FEEDBACK_MOLI urlString:URL_FEEDBACK_MOLI httpHead:nil bodyString:bodyString objectTaskFinished:^(NSError *error, id obj) {
@@ -93,7 +93,9 @@
 - (void)dealloc
 {
     [[NSNotificationCenter defaultCenter] removeObserver:self];
+    NSLog(@"dealloc:SuggestionController");
 }
+
 
 - (void)didReceiveMemoryWarning {
     [super didReceiveMemoryWarning];

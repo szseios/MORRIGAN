@@ -82,6 +82,7 @@
 #define kColor_6911a5  @"#6911a5"  // 普通紫色
 #define kColor_ffffff  @"#ffffff"  // 白色
 
+#define TARGETCHANGENOTIFICATION  @"TARGETCHANGENOTIFICATION"  // 训练目标改变通知
 
 
 

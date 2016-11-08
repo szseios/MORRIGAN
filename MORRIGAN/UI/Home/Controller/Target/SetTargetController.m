@@ -31,7 +31,7 @@
     // Do any additional setup after loading the view from its nib.
     _achieveButton.clipsToBounds = YES;
     _achieveButton.layer.cornerRadius = 5;
-    [_achieveButton addTarget:self action:@selector(targetAchieve) forControlEvents:UIControlEventTouchUpInside];
+    [_achieveButton addTarget:self action:@selector(clickEnsure) forControlEvents:UIControlEventTouchUpInside];
     _countLabel.text = [UserInfo share].target;
     
     [self setUpBarView];
@@ -53,8 +53,8 @@
 
 - (void)targetAchieve
 {
-    NSDictionary *dictionary = @{@"userId": [UserInfo share].userId,
-                                 @"target": [UserInfo share].target,
+    NSDictionary *dictionary = @{@"userId": [UserInfo share].userId ? [UserInfo share].userId : @"",
+                                 @"target": [UserInfo share].target ? [UserInfo share].target : @"",
                                  };
     NSString *bodyString = [NMOANetWorking handleHTTPBodyParams:dictionary];
     [[NMOANetWorking share] taskWithTag:ID_EDIT_USERINFO urlString:URL_EDIT_USERINFO httpHead:nil bodyString:bodyString objectTaskFinished:^(NSError *error, id obj) {
@@ -100,6 +100,7 @@
 
 - (void)clickEnsure
 {
+    [[NSNotificationCenter defaultCenter] postNotificationName:TARGETCHANGENOTIFICATION object:nil];
     [self targetAchieve];
 }
 
@@ -114,6 +115,11 @@
 - (void)didReceiveMemoryWarning {
     [super didReceiveMemoryWarning];
     // Dispose of any resources that can be recreated.
+}
+
+- (void)dealloc
+{
+    NSLog(@"dealloc:SetTargetController");
 }
 
 /*

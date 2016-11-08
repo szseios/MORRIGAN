@@ -18,24 +18,6 @@
 #import "HistoryDataController.h"
 #import "LoginViewController.h"
 
-@interface UIImageView (backImageMove)
-
-- (void)setViewCopiedImage:(UIView *)view;
-
-@end
-
-@implementation UIImageView (backImageMove)
-
-- (void)setViewCopiedImage:(UIView *)view {
-    UIGraphicsBeginImageContextWithOptions(view.bounds.size, NO, 4);
-    [view.layer renderInContext:UIGraphicsGetCurrentContext()];
-    UIImage *image = UIGraphicsGetImageFromCurrentImageContext();
-    UIGraphicsEndImageContext();
-    self.image = image;
-}
-
-@end
-
 @interface RootViewController () <UIGestureRecognizerDelegate,HomePageControllerDelegate,PersonalControllerDelegate>
 
 @property (nonatomic , strong) HomePageController *homeCtl;
@@ -56,15 +38,12 @@
     backgroudView.image = [UIImage imageNamed:@"basicBackground"];
     [self.view addSubview:backgroudView];
     
-    [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(moveToHomePage) name:MOVETOHOMEPAGENOTIFICATION object:nil];
-    
     _homeCtl = [[HomePageController alloc] init];
     _homeCtl.delegate = self;
     [self addChildViewController:_homeCtl];
     
     _personCtl = [[PersonalController alloc] init];
     _personCtl.delegate = self;
-//    _personCtl.view.x = -kScreenWidth * 3 / 4;
     [self addChildViewController:_personCtl];
     
     [self.view addSubview:_personCtl.view];
@@ -77,20 +56,10 @@
     [super viewWillAppear:animated];
 }
 
-- (void)moveToHomePage
-{
-    _personCtl.view.alpha = 0;
-    [self.view addSubview:_homeCtl.view];
-    [self.view insertSubview:_personCtl.view belowSubview:_homeCtl.view];
-//    _personCtl.view.alpha = 1;
-}
-
 - (void)leftClick
 {
     [UIView animateWithDuration:0.3 animations:^{
-        
         _homeCtl.view.x = kScreenWidth * 3 / 4;
-//        _personCtl.view.x = 0;
     } completion:^(BOOL finished) {
 
     }];
@@ -99,11 +68,8 @@
 - (void)back
 {
     [UIView animateWithDuration:0.3 animations:^{
-//        _homeCtl.view.x = 0;
         _personCtl.view.x = -kScreenWidth * 3 / 4;
     } completion:^(BOOL finished) {
-        _rightImageView.hidden = YES;
-        _rightImageView = nil;
     }];
 }
 
@@ -112,10 +78,7 @@
 {
     [UIView animateWithDuration:0.3 animations:^{
         _homeCtl.view.x = 0;
-//        _personCtl.view.x = -kScreenWidth * 3 / 4;
     } completion:^(BOOL finished) {
-        _rightImageView.hidden = YES;
-        _rightImageView = nil;
     }];
 }
 

@@ -445,6 +445,7 @@ static NSString *cellIdentifier = @"cellIdentifier";
 - (void)dealloc
 {
     [[NSNotificationCenter defaultCenter] removeObserver:self];
+    NSLog(@"dealloc:MyDataController");
 }
 
 /*

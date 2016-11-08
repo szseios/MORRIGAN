@@ -58,6 +58,9 @@
 // An empty implementation adversely affects performance during animation.
 - (void)drawRect:(CGRect)rect {
     // Drawing code
+    
+    [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(refreshData:) name:TARGETCHANGENOTIFICATION object:nil];
+    
     _viewWidth = rect.size.width;
     _viewHeight = rect.size.height;
     
@@ -278,16 +281,31 @@
     
     if ( offsetXX >= offsetX / 2) {
         if ([_dateLabel.text rangeOfString:@"A"].location != NSNotFound) {
-            
+            NSString *tempStr = [_dateLabel.text stringByReplacingOccurrencesOfString:@"A" withString:@"P"];
+            _dateLabel.text = tempStr;
         }
         _horizImageView.image = [UIImage imageNamed:@"icon_star_0"];
         
     }else{
         if ([_dateLabel.text rangeOfString:@"P"].location != NSNotFound) {
             
+            NSString *tempStr = [_dateLabel.text stringByReplacingOccurrencesOfString:@"P" withString:@"A"];
+            _dateLabel.text = tempStr;
         }
         _horizImageView.image = [UIImage imageNamed:@"icon_noRecord"];
     }
+}
+
+- (void)refreshData:(NSNotification *)notification
+{
+    NSString *time = [UserInfo share].target;
+    if (!time) {
+        time = @"60";
+    }
+    NSMutableAttributedString *attributeString = [[NSMutableAttributedString alloc] initWithString:[NSString stringWithFormat:@"%@min",time]];
+    [attributeString setAttributes:@{NSFontAttributeName:[UIFont systemFontOfSize:60]} range:NSMakeRange(0, time.length)];
+    _timeLabel.attributedText = attributeString;
+    [self setNeedsDisplay];
 }
 
 

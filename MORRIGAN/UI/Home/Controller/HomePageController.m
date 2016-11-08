@@ -67,13 +67,14 @@
        UIAlertView *alert = [[UIAlertView alloc] initWithTitle:@"还未连接设备" message:nil delegate:self cancelButtonTitle:@"取消" otherButtonTitles:@"连接", nil];
         [alert show];
     }
+    [self setUpHomeMainView];
     
 }
 
 - (void)viewWillAppear:(BOOL)animated
 {
     [super viewWillAppear:animated];
-    [self setUpHomeMainView];
+    
 }
 
 - (void)setUpBarView

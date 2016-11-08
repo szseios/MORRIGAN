@@ -18,8 +18,6 @@
 
 @interface PersonalController : UIViewController
 
-@property (nonatomic , strong) UIImage *rightImage;
-
 @property (nonatomic , assign) id<PersonalControllerDelegate> delegate;
 
 @end

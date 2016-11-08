@@ -101,6 +101,12 @@
     // Dispose of any resources that can be recreated.
 }
 
+- (void)dealloc
+{
+    [[NSNotificationCenter defaultCenter] removeObserver:self];
+    NSLog(@"dealloc:NickNameController");
+}
+
 /*
 #pragma mark - Navigation
 
