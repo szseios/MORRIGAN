@@ -11,7 +11,6 @@
 #import "MusicViewController.h"
 #import "HandKneadViewController.h"
 #import "AutoKneadViewController.h"
-#import "BTTestViewController.h"
 #import "MusicManager.h"
 #import "BluetoothManager.h"
 #import <AVFoundation/AVFoundation.h>

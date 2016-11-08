@@ -7,13 +7,13 @@
 //
 
 #import <UIKit/UIKit.h>
-#import "relateDeviceModel.h"
+#import "PeripheralModel.h"
 
 @protocol RelateDeviceCellDelegate <NSObject>
 
-- (void)editDevice:(relateDeviceModel *)model withIndePath:(NSIndexPath *)index;
+- (void)editDevice:(PeripheralModel *)model withIndePath:(NSIndexPath *)index;
 
-- (void)deleteDevice:(relateDeviceModel *)model withIndePath:(NSIndexPath *)index;
+- (void)deleteDevice:(PeripheralModel *)model withIndePath:(NSIndexPath *)index;
 
 @end
 
@@ -27,6 +27,6 @@
 
 @property (nonatomic , assign) id<RelateDeviceCellDelegate> delegate;
 
-- (void)setDeviceModel:(relateDeviceModel *)model withIndexPath:(NSIndexPath *)index;
+- (void)setDeviceModel:(PeripheralModel *)model withIndexPath:(NSIndexPath *)index;
 
 @end

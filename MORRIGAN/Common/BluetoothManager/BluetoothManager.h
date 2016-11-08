@@ -33,9 +33,5 @@ extern NSString * const DisconnectPeripheral;
 
 - (void)writeValueByOperation:(BluetoothOperation *)operation;
 
-- (void)scanTest;
-- (void)connectTest;
-- (void)unConnectTest;
-- (void)writeValue:(NSData *)data;
 
 @end

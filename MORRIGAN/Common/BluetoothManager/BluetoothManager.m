@@ -7,7 +7,6 @@
 //
 
 #import "BluetoothManager.h"
-#import "BtSettingInfo.h"
 
 static BluetoothManager *manager;
 static NSString * const ServiceUUID = @"56FF";
@@ -144,7 +143,7 @@ NSString * const DisconnectPeripheral = @"DisconnectPeripheral";
                         // @"ee"是模块给客户端的应答，不处理
                         success = YES;
                     } else {
-                        [weakSelf writeValue:[[BtSettingInfo share] getResultDataOfAnswer:answerCode]];
+
                     }
                     // 有效数据获取返回给Controller处理
                 } else {
@@ -277,27 +276,6 @@ NSString * const DisconnectPeripheral = @"DisconnectPeripheral";
 }
 
 
-
-#pragma mark - 连接／断开设备（测试）
-
-- (void)scanTest
-{
-//    [self start];
-}
-
-- (void)connectTest
-{
-    if(self.willConnectPeripheral) {
-        [self connectingBlueTooth:self.willConnectPeripheral];
-    }
-   
-}
-
-- (void)unConnectTest
-{
-    [self unConnectingBlueTooth];
-
-}
 
 
 #pragma mark - 往连接的设备写数据

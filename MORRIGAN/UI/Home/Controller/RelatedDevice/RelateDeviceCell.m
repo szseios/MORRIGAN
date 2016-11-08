@@ -10,7 +10,7 @@
 
 @interface RelateDeviceCell ()
 
-@property (nonatomic , strong) relateDeviceModel *model;
+@property (nonatomic , strong) PeripheralModel *model;
 
 @property (nonatomic , strong) NSIndexPath *index;
 
@@ -31,7 +31,7 @@
     _deviceIDLabel.numberOfLines = 0;
 }
 
-- (void)setDeviceModel:(relateDeviceModel *)model withIndexPath:(NSIndexPath *)index
+- (void)setDeviceModel:(PeripheralModel *)model withIndexPath:(NSIndexPath *)index
 {
     _model = model;
     _index = index;
@@ -44,7 +44,7 @@
     }else{
         _backgroundImageView.image = [UIImage imageNamed:@"addDeviceBackgroud"];
         _deviceIDLabel.hidden = NO;
-        _deviceIDLabel.text = model.deviceID;
+        _deviceIDLabel.text = model.name;
         _countLabel.hidden = NO;
         _countLabel.text = [NSString stringWithFormat:@"%ld",index.row];
         _editImageView.hidden = NO;

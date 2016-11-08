@@ -130,9 +130,6 @@
 		EB6DBC871DC8216E005823B2 /* PeripheralListViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = EB6DBC811DC8216E005823B2 /* PeripheralListViewController.xib */; };
 		EB6DBC881DC8216E005823B2 /* SearchPeripheralViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = EB6DBC831DC8216E005823B2 /* SearchPeripheralViewController.m */; };
 		EB6DBC891DC8216E005823B2 /* SearchPeripheralViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = EB6DBC841DC8216E005823B2 /* SearchPeripheralViewController.xib */; };
-		EB6DBC8D1DC82239005823B2 /* BTTestViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = EB6DBC8C1DC82239005823B2 /* BTTestViewController.m */; };
-		EB6DBC901DC82288005823B2 /* BtSettingInfo.m in Sources */ = {isa = PBXBuildFile; fileRef = EB6DBC8F1DC82288005823B2 /* BtSettingInfo.m */; };
-		EB6DBC911DC82288005823B2 /* BtSettingInfo.m in Sources */ = {isa = PBXBuildFile; fileRef = EB6DBC8F1DC82288005823B2 /* BtSettingInfo.m */; };
 		EB7AD9411DA72FF6001D1DCA /* main.m in Sources */ = {isa = PBXBuildFile; fileRef = EB7AD9401DA72FF6001D1DCA /* main.m */; };
 		EB7AD9441DA72FF6001D1DCA /* AppDelegate.m in Sources */ = {isa = PBXBuildFile; fileRef = EB7AD9431DA72FF6001D1DCA /* AppDelegate.m */; };
 		EB7AD94C1DA72FF6001D1DCA /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = EB7AD94B1DA72FF6001D1DCA /* Assets.xcassets */; };
@@ -387,10 +384,6 @@
 		EB6DBC821DC8216E005823B2 /* SearchPeripheralViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SearchPeripheralViewController.h; sourceTree = "<group>"; };
 		EB6DBC831DC8216E005823B2 /* SearchPeripheralViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = SearchPeripheralViewController.m; sourceTree = "<group>"; };
 		EB6DBC841DC8216E005823B2 /* SearchPeripheralViewController.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = SearchPeripheralViewController.xib; sourceTree = "<group>"; };
-		EB6DBC8B1DC82239005823B2 /* BTTestViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = BTTestViewController.h; sourceTree = "<group>"; };
-		EB6DBC8C1DC82239005823B2 /* BTTestViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = BTTestViewController.m; sourceTree = "<group>"; };
-		EB6DBC8E1DC82288005823B2 /* BtSettingInfo.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = BtSettingInfo.h; sourceTree = "<group>"; };
-		EB6DBC8F1DC82288005823B2 /* BtSettingInfo.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = BtSettingInfo.m; sourceTree = "<group>"; };
 		EB7AD93C1DA72FF6001D1DCA /* MORRIGAN.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = MORRIGAN.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		EB7AD9401DA72FF6001D1DCA /* main.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = main.m; sourceTree = "<group>"; };
 		EB7AD9421DA72FF6001D1DCA /* AppDelegate.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = AppDelegate.h; sourceTree = "<group>"; };
@@ -891,10 +884,6 @@
 		EB6DBC8A1DC82239005823B2 /* test */ = {
 			isa = PBXGroup;
 			children = (
-				EB6DBC8E1DC82288005823B2 /* BtSettingInfo.h */,
-				EB6DBC8F1DC82288005823B2 /* BtSettingInfo.m */,
-				EB6DBC8B1DC82239005823B2 /* BTTestViewController.h */,
-				EB6DBC8C1DC82239005823B2 /* BTTestViewController.m */,
 			);
 			path = test;
 			sourceTree = "<group>";
@@ -1287,10 +1276,8 @@
 				4728EDBC1DC4865E0005F9C3 /* PNColor.m in Sources */,
 				47FF16661DC9F48B00DBD493 /* SDWebImageDecoder.m in Sources */,
 				4728ED7E1DC485F50005F9C3 /* HomeMainView.m in Sources */,
-				EB6DBC901DC82288005823B2 /* BtSettingInfo.m in Sources */,
 				3E632A551DC5A47B00CC2332 /* BabyToy.m in Sources */,
 				4728EDC61DC4865E0005F9C3 /* PNScatterChartData.m in Sources */,
-				EB6DBC8D1DC82239005823B2 /* BTTestViewController.m in Sources */,
 				4728ED7C1DC485F50005F9C3 /* BasicBarView.m in Sources */,
 				47FF166A1DC9F48B00DBD493 /* SDWebImagePrefetcher.m in Sources */,
 				47FF166C1DC9F48B00DBD493 /* UIImage+GIF.m in Sources */,
@@ -1359,7 +1346,6 @@
 			files = (
 				EB7AD95A1DA72FF6001D1DCA /* MORRIGANTests.m in Sources */,
 				EB21FA1F1DBF31A000DDD28A /* FuntionButton.m in Sources */,
-				EB6DBC911DC82288005823B2 /* BtSettingInfo.m in Sources */,
 				EBF011B01DA7920A009E8394 /* Utils.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -1480,8 +1466,8 @@
 			isa = XCBuildConfiguration;
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
-				CODE_SIGN_IDENTITY = "iPhone Developer: 双南 黄 (JXJPSFJD9R)";
-				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer: 双南 黄 (JXJPSFJD9R)";
+				CODE_SIGN_IDENTITY = "iPhone Distribution: Shenzhen Stock Exchange";
+				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Distribution: Shenzhen Stock Exchange";
 				DEVELOPMENT_TEAM = 6C7QEGP2K7;
 				ENABLE_BITCODE = NO;
 				GCC_PREFIX_HEADER = MORRIGAN/PrefixHeader.pch;
@@ -1494,8 +1480,8 @@
 				);
 				PRODUCT_BUNDLE_IDENTIFIER = com.szse.nmoastg;
 				PRODUCT_NAME = "$(TARGET_NAME)";
-				PROVISIONING_PROFILE = "c18e5ba6-a4fa-409d-935f-65aac56a7533";
-				PROVISIONING_PROFILE_SPECIFIER = NMOA_Development;
+				PROVISIONING_PROFILE = "a5e86c13-b31b-4a4b-a528-428f7cd810a3";
+				PROVISIONING_PROFILE_SPECIFIER = NMOAStgInhouse;
 			};
 			name = Debug;
 		};
@@ -1503,8 +1489,8 @@
 			isa = XCBuildConfiguration;
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
-				CODE_SIGN_IDENTITY = "iPhone Developer: 双南 黄 (JXJPSFJD9R)";
-				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer: 双南 黄 (JXJPSFJD9R)";
+				CODE_SIGN_IDENTITY = "iPhone Distribution: Shenzhen Stock Exchange";
+				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Distribution: Shenzhen Stock Exchange";
 				DEVELOPMENT_TEAM = 6C7QEGP2K7;
 				ENABLE_BITCODE = NO;
 				GCC_PREFIX_HEADER = MORRIGAN/PrefixHeader.pch;
@@ -1517,8 +1503,8 @@
 				);
 				PRODUCT_BUNDLE_IDENTIFIER = com.szse.nmoastg;
 				PRODUCT_NAME = "$(TARGET_NAME)";
-				PROVISIONING_PROFILE = "c18e5ba6-a4fa-409d-935f-65aac56a7533";
-				PROVISIONING_PROFILE_SPECIFIER = NMOA_Development;
+				PROVISIONING_PROFILE = "a5e86c13-b31b-4a4b-a528-428f7cd810a3";
+				PROVISIONING_PROFILE_SPECIFIER = NMOAStgInhouse;
 			};
 			name = Release;
 		};

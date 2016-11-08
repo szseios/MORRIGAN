@@ -23,20 +23,16 @@
 
 @implementation RelateDeviceController
 
-- (NSMutableArray *)deviceArray
-{
-    if (!_deviceArray) {
-        _deviceArray = [NSMutableArray array];
-        for (NSInteger i = 0; i < 4; i++) {
-            relateDeviceModel *model = [[relateDeviceModel alloc] init];
-            [_deviceArray addObject:model];
-        }
-    }
-     return _deviceArray;
-}
 
 - (void)viewDidLoad {
     [super viewDidLoad];
+    
+    _deviceArray = [[NSMutableArray alloc] initWithObjects:[[PeripheralModel alloc] init], nil];
+    NSArray *peripherals = [DBManager selectPeripherals];
+    if (peripherals) {
+        [_deviceArray addObjectsFromArray:peripherals];
+    }
+    
     UIImageView *backImageView = [[UIImageView alloc] initWithFrame:CGRectMake(0, 0, kScreenWidth, 64)];
     backImageView.image = [UIImage imageNamed:@"basicBackground"];
     [self.view addSubview:backImageView];
@@ -47,6 +43,7 @@
     if (self.connectBottomView) {
         [self.view bringSubviewToFront:self.connectBottomView];
     }
+    
     
 }
 
@@ -100,7 +97,7 @@
 
 - (NSInteger)collectionView:(UICollectionView *)collectionView numberOfItemsInSection:(NSInteger)section
 {
-    return self.deviceArray.count ;
+    return self.deviceArray.count;
 }
 
 - (UICollectionViewCell *)collectionView:(UICollectionView *)collectionView cellForItemAtIndexPath:(NSIndexPath *)indexPath
@@ -113,12 +110,10 @@
 
 - (void)collectionView:(UICollectionView *)collectionView didSelectItemAtIndexPath:(NSIndexPath *)indexPath
 {
-    if (indexPath.row == 0) {
-        
-        NSDictionary *dictionary = @{@"userId": [UserInfo share].userId,
-//                                     @"deviceName": @"测试设备",
-                                     @"mac":@"aasfa_Asdasad_a3eqa"
-                                     };
+    if (indexPath.row > 0) {
+        PeripheralModel *model = _deviceArray[indexPath.row];
+        NSDictionary *dictionary = @{@"userId": [UserInfo share].userId?[UserInfo share].userId:@"",
+                                     @"mac":model.uuid?model.uuid:@""};
         NSString *bodyString = [NMOANetWorking handleHTTPBodyParams:dictionary];
         [[NMOANetWorking share] taskWithTag:ID_UNBINGDING_DEVICE urlString:URL_UNBINGDING_DEVICE httpHead:nil bodyString:bodyString objectTaskFinished:^(NSError *error, id obj) {
             
@@ -134,12 +129,12 @@
 
 #pragma mark - RelateDeviceCellDelegate
 
-- (void)editDevice:(relateDeviceModel *)model withIndePath:(NSIndexPath *)index
+- (void)editDevice:(PeripheralModel *)model withIndePath:(NSIndexPath *)index
 {
     NSLog(@"编辑第%ld个设备",index.row);
 }
 
-- (void)deleteDevice:(relateDeviceModel *)model withIndePath:(NSIndexPath *)index
+- (void)deleteDevice:(PeripheralModel *)model withIndePath:(NSIndexPath *)index
 {
     NSLog(@"删除第%ld个设备",index.row);
 }

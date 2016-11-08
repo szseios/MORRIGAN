@@ -25,6 +25,7 @@
 @property (weak, nonatomic) IBOutlet UIView *squareView;
 @property (weak, nonatomic) IBOutlet UILabel *connectingLabel;
 @property (weak, nonatomic) IBOutlet UIView *bottomView;
+@property (weak, nonatomic) IBOutlet UIImageView *runloopImageView;
 
 @end
 
@@ -49,6 +50,8 @@
 
 - (void)viewWillDisappear:(BOOL)animated {
     [super viewWillDisappear:animated];
+    [self stopAnimating];
+    [[NSNotificationCenter defaultCenter] removeObserver:self];
     
 }
 
@@ -127,7 +130,7 @@
     _bottomView.hidden = NO;
     _squareView.hidden = NO;
     self.view.userInteractionEnabled = NO;
-
+    [self startAnimating];
 }
 
 - (void)connectPeripheralSuccess {
@@ -140,6 +143,21 @@
     PeripheralBindingFinishedViewController *ctl = [[PeripheralBindingFinishedViewController alloc] init];
     ctl.connectSuccess = NO;
     [self.navigationController pushViewController:ctl animated:YES];
+}
+
+- (void)startAnimating {
+    CABasicAnimation* rotationAnimation;
+    rotationAnimation = [CABasicAnimation animationWithKeyPath:@"transform.rotation.z"];
+    rotationAnimation.toValue = [NSNumber numberWithFloat: M_PI * 2.0 ];
+    rotationAnimation.duration = 0.75;
+    rotationAnimation.cumulative = YES;
+    rotationAnimation.repeatCount = INT_MAX;
+    rotationAnimation.removedOnCompletion = NO;
+    [_runloopImageView.layer addAnimation:rotationAnimation forKey:nil];
+}
+
+- (void)stopAnimating {
+    [_runloopImageView.layer removeAllAnimations];
 }
 
 
