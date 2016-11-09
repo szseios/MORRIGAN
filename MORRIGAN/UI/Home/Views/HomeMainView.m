@@ -39,7 +39,15 @@
 
 @property (nonatomic , strong) UILabel *dateLabel;   //日期
 
-@property (nonatomic , strong) UIImageView *horizImageView; //日期下面的横杆
+@property (nonatomic , strong) UILabel *APMLabel;   //上下午
+
+@property (nonatomic , strong) UIImageView *lefthorizImageView; //日期下面的左横杆
+
+@property (nonatomic , strong) UIImageView *righthorizImageView; //日期下面的右横杆
+
+@property (nonatomic , strong) UIView *horizView;
+
+@property (nonatomic , strong) UIView *waveView;
 
 @end
 
@@ -76,7 +84,7 @@
     _circleImageView.backgroundColor = [UIColor clearColor];
     _circleImageView.image = [UIImage imageNamed:@"round_scale_all"];
     [self addSubview:_circleImageView];
-    
+    [self setUpWaveView];
     [self setUpCenterView];
     [self setUpUpView];
     [self setUpDownView];
@@ -93,6 +101,24 @@
     
 }
 
+- (void)setUpWaveView
+{
+    CGFloat waveX = _viewWidth * 23.5 / 312.0;
+    CGFloat waveY = _viewHeight * 150.5 / 860;
+    CGFloat waveW = _viewWidth * 238 / 312;
+    _waveView = [[UIView alloc] initWithFrame:CGRectMake(waveX, waveY, waveW, waveW)];
+    _waveView.clipsToBounds = YES;
+    _waveView.layer.cornerRadius = waveW / 2;
+    _waveView.backgroundColor = [UIColor clearColor];
+    
+    [self addSubview:_waveView];
+    
+    UIBezierPath *path = [UIBezierPath bezierPath];
+    [path addArcWithCenter:_waveView.center radius:waveW startAngle:M_PI / 6 endAngle:M_PI * 5 / 6 clockwise:YES];
+//    path addCurveToPoint:CGPointMake(<#CGFloat x#>, <#CGFloat y#>) controlPoint1:<#(CGPoint)#> controlPoint2:<#(CGPoint)#>
+    
+}
+
 
 - (void)setUpCenterView
 {
@@ -101,13 +127,6 @@
     _centerView.layer.cornerRadius = _centerView.frame.size.width / 2;
     _centerView.backgroundColor = [UIColor clearColor];
     [self addSubview:_centerView];
-    
-    CGFloat waveX = _viewWidth * 46 / 623.0;
-    
-    
-//    UIImageView *waveImage = [[UIImageView alloc] initWithFrame:backView.frame];
-//    waveImage.image = [UIImage imageNamed:@"wave"];
-//    [backView addSubview:waveImage];
     
     CGFloat timeLabelY = (_centerView.frame.size.width / 2) - 70;
     CGFloat timeLabelW = CGRectGetWidth(_centerView.frame);
@@ -125,23 +144,42 @@
     [_centerView addSubview:_timeLabel];
     
     NSDateFormatter *formatter = [[NSDateFormatter alloc] init];
-    [formatter setDateFormat:@"yyyy年MM月dd日 aa"];
+    [formatter setDateFormat:@"yyyy年MM月dd日"];
     NSString *dateStr = [formatter stringFromDate:[NSDate date]];
     
     CGFloat dateLabelY = CGRectGetMaxY(_timeLabel.frame);
-    _dateLabel = [[UILabel alloc] initWithFrame:CGRectMake(0, dateLabelY, timeLabelW, 25)];
+    _dateLabel = [[UILabel alloc] initWithFrame:CGRectMake(0, dateLabelY, timeLabelW- 50, 25)];
     _dateLabel.text = dateStr;
     _dateLabel.textColor = [UIColor whiteColor];
-    _dateLabel.textAlignment = NSTextAlignmentCenter;
+    
     _dateLabel.font = [UIFont systemFontOfSize:(kScreenWidth > 320 ? 17 : 15)];
+    [_dateLabel sizeToFit];
+    _dateLabel.center = CGPointMake(_centerView.width / 2 -15, dateLabelY + 25/2);
     [_centerView addSubview:_dateLabel];
     
+    CGFloat APMLabelX = CGRectGetMaxX(_dateLabel.frame);
+    _APMLabel = [[UILabel alloc] initWithFrame:CGRectMake(APMLabelX + 10, dateLabelY, 50, 25)];
+    _APMLabel.text = @"AM";
+    _APMLabel.textColor = [UIColor whiteColor];
+    _APMLabel.textAlignment = NSTextAlignmentLeft;
+    _APMLabel.font = [UIFont systemFontOfSize:(kScreenWidth > 320 ? 17 : 15)];
+    [_centerView addSubview:_APMLabel];
+    
     CGFloat horizY = CGRectGetMaxY(_dateLabel.frame) + 10;
-    _horizImageView = [[UIImageView alloc] initWithFrame:CGRectMake(10, horizY, (_centerView.width - 20)/2, 8)];
-    _horizImageView.image = [UIImage imageNamed:@"icon_noRecord"];
-    _horizImageView.center = CGPointMake(CGRectGetMidX(_dateLabel.frame), horizY + 6);
-    _horizImageView.contentMode = UIViewContentModeCenter;
-    [_centerView addSubview:_horizImageView];
+    _horizView = [[UIView alloc] initWithFrame:CGRectMake(20,horizY , 60, 4)];
+    _horizView.backgroundColor = [UIColor clearColor];
+    _horizView.center = CGPointMake(_centerView.width / 2, horizY + 15);
+    [_centerView addSubview:_horizView];
+    
+    _lefthorizImageView = [[UIImageView alloc] initWithFrame:CGRectMake(5, 0, 25, 4)];
+    _lefthorizImageView.image = [UIImage imageNamed:@"empty_rect"];
+//    _lefthorizImageView.contentMode = UIViewContentModeCenter;
+    [_horizView addSubview:_lefthorizImageView];
+    
+    _righthorizImageView = [[UIImageView alloc] initWithFrame:CGRectMake(35, 0, 25, 4)];
+    _righthorizImageView.image = [UIImage imageNamed:@"full_rect"];
+//    _righthorizImageView.contentMode = UIViewContentModeCenter;
+    [_horizView addSubview:_righthorizImageView];
     
 }
 
@@ -176,7 +214,7 @@
     [self addSubview:_upView];
     
     _upBackgroundView = [[UIImageView alloc] initWithFrame:_upView.bounds];
-    _upBackgroundView.image = [UIImage imageNamed:@"auto_downBackgrround"];
+    _upBackgroundView.image = [UIImage imageNamed:@"elctricity"];
     _upBackgroundView.height = _upView.height * 0.2;
     _upBackgroundView.y = _upView.height - _upBackgroundView.height;
     [_upView addSubview:_upBackgroundView];
@@ -280,19 +318,14 @@
     CGFloat offsetXX = scrollView.contentOffset.x;
     
     if ( offsetXX >= offsetX / 2) {
-        if ([_dateLabel.text rangeOfString:@"A"].location != NSNotFound) {
-            NSString *tempStr = [_dateLabel.text stringByReplacingOccurrencesOfString:@"A" withString:@"P"];
-            _dateLabel.text = tempStr;
-        }
-        _horizImageView.image = [UIImage imageNamed:@"icon_star_0"];
+        _APMLabel.text = @"AM";
+        _righthorizImageView.image = [UIImage imageNamed:@"empty_rect"];
+        _lefthorizImageView.image = [UIImage imageNamed:@"full_rect"];
         
     }else{
-        if ([_dateLabel.text rangeOfString:@"P"].location != NSNotFound) {
-            
-            NSString *tempStr = [_dateLabel.text stringByReplacingOccurrencesOfString:@"P" withString:@"A"];
-            _dateLabel.text = tempStr;
-        }
-        _horizImageView.image = [UIImage imageNamed:@"icon_noRecord"];
+        _APMLabel.text = @"PM";
+        _righthorizImageView.image = [UIImage imageNamed:@"full_rect"];
+        _lefthorizImageView.image = [UIImage imageNamed:@"empty_rect"];
     }
 }
 
@@ -307,6 +340,7 @@
     _timeLabel.attributedText = attributeString;
     [self setNeedsDisplay];
 }
+
 
 
 

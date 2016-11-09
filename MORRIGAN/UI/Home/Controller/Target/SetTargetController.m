@@ -32,7 +32,7 @@
     _achieveButton.clipsToBounds = YES;
     _achieveButton.layer.cornerRadius = 5;
     [_achieveButton addTarget:self action:@selector(clickEnsure) forControlEvents:UIControlEventTouchUpInside];
-    _countLabel.text = [UserInfo share].target;
+    _countLabel.text = [UserInfo share].target ? [UserInfo share].target : @"60";
     
     [self setUpBarView];
     
@@ -82,7 +82,7 @@
     ZHRulerView *rulerView = [[ZHRulerView alloc] initWithMixNuber:5 maxNuber:180 showType:rulerViewshowHorizontalType rulerMultiple:10];
     _rulerView = rulerView;
     rulerView.round = YES;
-    rulerView.defaultVaule = [[UserInfo share].target integerValue];
+    rulerView.defaultVaule = [UserInfo share].target ? [[UserInfo share].target integerValue] : 60;
     rulerView.delegate = self;
     rulerView.frame = rulerFrame;
     

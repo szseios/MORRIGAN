@@ -33,6 +33,23 @@
         
         [self.view bringSubviewToFront:_connectBottomView];
     }
+    
+    [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(hiddenConnectView) name:ConnectPeripheralSuccess object:nil];
+    [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(showConnectView) name:DisconnectPeripheral object:nil];
+}
+
+- (void)hiddenConnectView
+{
+    if (_connectBottomView) {
+        _connectBottomView.hidden = YES;
+    }
+}
+
+- (void)showConnectView
+{
+    if (_connectBottomView) {
+        _connectBottomView.hidden = NO;
+    }
 }
 
 - (void)didReceiveMemoryWarning {
