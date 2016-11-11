@@ -9,7 +9,8 @@
 #import "SetTargetController.h"
 #import "ZHRulerView.h"
 
-@interface SetTargetController ()<BasicBarViewDelegate,ZHRulerViewDelegate>
+@interface SetTargetController ()<BasicBarViewDelegate,ZHRulerViewDelegate,UIScrollViewDelegate>
+
 @property (weak, nonatomic) IBOutlet UILabel *countLabel;
 
 @property (weak, nonatomic) IBOutlet UIButton *achieveButton;
@@ -17,6 +18,8 @@
 @property (nonatomic , strong) BasicBarView *barView;
 
 @property (nonatomic , strong) ZHRulerView *rulerView;
+
+@property (nonatomic , strong) UIScrollView *rulerScrollView;
 
 @end
 
@@ -76,7 +79,7 @@
     CGFloat rulerY = 235 + tempY;
     CGFloat rulerWidth = kScreenWidth;
     CGFloat rulerHeight = 235;
-    
+//
     CGRect rulerFrame = CGRectMake(rulerX, rulerY, rulerWidth, rulerHeight);
     
     ZHRulerView *rulerView = [[ZHRulerView alloc] initWithMixNuber:5 maxNuber:180 showType:rulerViewshowHorizontalType rulerMultiple:10];
@@ -87,6 +90,48 @@
     rulerView.frame = rulerFrame;
     
     [self.view addSubview:rulerView];
+//    _rulerScrollView = [[UIScrollView alloc] initWithFrame:CGRectMake(rulerX, rulerY, rulerWidth, rulerHeight)];
+//    _rulerScrollView.delegate = self;
+//    _rulerScrollView.backgroundColor = [UIColor clearColor];
+//    _rulerScrollView.contentSize = CGSizeMake(180*15, rulerHeight);
+//    _rulerScrollView.showsHorizontalScrollIndicator = NO;
+//    _rulerScrollView.contentInset = UIEdgeInsetsMake(0, kScreenWidth/2, 0, kScreenWidth/2);
+//    
+//    [self.view addSubview:_rulerScrollView];
+//    CGFloat viewW = 1;
+//    CGFloat viewH = 30;
+//    CGFloat viewH1 = 40;
+//    CGFloat viewX = 15;
+//    CGFloat viewY = 20;
+//    CGFloat viewY1 = 30;
+//    
+//    for (NSInteger i = 0; i <= 180; i++) {
+//        UIView *view = [[UIView alloc] initWithFrame:CGRectMake(viewX * i, i%5 == 0 ? viewY : viewY1, viewW, i%5 == 0 ?viewH1 : viewH)];
+//        view.alpha = 0.4;
+//        view.backgroundColor = [UIColor blackColor];
+//        if (i %5 == 0) {
+//            view.backgroundColor = [UIColor blackColor];
+//            if (i % 10 == 0) {
+//                UILabel *label = [[UILabel alloc] initWithFrame:CGRectMake(view.x-20, view.y + view.height + 20, 40, 25)];
+//                label.text = [NSString stringWithFormat:@"%ld",i];
+//                label.textAlignment = NSTextAlignmentCenter;
+//                label.textColor = [UIColor blackColor];
+//                [_rulerScrollView addSubview:label];
+//                
+//            }
+//        }
+//        [_rulerScrollView addSubview:view];
+//        
+//    }
+//    //添加指针view
+//    UIView *pointerView=[[UIView alloc] initWithFrame:CGRectMake(kScreenWidth/2 - 0.8, rulerY + viewY, 1.6, 40)];
+//    pointerView.backgroundColor=[UIColor purpleColor];
+//    pointerView.alpha = 0.7;
+//    [self.view addSubview:pointerView];
+//    
+//    UIImageView *arrowImageView = [[UIImageView alloc] initWithFrame:CGRectMake(kScreenWidth/2 - 3, rulerY + viewY + 43, 6, 4)];
+//    arrowImageView.image = [UIImage imageNamed:@"arrowUp"];
+//    [self.view addSubview:arrowImageView];
     
     
 }
@@ -116,6 +161,37 @@
     [super didReceiveMemoryWarning];
     // Dispose of any resources that can be recreated.
 }
+
+#pragma mark - UIScrollViewDelegate
+//
+//- (void)scrollViewDidScroll:(UIScrollView *)scrollView
+//{
+//    
+//   
+//}
+//
+//- (void)scrollViewWillEndDragging:(UIScrollView *)scrollView withVelocity:(CGPoint)velocity targetContentOffset:(inout CGPoint *)targetContentOffset
+//{
+//    velocity = CGPointZero;
+//    CGPoint orifinalTargetContentOffset = CGPointMake(targetContentOffset->x, targetContentOffset->y);
+//    CGFloat offSetX = orifinalTargetContentOffset.x + kScreenWidth /2;
+//    NSInteger count = (NSInteger)offSetX / 15 ;
+//    _countLabel.text = [NSString stringWithFormat:@"%.0ld",count];
+//    scrollView.contentOffset = CGPointMake(count * 15, scrollView.contentOffset.y);
+//}
+//
+//- (void)scrollViewDidEndDragging:(UIScrollView *)scrollView willDecelerate:(BOOL)decelerate
+//{
+//    if (decelerate) {
+//        
+//    }
+//    
+//}
+//
+//- (void)scrollViewDidEndDecelerating:(UIScrollView *)scrollView
+//{
+//    
+//}
 
 - (void)dealloc
 {

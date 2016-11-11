@@ -207,15 +207,6 @@ static NSString *cellIdentifier = @"cellIdentifier";
     }
 }
 
-- (void)alertView:(UIAlertView *)alertView clickedButtonAtIndex:(NSInteger)buttonIndex
-{
-    if (buttonIndex == 1) {
-        LoginViewController *loginViewController = [[LoginViewController alloc] init];
-        [self presentViewController:loginViewController animated:YES completion:^{
-            
-        }];
-    }
-}
 
 - (void)didReceiveMemoryWarning {
     [super didReceiveMemoryWarning];

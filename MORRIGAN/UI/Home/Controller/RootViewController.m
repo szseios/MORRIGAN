@@ -154,6 +154,43 @@
 
 }
 
+- (void)alertView:(UIAlertView *)alertView clickedButtonAtIndex:(NSInteger)buttonIndex
+{
+    if (buttonIndex == 1) {
+        
+    }
+}
+
+- (void)resingeUser
+{
+    // 注销登陆成功时调用这个
+    NSUserDefaults *defaults = [NSUserDefaults standardUserDefaults];
+    [defaults removeObjectForKey:kUserDefaultIdKey];
+    [defaults removeObjectForKey:kUserDefaultPasswordKey];
+    
+    NSDictionary *dictionary = @{@"userId": [UserInfo share].userId
+                                 };
+    NSString *bodyString = [NMOANetWorking handleHTTPBodyParams:dictionary];
+    [[NMOANetWorking share] taskWithTag:ID_CANCEL_MOLI
+                              urlString:URL_CANCEL_MOLI
+                               httpHead:nil
+                             bodyString:bodyString
+                     objectTaskFinished:^(NSError *error, id obj)
+     {
+         if ([[obj objectForKey:HTTP_KEY_RESULTCODE] isEqualToString:HTTP_RESULTCODE_SUCCESS]) {
+             [MBProgressHUD showHUDByContent:@"注销成功！" view:UI_Window afterDelay:2];
+             NSLog(@"注销成功！");
+         }else{
+             [MBProgressHUD showHUDByContent:@"注销失败！" view:UI_Window afterDelay:2];
+         }
+         
+         
+     }];
+    
+    LoginViewController *loginViewController = [[LoginViewController alloc] init];
+    [self.navigationController pushViewController:loginViewController animated:NO];
+}
+
 /*
 #pragma mark - Navigation
 

@@ -49,6 +49,12 @@
 
 @property (nonatomic , strong) UIView *waveView;
 
+@property (nonatomic , strong) CAShapeLayer *waveLayer;
+
+@property (nonatomic , assign) CGFloat waveOffsetX;
+
+@property (nonatomic , strong) CADisplayLink *waveDisplayLink;
+
 @end
 
 @implementation HomeMainView
@@ -113,10 +119,67 @@
     
     [self addSubview:_waveView];
     
-    UIBezierPath *path = [UIBezierPath bezierPath];
-    [path addArcWithCenter:_waveView.center radius:waveW startAngle:M_PI / 6 endAngle:M_PI * 5 / 6 clockwise:YES];
-//    path addCurveToPoint:CGPointMake(<#CGFloat x#>, <#CGFloat y#>) controlPoint1:<#(CGPoint)#> controlPoint2:<#(CGPoint)#>
+//    self.waveLayer = [CAShapeLayer layer];
+//    self.waveLayer.strokeColor = [UIColor whiteColor].CGColor;
+//    self.waveLayer.fillColor = [UIColor whiteColor].CGColor;
+//    self.waveOffsetX = 0;
+//    
+//    self.waveShapeLayerT = [CAShapeLayer layer];
+//    self.waveShapeLayerT.fillColor = self.waveColor.CGColor;
+//    [self.layer addSublayer:self.waveShapeLayerT];
+    /*
+     *CADisplayLink是一个能让我们以和屏幕刷新率相同的频率将内容画到屏幕上的定时器。我们在应用中创建一个新的 CADisplayLink 对象，把它添加到一个runloop中，并给它提供一个 target 和selector 在屏幕刷新的时候调用。
+     */
+//    self.waveDisplayLink = [CADisplayLink displayLinkWithTarget:self selector:@selector(getCurrentWave)];
+//    [self.waveDisplayLink addToRunLoop:[NSRunLoop mainRunLoop] forMode:NSRunLoopCommonModes];
+//    [self getCurrentWave];
+//    [_waveView.layer addSublayer:_waveLayer];
     
+}
+
+//CADispayLink相当于一个定时器 会一直绘制曲线波纹 看似在运动，其实是一直在绘画不同位置点的余弦函数曲线
+- (void)getCurrentWave {
+    //offsetX决定x位置，如果想搞明白可以多试几次
+    self.waveOffsetX += 0;
+    //声明第一条波曲线的路径
+    CGMutablePathRef path = CGPathCreateMutable();
+    //设置起始点
+    CGFloat waveW = _viewWidth * 238 / 312;
+    CGPathMoveToPoint(path, nil, 0, waveW / 3 * 2);
+    
+    CGFloat y = 0.f;
+    //第一个波纹的公式
+    for (float x = 0.f; x <= waveW ; x++) {
+        y = 10*sin((300 / waveW) * (x * M_PI / 90) - self.waveOffsetX * M_PI / 90) + waveW * 0.7;
+        CGPathAddLineToPoint(path, nil, x, y);
+        x++;
+    }
+    //把绘图信息添加到路径里
+    CGPathAddLineToPoint(path, nil, waveW, 1000 );
+    //结束绘图信息
+    CGPathCloseSubpath(path);
+    
+    self.waveLayer.path = path;
+    //释放绘图路径
+    CGPathRelease(path);
+    
+    /*
+     *  第二个
+     */
+//    self.offsetXT += self.waveSpeed;
+//    CGMutablePathRef pathT = CGPathCreateMutable();
+//    CGPathMoveToPoint(pathT, nil, 0, self.waveHeight+100);
+//    
+//    CGFloat yT = 0.f;
+//    for (float x = 0.f; x <= self.waveWidth ; x++) {
+//        yT = self.waveAmplitude*1.6 * sin((260 / self.waveWidth) * (x * M_PI / 180) - self.offsetXT * M_PI / 180) + self.waveHeight;
+//        CGPathAddLineToPoint(pathT, nil, x, yT-10);
+//    }
+//    CGPathAddLineToPoint(pathT, nil, self.waveWidth, self.frame.size.height);
+//    CGPathAddLineToPoint(pathT, nil, 0, self.frame.size.height);
+//    CGPathCloseSubpath(pathT);
+//    self.waveShapeLayerT.path = pathT;
+//    CGPathRelease(pathT);
 }
 
 
@@ -159,7 +222,7 @@
     
     CGFloat APMLabelX = CGRectGetMaxX(_dateLabel.frame);
     _APMLabel = [[UILabel alloc] initWithFrame:CGRectMake(APMLabelX + 10, dateLabelY, 50, 25)];
-    _APMLabel.text = @"AM";
+    _APMLabel.text = [self isAMOrPM] ? @"AM" : @"PM";
     _APMLabel.textColor = [UIColor whiteColor];
     _APMLabel.textAlignment = NSTextAlignmentLeft;
     _APMLabel.font = [UIFont systemFontOfSize:(kScreenWidth > 320 ? 17 : 15)];
@@ -171,13 +234,16 @@
     _horizView.center = CGPointMake(_centerView.width / 2, horizY + 15);
     [_centerView addSubview:_horizView];
     
+    NSString *leftImageName = [self isAMOrPM] ? @"full_rect" : @"empty_rect";
+    NSString *rightImageName = [self isAMOrPM] ? @"empty_rect" : @"full_rect";
+    
     _lefthorizImageView = [[UIImageView alloc] initWithFrame:CGRectMake(5, 0, 25, 4)];
-    _lefthorizImageView.image = [UIImage imageNamed:@"empty_rect"];
+    _lefthorizImageView.image = [UIImage imageNamed:leftImageName];
 //    _lefthorizImageView.contentMode = UIViewContentModeCenter;
     [_horizView addSubview:_lefthorizImageView];
     
     _righthorizImageView = [[UIImageView alloc] initWithFrame:CGRectMake(35, 0, 25, 4)];
-    _righthorizImageView.image = [UIImage imageNamed:@"full_rect"];
+    _righthorizImageView.image = [UIImage imageNamed:rightImageName];
 //    _righthorizImageView.contentMode = UIViewContentModeCenter;
     [_horizView addSubview:_righthorizImageView];
     
@@ -339,6 +405,16 @@
     [attributeString setAttributes:@{NSFontAttributeName:[UIFont systemFontOfSize:60]} range:NSMakeRange(0, time.length)];
     _timeLabel.attributedText = attributeString;
     [self setNeedsDisplay];
+}
+
+- (BOOL)isAMOrPM
+{
+    NSCalendar *calendar = [NSCalendar currentCalendar];
+    
+    NSDateComponents *compt = [calendar components:NSCalendarUnitHour
+                                          fromDate:[NSDate date]];
+    NSInteger hour = compt.hour;
+    return hour < 12 ? YES : NO;
 }
 
 
