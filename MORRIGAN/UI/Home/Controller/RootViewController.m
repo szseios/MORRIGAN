@@ -157,11 +157,11 @@
 - (void)alertView:(UIAlertView *)alertView clickedButtonAtIndex:(NSInteger)buttonIndex
 {
     if (buttonIndex == 1) {
-        
+        [self registerUser];
     }
 }
 
-- (void)resingeUser
+- (void)registerUser
 {
     // 注销登陆成功时调用这个
     NSUserDefaults *defaults = [NSUserDefaults standardUserDefaults];
@@ -180,6 +180,8 @@
          if ([[obj objectForKey:HTTP_KEY_RESULTCODE] isEqualToString:HTTP_RESULTCODE_SUCCESS]) {
              [MBProgressHUD showHUDByContent:@"注销成功！" view:UI_Window afterDelay:2];
              NSLog(@"注销成功！");
+             LoginViewController *loginViewController = [[LoginViewController alloc] init];
+             [self.navigationController pushViewController:loginViewController animated:NO];
          }else{
              [MBProgressHUD showHUDByContent:@"注销失败！" view:UI_Window afterDelay:2];
          }
@@ -187,8 +189,7 @@
          
      }];
     
-    LoginViewController *loginViewController = [[LoginViewController alloc] init];
-    [self.navigationController pushViewController:loginViewController animated:NO];
+   
 }
 
 /*
