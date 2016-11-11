@@ -96,9 +96,10 @@ static NSString *cellIdentifier = @"cellIdentifier";
 {
     if (buttonIndex == 1) {
         LoginViewController *loginViewController = [[LoginViewController alloc] init];
-        [self presentViewController:loginViewController animated:YES completion:^{
-            
-        }];
+//        [self presentViewController:loginViewController animated:YES completion:^{
+//            uan 
+//        }];
+        [self.navigationController pushViewController:loginViewController animated:NO];
     }
 }
 

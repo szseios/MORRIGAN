@@ -392,6 +392,7 @@
              
              // 进入主页
              RootViewController *homeViewController = [[RootViewController alloc] init];
+             NSLog(@"%@",self.navigationController);
              [self.navigationController pushViewController:homeViewController animated:YES];
 
          } else {
