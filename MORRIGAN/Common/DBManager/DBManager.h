@@ -9,6 +9,7 @@
 #import <Foundation/Foundation.h>
 #import "PeripheralModel.h"
 #import "FMDB.h"
+#import "RecordShouldUploadModel.h"
 
 @interface DBManager : NSObject
 
@@ -25,5 +26,16 @@
 + (NSArray *)selectPeripherals;
 
 + (NSDictionary *)selectLinkedPeripherals;
+
+
+
+// --------------------------------------------护理记录------------------------------------
++ (BOOL)insertRecord:(RecordShouldUploadModel *)model;
+
++ (BOOL)deleteRecord:(NSString *)uuid;
+
++ (NSArray *)selectAllRecord;
+
++ (NSArray *)selectRecordByUserId:(NSString *)userId;
 
 @end
