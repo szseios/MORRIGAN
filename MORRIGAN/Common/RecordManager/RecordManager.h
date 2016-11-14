@@ -16,8 +16,8 @@
 // 添加到待上传数组
 - (void)addToUploadArray:(RecordShouldUploadModel *)model;
 
-// 添加数据库中未上传的数据，并进行上传
-- (void)addDBDataAndUpload;
+// 上传数据库中的数据(shouldCleanUp == YES : 用户退出或注销需要上传完成红清除数据)
+- (void)uploadDBDatas:(BOOL)shouldCleanUp;
 
 
 @end

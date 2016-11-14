@@ -139,8 +139,8 @@ static NSString *dbPath = nil;
 
 + (BOOL)createRecordShouldUploadTable:(FMDatabase *)db {
     BOOL success = NO;
-//    NSString *sql = @"CREATE TABLE IF NOT EXISTS 'record_should_upload' ('uuid' TEXT PRIMARY KEY NOT NULL , 'userId' TEXT NOT NULL , 'date' TEXT NOT NULL, 'timeLong'  TEXT NOT NULL)";
-//    success = [db executeUpdate:sql];
+    NSString *sql = @"CREATE TABLE IF NOT EXISTS 'record_should_upload' ('uuid' TEXT PRIMARY KEY NOT NULL , 'userId' TEXT NOT NULL , 'date' TEXT NOT NULL, 'timeLong'  TEXT NOT NULL)";
+    success = [db executeUpdate:sql];
     return success;
 }
 
@@ -165,6 +165,16 @@ static NSString *dbPath = nil;
     __block BOOL success = NO;
     [[DBManager dbQueue] inDatabase:^(FMDatabase *db) {
         NSString *sql = [NSString stringWithFormat:@"DELETE FROM 'record_should_upload' WHERE uuid = '%@'",uuid];
+        success = [db executeUpdate:sql];
+    }];
+    return success;
+}
+
++ (BOOL)deleteAllRecord
+{
+    __block BOOL success = NO;
+    [[DBManager dbQueue] inDatabase:^(FMDatabase *db) {
+        NSString *sql = [NSString stringWithFormat:@"DELETE FROM 'record_should_upload'"];
         success = [db executeUpdate:sql];
     }];
     return success;
