@@ -16,7 +16,7 @@
 #import "NMOANetWorking.h"
 #import "RootViewController.h"
 #import "ForgetPwdViewController.h"
-#import "RecordUploadManager.h"
+#import "RecordManager.h"
 
 @interface LoginViewController ()
 {
@@ -284,7 +284,7 @@
 //    return;
 
     
-//    [[RecordUploadManager share] addDBDataAndUpload];
+//    [[RecordManager share] addDBDataAndUpload];
 //    return;
     
     

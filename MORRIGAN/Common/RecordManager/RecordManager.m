@@ -6,13 +6,13 @@
 //  Copyright © 2016年 mac-jhw. All rights reserved.
 //
 
-#import "RecordUploadManager.h"
+#import "RecordManager.h"
 #import "RecordShouldUploadModel.h"
 
 
-static RecordUploadManager *manager;
+static RecordManager *manager;
 
-@interface RecordUploadManager()
+@interface RecordManager()
 {
     NSMutableArray *_recordBufferArray;  // 等待上传的数据
     NSArray *_uploadingRecordArray;      // 正在上传的数据
@@ -23,13 +23,13 @@ static RecordUploadManager *manager;
 
 
 
-@implementation RecordUploadManager
+@implementation RecordManager
 
-+ (RecordUploadManager *)share
++ (RecordManager *)share
 {
     static dispatch_once_t onceToken;
     dispatch_once(&onceToken, ^{
-        manager = [[RecordUploadManager alloc] init];
+        manager = [[RecordManager alloc] init];
         
     });
     return manager;
@@ -75,7 +75,7 @@ static RecordUploadManager *manager;
     if(_isUploading == YES || self.recordBufferArray == nil || self.recordBufferArray.count == 0) {
         return;
     }
-    __weak RecordUploadManager *weakSelf = self;
+    __weak RecordManager *weakSelf = self;
     _isUploading = YES;
     
     // 把需要上传的数据放到上传的数组中,并将待上传数组清空

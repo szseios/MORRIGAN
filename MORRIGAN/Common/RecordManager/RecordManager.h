@@ -8,9 +8,9 @@
 
 #import <Foundation/Foundation.h>
 
-@interface RecordUploadManager : NSObject
+@interface RecordManager : NSObject
 
-+ (RecordUploadManager *)share;
++ (RecordManager *)share;
 
 
 // 添加到待上传数组
@@ -18,5 +18,6 @@
 
 // 添加数据库中未上传的数据，并进行上传
 - (void)addDBDataAndUpload;
+
 
 @end
