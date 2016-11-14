@@ -12,7 +12,7 @@
 
 @property (nonatomic,copy) NSString *uuid;
 @property (nonatomic,copy) NSString *userId;
-@property (nonatomic,copy) NSString *dataString;
+@property (nonatomic,copy) NSString *dateString;
 @property (nonatomic,copy) NSString *timeLongString;
 
 @end

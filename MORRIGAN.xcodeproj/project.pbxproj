@@ -819,6 +819,13 @@
 			path = SDWebImage;
 			sourceTree = "<group>";
 		};
+		EB20E0121DD961BA000C2E6E /* RecordUploadManager */ = {
+			isa = PBXGroup;
+			children = (
+			);
+			path = RecordUploadManager;
+			sourceTree = "<group>";
+		};
 		EB34F3A51DCA0F0D002B15B1 /* AutoKnead */ = {
 			isa = PBXGroup;
 			children = (
@@ -990,6 +997,7 @@
 		EBF011681DA73784009E8394 /* Common */ = {
 			isa = PBXGroup;
 			children = (
+				EB20E0121DD961BA000C2E6E /* RecordUploadManager */,
 				3E9ED0D61DD16B9B00A6F665 /* Model */,
 				3EF4E0091DD0A28E0003BD7C /* DBManager */,
 				3EF4DFF51DD0A26B0003BD7C /* FMDB */,

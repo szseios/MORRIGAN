@@ -132,7 +132,11 @@ static NSString *dbPath = nil;
     return dictionary;
 }
 
+
+
 // --------------------------------------------护理记录------------------------------------
+
+
 + (BOOL)createRecordShouldUploadTable:(FMDatabase *)db {
     BOOL success = NO;
 //    NSString *sql = @"CREATE TABLE IF NOT EXISTS 'record_should_upload' ('uuid' TEXT PRIMARY KEY NOT NULL , 'userId' TEXT NOT NULL , 'date' TEXT NOT NULL, 'timeLong'  TEXT NOT NULL)";
@@ -144,61 +148,67 @@ static NSString *dbPath = nil;
 + (BOOL)insertRecord:(RecordShouldUploadModel *)model {
     
     __block BOOL success = NO;
-//    [[DBManager dbQueue] inDatabase:^(FMDatabase *db) {
-//        NSString *sql = [NSString stringWithFormat:@"INSERT OR REPLACE INTO 'peripherals' ('uuid', 'name') VALUES ('%@', '%@')",
-//                         peripheral.identifier.UUIDString,
-//                         peripheral.name];
-//        success = [db executeUpdate:sql];
-//        
-//    }];
+    [[DBManager dbQueue] inDatabase:^(FMDatabase *db) {
+        NSString *sql = [NSString stringWithFormat:@"INSERT OR REPLACE INTO 'record_should_upload' ('uuid', 'userId', 'date', 'timeLong') VALUES ('%@', '%@','%@', '%@')",
+                         model.uuid,
+                         model.userId,
+                         model.dateString,
+                         model.timeLongString];
+        success = [db executeUpdate:sql];
+        
+    }];
     return success;
 }
 
 
 + (BOOL)deleteRecord:(NSString *)uuid {
     __block BOOL success = NO;
-//    [[DBManager dbQueue] inDatabase:^(FMDatabase *db) {
-//        NSString *sql = [NSString stringWithFormat:@"DELETE FROM 'peripherals' WHERE uuid = '%@'",uuid];
-//        success = [db executeUpdate:sql];
-//    }];
+    [[DBManager dbQueue] inDatabase:^(FMDatabase *db) {
+        NSString *sql = [NSString stringWithFormat:@"DELETE FROM 'record_should_upload' WHERE uuid = '%@'",uuid];
+        success = [db executeUpdate:sql];
+    }];
     return success;
 }
 
 + (NSArray *)selectAllRecord
 {
     __block NSMutableArray *array;
-//    [[DBManager dbQueue] inDatabase:^(FMDatabase *db) {
-//        NSString *sql = [NSString stringWithFormat:@"SELECT * FROM 'peripherals'"];
-//        FMResultSet *result = [db executeQuery:sql];
-//        while (result.next) {
-//            if (!array) {
-//                array = [[NSMutableArray alloc] init];
-//            }
-//            PeripheralModel *model = [[PeripheralModel alloc] init];
-//            model.uuid = [result stringForColumn:@"uuid"];
-//            model.name = [result stringForColumn:@"name"];
-//            [array addObject:model];
-//        }
-//    }];
+    [[DBManager dbQueue] inDatabase:^(FMDatabase *db) {
+        NSString *sql = [NSString stringWithFormat:@"SELECT * FROM 'record_should_upload'"];
+        FMResultSet *result = [db executeQuery:sql];
+        while (result.next) {
+            if (!array) {
+                array = [[NSMutableArray alloc] init];
+            }
+            RecordShouldUploadModel *model = [[RecordShouldUploadModel alloc] init];
+            model.uuid = [result stringForColumn:@"uuid"];
+            model.userId = [result stringForColumn:@"userId"];
+            model.dateString = [result stringForColumn:@"date"];
+            model.timeLongString = [result stringForColumn:@"timeLong"];
+            [array addObject:model];
+        }
+    }];
     return array;
 }
 
 + (NSArray *)selectRecordByUserId:(NSString *)userId
 {
     __block NSMutableArray *array;
-    //    [[DBManager dbQueue] inDatabase:^(FMDatabase *db) {
-    //        NSString *sql = [NSString stringWithFormat:@"SELECT * FROM 'peripherals'"];
-    //        FMResultSet *result = [db executeQuery:sql];
-    //        while (result.next) {
-    //            if (!array) {
-    //                array = [[NSMutableArray alloc] init];
-    //            }
-    //            PeripheralModel *model = [[PeripheralModel alloc] init];
-    //            model.uuid = [result stringForColumn:@"uuid"];
-    //            model.name = [result stringForColumn:@"name"];
-    //            [array addObject:model];
-    //        }
-    //    }];
+        [[DBManager dbQueue] inDatabase:^(FMDatabase *db) {
+            NSString *sql = [NSString stringWithFormat:@"SELECT * FROM 'record_should_upload' WHERE userId = '%@'",userId];
+            FMResultSet *result = [db executeQuery:sql];
+            while (result.next) {
+                if (!array) {
+                    array = [[NSMutableArray alloc] init];
+                }
+                RecordShouldUploadModel *model = [[RecordShouldUploadModel alloc] init];
+                model.uuid = [result stringForColumn:@"uuid"];
+                model.userId = [result stringForColumn:@"userId"];
+                model.dateString = [result stringForColumn:@"date"];
+                model.timeLongString = [result stringForColumn:@"timeLong"];
+                [array addObject:model];
+            }
+        }];
     return array;
 }
 
