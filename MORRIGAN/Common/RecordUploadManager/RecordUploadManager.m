@@ -53,7 +53,14 @@ static RecordUploadManager *manager;
 - (void)addDBDataAndUpload
 {
     // 添加数据库中未上传的数据
-    
+    for (NSInteger i = 0; i < 3; i++) {
+        RecordShouldUploadModel *model = [[RecordShouldUploadModel alloc] init];
+        model.uuid = @"sdddddd";
+        model.userId = @"1";
+        model.dateString = @"2016-10-20";
+        model.timeLongString = @"1:10";
+        [self.recordBufferArray addObject:model];
+    }
     
     
     [self uploadRecord];
@@ -61,6 +68,7 @@ static RecordUploadManager *manager;
 
 
 
+//http://112.74.100.227:8083/rest/moli/upload-record-list?userId=b1e81e1a-f3c8-4ccb-bb3c-7317ee6c41b7&hlInfo=[{"userId":"b1e81e1a-f3c8-4ccb-bb3c-7317ee6c41b7","date":"2016-09-12","timeLong":"30"},{"userId":"b1e81e1a-f3c8-4ccb-bb3c-7317ee6c41b7","date":"2016-09-13","timeLong":"30"},{"userId":"b1e81e1a-f3c8-4ccb-bb3c-7317ee6c41b7","date":"2016-09-14","timeLong":"30"}]
 
 - (void)uploadRecord
 {
@@ -76,20 +84,27 @@ static RecordUploadManager *manager;
     
     
     NSDictionary *dictionary = [NSDictionary dictionary];
+    NSMutableString *infoString = [NSMutableString string];
+    [infoString appendString:@"&hlInfo=["];
     for (RecordShouldUploadModel *model  in _uploadingRecordArray) {
         NSLog(@"剩余需要上传的护理记录数量: %ld，开始上传: %@, %@, %@, %@", self.recordBufferArray.count, model.uuid, model.userId, model.dateString, model.timeLongString);
-       
-        NSDictionary *dict = @{@"userId": model.userId,
-                               @"date": model.dateString,
-                               @"timeLong": model.timeLongString };
+        [infoString appendString:[NSString stringWithFormat:@"{\"userId\":\"%@\",\"date\":\"%@\",\"timeLong\":\"%@\"}",model.userId, model.dateString, model.timeLongString]];
+        if(model != [_uploadingRecordArray lastObject]) {
+            [infoString appendString:@","];
+        } else {
+            [infoString appendString:@"]"];
+            dictionary = @{@"userId": model.userId};
+        }
+        
     }
-    
-
     NSString *bodyString = [NMOANetWorking handleHTTPBodyParams:dictionary];
+    NSString *resultBodyString = [NSString stringWithFormat:@"%@%@",bodyString, infoString];
+    NSLog(@"resultBodyString: %@", resultBodyString);
+   
     [[NMOANetWorking share] taskWithTag:ID_UPLOAD_RECORD
                               urlString:URL_UPLOAD_RECORD
                                httpHead:nil
-                             bodyString:bodyString
+                             bodyString:resultBodyString
                      objectTaskFinished:^(NSError *error, id obj)
      {
          

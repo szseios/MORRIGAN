@@ -16,6 +16,7 @@
 #import "NMOANetWorking.h"
 #import "RootViewController.h"
 #import "ForgetPwdViewController.h"
+#import "RecordUploadManager.h"
 
 @interface LoginViewController ()
 {
@@ -282,6 +283,9 @@
 //    [self.navigationController pushViewController:homeViewController animated:YES];
 //    return;
 
+    
+//    [[RecordUploadManager share] addDBDataAndUpload];
+//    return;
     
     
     
