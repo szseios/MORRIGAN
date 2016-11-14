@@ -145,6 +145,12 @@
     // Dispose of any resources that can be recreated.
 }
 
+- (void)dealloc
+{
+    [[NSNotificationCenter defaultCenter] removeObserver:self];
+    NSLog(@"dealloc:RelateDeviceController");
+}
+
 /*
 #pragma mark - Navigation
 

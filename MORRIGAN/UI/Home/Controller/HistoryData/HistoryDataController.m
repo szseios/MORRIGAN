@@ -70,7 +70,7 @@ static NSString *cellID = @"DataCellID";
     _weekDataArray = [NSMutableArray array];
     
     __weak HistoryDataController *blockSelf = self;
-    NSDictionary *dictionary = @{@"userId": [UserInfo share].userId,
+    NSDictionary *dictionary = @{@"userId": [UserInfo share].userId ? [UserInfo share].userId : @"",
                                  };
     NSString *bodyString = [NMOANetWorking handleHTTPBodyParams:dictionary];
     [[NMOANetWorking share] taskWithTag:ID_GET_RECORD urlString:URL_GET_RECORD httpHead:nil bodyString:bodyString objectTaskFinished:^(NSError *error, id obj) {
@@ -380,6 +380,13 @@ static NSString *cellID = @"DataCellID";
 - (void)didReceiveMemoryWarning {
     [super didReceiveMemoryWarning];
     // Dispose of any resources that can be recreated.
+}
+
+
+- (void)dealloc
+{
+    [[NSNotificationCenter defaultCenter] removeObserver:self];
+    NSLog(@"dealloc:HistoryDataController");
 }
 
 /*

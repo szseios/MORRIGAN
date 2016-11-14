@@ -23,7 +23,9 @@
 
 @property (nonatomic , strong) UIView *headerView;
 
-@property (nonatomic , strong) UIImageView *rightImageView;
+@property (nonatomic , strong) UILabel *nameLabel;
+
+@property (nonatomic , strong) UIImageView *headerImageView;
 
 @end
 
@@ -48,61 +50,42 @@ static NSString *cellIdentifier = @"cellIdentifier";
     
     //headerView
     _headerView = [[UIView alloc] initWithFrame:CGRectMake(0, 0, cellWidth, 120)];
-    UIImageView *headerImageView = [[UIImageView alloc] initWithFrame:CGRectMake(20, 35, 80, 80)];
-    headerImageView.clipsToBounds = YES;
-    headerImageView.layer.cornerRadius = 40;
+    _headerImageView = [[UIImageView alloc] initWithFrame:CGRectMake(20, 35, 80, 80)];
+    _headerImageView.clipsToBounds = YES;
+    _headerImageView.layer.cornerRadius = 40;
 //    headerImageView.image = [UIImage imageNamed:@"defaultHeaderView"];
     
-    [headerImageView sd_setImageWithURL:[NSURL URLWithString:[UserInfo share].imgUrl] placeholderImage:[UIImage imageNamed:@"defaultHeaderView"] options:SDWebImageHandleCookies | SDWebImageRetryFailed completed:^(UIImage *image, NSError *error, SDImageCacheType cacheType, NSURL *imageURL) {
+    [_headerImageView sd_setImageWithURL:[NSURL URLWithString:[UserInfo share].imgUrl] placeholderImage:[UIImage imageNamed:@"defaultHeaderView"] options:SDWebImageHandleCookies | SDWebImageRetryFailed completed:^(UIImage *image, NSError *error, SDImageCacheType cacheType, NSURL *imageURL) {
         
     }];
     
-    UITapGestureRecognizer *tap = [[UITapGestureRecognizer alloc] initWithTarget:self action:@selector(selectHeaderImage)];
-    [headerImageView addGestureRecognizer:tap];
-    [_headerView addSubview:headerImageView];
+//    UITapGestureRecognizer *tap = [[UITapGestureRecognizer alloc] initWithTarget:self action:@selector(selectHeaderImage)];
+//    [_headerImageView addGestureRecognizer:tap];
+    [_headerView addSubview:_headerImageView];
     
-    CGFloat nameLabelY = headerImageView.height / 2 + 15;
-    UILabel *nameLabel = [[UILabel alloc] initWithFrame: CGRectMake(120, nameLabelY, cellWidth - 120, 40)];
-    nameLabel.text = [UserInfo share].nickName;
-    nameLabel.font = [UIFont systemFontOfSize:14];
-    nameLabel.textColor = [UIColor whiteColor];
-    [_headerView addSubview:nameLabel];
+    CGFloat nameLabelY = _headerImageView.height / 2 + 15;
+    _nameLabel = [[UILabel alloc] initWithFrame: CGRectMake(120, nameLabelY, cellWidth - 120, 40)];
+    _nameLabel.text = [UserInfo share].nickName ? [UserInfo share].nickName : @"";
+    _nameLabel.font = [UIFont systemFontOfSize:14];
+    _nameLabel.textColor = [UIColor whiteColor];
+    [_headerView addSubview:_nameLabel];
     
     _personalTableView.tableHeaderView = _headerView;
     
     
 }
 
-- (void)selectHeaderImage
+- (void)viewWillAppear:(BOOL)animated
 {
-    
-}
-
-- (void)moveToBack
-{
-    [UIView animateWithDuration:0.3 animations:^{
-        _rightImageView.x = 0;
-        _rightImageView.y = 0;
-    } completion:^(BOOL finished) {
-        _rightImageView.hidden = YES;
-        _rightImageView = nil;
-        self.view.alpha = 0;
-        dispatch_async(dispatch_get_main_queue(), ^{
-            [[NSNotificationCenter defaultCenter] postNotificationName:MOVETOHOMEPAGENOTIFICATION object:nil];
-        });
+    [super viewWillAppear:animated];
+    _nameLabel.text = [UserInfo share].nickName ? [UserInfo share].nickName : @"";
+    [_headerImageView sd_setImageWithURL:[NSURL URLWithString:[UserInfo share].imgUrl] placeholderImage:[UIImage imageNamed:@"defaultHeaderView"] options:SDWebImageHandleCookies | SDWebImageRetryFailed completed:^(UIImage *image, NSError *error, SDImageCacheType cacheType, NSURL *imageURL) {
+        
     }];
 }
 
-- (void)setRightImage:(UIImage *)rightImage
+- (void)selectHeaderImage
 {
-    _rightImageView = [[UIImageView alloc] initWithFrame:CGRectMake(kScreenWidth * 3 / 4, 20, kScreenWidth, kScreenHeight)];
-    
-    _rightImage = rightImage;
-    _rightImageView.image = rightImage;
-    [self.view addSubview:_rightImageView];
-    UITapGestureRecognizer *tap = [[UITapGestureRecognizer alloc] initWithTarget:self action:@selector(moveToBack)];
-    _rightImageView.userInteractionEnabled = YES;
-    [_rightImageView addGestureRecognizer:tap];
     
 }
 
@@ -222,85 +205,8 @@ static NSString *cellIdentifier = @"cellIdentifier";
         [self.delegate didSelectCellWithIndexPath:indexPath];
         return;
     }
-    
-//    [[NSNotificationCenter defaultCenter] postNotificationName:@"move" object:nil];
-//    if (indexPath.section == 0) {
-//        switch (indexPath.row) {
-//            case 0:
-//            {
-//                MyDataController *myDataCtl = [[MyDataController alloc] init];
-//                myDataCtl.hidesBottomBarWhenPushed = YES;
-//                [self.navigationController pushViewController:myDataCtl animated:YES];
-//            }
-//                break;
-//            case 1:
-//            {
-//                SetTargetController *targetCtl = [[SetTargetController alloc] init];
-//                targetCtl.hidesBottomBarWhenPushed = YES;
-//                [self.navigationController pushViewController:targetCtl animated:YES];
-//            }
-//                break;
-//                
-//            case 2:
-//            {
-//                HistoryDataController *historyCtl = [[HistoryDataController alloc] init];
-//                historyCtl.hidesBottomBarWhenPushed = YES;
-//                [self.navigationController pushViewController:historyCtl animated:YES];
-//            }
-//                break;
-//                
-//            case 3:
-//            {
-//                RelateDeviceController *relateCtl = [[RelateDeviceController alloc] init];
-//                relateCtl.hidesBottomBarWhenPushed = YES;
-//                [self.navigationController pushViewController:relateCtl animated:YES];
-//            }
-//                break;
-//                
-//                
-//            default:
-//                break;
-//        }
-//    }
-//    else{
-//        switch (indexPath.row) {
-//            case 0:
-//            {
-//                AboutMorriganController *aboutCtl = [[AboutMorriganController alloc] initWithTitle:@"关于MORRIGAN" showBackButton:YES showRightButton:YES rightButtonImageName:@"icon_rightItem_link" backButtonImageName:@"icon_rightArrow"];
-//                [self.navigationController pushViewController:aboutCtl animated:YES];
-//            }
-//                break;
-//            case 1:
-//            {
-//                SuggestionController *suggestCtl = [[SuggestionController alloc] initWithTitle:@"意见反馈" showBackButton:YES showRightButton:YES rightButtonText:@"确定" backButtonText:@"取消"];
-//                [self.navigationController pushViewController:suggestCtl animated:YES];
-//            }
-//                break;
-//                
-//            case 2:
-//            {
-//                UIAlertView *alert = [[UIAlertView alloc] initWithTitle:@"注销用户信息" message:@"注销后此账号将删除所有有关信息，只能通过重新注册才能登陆" delegate:self cancelButtonTitle:@"取消" otherButtonTitles:@"注销", nil];
-//                [alert show];
-//            }
-//                break;
-//                
-//                
-//            default:
-//                break;
-//        }
-//    }
-
 }
 
-- (void)alertView:(UIAlertView *)alertView clickedButtonAtIndex:(NSInteger)buttonIndex
-{
-    if (buttonIndex == 1) {
-        LoginViewController *loginViewController = [[LoginViewController alloc] init];
-        [self presentViewController:loginViewController animated:YES completion:^{
-            
-        }];
-    }
-}
 
 - (void)didReceiveMemoryWarning {
     [super didReceiveMemoryWarning];

@@ -39,7 +39,21 @@
 
 @property (nonatomic , strong) UILabel *dateLabel;   //日期
 
-@property (nonatomic , strong) UIImageView *horizImageView; //日期下面的横杆
+@property (nonatomic , strong) UILabel *APMLabel;   //上下午
+
+@property (nonatomic , strong) UIImageView *lefthorizImageView; //日期下面的左横杆
+
+@property (nonatomic , strong) UIImageView *righthorizImageView; //日期下面的右横杆
+
+@property (nonatomic , strong) UIView *horizView;
+
+@property (nonatomic , strong) UIView *waveView;
+
+@property (nonatomic , strong) CAShapeLayer *waveLayer;
+
+@property (nonatomic , assign) CGFloat waveOffsetX;
+
+@property (nonatomic , strong) CADisplayLink *waveDisplayLink;
 
 @end
 
@@ -58,6 +72,9 @@
 // An empty implementation adversely affects performance during animation.
 - (void)drawRect:(CGRect)rect {
     // Drawing code
+    
+    [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(refreshData:) name:TARGETCHANGENOTIFICATION object:nil];
+    
     _viewWidth = rect.size.width;
     _viewHeight = rect.size.height;
     
@@ -73,7 +90,7 @@
     _circleImageView.backgroundColor = [UIColor clearColor];
     _circleImageView.image = [UIImage imageNamed:@"round_scale_all"];
     [self addSubview:_circleImageView];
-    
+    [self setUpWaveView];
     [self setUpCenterView];
     [self setUpUpView];
     [self setUpDownView];
@@ -90,6 +107,81 @@
     
 }
 
+- (void)setUpWaveView
+{
+    CGFloat waveX = _viewWidth * 23.5 / 312.0;
+    CGFloat waveY = _viewHeight * 150.5 / 860;
+    CGFloat waveW = _viewWidth * 238 / 312;
+    _waveView = [[UIView alloc] initWithFrame:CGRectMake(waveX, waveY, waveW, waveW)];
+    _waveView.clipsToBounds = YES;
+    _waveView.layer.cornerRadius = waveW / 2;
+    _waveView.backgroundColor = [UIColor clearColor];
+    
+    [self addSubview:_waveView];
+    
+//    self.waveLayer = [CAShapeLayer layer];
+//    self.waveLayer.strokeColor = [UIColor whiteColor].CGColor;
+//    self.waveLayer.fillColor = [UIColor whiteColor].CGColor;
+//    self.waveOffsetX = 0;
+//    
+//    self.waveShapeLayerT = [CAShapeLayer layer];
+//    self.waveShapeLayerT.fillColor = self.waveColor.CGColor;
+//    [self.layer addSublayer:self.waveShapeLayerT];
+    /*
+     *CADisplayLink是一个能让我们以和屏幕刷新率相同的频率将内容画到屏幕上的定时器。我们在应用中创建一个新的 CADisplayLink 对象，把它添加到一个runloop中，并给它提供一个 target 和selector 在屏幕刷新的时候调用。
+     */
+//    self.waveDisplayLink = [CADisplayLink displayLinkWithTarget:self selector:@selector(getCurrentWave)];
+//    [self.waveDisplayLink addToRunLoop:[NSRunLoop mainRunLoop] forMode:NSRunLoopCommonModes];
+//    [self getCurrentWave];
+//    [_waveView.layer addSublayer:_waveLayer];
+    
+}
+
+//CADispayLink相当于一个定时器 会一直绘制曲线波纹 看似在运动，其实是一直在绘画不同位置点的余弦函数曲线
+- (void)getCurrentWave {
+    //offsetX决定x位置，如果想搞明白可以多试几次
+    self.waveOffsetX += 0;
+    //声明第一条波曲线的路径
+    CGMutablePathRef path = CGPathCreateMutable();
+    //设置起始点
+    CGFloat waveW = _viewWidth * 238 / 312;
+    CGPathMoveToPoint(path, nil, 0, waveW / 3 * 2);
+    
+    CGFloat y = 0.f;
+    //第一个波纹的公式
+    for (float x = 0.f; x <= waveW ; x++) {
+        y = 10*sin((300 / waveW) * (x * M_PI / 90) - self.waveOffsetX * M_PI / 90) + waveW * 0.7;
+        CGPathAddLineToPoint(path, nil, x, y);
+        x++;
+    }
+    //把绘图信息添加到路径里
+    CGPathAddLineToPoint(path, nil, waveW, 1000 );
+    //结束绘图信息
+    CGPathCloseSubpath(path);
+    
+    self.waveLayer.path = path;
+    //释放绘图路径
+    CGPathRelease(path);
+    
+    /*
+     *  第二个
+     */
+//    self.offsetXT += self.waveSpeed;
+//    CGMutablePathRef pathT = CGPathCreateMutable();
+//    CGPathMoveToPoint(pathT, nil, 0, self.waveHeight+100);
+//    
+//    CGFloat yT = 0.f;
+//    for (float x = 0.f; x <= self.waveWidth ; x++) {
+//        yT = self.waveAmplitude*1.6 * sin((260 / self.waveWidth) * (x * M_PI / 180) - self.offsetXT * M_PI / 180) + self.waveHeight;
+//        CGPathAddLineToPoint(pathT, nil, x, yT-10);
+//    }
+//    CGPathAddLineToPoint(pathT, nil, self.waveWidth, self.frame.size.height);
+//    CGPathAddLineToPoint(pathT, nil, 0, self.frame.size.height);
+//    CGPathCloseSubpath(pathT);
+//    self.waveShapeLayerT.path = pathT;
+//    CGPathRelease(pathT);
+}
+
 
 - (void)setUpCenterView
 {
@@ -98,13 +190,6 @@
     _centerView.layer.cornerRadius = _centerView.frame.size.width / 2;
     _centerView.backgroundColor = [UIColor clearColor];
     [self addSubview:_centerView];
-    
-    CGFloat waveX = _viewWidth * 46 / 623.0;
-    
-    
-//    UIImageView *waveImage = [[UIImageView alloc] initWithFrame:backView.frame];
-//    waveImage.image = [UIImage imageNamed:@"wave"];
-//    [backView addSubview:waveImage];
     
     CGFloat timeLabelY = (_centerView.frame.size.width / 2) - 70;
     CGFloat timeLabelW = CGRectGetWidth(_centerView.frame);
@@ -122,23 +207,45 @@
     [_centerView addSubview:_timeLabel];
     
     NSDateFormatter *formatter = [[NSDateFormatter alloc] init];
-    [formatter setDateFormat:@"yyyy年MM月dd日 aa"];
+    [formatter setDateFormat:@"yyyy年MM月dd日"];
     NSString *dateStr = [formatter stringFromDate:[NSDate date]];
     
     CGFloat dateLabelY = CGRectGetMaxY(_timeLabel.frame);
-    _dateLabel = [[UILabel alloc] initWithFrame:CGRectMake(0, dateLabelY, timeLabelW, 25)];
+    _dateLabel = [[UILabel alloc] initWithFrame:CGRectMake(0, dateLabelY, timeLabelW- 50, 25)];
     _dateLabel.text = dateStr;
     _dateLabel.textColor = [UIColor whiteColor];
-    _dateLabel.textAlignment = NSTextAlignmentCenter;
+    
     _dateLabel.font = [UIFont systemFontOfSize:(kScreenWidth > 320 ? 17 : 15)];
+    [_dateLabel sizeToFit];
+    _dateLabel.center = CGPointMake(_centerView.width / 2 -15, dateLabelY + 25/2);
     [_centerView addSubview:_dateLabel];
     
+    CGFloat APMLabelX = CGRectGetMaxX(_dateLabel.frame);
+    _APMLabel = [[UILabel alloc] initWithFrame:CGRectMake(APMLabelX + 10, dateLabelY, 50, 25)];
+    _APMLabel.text = [self isAMOrPM] ? @"AM" : @"PM";
+    _APMLabel.textColor = [UIColor whiteColor];
+    _APMLabel.textAlignment = NSTextAlignmentLeft;
+    _APMLabel.font = [UIFont systemFontOfSize:(kScreenWidth > 320 ? 17 : 15)];
+    [_centerView addSubview:_APMLabel];
+    
     CGFloat horizY = CGRectGetMaxY(_dateLabel.frame) + 10;
-    _horizImageView = [[UIImageView alloc] initWithFrame:CGRectMake(10, horizY, (_centerView.width - 20)/2, 8)];
-    _horizImageView.image = [UIImage imageNamed:@"icon_noRecord"];
-    _horizImageView.center = CGPointMake(CGRectGetMidX(_dateLabel.frame), horizY + 6);
-    _horizImageView.contentMode = UIViewContentModeCenter;
-    [_centerView addSubview:_horizImageView];
+    _horizView = [[UIView alloc] initWithFrame:CGRectMake(20,horizY , 60, 4)];
+    _horizView.backgroundColor = [UIColor clearColor];
+    _horizView.center = CGPointMake(_centerView.width / 2, horizY + 15);
+    [_centerView addSubview:_horizView];
+    
+    NSString *leftImageName = [self isAMOrPM] ? @"full_rect" : @"empty_rect";
+    NSString *rightImageName = [self isAMOrPM] ? @"empty_rect" : @"full_rect";
+    
+    _lefthorizImageView = [[UIImageView alloc] initWithFrame:CGRectMake(5, 0, 25, 4)];
+    _lefthorizImageView.image = [UIImage imageNamed:leftImageName];
+//    _lefthorizImageView.contentMode = UIViewContentModeCenter;
+    [_horizView addSubview:_lefthorizImageView];
+    
+    _righthorizImageView = [[UIImageView alloc] initWithFrame:CGRectMake(35, 0, 25, 4)];
+    _righthorizImageView.image = [UIImage imageNamed:rightImageName];
+//    _righthorizImageView.contentMode = UIViewContentModeCenter;
+    [_horizView addSubview:_righthorizImageView];
     
 }
 
@@ -173,7 +280,7 @@
     [self addSubview:_upView];
     
     _upBackgroundView = [[UIImageView alloc] initWithFrame:_upView.bounds];
-    _upBackgroundView.image = [UIImage imageNamed:@"auto_downBackgrround"];
+    _upBackgroundView.image = [UIImage imageNamed:@"elctricity"];
     _upBackgroundView.height = _upView.height * 0.2;
     _upBackgroundView.y = _upView.height - _upBackgroundView.height;
     [_upView addSubview:_upBackgroundView];
@@ -277,18 +384,39 @@
     CGFloat offsetXX = scrollView.contentOffset.x;
     
     if ( offsetXX >= offsetX / 2) {
-        if ([_dateLabel.text rangeOfString:@"A"].location != NSNotFound) {
-            
-        }
-        _horizImageView.image = [UIImage imageNamed:@"icon_star_0"];
+        _APMLabel.text = @"AM";
+        _righthorizImageView.image = [UIImage imageNamed:@"empty_rect"];
+        _lefthorizImageView.image = [UIImage imageNamed:@"full_rect"];
         
     }else{
-        if ([_dateLabel.text rangeOfString:@"P"].location != NSNotFound) {
-            
-        }
-        _horizImageView.image = [UIImage imageNamed:@"icon_noRecord"];
+        _APMLabel.text = @"PM";
+        _righthorizImageView.image = [UIImage imageNamed:@"full_rect"];
+        _lefthorizImageView.image = [UIImage imageNamed:@"empty_rect"];
     }
 }
+
+- (void)refreshData:(NSNotification *)notification
+{
+    NSString *time = [UserInfo share].target;
+    if (!time) {
+        time = @"60";
+    }
+    NSMutableAttributedString *attributeString = [[NSMutableAttributedString alloc] initWithString:[NSString stringWithFormat:@"%@min",time]];
+    [attributeString setAttributes:@{NSFontAttributeName:[UIFont systemFontOfSize:60]} range:NSMakeRange(0, time.length)];
+    _timeLabel.attributedText = attributeString;
+    [self setNeedsDisplay];
+}
+
+- (BOOL)isAMOrPM
+{
+    NSCalendar *calendar = [NSCalendar currentCalendar];
+    
+    NSDateComponents *compt = [calendar components:NSCalendarUnitHour
+                                          fromDate:[NSDate date]];
+    NSInteger hour = compt.hour;
+    return hour < 12 ? YES : NO;
+}
+
 
 
 

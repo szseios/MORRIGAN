@@ -16,6 +16,7 @@
 #import "NMOANetWorking.h"
 #import "RootViewController.h"
 #import "ForgetPwdViewController.h"
+#import "RecordManager.h"
 
 @interface LoginViewController ()
 {
@@ -278,10 +279,13 @@
 {
     NSLog(@"loginButtonClickInLogin");
     // 进入主页（测试）
-    RootViewController *homeViewController = [[RootViewController alloc] init];
-    [self.navigationController pushViewController:homeViewController animated:YES];
-    return;
+//    RootViewController *homeViewController = [[RootViewController alloc] init];
+//    [self.navigationController pushViewController:homeViewController animated:YES];
+//    return;
 
+    
+//    [[RecordManager share] addDBDataAndUpload];
+//    return;
     
     
     
@@ -392,12 +396,13 @@
              
              // 进入主页
              RootViewController *homeViewController = [[RootViewController alloc] init];
+             NSLog(@"%@",self.navigationController);
              [self.navigationController pushViewController:homeViewController animated:YES];
 
          } else {
              
              NSLog(@"登陆失败！");
-             UIAlertView *alert = [[UIAlertView alloc] initWithTitle:[obj objectForKey:HTTP_KEY_RESULTMESSAGE] message:nil delegate:self cancelButtonTitle:nil otherButtonTitles:@"确定", nil];
+             UIAlertView *alert = [[UIAlertView alloc] initWithTitle:[obj objectForKey:HTTP_KEY_RESULTMESSAGE] == nil ? @"登陆失败！": [obj objectForKey:HTTP_KEY_RESULTMESSAGE] message:nil delegate:self cancelButtonTitle:nil otherButtonTitles:@"确定", nil];
              [alert show];
          }
          
