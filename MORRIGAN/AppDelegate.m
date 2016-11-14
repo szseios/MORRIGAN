@@ -60,7 +60,11 @@
 //        [self.window makeKeyAndVisible];
     });
   
-    
+//    NSDateFormatter *dateFormatter = [[NSDateFormatter alloc] init];
+//    [dateFormatter setDateFormat:@"yyyy-MM-dd HH:mm:ss"];
+//    NSDate *date1 = [dateFormatter dateFromString:@"2016-11-12 04:00:01"];
+//    NSDate *date2 = [dateFormatter dateFromString:@"2016-11-12 10:00:01"];
+//    [DBManager insertData:@"1" startTime:date1 endTime:date2 type:1];
     return YES;
 }
 

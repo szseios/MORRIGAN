@@ -146,7 +146,13 @@ static MusicManager *manager = nil;
     [operation setValue:@"01" index:2];
     [operation setValue:@"01" index:3];
     [operation setValue:@"03" index:4];
-    [operation setNumber:peakPower index:12];
+    if (peakPower > 127) {
+        [operation setNumber:127 index:12];
+        [operation setNumber:peakPower % 127 index:13];
+    }
+    else {
+        [operation setNumber:peakPower index:12];
+    }
     [[BluetoothManager share] writeValueByOperation:operation];
 }
 

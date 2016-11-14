@@ -8,6 +8,7 @@
 
 #import <Foundation/Foundation.h>
 #import "PeripheralModel.h"
+#import "MassageRecordModel.h"
 #import "FMDB.h"
 
 @interface DBManager : NSObject
@@ -25,5 +26,7 @@
 + (NSArray *)selectPeripherals;
 
 + (NSDictionary *)selectLinkedPeripherals;
+
++ (BOOL)insertData:(NSString *)userID startTime:(NSDate *)start endTime:(NSDate *)end type:(MassageType)type;
 
 @end
