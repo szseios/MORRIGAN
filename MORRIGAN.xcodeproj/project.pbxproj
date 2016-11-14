@@ -118,6 +118,8 @@
 		47FF16711DC9F48B00DBD493 /* UIView+WebCacheOperation.m in Sources */ = {isa = PBXBuildFile; fileRef = 47FF16611DC9F48B00DBD493 /* UIView+WebCacheOperation.m */; };
 		47FF16731DC9FAE500DBD493 /* NullSafe.m in Sources */ = {isa = PBXBuildFile; fileRef = 47FF16721DC9FAE500DBD493 /* NullSafe.m */; };
 		EB1E63D01DD6D80800F28068 /* RecordShouldUploadModel.m in Sources */ = {isa = PBXBuildFile; fileRef = EB1E63CF1DD6D80800F28068 /* RecordShouldUploadModel.m */; };
+		EB20E0151DD96294000C2E6E /* RecordUploadManager.m in Sources */ = {isa = PBXBuildFile; fileRef = EB20E0141DD96294000C2E6E /* RecordUploadManager.m */; };
+		EB20E0161DD96294000C2E6E /* RecordUploadManager.m in Sources */ = {isa = PBXBuildFile; fileRef = EB20E0141DD96294000C2E6E /* RecordUploadManager.m */; };
 		EB21FA1E1DBF31A000DDD28A /* FuntionButton.m in Sources */ = {isa = PBXBuildFile; fileRef = EB21FA1D1DBF31A000DDD28A /* FuntionButton.m */; };
 		EB21FA1F1DBF31A000DDD28A /* FuntionButton.m in Sources */ = {isa = PBXBuildFile; fileRef = EB21FA1D1DBF31A000DDD28A /* FuntionButton.m */; };
 		EB34F3AB1DCA0F0D002B15B1 /* AutoKneadViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = EB34F3A71DCA0F0D002B15B1 /* AutoKneadViewController.m */; };
@@ -366,6 +368,8 @@
 		47FF16721DC9FAE500DBD493 /* NullSafe.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = NullSafe.m; sourceTree = "<group>"; };
 		EB1E63CE1DD6D80800F28068 /* RecordShouldUploadModel.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = RecordShouldUploadModel.h; sourceTree = "<group>"; };
 		EB1E63CF1DD6D80800F28068 /* RecordShouldUploadModel.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = RecordShouldUploadModel.m; sourceTree = "<group>"; };
+		EB20E0131DD96294000C2E6E /* RecordUploadManager.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = RecordUploadManager.h; sourceTree = "<group>"; };
+		EB20E0141DD96294000C2E6E /* RecordUploadManager.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = RecordUploadManager.m; sourceTree = "<group>"; };
 		EB21FA1C1DBF31A000DDD28A /* FuntionButton.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = FuntionButton.h; sourceTree = "<group>"; };
 		EB21FA1D1DBF31A000DDD28A /* FuntionButton.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = FuntionButton.m; sourceTree = "<group>"; };
 		EB34F3A61DCA0F0D002B15B1 /* AutoKneadViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = AutoKneadViewController.h; sourceTree = "<group>"; };
@@ -822,6 +826,8 @@
 		EB20E0121DD961BA000C2E6E /* RecordUploadManager */ = {
 			isa = PBXGroup;
 			children = (
+				EB20E0131DD96294000C2E6E /* RecordUploadManager.h */,
+				EB20E0141DD96294000C2E6E /* RecordUploadManager.m */,
 			);
 			path = RecordUploadManager;
 			sourceTree = "<group>";
@@ -1305,6 +1311,7 @@
 				4728ED7F1DC485F50005F9C3 /* HomePageButton.m in Sources */,
 				4728ED6E1DC485BA0005F9C3 /* SetTargetController.m in Sources */,
 				4728EDC11DC4865E0005F9C3 /* PNPieChart.m in Sources */,
+				EB20E0151DD96294000C2E6E /* RecordUploadManager.m in Sources */,
 				EB6DBC861DC8216E005823B2 /* PeripheralListViewController.m in Sources */,
 				EB7AD9441DA72FF6001D1DCA /* AppDelegate.m in Sources */,
 				4728EDBF1DC4865E0005F9C3 /* PNLineChartData.m in Sources */,
@@ -1361,6 +1368,7 @@
 				EB7AD95A1DA72FF6001D1DCA /* MORRIGANTests.m in Sources */,
 				EB21FA1F1DBF31A000DDD28A /* FuntionButton.m in Sources */,
 				EBF011B01DA7920A009E8394 /* Utils.m in Sources */,
+				EB20E0161DD96294000C2E6E /* RecordUploadManager.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
