@@ -284,7 +284,14 @@
 //    return;
 
     
-//    [[RecordManager share] addDBDataAndUpload];
+//    RecordShouldUploadModel *model = [[RecordShouldUploadModel alloc] init];
+//    model.uuid = @"333";
+//    model.userId = @"5";
+//    model.dateString = @"2016-10-20";
+//    model.timeLongString = @"1:10";
+//
+//    [[RecordManager share] addToUploadArray:model];
+////    [[RecordManager share] uploadDBDatas:YES];
 //    return;
     
     

@@ -36,6 +36,8 @@
 
 + (BOOL)deleteRecord:(NSString *)uuid;
 
++ (BOOL)deleteAllRecord;
+
 + (NSArray *)selectAllRecord;
 
 + (NSArray *)selectRecordByUserId:(NSString *)userId;
