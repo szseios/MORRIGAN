@@ -28,8 +28,6 @@
 
 + (NSDictionary *)selectLinkedPeripherals;
 
-+ (BOOL)insertMassageRecord:(MassageRecordModel *)model;
-
 + (BOOL)insertData:(NSString *)userID startTime:(NSDate *)start endTime:(NSDate *)end type:(MassageType)type;
 
 + (NSArray *)selectForenoonDatas:(NSString *)userID;
