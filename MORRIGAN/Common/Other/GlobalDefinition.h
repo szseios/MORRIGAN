@@ -89,6 +89,9 @@
 #define ID_CHECK_DEVICEBIND            1015
 #define URL_CHECK_DEVICEBIND        APP_SERVER_URL@"rest/moli/bind-check"
 
+// 星级评定
+#define ID_GET_RANK            1016
+#define URL_GET_RANK        APP_SERVER_URL@"rest/moli/get-rank"
 // ---------------------------------------------------------------------------------------------------------
 #define kColor_440067  @"#440067"  // 深紫色
 #define kColor_6911a5  @"#6911a5"  // 普通紫色

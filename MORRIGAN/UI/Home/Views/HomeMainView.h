@@ -16,4 +16,8 @@
 
 - (void)emptyStartTime:(CGFloat)startTime toEndTime:(CGFloat)endTime;
 
+- (void)setStarLabelAndImage:(NSString *)star;
+
+- (void)setElectricityPersent:(CGFloat)persent;
+
 @end

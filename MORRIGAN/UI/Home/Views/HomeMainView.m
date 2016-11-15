@@ -55,6 +55,8 @@
 
 @property (nonatomic , strong) CADisplayLink *waveDisplayLink;
 
+@property (nonatomic , strong) UIImageView *starImage;
+
 @end
 
 @implementation HomeMainView
@@ -150,12 +152,12 @@
     CGFloat y = 0.f;
     //第一个波纹的公式
     for (float x = 0.f; x <= waveW ; x++) {
-        y = 10*sin((300 / waveW) * (x * M_PI / 90) - self.waveOffsetX * M_PI / 90) + waveW * 0.7;
+        y = 15*sin((300 / waveW) * (x * M_PI / 90) - self.waveOffsetX * M_PI / 90) + waveW * 0.7;
         CGPathAddLineToPoint(path, nil, x, y);
         x++;
     }
     //把绘图信息添加到路径里
-    CGPathAddLineToPoint(path, nil, waveW, 1000 );
+    CGPathAddLineToPoint(path, nil, waveW, 1000);
     //结束绘图信息
     CGPathCloseSubpath(path);
     
@@ -270,9 +272,9 @@
 - (void)setUpUpView
 {
     _upView = [[UIView alloc] init];
-    CGFloat upViewX = _viewWidth * 476 / 624.0;
-    CGFloat upViewY = _viewHeight * 26 / 860.0;
-    CGFloat upViewW = _viewWidth * 118 / 624.0;
+    CGFloat upViewX = _viewWidth * 478 / 623.0;
+    CGFloat upViewY = _viewHeight * 31.5 / 860.0;
+    CGFloat upViewW = _viewWidth * 112.5 / 623.0;
     [_upView setFrame:CGRectMake(upViewX, upViewY, upViewW, upViewW)];
     _upView.clipsToBounds = YES;
     _upView.layer.cornerRadius = upViewW / 2;
@@ -280,7 +282,7 @@
     [self addSubview:_upView];
     
     _upBackgroundView = [[UIImageView alloc] initWithFrame:_upView.bounds];
-    _upBackgroundView.image = [UIImage imageNamed:@"elctricity"];
+    _upBackgroundView.image =  [self createImageWithColor:[Utils stringTOColor:@"#a743c7"]];
     _upBackgroundView.height = _upView.height * 0.2;
     _upBackgroundView.y = _upView.height - _upBackgroundView.height;
     [_upView addSubview:_upBackgroundView];
@@ -330,21 +332,19 @@
     _starLabel = [[UILabel alloc] initWithFrame:CGRectMake(starX, starY, starW, starH)];
     _starLabel.textColor = [UIColor whiteColor];
     _starLabel.textAlignment = NSTextAlignmentCenter;
-    NSInteger starCount = 88;
+    NSString *starCount = @"0";
     _starLabel.font = [UIFont systemFontOfSize:10];
-    NSMutableAttributedString *attributeString = [[NSMutableAttributedString alloc] initWithString:[NSString stringWithFormat:@"%ldstar",starCount]];
-    [attributeString setAttributes:@{NSFontAttributeName:[UIFont systemFontOfSize:18]} range:NSMakeRange(0, 2)];
-    _starLabel.attributedText = attributeString;
+    [self starLabelAttributeStr:starCount];
     [_downView addSubview:_starLabel];
     
     CGFloat starImageY = CGRectGetMaxY(_starLabel.frame);
     CGFloat starImageX = 12;
     CGFloat starImageW = _downView.width - 24;
     CGFloat starImageH = kScreenHeight > 568 ? 14 : 10;
-    UIImageView *starImage = [[UIImageView alloc] initWithFrame:CGRectMake(starImageX, starImageY, starImageW, starImageH)];
-    starImage.backgroundColor = [UIColor clearColor];
-    starImage.image = [UIImage imageNamed:@"icon_star_25"];
-    [_downView addSubview:starImage];
+    _starImage = [[UIImageView alloc] initWithFrame:CGRectMake(starImageX, starImageY, starImageW, starImageH)];
+    _starImage.backgroundColor = [UIColor clearColor];
+    _starImage.image = [UIImage imageNamed:@"icon_star_0"];
+    [_downView addSubview:_starImage];
     
 }
 
@@ -353,7 +353,7 @@
     PNCircleChart *circleChart = [[PNCircleChart alloc] initWithFrame:CGRectMake(_circleImageView.x+2,_circleImageView.y+4, _circleImageView.width-4, _circleImageView.height-4) startAngle:startTime endAngle:endTime total:@360 current:@(360) clockwise:YES];
     
     circleChart.backgroundColor = [UIColor clearColor];
-    
+    circleChart.lineWidth = @12;
     [circleChart setStrokeColor:[UIColor whiteColor]];
     [circleChart setStrokeColorGradientStart:[UIColor redColor]];
     [circleChart strokeChart];
@@ -417,6 +417,90 @@
     return hour < 12 ? YES : NO;
 }
 
+- (void)setStarLabelAndImage:(NSString *)star
+{
+    if (star) {
+       NSInteger rank = [star integerValue];
+        NSString *imageName;
+        NSString *starStr;
+        switch (rank) {
+            case 0:
+            {
+                imageName = @"icon_star_5";
+                starStr = @"0.5";
+            }
+                break;
+            case 1:
+            {
+                imageName = @"icon_star_10";
+                starStr = @"1";
+            }
+                break;
+                
+            case 2:
+            {
+                imageName = @"icon_star_15";
+                starStr = @"1.5";
+            }
+                break;
+                
+            case 3:
+            {
+                imageName = @"icon_star_20";
+                starStr = @"2";
+            }
+                break;
+                
+            case 4:
+            {
+                imageName = @"icon_star_25";
+                starStr = @"2.5";
+            }
+                break;
+                
+            case 5:
+            {
+                imageName = @"icon_star_30";
+                starStr = @"3";
+            }
+                break;
+                
+                
+            default:
+                break;
+        }
+        [_starImage setImage:[UIImage imageNamed:imageName]];
+        [self starLabelAttributeStr:starStr];
+    }
+    [self setNeedsDisplay];
+    
+}
+
+- (void)setElectricityPersent:(CGFloat)persent
+{
+    _upBackgroundView.height = _upView.height * persent;
+    _upBackgroundView.y = _upView.height - _upBackgroundView.height;
+    [self setNeedsDisplay];
+}
+
+- (void)starLabelAttributeStr:(NSString *)starStr
+{
+    NSMutableAttributedString *attributeString = [[NSMutableAttributedString alloc] initWithString:[NSString stringWithFormat:@"%@star",starStr]];
+    [attributeString setAttributes:@{NSFontAttributeName:[UIFont systemFontOfSize:18]} range:NSMakeRange(0, starStr.length)];
+    _starLabel.attributedText = attributeString;
+}
+
+- (UIImage*) createImageWithColor:(UIColor*) color
+{
+    CGRect rect=CGRectMake(0.0f, 0.0f, 1.0f, 1.0f);
+    UIGraphicsBeginImageContext(rect.size);
+    CGContextRef context = UIGraphicsGetCurrentContext();
+    CGContextSetFillColorWithColor(context, [color CGColor]);
+    CGContextFillRect(context, rect);
+    UIImage *theImage = UIGraphicsGetImageFromCurrentImageContext();
+    UIGraphicsEndImageContext();
+    return theImage;
+}
 
 
 

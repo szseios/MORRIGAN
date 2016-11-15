@@ -12,6 +12,7 @@
 
 + (RecordManager *)share;
 
+- (NSString *)getStarRank;
 
 // 添加到待上传数组
 - (void)addToUploadArray:(RecordShouldUploadModel *)model;

@@ -71,7 +71,7 @@
     model.type = 1;
     model.startTime = date1;
     model.endTime = date2;
-    [DBManager insertMassageRecord:model];
+//    [DBManager insertMassageRecord:model];
     
     return YES;
 }
