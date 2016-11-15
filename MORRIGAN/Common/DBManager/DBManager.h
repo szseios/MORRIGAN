@@ -34,7 +34,7 @@
 
 + (NSArray *)selectForenoonDatas:(NSString *)userID;
 
-+ (NSArray *)selectaAfternoonDatas:(NSString *)userID
++ (NSArray *)selectaAfternoonDatas:(NSString *)userID;
 
 
 //// --------------------------------------------护理记录------------------------------------
