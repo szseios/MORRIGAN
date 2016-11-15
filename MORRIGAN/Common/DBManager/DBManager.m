@@ -147,7 +147,7 @@ static NSString *dbPath = nil;
 
 #pragma mark - 数据
 
-+ (NSArray *)selectTodayDatas {
++ (NSArray *)selectForenoonDatas:(NSString *)userID {
     __block NSMutableArray *datas;
     [[DBManager dbQueue] inDatabase:^(FMDatabase *db) {
         NSCalendar *cal = [NSCalendar currentCalendar];
@@ -158,13 +158,12 @@ static NSString *dbPath = nil;
                                @(todayComponents.year).stringValue,
                                @(todayComponents.month).stringValue,
                                @(todayComponents.day).stringValue];
-        todayComponents.day += 1;
-        NSString *endDate = [NSString stringWithFormat:@"%@-%@-%@ 00:00:00 +0000",
+        NSString *endDate = [NSString stringWithFormat:@"%@-%@-%@ 11:59:59 +0000",
                              @(todayComponents.year).stringValue,
                              @(todayComponents.month).stringValue,
                              @(todayComponents.day).stringValue];
         
-        NSString *sql = [NSString stringWithFormat:@"select * from datas where start_time >= '%@' and  end_time <= '%@'",startDate,endDate];
+        NSString *sql = [NSString stringWithFormat:@"select * from datas where start_time >= '%@' and  end_time <= '%@' and user_id = '%@'",startDate,endDate,userID];
         
         FMResultSet *result = [db executeQuery:sql];
         while (result.next) {
@@ -182,6 +181,42 @@ static NSString *dbPath = nil;
     }];
     return datas;
 }
+
++ (NSArray *)selectaAfternoonDatas:(NSString *)userID  {
+    __block NSMutableArray *datas;
+    [[DBManager dbQueue] inDatabase:^(FMDatabase *db) {
+        NSCalendar *cal = [NSCalendar currentCalendar];
+        NSDateComponents *todayComponents = [cal components:NSYearCalendarUnit|NSMonthCalendarUnit|NSDayCalendarUnit
+                                                   fromDate:[NSDate date]];
+        
+        NSString *startDate = [NSString stringWithFormat:@"%@-%@-%@ 12:00:00 +0000",
+                               @(todayComponents.year).stringValue,
+                               @(todayComponents.month).stringValue,
+                               @(todayComponents.day).stringValue];
+        NSString *endDate = [NSString stringWithFormat:@"%@-%@-%@ 23:59:59 +0000",
+                             @(todayComponents.year).stringValue,
+                             @(todayComponents.month).stringValue,
+                             @(todayComponents.day).stringValue];
+        
+        NSString *sql = [NSString stringWithFormat:@"select * from datas where start_time >= '%@' and  end_time <= '%@' and user_id = '%@'",startDate,endDate,userID];
+        
+        FMResultSet *result = [db executeQuery:sql];
+        while (result.next) {
+            if (!datas) {
+                datas = [[NSMutableArray alloc] init];
+            }
+            MassageRecordModel *model = [[MassageRecordModel alloc] init];
+            model.userID = [result stringForColumn:@"user_id"];
+            model.startTime = [result dateForColumn:@"start_time"];
+            model.endTime = [result dateForColumn:@"end_time"];
+            model.type = [result intForColumn:@"type"];
+            [datas addObject:model];
+        }
+        
+    }];
+    return datas;
+}
+
 
 + (BOOL)insertData:(NSString *)userID startTime:(NSDate *)start endTime:(NSDate *)end type:(MassageType)type {
     __block BOOL success = NO;
