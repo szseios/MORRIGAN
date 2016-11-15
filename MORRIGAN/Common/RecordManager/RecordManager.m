@@ -48,18 +48,18 @@ static RecordManager *manager;
 
 - (void)addToUploadArray:(RecordShouldUploadModel *)model
 {
-    if([DBManager insertRecord:model]) {
-        NSLog(@"insertRecord，添加到数据库成功！");
-    } else {
-        NSLog(@"insertRecord，添加到数据库失败！");
-    }
-    [self uploadDBDatas:NO];
+//    if([DBManager insertRecord:model]) {
+//        NSLog(@"insertRecord，添加到数据库成功！");
+//    } else {
+//        NSLog(@"insertRecord，添加到数据库失败！");
+//    }
+//    [self uploadDBDatas:NO];
 }
 
 - (void)uploadDBDatas:(BOOL)shouldCleanUp
 {
     // 添加数据库中未上传的数据
-    [self.recordBufferArray addObjectsFromArray:[DBManager selectAllRecord]];
+//    [self.recordBufferArray addObjectsFromArray:[DBManager selectAllRecord]];
 //    for (NSInteger i = 0; i < 3; i++) {
 //        RecordShouldUploadModel *model = [[RecordShouldUploadModel alloc] init];
 //        model.uuid = @"sdddddd";
@@ -118,11 +118,11 @@ static RecordManager *manager;
          if ([[obj objectForKey:HTTP_KEY_RESULTCODE] isEqualToString:HTTP_RESULTCODE_SUCCESS]) {
              NSLog(@"上传护理记录成功！");
              for (RecordShouldUploadModel *model in _uploadingRecordArray) {
-                 if([DBManager deleteRecord:model.uuid]) {
-                     NSLog(@"deleteRecord， 删除记录成功！");
-                 } else {
-                     NSLog(@"deleteRecord， 删除记录失败！");
-                 }
+//                 if([DBManager deleteRecord:model.uuid]) {
+//                     NSLog(@"deleteRecord， 删除记录成功！");
+//                 } else {
+//                     NSLog(@"deleteRecord， 删除记录失败！");
+//                 }
              }
              
          } else {
@@ -135,11 +135,11 @@ static RecordManager *manager;
          if(shouldCleanUp) {
              // 清空数据
              [_recordBufferArray removeAllObjects];
-             if([DBManager deleteAllRecord]) {
-                 NSLog(@"deleteAllRecord， 删除所有记录成功！");
-             } else {
-                 NSLog(@"deleteAllRecord， 删除所有记录失败！");
-             }
+//             if([DBManager deleteAllRecord]) {
+//                 NSLog(@"deleteAllRecord， 删除所有记录成功！");
+//             } else {
+//                 NSLog(@"deleteAllRecord， 删除所有记录失败！");
+//             }
 
          } else {
              // 继续上传缓冲中的数据

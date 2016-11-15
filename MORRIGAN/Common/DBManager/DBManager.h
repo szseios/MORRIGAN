@@ -28,18 +28,20 @@
 
 + (NSDictionary *)selectLinkedPeripherals;
 
++ (BOOL)insertMassageRecord:(MassageRecordModel *)model;
+
 + (BOOL)insertData:(NSString *)userID startTime:(NSDate *)start endTime:(NSDate *)end type:(MassageType)type;
 
 
-// --------------------------------------------护理记录------------------------------------
-+ (BOOL)insertRecord:(RecordShouldUploadModel *)model;
-
-+ (BOOL)deleteRecord:(NSString *)uuid;
-
-+ (BOOL)deleteAllRecord;
-
-+ (NSArray *)selectAllRecord;
-
-+ (NSArray *)selectRecordByUserId:(NSString *)userId;
+//// --------------------------------------------护理记录------------------------------------
+//+ (BOOL)insertRecord:(RecordShouldUploadModel *)model;
+//
+//+ (BOOL)deleteRecord:(NSString *)uuid;
+//
+//+ (BOOL)deleteAllRecord;
+//
+//+ (NSArray *)selectAllRecord;
+//
+//+ (NSArray *)selectRecordByUserId:(NSString *)userId;
 
 @end
