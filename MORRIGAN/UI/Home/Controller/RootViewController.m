@@ -163,12 +163,7 @@
 
 - (void)registerUser
 {
-    // 注销登陆成功时调用这个
-    NSUserDefaults *defaults = [NSUserDefaults standardUserDefaults];
-    [defaults removeObjectForKey:kUserDefaultIdKey];
-    [defaults removeObjectForKey:kUserDefaultPasswordKey];
-    
-    NSDictionary *dictionary = @{@"userId": [UserInfo share].userId
+    NSDictionary *dictionary = @{@"userId": [UserInfo share].userId?[UserInfo share].userId:@""
                                  };
     NSString *bodyString = [NMOANetWorking handleHTTPBodyParams:dictionary];
     [[NMOANetWorking share] taskWithTag:ID_CANCEL_MOLI
@@ -180,6 +175,10 @@
          if ([[obj objectForKey:HTTP_KEY_RESULTCODE] isEqualToString:HTTP_RESULTCODE_SUCCESS]) {
              [MBProgressHUD showHUDByContent:@"注销成功！" view:UI_Window afterDelay:2];
              NSLog(@"注销成功！");
+             // 注销登陆成功时调用这个
+             NSUserDefaults *defaults = [NSUserDefaults standardUserDefaults];
+             [defaults removeObjectForKey:kUserDefaultIdKey];
+             [defaults removeObjectForKey:kUserDefaultPasswordKey];
              LoginViewController *loginViewController = [[LoginViewController alloc] init];
              [self.navigationController pushViewController:loginViewController animated:NO];
          }else{

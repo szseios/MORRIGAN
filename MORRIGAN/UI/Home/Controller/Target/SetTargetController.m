@@ -132,7 +132,7 @@
 //    UIImageView *arrowImageView = [[UIImageView alloc] initWithFrame:CGRectMake(kScreenWidth/2 - 3, rulerY + viewY + 43, 6, 4)];
 //    arrowImageView.image = [UIImage imageNamed:@"arrowUp"];
 //    [self.view addSubview:arrowImageView];
-    
+//    
     
 }
 
@@ -163,35 +163,42 @@
 }
 
 #pragma mark - UIScrollViewDelegate
-//
-//- (void)scrollViewDidScroll:(UIScrollView *)scrollView
-//{
-//    
-//   
-//}
-//
-//- (void)scrollViewWillEndDragging:(UIScrollView *)scrollView withVelocity:(CGPoint)velocity targetContentOffset:(inout CGPoint *)targetContentOffset
-//{
-//    velocity = CGPointZero;
-//    CGPoint orifinalTargetContentOffset = CGPointMake(targetContentOffset->x, targetContentOffset->y);
-//    CGFloat offSetX = orifinalTargetContentOffset.x + kScreenWidth /2;
-//    NSInteger count = (NSInteger)offSetX / 15 ;
+
+- (void)scrollViewDidScroll:(UIScrollView *)scrollView
+{
+//    [self scrollViewWillEndDragging:scrollView withVelocity:CGPointZero targetContentOffset:scrollView.contentOffset];
+   
+}
+
+- (void)scrollViewWillEndDragging:(UIScrollView *)scrollView withVelocity:(CGPoint)velocity targetContentOffset:(inout CGPoint *)targetContentOffset
+{
+
+    CGPoint orifinalTargetContentOffset = CGPointMake(targetContentOffset->x, targetContentOffset->y);
+    CGFloat offSetX = (orifinalTargetContentOffset.x + kScreenWidth /2) * 100;
+    NSInteger count = (NSInteger)offSetX % 1400 ;
+    if (count > 700) {
+        offSetX += 1400 - count;
+    }else{
+        offSetX -= count;
+    }
+    NSInteger number = (NSInteger)offSetX / 1400;
+    _countLabel.text = [NSString stringWithFormat:@"%.0ld",number];
+    scrollView.contentOffset = CGPointMake((number * 1400 - kScreenWidth /2 * 100) / 100.0, scrollView.contentOffset.y);
+    NSLog(@"scrollViewWillEndDragging:%lf",orifinalTargetContentOffset.x);
+}
+
+
+- (void)scrollViewDidEndDecelerating:(UIScrollView *)scrollView
+{
+    
+//    CGFloat offSetX = scrollView.contentOffset.x + kScreenWidth /2;
+//    NSInteger count = (NSInteger)offSetX / 15.25 ;
 //    _countLabel.text = [NSString stringWithFormat:@"%.0ld",count];
-//    scrollView.contentOffset = CGPointMake(count * 15, scrollView.contentOffset.y);
-//}
-//
-//- (void)scrollViewDidEndDragging:(UIScrollView *)scrollView willDecelerate:(BOOL)decelerate
-//{
-//    if (decelerate) {
-//        
-//    }
-//    
-//}
-//
-//- (void)scrollViewDidEndDecelerating:(UIScrollView *)scrollView
-//{
-//    
-//}
+//    scrollView.contentOffset = CGPointMake(count * 15.25, scrollView.contentOffset.y);
+     NSLog(@"scrollViewDidEndDecelerating:%lf",scrollView.contentOffset.x);
+}
+
+
 
 - (void)dealloc
 {

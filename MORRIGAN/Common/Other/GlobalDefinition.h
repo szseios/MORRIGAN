@@ -77,6 +77,18 @@
 #define ID_FEEDBACK_MOLI            1012
 #define URL_FEEDBACK_MOLI            APP_SERVER_URL@"rest/moli/feedback"
 
+// 编辑设备名称
+#define ID_EDIT_DEVICENAME            1013
+#define URL_EDIT_DEVICENAME        APP_SERVER_URL@"rest/moli/edit-device-name"
+
+// 获取用户设备绑定列表
+#define ID_GET_DEVICELIST            1014
+#define URL_GET_DEVICELIST        APP_SERVER_URL@"rest/moli/get-device-list"
+
+// 设备是否被绑定
+#define ID_CHECK_DEVICEBIND            1015
+#define URL_CHECK_DEVICEBIND        APP_SERVER_URL@"rest/moli/bind-check"
+
 // ---------------------------------------------------------------------------------------------------------
 #define kColor_440067  @"#440067"  // 深紫色
 #define kColor_6911a5  @"#6911a5"  // 普通紫色

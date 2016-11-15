@@ -169,6 +169,7 @@ static NSString *cellID = @"DataCellID";
     _dayBarChat.showChartBorder = YES;
     _dayBarChat.yMaxValue = 60;
     [_dayBarChat setXLabels:@[@1,@2,@3,@4,@5,@6,@7,@8,@9,@10,@11,@12,@13,@14,@15,@16,@17,@18,@19,@20,@21,@22,@23,@24]];
+    
     [_dayBarChat setYValues:@[@0,@0,@0,@0,@0.0,@0,@0,@0,@0,@0,@0,@0,@0,@0,@0,@0,@0,@0,@0,@0,@0,@0,@0,@0]];
     [_dayBarChat setStrokeColor:PNWhite];
     [_dayBarChat strokeChart];
@@ -230,7 +231,12 @@ static NSString *cellID = @"DataCellID";
     if (_weekDataArray.count > 0) {
        [_weekBarChat setYValues:_weekDataArray];
     }else{
-        [_weekBarChat setYValues:@[@0,@0,@0,@0,@0,@0,@0]];
+        if (_weekDataArray && _weekDataArray.count == 7) {
+            [_weekBarChat setYValues:_weekDataArray];
+        }else{
+          [_weekBarChat setYValues:@[@0,@0,@0,@0,@0,@0,@0]];
+        }
+        
     }
     [_weekBarChat setStrokeColor:PNWhite];
     [_weekBarChat strokeChart];

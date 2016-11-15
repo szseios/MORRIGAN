@@ -101,6 +101,7 @@
 		4728EDD21DC4865E0005F9C3 /* ZHRulerScrollView.m in Sources */ = {isa = PBXBuildFile; fileRef = 4728EDB51DC4865E0005F9C3 /* ZHRulerScrollView.m */; };
 		4728EDD31DC4865E0005F9C3 /* ZHRulerView.m in Sources */ = {isa = PBXBuildFile; fileRef = 4728EDB71DC4865E0005F9C3 /* ZHRulerView.m */; };
 		4728EDD61DC486A40005F9C3 /* UIView+Extension.m in Sources */ = {isa = PBXBuildFile; fileRef = 4728EDD51DC486A40005F9C3 /* UIView+Extension.m */; };
+		47EF55DE1DDAC4CA00ED655E /* EditDeviceNameController.m in Sources */ = {isa = PBXBuildFile; fileRef = 47EF55DD1DDAC4CA00ED655E /* EditDeviceNameController.m */; };
 		47FF16621DC9F48B00DBD493 /* MKAnnotationView+WebCache.m in Sources */ = {isa = PBXBuildFile; fileRef = 47FF16421DC9F48B00DBD493 /* MKAnnotationView+WebCache.m */; };
 		47FF16631DC9F48B00DBD493 /* NSData+ImageContentType.m in Sources */ = {isa = PBXBuildFile; fileRef = 47FF16441DC9F48B00DBD493 /* NSData+ImageContentType.m */; };
 		47FF16641DC9F48B00DBD493 /* SDImageCache.m in Sources */ = {isa = PBXBuildFile; fileRef = 47FF16461DC9F48B00DBD493 /* SDImageCache.m */; };
@@ -334,6 +335,8 @@
 		4728EDB71DC4865E0005F9C3 /* ZHRulerView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ZHRulerView.m; sourceTree = "<group>"; };
 		4728EDD41DC486A40005F9C3 /* UIView+Extension.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "UIView+Extension.h"; sourceTree = "<group>"; };
 		4728EDD51DC486A40005F9C3 /* UIView+Extension.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "UIView+Extension.m"; sourceTree = "<group>"; };
+		47EF55DC1DDAC4CA00ED655E /* EditDeviceNameController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = EditDeviceNameController.h; sourceTree = "<group>"; };
+		47EF55DD1DDAC4CA00ED655E /* EditDeviceNameController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = EditDeviceNameController.m; sourceTree = "<group>"; };
 		47FF16411DC9F48B00DBD493 /* MKAnnotationView+WebCache.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "MKAnnotationView+WebCache.h"; sourceTree = "<group>"; };
 		47FF16421DC9F48B00DBD493 /* MKAnnotationView+WebCache.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "MKAnnotationView+WebCache.m"; sourceTree = "<group>"; };
 		47FF16431DC9F48B00DBD493 /* NSData+ImageContentType.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "NSData+ImageContentType.h"; sourceTree = "<group>"; };
@@ -651,6 +654,8 @@
 				4728ED541DC485BA0005F9C3 /* RelateDeviceCell.xib */,
 				4728ED551DC485BA0005F9C3 /* RelateDeviceController.h */,
 				4728ED561DC485BA0005F9C3 /* RelateDeviceController.m */,
+				47EF55DC1DDAC4CA00ED655E /* EditDeviceNameController.h */,
+				47EF55DD1DDAC4CA00ED655E /* EditDeviceNameController.m */,
 			);
 			path = RelatedDevice;
 			sourceTree = "<group>";
@@ -1298,6 +1303,7 @@
 				47FF166D1DC9F48B00DBD493 /* UIImage+MultiFormat.m in Sources */,
 				4728ED611DC485BA0005F9C3 /* WebInfoController.m in Sources */,
 				4728EDBC1DC4865E0005F9C3 /* PNColor.m in Sources */,
+				47EF55DE1DDAC4CA00ED655E /* EditDeviceNameController.m in Sources */,
 				47FF16661DC9F48B00DBD493 /* SDWebImageDecoder.m in Sources */,
 				4728ED7E1DC485F50005F9C3 /* HomeMainView.m in Sources */,
 				3E632A551DC5A47B00CC2332 /* BabyToy.m in Sources */,

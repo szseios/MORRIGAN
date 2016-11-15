@@ -8,16 +8,21 @@
 
 #import "RelateDeviceController.h"
 #import "RelateDeviceCell.h"
+#import "EditDeviceNameController.h"
 
 #define RelateDeviceCellID @"RelateDeviceCellID"
 
-@interface RelateDeviceController () <UICollectionViewDelegate,UICollectionViewDataSource,UICollectionViewDelegateFlowLayout,BasicBarViewDelegate,RelateDeviceCellDelegate>
+@interface RelateDeviceController () <UICollectionViewDelegate,UICollectionViewDataSource,UICollectionViewDelegateFlowLayout,BasicBarViewDelegate,RelateDeviceCellDelegate,UIAlertViewDelegate>
 
 @property (nonatomic , strong) UICollectionView *collectionView;
 
 @property (nonatomic , strong) BasicBarView *barView;
 
 @property (nonatomic , strong) NSMutableArray *deviceArray;
+
+@property (nonatomic , strong) NSIndexPath *editIndex;
+
+@property (nonatomic , strong) PeripheralModel *model;
 
 @end
 
@@ -26,6 +31,8 @@
 
 - (void)viewDidLoad {
     [super viewDidLoad];
+    
+    [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(editDeviceName:) name:CHANGEDEVICENAMENOTIFICATION object:nil];
     
     _deviceArray = [[NSMutableArray alloc] initWithObjects:[[PeripheralModel alloc] init], nil];
     NSArray *peripherals = [DBManager selectPeripherals];
@@ -110,33 +117,70 @@
 
 - (void)collectionView:(UICollectionView *)collectionView didSelectItemAtIndexPath:(NSIndexPath *)indexPath
 {
-    if (indexPath.row > 0) {
-        PeripheralModel *model = _deviceArray[indexPath.row];
-        NSDictionary *dictionary = @{@"userId": [UserInfo share].userId?[UserInfo share].userId:@"",
-                                     @"mac":model.uuid?model.uuid:@""};
-        NSString *bodyString = [NMOANetWorking handleHTTPBodyParams:dictionary];
-        [[NMOANetWorking share] taskWithTag:ID_UNBINGDING_DEVICE urlString:URL_UNBINGDING_DEVICE httpHead:nil bodyString:bodyString objectTaskFinished:^(NSError *error, id obj) {
-            
-            if ([[obj objectForKey:HTTP_KEY_RESULTCODE] isEqualToString:HTTP_RESULTCODE_SUCCESS]) {
-                [MBProgressHUD showHUDByContent:@"解除绑定成功！" view:UI_Window afterDelay:2];
-                NSLog(@"解除绑定成功！");
-            }else{
-                [MBProgressHUD showHUDByContent:@"绑定失败！" view:UI_Window afterDelay:2];
-            }
-        }];
+    if (indexPath.row == 0) {
+        SearchPeripheralViewController *search = [[SearchPeripheralViewController alloc] init];
+        [self.navigationController pushViewController:search animated:YES];
+    }else{
+        return;
     }
-}
+                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                               }
 
 #pragma mark - RelateDeviceCellDelegate
 
 - (void)editDevice:(PeripheralModel *)model withIndePath:(NSIndexPath *)index
 {
+    _editIndex = index;
+    EditDeviceNameController *ctl = [[EditDeviceNameController alloc] initWithDeviceName:model];
+    [self.navigationController pushViewController:ctl animated:YES];
     NSLog(@"编辑第%ld个设备",index.row);
 }
 
 - (void)deleteDevice:(PeripheralModel *)model withIndePath:(NSIndexPath *)index
 {
+    _model = model;
+    UIAlertView *alert = [[UIAlertView alloc] initWithTitle:@"是否删除绑定设备" message:nil delegate:self cancelButtonTitle:@"取消" otherButtonTitles:@"注销", nil];
+    [alert show];
     NSLog(@"删除第%ld个设备",index.row);
+}
+
+- (void)alertView:(UIAlertView *)alertView clickedButtonAtIndex:(NSInteger)buttonIndex
+{
+    if (buttonIndex == 1) {
+        [self removeBindDevice];
+    }
+}
+
+- (void)removeBindDevice
+{
+    NSDictionary *dictionary = @{
+                                 @"userId":[UserInfo share].userId,
+                                 @"mac":_model.uuid
+                                 };
+    NSString *bodyString = [NMOANetWorking handleHTTPBodyParams:dictionary];
+    [[NMOANetWorking share] taskWithTag:ID_UNBINGDING_DEVICE
+                              urlString:URL_UNBINGDING_DEVICE
+                               httpHead:nil
+                             bodyString:bodyString
+                     objectTaskFinished:^(NSError *error, id obj)
+     {
+         if ([[obj objectForKey:HTTP_KEY_RESULTCODE] isEqualToString:HTTP_RESULTCODE_SUCCESS]) {
+             [MBProgressHUD showHUDByContent:@"解除绑定成功！" view:UI_Window afterDelay:2];
+             [_deviceArray removeObject:_model];
+             [self.collectionView reloadData];
+             NSLog(@"解除绑定成功！");
+         }else{
+             [MBProgressHUD showHUDByContent:@"解除绑定失败！" view:UI_Window afterDelay:2];
+         }
+         
+         
+     }];
+    
+}
+
+- (void)editDeviceName:(NSNotification*)notice
+{
+    RelateDeviceCell *cell = (RelateDeviceCell *)[_collectionView cellForItemAtIndexPath:_editIndex];
+    cell.deviceIDLabel.text = notice.object;
 }
 
 
