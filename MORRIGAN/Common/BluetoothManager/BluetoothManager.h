@@ -12,6 +12,7 @@
 
 extern NSString * const ConnectPeripheralSuccess;
 extern NSString * const ConnectPeripheralError;
+extern NSString * const ConnectPeripheralTimeOut;
 extern NSString * const DisconnectPeripheral;
 
 @interface BluetoothManager : NSObject {

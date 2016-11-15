@@ -15,10 +15,13 @@ static NSString * const ReceiveCharacteristicUUID = @"000033F2-0000-1000-8000-00
 
 NSString * const ConnectPeripheralSuccess = @"ConnectPeripheralSuccess";
 NSString * const ConnectPeripheralError = @"ConnectPeripheralError";
+NSString * const ConnectPeripheralTimeOut = @"ConnectPeripheralTimeOut";
 NSString * const DisconnectPeripheral = @"DisconnectPeripheral";
 
 
-@interface BluetoothManager ()
+@interface BluetoothManager () {
+    NSTimer *_timer;
+}
 
 @property (nonatomic,strong)CBPeripheral *willConnectPeripheral;     // 将要连接的设备
 @property (nonatomic,strong)CBPeripheral *curConnectPeripheral;      // 当前连接的设备
@@ -143,7 +146,16 @@ NSString * const DisconnectPeripheral = @"DisconnectPeripheral";
                         // @"ee"是模块给客户端的应答，不处理
                         success = YES;
                     } else {
-
+                        NSString *code = [receiveDataHexString substringWithRange:NSMakeRange(36, 2)];
+                        //蓝牙设备通知app电量变化
+                        if ([code isEqualToString:@"01"]) {
+                            success = YES;
+                        }
+                        //蓝牙设备返回无效数据
+                        else {
+                            NSLog(@"数据无效");
+                            responseError = [[NSError alloc] initWithDomain:@"" code:-888 userInfo:@{@"message":@"蓝牙设备返回数据无效"}];
+                        }
                     }
                     // 有效数据获取返回给Controller处理
                 } else {
@@ -206,6 +218,7 @@ NSString * const DisconnectPeripheral = @"DisconnectPeripheral";
         //通知连接蓝牙设备失败
         [[NSNotificationCenter defaultCenter] postNotificationName:ConnectPeripheralError
                                                             object:nil];
+        [weakSelf endTimer];
         
     }];
     
@@ -219,6 +232,7 @@ NSString * const DisconnectPeripheral = @"DisconnectPeripheral";
         //通知断开蓝牙设备
         [[NSNotificationCenter defaultCenter] postNotificationName:DisconnectPeripheral
                                                             object:nil];
+        [weakSelf endTimer];
     }];
     
     
@@ -339,6 +353,58 @@ NSString * const DisconnectPeripheral = @"DisconnectPeripheral";
     }
     
     return YES;
+}
+
+#pragma mark - 
+
+- (void)startConnectPeripheralTimer {
+    if (!_timer) {
+        [_timer invalidate];
+        _timer = nil;
+    }
+    _timer = [NSTimer scheduledTimerWithTimeInterval:30
+                                              target:self
+                                            selector:@selector(ConnectPeripheralTimeOut)
+                                            userInfo:nil
+                                             repeats:NO];
+}
+
+- (void)startTimer {
+    if (!_timer) {
+        [_timer invalidate];
+        _timer = nil;
+    }
+    _timer = [NSTimer scheduledTimerWithTimeInterval:30
+                                              target:self
+                                            selector:@selector(writeDataTimeOut)
+                                            userInfo:nil
+                                             repeats:NO];
+}
+
+- (void)endTimer {
+    if (!_timer) {
+        [_timer invalidate];
+        _timer = nil;
+    }
+}
+
+- (void)ConnectPeripheralTimeOut {
+    [[NSNotificationCenter defaultCenter] postNotificationName:ConnectPeripheralTimeOut
+                                                        object:nil];
+}
+
+- (void)writeDataTimeOut {
+    if (_currentOperation.response) {
+        NSError *responseError = [[NSError alloc] initWithDomain:@"" code:-888 userInfo:@{@"message":@"蓝牙设备返回数据无效"}];
+        _currentOperation.response(nil,_currentOperation.tag,responseError,NO);
+        
+        [_operationQueue removeObject:_currentOperation];
+        _currentOperation = nil;
+        if (_operationQueue.count > 0) {
+            _currentOperation = _operationQueue[0];
+            [self writeValueByOperation:_currentOperation];
+        }
+    }
 }
 
 @end

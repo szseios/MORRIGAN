@@ -16,6 +16,7 @@
 #import "NMOANetWorking.h"
 #import "RootViewController.h"
 #import "ForgetPwdViewController.h"
+#import "RecordManager.h"
 
 @interface LoginViewController ()
 {
@@ -282,6 +283,16 @@
 //    [self.navigationController pushViewController:homeViewController animated:YES];
 //    return;
 
+    
+//    RecordShouldUploadModel *model = [[RecordShouldUploadModel alloc] init];
+//    model.uuid = @"333";
+//    model.userId = @"5";
+//    model.dateString = @"2016-10-20";
+//    model.timeLongString = @"1:10";
+//
+//    [[RecordManager share] addToUploadArray:model];
+////    [[RecordManager share] uploadDBDatas:YES];
+//    return;
     
     
     

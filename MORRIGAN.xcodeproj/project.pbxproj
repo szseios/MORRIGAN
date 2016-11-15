@@ -7,6 +7,7 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		3E216B321DD98C69003D52D7 /* MassageRecordModel.m in Sources */ = {isa = PBXBuildFile; fileRef = 3E216B311DD98C69003D52D7 /* MassageRecordModel.m */; };
 		3E2539791DAA3DA800CB1EF8 /* ForgetPwdViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 3E2539761DAA3DA800CB1EF8 /* ForgetPwdViewController.m */; };
 		3E25397E1DAA3DDA00CB1EF8 /* UserInfo.m in Sources */ = {isa = PBXBuildFile; fileRef = 3E25397D1DAA3DDA00CB1EF8 /* UserInfo.m */; };
 		3E2539811DAA3DE600CB1EF8 /* LoginManager.m in Sources */ = {isa = PBXBuildFile; fileRef = 3E2539801DAA3DE600CB1EF8 /* LoginManager.m */; };
@@ -118,6 +119,8 @@
 		47FF16701DC9F48B00DBD493 /* UIImageView+WebCache.m in Sources */ = {isa = PBXBuildFile; fileRef = 47FF165F1DC9F48B00DBD493 /* UIImageView+WebCache.m */; };
 		47FF16711DC9F48B00DBD493 /* UIView+WebCacheOperation.m in Sources */ = {isa = PBXBuildFile; fileRef = 47FF16611DC9F48B00DBD493 /* UIView+WebCacheOperation.m */; };
 		47FF16731DC9FAE500DBD493 /* NullSafe.m in Sources */ = {isa = PBXBuildFile; fileRef = 47FF16721DC9FAE500DBD493 /* NullSafe.m */; };
+		EB1E63D01DD6D80800F28068 /* RecordShouldUploadModel.m in Sources */ = {isa = PBXBuildFile; fileRef = EB1E63CF1DD6D80800F28068 /* RecordShouldUploadModel.m */; };
+		EB20E01A1DD9A324000C2E6E /* RecordManager.m in Sources */ = {isa = PBXBuildFile; fileRef = EB20E0191DD9A324000C2E6E /* RecordManager.m */; };
 		EB21FA1E1DBF31A000DDD28A /* FuntionButton.m in Sources */ = {isa = PBXBuildFile; fileRef = EB21FA1D1DBF31A000DDD28A /* FuntionButton.m */; };
 		EB21FA1F1DBF31A000DDD28A /* FuntionButton.m in Sources */ = {isa = PBXBuildFile; fileRef = EB21FA1D1DBF31A000DDD28A /* FuntionButton.m */; };
 		EB34F3AB1DCA0F0D002B15B1 /* AutoKneadViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = EB34F3A71DCA0F0D002B15B1 /* AutoKneadViewController.m */; };
@@ -164,6 +167,8 @@
 /* End PBXContainerItemProxy section */
 
 /* Begin PBXFileReference section */
+		3E216B301DD98C69003D52D7 /* MassageRecordModel.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MassageRecordModel.h; sourceTree = "<group>"; };
+		3E216B311DD98C69003D52D7 /* MassageRecordModel.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = MassageRecordModel.m; sourceTree = "<group>"; };
 		3E2539751DAA3DA800CB1EF8 /* ForgetPwdViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ForgetPwdViewController.h; sourceTree = "<group>"; };
 		3E2539761DAA3DA800CB1EF8 /* ForgetPwdViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ForgetPwdViewController.m; sourceTree = "<group>"; };
 		3E25397C1DAA3DDA00CB1EF8 /* UserInfo.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = UserInfo.h; sourceTree = "<group>"; };
@@ -366,6 +371,10 @@
 		47FF16601DC9F48B00DBD493 /* UIView+WebCacheOperation.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "UIView+WebCacheOperation.h"; sourceTree = "<group>"; };
 		47FF16611DC9F48B00DBD493 /* UIView+WebCacheOperation.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "UIView+WebCacheOperation.m"; sourceTree = "<group>"; };
 		47FF16721DC9FAE500DBD493 /* NullSafe.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = NullSafe.m; sourceTree = "<group>"; };
+		EB1E63CE1DD6D80800F28068 /* RecordShouldUploadModel.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = RecordShouldUploadModel.h; sourceTree = "<group>"; };
+		EB1E63CF1DD6D80800F28068 /* RecordShouldUploadModel.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = RecordShouldUploadModel.m; sourceTree = "<group>"; };
+		EB20E0181DD9A324000C2E6E /* RecordManager.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = RecordManager.h; sourceTree = "<group>"; };
+		EB20E0191DD9A324000C2E6E /* RecordManager.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = RecordManager.m; sourceTree = "<group>"; };
 		EB21FA1C1DBF31A000DDD28A /* FuntionButton.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = FuntionButton.h; sourceTree = "<group>"; };
 		EB21FA1D1DBF31A000DDD28A /* FuntionButton.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = FuntionButton.m; sourceTree = "<group>"; };
 		EB34F3A61DCA0F0D002B15B1 /* AutoKneadViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = AutoKneadViewController.h; sourceTree = "<group>"; };
@@ -527,6 +536,10 @@
 			children = (
 				3E9ED0D71DD16BAA00A6F665 /* PeripheralModel.h */,
 				3E9ED0D81DD16BAA00A6F665 /* PeripheralModel.m */,
+				3E216B301DD98C69003D52D7 /* MassageRecordModel.h */,
+				3E216B311DD98C69003D52D7 /* MassageRecordModel.m */,
+				EB1E63CE1DD6D80800F28068 /* RecordShouldUploadModel.h */,
+				EB1E63CF1DD6D80800F28068 /* RecordShouldUploadModel.m */,
 			);
 			path = Model;
 			sourceTree = "<group>";
@@ -819,6 +832,15 @@
 			path = SDWebImage;
 			sourceTree = "<group>";
 		};
+		EB20E0171DD9A324000C2E6E /* RecordManager */ = {
+			isa = PBXGroup;
+			children = (
+				EB20E0181DD9A324000C2E6E /* RecordManager.h */,
+				EB20E0191DD9A324000C2E6E /* RecordManager.m */,
+			);
+			path = RecordManager;
+			sourceTree = "<group>";
+		};
 		EB34F3A51DCA0F0D002B15B1 /* AutoKnead */ = {
 			isa = PBXGroup;
 			children = (
@@ -990,6 +1012,7 @@
 		EBF011681DA73784009E8394 /* Common */ = {
 			isa = PBXGroup;
 			children = (
+				EB20E0171DD9A324000C2E6E /* RecordManager */,
 				3E9ED0D61DD16B9B00A6F665 /* Model */,
 				3EF4E0091DD0A28E0003BD7C /* DBManager */,
 				3EF4DFF51DD0A26B0003BD7C /* FMDB */,
@@ -1255,6 +1278,7 @@
 				4728EDC21DC4865E0005F9C3 /* PNPieChartDataItem.m in Sources */,
 				EB34F3AC1DCA0F0D002B15B1 /* HandKneadViewController.m in Sources */,
 				4728EDC31DC4865E0005F9C3 /* PNRadarChart.m in Sources */,
+				3E216B321DD98C69003D52D7 /* MassageRecordModel.m in Sources */,
 				3E632A511DC5A47B00CC2332 /* BabyOptions.m in Sources */,
 				4728ED7D1DC485F50005F9C3 /* ChooseDataView.m in Sources */,
 				47FF16631DC9F48B00DBD493 /* NSData+ImageContentType.m in Sources */,
@@ -1298,6 +1322,7 @@
 				4728ED7F1DC485F50005F9C3 /* HomePageButton.m in Sources */,
 				4728ED6E1DC485BA0005F9C3 /* SetTargetController.m in Sources */,
 				4728EDC11DC4865E0005F9C3 /* PNPieChart.m in Sources */,
+				EB20E01A1DD9A324000C2E6E /* RecordManager.m in Sources */,
 				EB6DBC861DC8216E005823B2 /* PeripheralListViewController.m in Sources */,
 				EB7AD9441DA72FF6001D1DCA /* AppDelegate.m in Sources */,
 				4728EDBF1DC4865E0005F9C3 /* PNLineChartData.m in Sources */,
@@ -1320,6 +1345,7 @@
 				47FF16681DC9F48B00DBD493 /* SDWebImageDownloaderOperation.m in Sources */,
 				3E632A4F1DC5A47B00CC2332 /* BabyCentralManager.m in Sources */,
 				3E2AC8601DCF01D000961883 /* BindingCustomButton.m in Sources */,
+				EB1E63D01DD6D80800F28068 /* RecordShouldUploadModel.m in Sources */,
 				3EF4E0031DD0A26B0003BD7C /* FMDatabasePool.m in Sources */,
 				3EF4E0021DD0A26B0003BD7C /* FMDatabaseAdditions.m in Sources */,
 				4728EDBD1DC4865E0005F9C3 /* PNGenericChart.m in Sources */,
@@ -1472,8 +1498,8 @@
 			isa = XCBuildConfiguration;
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
-				CODE_SIGN_IDENTITY = "iPhone Distribution: Shenzhen Stock Exchange";
-				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Distribution: Shenzhen Stock Exchange";
+				CODE_SIGN_IDENTITY = "iPhone Developer: 双南 黄 (JXJPSFJD9R)";
+				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer: 双南 黄 (JXJPSFJD9R)";
 				DEVELOPMENT_TEAM = 6C7QEGP2K7;
 				ENABLE_BITCODE = NO;
 				GCC_PREFIX_HEADER = MORRIGAN/PrefixHeader.pch;
@@ -1486,8 +1512,8 @@
 				);
 				PRODUCT_BUNDLE_IDENTIFIER = com.szse.nmoastg;
 				PRODUCT_NAME = "$(TARGET_NAME)";
-				PROVISIONING_PROFILE = "a5e86c13-b31b-4a4b-a528-428f7cd810a3";
-				PROVISIONING_PROFILE_SPECIFIER = NMOAStgInhouse;
+				PROVISIONING_PROFILE = "c18e5ba6-a4fa-409d-935f-65aac56a7533";
+				PROVISIONING_PROFILE_SPECIFIER = NMOA_Development;
 			};
 			name = Debug;
 		};
@@ -1495,8 +1521,8 @@
 			isa = XCBuildConfiguration;
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
-				CODE_SIGN_IDENTITY = "iPhone Distribution: Shenzhen Stock Exchange";
-				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Distribution: Shenzhen Stock Exchange";
+				CODE_SIGN_IDENTITY = "iPhone Developer: 双南 黄 (JXJPSFJD9R)";
+				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer: 双南 黄 (JXJPSFJD9R)";
 				DEVELOPMENT_TEAM = 6C7QEGP2K7;
 				ENABLE_BITCODE = NO;
 				GCC_PREFIX_HEADER = MORRIGAN/PrefixHeader.pch;
@@ -1509,8 +1535,8 @@
 				);
 				PRODUCT_BUNDLE_IDENTIFIER = com.szse.nmoastg;
 				PRODUCT_NAME = "$(TARGET_NAME)";
-				PROVISIONING_PROFILE = "a5e86c13-b31b-4a4b-a528-428f7cd810a3";
-				PROVISIONING_PROFILE_SPECIFIER = NMOAStgInhouse;
+				PROVISIONING_PROFILE = "c18e5ba6-a4fa-409d-935f-65aac56a7533";
+				PROVISIONING_PROFILE_SPECIFIER = NMOA_Development;
 			};
 			name = Release;
 		};
