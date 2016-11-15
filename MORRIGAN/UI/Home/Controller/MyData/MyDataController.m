@@ -96,9 +96,10 @@ static NSString *cellIdentifier = @"cellIdentifier";
 {
     if (buttonIndex == 1) {
         LoginViewController *loginViewController = [[LoginViewController alloc] init];
-//        [self presentViewController:loginViewController animated:YES completion:^{
-//            uan 
-//        }];
+        // 注销登陆成功时调用这个
+        NSUserDefaults *defaults = [NSUserDefaults standardUserDefaults];
+        [defaults removeObjectForKey:kUserDefaultIdKey];
+        [defaults removeObjectForKey:kUserDefaultPasswordKey];;
         [self.navigationController pushViewController:loginViewController animated:NO];
     }
 }
