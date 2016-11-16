@@ -152,5 +152,34 @@ static RecordManager *manager;
      }];
 }
 
+- (NSString *)getStarRank
+{
+    __block NSString *starStr;
+    NSDictionary *dictionary = @{@"userId":[UserInfo share].userId};
+    NSString *bodyString = [NMOANetWorking handleHTTPBodyParams:dictionary];
+    
+    [[NMOANetWorking share] taskWithTag:ID_GET_RANK
+                              urlString:URL_GET_RANK
+                               httpHead:nil
+                             bodyString:bodyString
+                     objectTaskFinished:^(NSError *error, id obj)
+     {
+         
+         if ([[obj objectForKey:HTTP_KEY_RESULTCODE] isEqualToString:HTTP_RESULTCODE_SUCCESS]) {
+             NSLog(@"获取星级评定成功！");
+             NSString *tempStr = [obj objectForKey:@"rank"];
+             if (tempStr) {
+                 starStr = tempStr;
+             }
+         } else {
+             NSLog(@"获取星级评定失败！");
+             starStr = @"";
+         }
+         
+         
+     }];
+    return starStr;
+}
+
 
 @end

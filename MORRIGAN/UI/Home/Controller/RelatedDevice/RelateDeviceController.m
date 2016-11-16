@@ -35,9 +35,16 @@
     [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(editDeviceName:) name:CHANGEDEVICENAMENOTIFICATION object:nil];
     
     _deviceArray = [[NSMutableArray alloc] initWithObjects:[[PeripheralModel alloc] init], nil];
-    NSArray *peripherals = [DBManager selectPeripherals];
-    if (peripherals) {
-        [_deviceArray addObjectsFromArray:peripherals];
+//    NSArray *peripherals = [DBManager selectPeripherals];
+//    if (peripherals) {
+//        [_deviceArray addObjectsFromArray:peripherals];
+//    }
+    
+    for (NSInteger i = 0; i< 5; i++) {
+        PeripheralModel *model = [[PeripheralModel alloc] init];
+        model.name = [NSString stringWithFormat:@"model%ld",i];
+        model.uuid = @"njvjklnsjnl";
+        [_deviceArray addObject:model];
     }
     
     UIImageView *backImageView = [[UIImageView alloc] initWithFrame:CGRectMake(0, 0, kScreenWidth, 64)];
@@ -130,7 +137,7 @@
 - (void)editDevice:(PeripheralModel *)model withIndePath:(NSIndexPath *)index
 {
     _editIndex = index;
-    EditDeviceNameController *ctl = [[EditDeviceNameController alloc] initWithDeviceName:model];
+    EditDeviceNameController *ctl = [[EditDeviceNameController alloc] initWithDeviceModel:model];
     [self.navigationController pushViewController:ctl animated:YES];
     NSLog(@"编辑第%ld个设备",index.row);
 }

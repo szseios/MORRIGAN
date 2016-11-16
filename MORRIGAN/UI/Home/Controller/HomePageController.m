@@ -15,6 +15,7 @@
 #import "SearchPeripheralViewController.h"
 #import "AutoKneadViewController.h"
 #import "HandKneadViewController.h"
+#import "RecordManager.h"
 
 @interface HomePageController () <BasicBarViewDelegate,UIAlertViewDelegate>
 
@@ -74,6 +75,10 @@
 - (void)viewWillAppear:(BOOL)animated
 {
     [super viewWillAppear:animated];
+    NSString *starStr = [[RecordManager share] getStarRank];
+    if (starStr && starStr.length > 0) {
+        [_mainView setStarLabelAndImage:starStr];
+    }
     
 }
 

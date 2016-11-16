@@ -13,6 +13,6 @@
 
 @interface EditDeviceNameController : UIViewController
 
-- (instancetype)initWithDeviceName:(PeripheralModel*)model;
+- (instancetype)initWithDeviceModel:(PeripheralModel*)model;
 
 @end

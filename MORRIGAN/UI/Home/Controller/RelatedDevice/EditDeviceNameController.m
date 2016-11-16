@@ -39,7 +39,10 @@
     UIImageView *backImageView = [[UIImageView alloc] initWithFrame:CGRectMake(0, 0, kScreenWidth, 64)];
     backImageView.image = [UIImage imageNamed:@"basicBackground"];
     [self.view addSubview:backImageView];
-    
+    _textField = [[UITextField alloc] initWithFrame:CGRectMake(20, 104, kScreenWidth - 40, 30)];
+    _textField.placeholder = @"输入修改名称";
+    _textField.backgroundColor = [UIColor colorWithRed:0.9 green:0.9 blue:0.9 alpha:0.9];
+    [self.view addSubview:_textField];
     if (_model) {
         _textField.text = _model.name;
     }
