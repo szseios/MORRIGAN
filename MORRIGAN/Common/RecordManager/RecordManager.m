@@ -155,7 +155,7 @@ static RecordManager *manager;
 - (NSString *)getStarRank
 {
     __block NSString *starStr;
-    NSDictionary *dictionary = @{@"userId":[UserInfo share].userId};
+    NSDictionary *dictionary = @{@"userId":[UserInfo share].userId?[UserInfo share].userId:@""};
     NSString *bodyString = [NMOANetWorking handleHTTPBodyParams:dictionary];
     
     [[NMOANetWorking share] taskWithTag:ID_GET_RANK

@@ -95,6 +95,16 @@
     _panGestureView.userInteractionEnabled = YES;
     [_panGestureView addGestureRecognizer:panGestureRecognizer];
     
+    UIView *topLine = [[UIView alloc] initWithFrame:CGRectMake(0,
+                                                               _panGestureView.height - 4.5,
+                                                               _panGestureView.width,
+                                                               0.5)];
+    topLine.backgroundColor = [UIColor colorWithRed:186 / 255.0
+                                              green:140 / 255.0
+                                               blue:244 / 255.0
+                                              alpha:1];
+    [_panGestureView addSubview:topLine];
+    
     UITapGestureRecognizer *show = [[UITapGestureRecognizer alloc] initWithTarget:self action:@selector(showMusicView)];
     [_panGestureView addGestureRecognizer:show];
     
@@ -124,6 +134,16 @@
            forControlEvents:UIControlEventTouchUpInside];
     [_musicView addSubview:_closeButton];
     
+    UIView *bottomLine = [[UIView alloc] initWithFrame:CGRectMake(0,
+                                                                  0,
+                                                                  _closeButton.width,
+                                                                  0.5)];
+    bottomLine.backgroundColor = [UIColor colorWithRed:0 / 255.0
+                                                 green:0 / 255.0
+                                                  blue:0 / 255.0
+                                                 alpha:0.1];
+    [_closeButton addSubview:bottomLine];
+    
     _tableView = [[UITableView alloc] initWithFrame:CGRectMake(0,
                                                                63,
                                                                kScreenWidth,
@@ -139,7 +159,7 @@
                                                                 green:223 / 255.0
                                                                  blue:250 / 255.0
                                                                 alpha:1];
-    
+    _tableView.tableFooterView = [[UIView alloc] initWithFrame:CGRectZero];
     [_musicView addSubview:_tableView];
     
     [_tableView registerNib:[UINib nibWithNibName:@"MusicTableViewCell"
