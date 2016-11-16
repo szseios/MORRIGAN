@@ -32,7 +32,7 @@
     [BluetoothManager share];
     
     self.window = [[UIWindow alloc] initWithFrame:[[UIScreen mainScreen] bounds]];//设置窗口
-//    BTTestViewController *loginViewController = [[BTTestViewController alloc] init];
+    //BTTestViewController *loginViewController = [[BTTestViewController alloc] init];
     //AutoKneadViewController *loginViewController = [[AutoKneadViewController alloc] init];
     //HandKneadViewController *loginViewController = [[HandKneadViewController alloc] init];
     LoginViewController *loginViewController = [[LoginViewController alloc] init];

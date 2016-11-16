@@ -157,38 +157,40 @@
     _bigCircleRootView = bigCircleRootView;
     // gear大数字
     CGFloat gearNumLabelW = 70;
-    CGFloat gearNumLabelH = 90;
+    CGFloat gearNumLabelH = 120;
     if(kScreenHeight < 570) {
         // 5s
-        gearNumLabelH = 70;
+        gearNumLabelH = 90;
         gearNumLabelW = 60;
     }
-    CGFloat gearNumLabelX = bigCircleRootViewW/2 - gearNumLabelW;
-    CGFloat gearNumLabelY = bigCircleRootViewW/2 - gearNumLabelH;
+    CGFloat gearNumLabelX = bigCircleRootViewW/2 - gearNumLabelW + 10;
+    CGFloat gearNumLabelY = bigCircleRootViewW/2 - gearNumLabelH + 30;
     if(kScreenHeight < 570) {
         // 5s
         gearNumLabelX = bigCircleRootViewW/2 - gearNumLabelW + 10;
-        gearNumLabelY = bigCircleRootViewW/2 - gearNumLabelH + 15;
+        gearNumLabelY = bigCircleRootViewW/2 - gearNumLabelH + 25;
     }
     UILabel *gearNumLabel = [[UILabel alloc] initWithFrame:CGRectMake(gearNumLabelX, gearNumLabelY, gearNumLabelW, gearNumLabelH)];
-    gearNumLabel.text = @"1";
+    gearNumLabel.text = @"2";
     gearNumLabel.textColor = [UIColor whiteColor];
-    gearNumLabel.font = [UIFont italicSystemFontOfSize:100.0];
+    gearNumLabel.font = [UIFont italicSystemFontOfSize:110.0];
     if(kScreenHeight < 570) {
         // 5s
-        gearNumLabel.font = [UIFont italicSystemFontOfSize:70.0];
+        gearNumLabel.font = [UIFont italicSystemFontOfSize:90.0];
     }
     [bigCircleRootView addSubview:gearNumLabel];
     _gearNumLabel = gearNumLabel;
     // gear
     CGFloat gearLabelW = 80;
     CGFloat gearLabelH = 40;
-    CGFloat gearLabelX = gearNumLabelX + gearNumLabelW + 20;
+    CGFloat gearLabelX = gearNumLabelX + gearNumLabelW ;
+    CGFloat gearLabelY = gearNumLabelY + gearNumLabelH - gearLabelH - 10;
     if(kScreenHeight < 570) {
         // 5s
         gearLabelX = gearNumLabelX + gearNumLabelW;
+        gearLabelY = gearNumLabelY + gearNumLabelH - gearLabelH - 5;
     }
-    CGFloat gearLabelY = gearNumLabelY + gearNumLabelH - gearLabelH - 10;
+    
     UILabel *gearLabel = [[UILabel alloc] initWithFrame:CGRectMake(gearLabelX, gearLabelY, gearLabelW, gearLabelH)];
     gearLabel.text = @"gear";
     gearLabel.textColor = [UIColor whiteColor];
@@ -199,7 +201,7 @@
     CGFloat timeLabelW = 100;
     CGFloat timeLabelH = 40;
     CGFloat timeLabelX = bigCircleRootViewW/2 - timeLabelW/2;
-    CGFloat timeLabelY = bigCircleRootViewH - 50 - timeLabelH;
+    CGFloat timeLabelY = bigCircleRootViewH - 30 - timeLabelH;
     if(kScreenHeight < 570) {
         // 5s
         timeLabelY = bigCircleRootViewH - 15 - timeLabelH;
