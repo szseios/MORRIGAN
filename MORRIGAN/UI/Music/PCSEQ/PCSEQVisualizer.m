@@ -9,7 +9,7 @@
 #import "PCSEQVisualizer.h"
 #import "UIImage+Color.h"
 
-#define kWidth 5
+#define kWidth 4
 #define kHeight 200
 #define kPadding 1
 
@@ -18,6 +18,7 @@
 {
     NSTimer* timer;
     NSArray* barArray;
+    NSArray* topArray;
 }
 - (id)initWithNumberOfBars:(int)numberOfBars
 {
@@ -27,23 +28,29 @@
         self.frame = CGRectMake(0, 0, kPadding*numberOfBars+(kWidth*numberOfBars), kHeight);
         
         NSMutableArray* tempBarArray = [[NSMutableArray alloc]initWithCapacity:numberOfBars];
+        NSMutableArray* tempTopBarArray = [[NSMutableArray alloc]initWithCapacity:numberOfBars];
         
         for(int i = 0; i < numberOfBars; i++){
             
             UIImageView* bar = [[UIImageView alloc]initWithFrame:CGRectMake(i*kWidth+i*kPadding, 0, kWidth, 1)];
             bar.userInteractionEnabled = YES;
-            bar.image = [UIImage imageWithColor:[UIColor colorWithWhite:1 alpha:0.2]];
+            bar.image = [UIImage imageWithColor:[UIColor colorWithWhite:1 alpha:1]];
             [self addSubview:bar];
             [tempBarArray addObject:bar];
+            
+            
+            UIImageView* topBar = [[UIImageView alloc]initWithFrame:CGRectMake(i*kWidth+i*kPadding, 0, kWidth, 1)];
+            topBar.userInteractionEnabled = YES;
+            topBar.image = [UIImage imageWithColor:[UIColor colorWithWhite:1 alpha:0.15]];
+            [self addSubview:topBar];
+            [tempTopBarArray addObject:topBar];
             
         }
 
         barArray = [[NSArray alloc]initWithArray:tempBarArray];
+        topArray = [[NSArray alloc]initWithArray:tempTopBarArray];
         
         [self initAnimationViews];
-        
-        CGAffineTransform transform = CGAffineTransformMakeRotation(M_PI_2*2);
-        self.transform = transform;
        
         [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(stop) name:@"stopTimer" object:nil];
   
@@ -68,28 +75,34 @@
 }
 
 - (void)initAnimationViews {
-    for(UIImageView* bar in barArray){
+    
+    for (NSInteger i = 0; i < barArray.count; i++) {
+        UIImageView *bar = [barArray objectAtIndex:i];
+        UIImageView *topBar = [topArray objectAtIndex:i];
         
         CGRect rect = bar.frame;
-        rect.size.height = arc4random() % (kHeight - 50) + 50;
-        rect.origin.y = (self.frame.size.height - rect.size.height) / 2;
+        rect.size.height = arc4random() % (kHeight / 2 - 25) + 25;
+        rect.origin.y = self.height / 2 - rect.size.height;
         bar.frame = rect;
-        
+        rect.origin.y = self.frame.size.height / 2;
+        topBar.frame = rect;
     }
+    
 }
 
 -(void)ticker{
 
     [UIView animateWithDuration:.2 animations:^{
-    
-        for(UIImageView* bar in barArray){
+        for (NSInteger i = 0; i < barArray.count; i++) {
+            UIImageView *bar = [barArray objectAtIndex:i];
+            UIImageView *topBar = [topArray objectAtIndex:i];
             
             CGRect rect = bar.frame;
-            rect.size.height = arc4random() % (kHeight - 50) + 50;
-            rect.origin.y = (self.frame.size.height - rect.size.height) / 2;
+            rect.size.height = arc4random() % (kHeight / 2 - 25) + 25;
+            rect.origin.y = self.height / 2 - rect.size.height;
             bar.frame = rect;
-            
-            
+            rect.origin.y = self.frame.size.height / 2;
+            topBar.frame = rect;
         }
     
     }];

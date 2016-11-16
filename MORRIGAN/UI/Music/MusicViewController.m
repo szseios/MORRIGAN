@@ -56,6 +56,19 @@
     [super viewDidLoad];
     // Do any additional setup after loading the view from its nib.
     self.view.backgroundColor = [UIColor whiteColor];
+    [_previousButton setBackgroundImage:[UIImage imageNamed:@"music_previous"]
+                               forState:UIControlStateNormal];
+    [_nextButton setBackgroundImage:[UIImage imageNamed:@"music_next"]
+                           forState:UIControlStateNormal];
+    [_startButton setBackgroundImage:[UIImage imageNamed:@"music_play"]
+                            forState:UIControlStateNormal];
+    
+    [_previousButton setBackgroundImage:[UIImage imageNamed:@"music_previous_selected"]
+                               forState:UIControlStateHighlighted];
+    [_nextButton setBackgroundImage:[UIImage imageNamed:@"music_next_selected"]
+                               forState:UIControlStateHighlighted];
+    [_startButton setBackgroundImage:[UIImage imageNamed:@"music_play_selected"]
+                               forState:UIControlStateHighlighted];
     
     [_slider setThumbImage:[UIImage imageNamed:@"music_adjust_progress"]
                   forState:UIControlStateNormal];
@@ -64,15 +77,17 @@
     [_slider addTarget:self action:@selector(sliderValueChanged)
       forControlEvents:UIControlEventValueChanged];
     
+    _slider.tintColor = [Utils stringTOColor:@"#ff70dc"];
+    
     int count;
     if (kScreenHeight == 568) {
-        count = 45;
+        count = 50;
     }
     else if (kScreenHeight == 667) {
-        count = 55;
+        count = 60;
     }
     else if (kScreenHeight == 736) {
-        count = 60;
+        count = 65;
     }
     
     
@@ -143,15 +158,12 @@
     UITapGestureRecognizer *hiddenTableView = [[UITapGestureRecognizer alloc] initWithTarget:self action:@selector(hiddeMusicView)];
     [_pcseView addGestureRecognizer:hiddenTableView];
     
-    UIView *shadowView = [[UIView alloc] initWithFrame:CGRectMake(0,
-                                                                  0,
-                                                                  _pcseView.frame.size.width,
-                                                                  _pcseView.frame.size.height / 2)];
-    shadowView.backgroundColor = [UIColor colorWithRed:158 / 255.0
-                                                 green:95 / 255.0
-                                                  blue:247 / 255.0
-                                                 alpha:0.2];
-    [_pcseView addSubview:shadowView];
+//    UIView *shadowView = [[UIView alloc] initWithFrame:CGRectMake(0,
+//                                                                  0,
+//                                                                  _pcseView.frame.size.width,
+//                                                                  _pcseView.frame.size.height / 2)];
+//    shadowView.backgroundColor = [Utils stringTOColor:@"#8c39e5"];
+//    [_pcseView addSubview:shadowView];
     
     
     MusicModel *model = [_musics objectAtIndex:_selectedIndexPath.row];
@@ -206,6 +218,8 @@
     [self playMusicByIndexPath:indexPath];
     [_startButton setBackgroundImage:[UIImage imageNamed:@"music_stop"]
                             forState:UIControlStateNormal];
+    [_startButton setBackgroundImage:[UIImage imageNamed:@"music_stop"]
+                            forState:UIControlStateHighlighted];
     [MusicManager share].currentSelectedIndex = _selectedIndexPath.row;
 }
 
@@ -218,18 +232,24 @@
         [self playMusicByIndexPath:_selectedIndexPath];
         [_startButton setBackgroundImage:[UIImage imageNamed:@"music_stop"]
                                 forState:UIControlStateNormal];
+        [_startButton setBackgroundImage:[UIImage imageNamed:@"music_stop"]
+                                forState:UIControlStateHighlighted];
     }
     else if ([[MusicManager share] isPlaying]) {
         [[MusicManager share] pause];
         [_pcseView stop];
         [_startButton setBackgroundImage:[UIImage imageNamed:@"music_play"]
                                 forState:UIControlStateNormal];
+        [_startButton setBackgroundImage:[UIImage imageNamed:@"music_play_selected"]
+                                forState:UIControlStateHighlighted];
     } else {
         [[MusicManager share] play];
         [self startTiming];
         [_pcseView start];
         [_startButton setBackgroundImage:[UIImage imageNamed:@"music_stop"]
                                 forState:UIControlStateNormal];
+        [_startButton setBackgroundImage:[UIImage imageNamed:@"music_stop"]
+                                forState:UIControlStateHighlighted];
     }
 }
 
@@ -276,6 +296,8 @@
     [self playMusicByIndexPath:_selectedIndexPath];
     [_startButton setBackgroundImage:[UIImage imageNamed:@"music_stop"]
                             forState:UIControlStateNormal];
+    [_startButton setBackgroundImage:[UIImage imageNamed:@"music_stop"]
+                            forState:UIControlStateHighlighted];
     [MusicManager share].currentSelectedIndex = _selectedIndexPath.row;
 }
 
@@ -292,6 +314,8 @@
     [self playMusicByIndexPath:_selectedIndexPath];
     [_startButton setBackgroundImage:[UIImage imageNamed:@"music_stop"]
                             forState:UIControlStateNormal];
+    [_startButton setBackgroundImage:[UIImage imageNamed:@"music_stop"]
+                            forState:UIControlStateHighlighted];
     [MusicManager share].currentSelectedIndex = _selectedIndexPath.row;
 }
 

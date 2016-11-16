@@ -278,21 +278,21 @@
 - (void)loginButtonClickInLogin:(id)sender
 {
     NSLog(@"loginButtonClickInLogin");
-    // 进入主页（测试）
-//    RootViewController *homeViewController = [[RootViewController alloc] init];
-//    [self.navigationController pushViewController:homeViewController animated:YES];
-//    return;
+//     进入主页（测试）
+    RootViewController *homeViewController = [[RootViewController alloc] init];
+    [self.navigationController pushViewController:homeViewController animated:YES];
+    return;
 
     
-//    RecordShouldUploadModel *model = [[RecordShouldUploadModel alloc] init];
-//    model.uuid = @"333";
-//    model.userId = @"5";
-//    model.dateString = @"2016-10-20";
-//    model.timeLongString = @"1:10";
-//
-//    [[RecordManager share] addToUploadArray:model];
-////    [[RecordManager share] uploadDBDatas:YES];
-//    return;
+    RecordShouldUploadModel *model = [[RecordShouldUploadModel alloc] init];
+    model.uuid = @"333";
+    model.userId = @"5";
+    model.dateString = @"2016-10-20";
+    model.timeLongString = @"1:10";
+
+    [[RecordManager share] addToUploadArray:model];
+//    [[RecordManager share] uploadDBDatas:YES];
+    return;
     
     
     
