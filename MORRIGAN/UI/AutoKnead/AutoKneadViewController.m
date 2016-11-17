@@ -474,12 +474,6 @@
 - (void)startBtnHandler:(id)sender
 {
     
-    if (![BluetoothManager share].isConnected) {
-        UIAlertView *alert = [[UIAlertView alloc] initWithTitle:@"还未连接设备！" message:nil delegate:self cancelButtonTitle:nil otherButtonTitles:@"确定", nil];
-        [alert show];
-        return;
-    }
-    
     BluetoothOperation *operation = [[BluetoothOperation alloc] init];
     [operation setValue:@"01" index:2];
     [operation setValue:@"02" index:4];
@@ -502,12 +496,18 @@
 
     // 必须选择一个
     if(hasSelected == NO) {
-        //[MBProgressHUD showHUDByContent:@"请选择组合模式！" view: self.view];
-        UIAlertView *alert = [[UIAlertView alloc] initWithTitle:@"请选择组合模式！" message:nil delegate:self cancelButtonTitle:nil otherButtonTitles:@"确定", nil];
-        [alert show];
+        [MBProgressHUD showHUDByContent:@"请先选择组合模式" view: self.view];
+//        UIAlertView *alert = [[UIAlertView alloc] initWithTitle:@"请选择组合模式" message:nil delegate:self cancelButtonTitle:nil otherButtonTitles:@"确定", nil];
+//        [alert show];
         return;
     }
     
+    if (![BluetoothManager share].isConnected) {
+        UIAlertView *alert = [[UIAlertView alloc] initWithTitle:@"蓝牙未连接，请先连接设备再来按摩吧" message:nil delegate:self cancelButtonTitle:nil otherButtonTitles:@"确定", nil];
+        [alert show];
+        return;
+    }
+
     
     
     if(_buttonStartStop.tag == kButtonStopTag) {

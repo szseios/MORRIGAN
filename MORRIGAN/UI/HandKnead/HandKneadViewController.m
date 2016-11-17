@@ -457,6 +457,9 @@
 
     _currentGear ++;
     if(_currentGear > 3) {
+        [MBProgressHUD showHUDByContent:@"当前已经是最高档位" view: self.view];
+//        UIAlertView *alert = [[UIAlertView alloc] initWithTitle:@"当前已经是最高档位" message:nil delegate:self cancelButtonTitle:nil otherButtonTitles:@"确定", nil];
+//        [alert show];
         _currentGear = 3;
     }
     _gearNumLabel.text = [NSString stringWithFormat:@"%ld", _currentGear];
@@ -475,6 +478,9 @@
     _currentGear --;
     if(_currentGear <= 0) {
         _currentGear = 1;
+        [MBProgressHUD showHUDByContent:@"当前已经是最低档位" view: self.view];
+//        UIAlertView *alert = [[UIAlertView alloc] initWithTitle:@"当前已经是最低档位" message:nil delegate:self cancelButtonTitle:nil otherButtonTitles:@"确定", nil];
+//        [alert show];
     }
     _gearNumLabel.text = [NSString stringWithFormat:@"%ld", _currentGear];
     
@@ -486,7 +492,7 @@
 {
     NSLog(@"startButtonClick");
     if (![BluetoothManager share].isConnected) {
-        UIAlertView *alert = [[UIAlertView alloc] initWithTitle:@"还未连接设备！" message:nil delegate:self cancelButtonTitle:nil otherButtonTitles:@"确定", nil];
+        UIAlertView *alert = [[UIAlertView alloc] initWithTitle:@"蓝牙未连接，请先连接设备再来按摩吧" message:nil delegate:self cancelButtonTitle:nil otherButtonTitles:@"确定", nil];
         [alert show];
         return;
     }
