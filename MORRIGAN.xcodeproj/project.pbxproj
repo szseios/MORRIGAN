@@ -146,6 +146,7 @@
 		EBF011841DA7883B009E8394 /* Urls.plist in Resources */ = {isa = PBXBuildFile; fileRef = EBF011801DA7883B009E8394 /* Urls.plist */; };
 		EBF011AF1DA7920A009E8394 /* Utils.m in Sources */ = {isa = PBXBuildFile; fileRef = EBF011AE1DA7920A009E8394 /* Utils.m */; };
 		EBF011B01DA7920A009E8394 /* Utils.m in Sources */ = {isa = PBXBuildFile; fileRef = EBF011AE1DA7920A009E8394 /* Utils.m */; };
+		EBFEFEAC1DDD3FC7003D8B48 /* Reachability.m in Sources */ = {isa = PBXBuildFile; fileRef = EBFEFEAB1DDD3FC7003D8B48 /* Reachability.m */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -423,6 +424,8 @@
 		EBF011801DA7883B009E8394 /* Urls.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = Urls.plist; sourceTree = "<group>"; };
 		EBF011AD1DA7920A009E8394 /* Utils.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = Utils.h; sourceTree = "<group>"; };
 		EBF011AE1DA7920A009E8394 /* Utils.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = Utils.m; sourceTree = "<group>"; };
+		EBFEFEAA1DDD3FC7003D8B48 /* Reachability.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = Reachability.h; sourceTree = "<group>"; };
+		EBFEFEAB1DDD3FC7003D8B48 /* Reachability.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = Reachability.m; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -1019,6 +1022,7 @@
 				4728EDA81DC4865E0005F9C3 /* WebAboutMorrigan */,
 				4728EDB31DC4865E0005F9C3 /* ZHRulerView */,
 				EBF011751DA7883B009E8394 /* netWorking */,
+				EBFEFEA91DDD3FC7003D8B48 /* Reachability */,
 				EBF011691DA73784009E8394 /* Other */,
 			);
 			path = Common;
@@ -1097,6 +1101,15 @@
 				EBF011791DA7883B009E8394 /* NMOANetWorking.m */,
 			);
 			path = NMOANetWorking;
+			sourceTree = "<group>";
+		};
+		EBFEFEA91DDD3FC7003D8B48 /* Reachability */ = {
+			isa = PBXGroup;
+			children = (
+				EBFEFEAA1DDD3FC7003D8B48 /* Reachability.h */,
+				EBFEFEAB1DDD3FC7003D8B48 /* Reachability.m */,
+			);
+			path = Reachability;
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
@@ -1272,6 +1285,7 @@
 				4728ED3A1DC485AB0005F9C3 /* RootViewController.m in Sources */,
 				4728EDC21DC4865E0005F9C3 /* PNPieChartDataItem.m in Sources */,
 				EB34F3AC1DCA0F0D002B15B1 /* HandKneadViewController.m in Sources */,
+				EBFEFEAC1DDD3FC7003D8B48 /* Reachability.m in Sources */,
 				4728EDC31DC4865E0005F9C3 /* PNRadarChart.m in Sources */,
 				3E216B321DD98C69003D52D7 /* MassageRecordModel.m in Sources */,
 				3E632A511DC5A47B00CC2332 /* BabyOptions.m in Sources */,

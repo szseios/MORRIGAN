@@ -45,14 +45,17 @@ static RecordManager *manager;
 
 
 
-- (void)addToUploadArray:(MassageRecordModel *)model
+- (void)addToDB:(MassageRecordModel *)model
 {
-//    if([DBManager insertRecord:model]) {
-//        NSLog(@"insertRecord，添加到数据库成功！");
-//    } else {
-//        NSLog(@"insertRecord，添加到数据库失败！");
-//    }
-//    [self uploadDBDatas:NO];
+    if([DBManager insertData:model.userID startTime:model.startTime endTime:model.endTime type:model.type]) {
+        NSLog(@"insertRecord，添加到数据库成功！");
+    } else {
+        NSLog(@"insertRecord，添加到数据库失败！");
+    }
+    
+    NSArray *result = [DBManager selectForenoonDatas:model.userID];
+    NSLog(@"%@", result);
+    
 }
 
 - (void)uploadDBDatas:(BOOL)shouldCleanUp

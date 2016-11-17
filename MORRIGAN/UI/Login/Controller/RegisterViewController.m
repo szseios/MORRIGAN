@@ -13,6 +13,7 @@
 #import "UserInfo.h"
 #import "LoginManager.h"
 #import "Utils.h"
+#import "AppDelegate.h"
 
 
 
@@ -340,6 +341,10 @@
 - (void)getAuthCodeButtonClickInRegister:(id)sender
 {
     NSLog(@"getAuthCodeButtonClickInRegister");
+    AppDelegate *appDelegate = [UIApplication sharedApplication].delegate;
+    if ([appDelegate checkReachable] == NO) {
+        return;
+    }
     
     if(_getAuthCodeButton.tag == kgetAuthCodeButtonOfGetting){
         return;
@@ -359,6 +364,7 @@
         [alert show];
         return;
     }
+    
     
     UIAlertView *alert = [[UIAlertView alloc] initWithTitle:@"确认手机号码" message:phoneNumber delegate:self cancelButtonTitle:@"取消" otherButtonTitles:@"确定", nil];
     alert.tag = kAlertViewTagOfConfirmPhoneNumber;
@@ -388,9 +394,15 @@
 - (void)registerButtonClickInRegister:(id)sender
 {
     NSLog(@"registerButtonClickInRegister");
-
+    
     UIButton *button = (UIButton *)sender;
     button.backgroundColor = [UIColor clearColor];
+    
+    AppDelegate *appDelegate = [UIApplication sharedApplication].delegate;
+    if ([appDelegate checkReachable] == NO) {
+        return;
+    }
+
     
     NSString *phoneNumber = _phoneNumbrInputView.text;
     NSString *authCode = _authCodeInputView.text;
@@ -436,7 +448,7 @@
         [alert show];
         return;
     }
-
+    
     // 注册
     [self beginRegister:phoneNumber authCode:authCode password:password sex:_sexString];
     
