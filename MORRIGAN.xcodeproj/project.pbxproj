@@ -119,7 +119,6 @@
 		47FF16701DC9F48B00DBD493 /* UIImageView+WebCache.m in Sources */ = {isa = PBXBuildFile; fileRef = 47FF165F1DC9F48B00DBD493 /* UIImageView+WebCache.m */; };
 		47FF16711DC9F48B00DBD493 /* UIView+WebCacheOperation.m in Sources */ = {isa = PBXBuildFile; fileRef = 47FF16611DC9F48B00DBD493 /* UIView+WebCacheOperation.m */; };
 		47FF16731DC9FAE500DBD493 /* NullSafe.m in Sources */ = {isa = PBXBuildFile; fileRef = 47FF16721DC9FAE500DBD493 /* NullSafe.m */; };
-		EB1E63D01DD6D80800F28068 /* RecordShouldUploadModel.m in Sources */ = {isa = PBXBuildFile; fileRef = EB1E63CF1DD6D80800F28068 /* RecordShouldUploadModel.m */; };
 		EB20E01A1DD9A324000C2E6E /* RecordManager.m in Sources */ = {isa = PBXBuildFile; fileRef = EB20E0191DD9A324000C2E6E /* RecordManager.m */; };
 		EB21FA1E1DBF31A000DDD28A /* FuntionButton.m in Sources */ = {isa = PBXBuildFile; fileRef = EB21FA1D1DBF31A000DDD28A /* FuntionButton.m */; };
 		EB21FA1F1DBF31A000DDD28A /* FuntionButton.m in Sources */ = {isa = PBXBuildFile; fileRef = EB21FA1D1DBF31A000DDD28A /* FuntionButton.m */; };
@@ -371,8 +370,6 @@
 		47FF16601DC9F48B00DBD493 /* UIView+WebCacheOperation.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "UIView+WebCacheOperation.h"; sourceTree = "<group>"; };
 		47FF16611DC9F48B00DBD493 /* UIView+WebCacheOperation.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "UIView+WebCacheOperation.m"; sourceTree = "<group>"; };
 		47FF16721DC9FAE500DBD493 /* NullSafe.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = NullSafe.m; sourceTree = "<group>"; };
-		EB1E63CE1DD6D80800F28068 /* RecordShouldUploadModel.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = RecordShouldUploadModel.h; sourceTree = "<group>"; };
-		EB1E63CF1DD6D80800F28068 /* RecordShouldUploadModel.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = RecordShouldUploadModel.m; sourceTree = "<group>"; };
 		EB20E0181DD9A324000C2E6E /* RecordManager.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = RecordManager.h; sourceTree = "<group>"; };
 		EB20E0191DD9A324000C2E6E /* RecordManager.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = RecordManager.m; sourceTree = "<group>"; };
 		EB21FA1C1DBF31A000DDD28A /* FuntionButton.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = FuntionButton.h; sourceTree = "<group>"; };
@@ -538,8 +535,6 @@
 				3E9ED0D81DD16BAA00A6F665 /* PeripheralModel.m */,
 				3E216B301DD98C69003D52D7 /* MassageRecordModel.h */,
 				3E216B311DD98C69003D52D7 /* MassageRecordModel.m */,
-				EB1E63CE1DD6D80800F28068 /* RecordShouldUploadModel.h */,
-				EB1E63CF1DD6D80800F28068 /* RecordShouldUploadModel.m */,
 			);
 			path = Model;
 			sourceTree = "<group>";
@@ -1345,7 +1340,6 @@
 				47FF16681DC9F48B00DBD493 /* SDWebImageDownloaderOperation.m in Sources */,
 				3E632A4F1DC5A47B00CC2332 /* BabyCentralManager.m in Sources */,
 				3E2AC8601DCF01D000961883 /* BindingCustomButton.m in Sources */,
-				EB1E63D01DD6D80800F28068 /* RecordShouldUploadModel.m in Sources */,
 				3EF4E0031DD0A26B0003BD7C /* FMDatabasePool.m in Sources */,
 				3EF4E0021DD0A26B0003BD7C /* FMDatabaseAdditions.m in Sources */,
 				4728EDBD1DC4865E0005F9C3 /* PNGenericChart.m in Sources */,

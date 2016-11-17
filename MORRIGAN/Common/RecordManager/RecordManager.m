@@ -7,7 +7,6 @@
 //
 
 #import "RecordManager.h"
-#import "RecordShouldUploadModel.h"
 #import "DBManager.h"
 
 
@@ -46,7 +45,7 @@ static RecordManager *manager;
 
 
 
-- (void)addToUploadArray:(RecordShouldUploadModel *)model
+- (void)addToUploadArray:(MassageRecordModel *)model
 {
 //    if([DBManager insertRecord:model]) {
 //        NSLog(@"insertRecord，添加到数据库成功！");
@@ -93,15 +92,15 @@ static RecordManager *manager;
     NSDictionary *dictionary = [NSDictionary dictionary];
     NSMutableString *infoString = [NSMutableString string];
     [infoString appendString:@"&hlInfo=["];
-    for (RecordShouldUploadModel *model  in _uploadingRecordArray) {
-        NSLog(@"剩余需要上传的护理记录数量: %ld，开始上传: %@, %@, %@, %@", _uploadingRecordArray.count, model.uuid, model.userId, model.dateString, model.timeLongString);
-        [infoString appendString:[NSString stringWithFormat:@"{\"userId\":\"%@\",\"date\":\"%@\",\"timeLong\":\"%@\"}",model.userId, model.dateString, model.timeLongString]];
-        if(model != [_uploadingRecordArray lastObject]) {
-            [infoString appendString:@","];
-        } else {
-            [infoString appendString:@"]"];
-            dictionary = @{@"userId": model.userId};
-        }
+    for (MassageRecordModel *model  in _uploadingRecordArray) {
+//        NSLog(@"剩余需要上传的护理记录数量: %ld，开始上传: %@, %@, %@, %@", _uploadingRecordArray.count, model.uuid, model.userId, model.dateString, model.timeLongString);
+//        [infoString appendString:[NSString stringWithFormat:@"{\"userId\":\"%@\",\"date\":\"%@\",\"timeLong\":\"%@\"}",model.userId, model.dateString, model.timeLongString]];
+//        if(model != [_uploadingRecordArray lastObject]) {
+//            [infoString appendString:@","];
+//        } else {
+//            [infoString appendString:@"]"];
+//            dictionary = @{@"userId": model.userId};
+//        }
         
     }
     NSString *bodyString = [NMOANetWorking handleHTTPBodyParams:dictionary];
@@ -117,7 +116,7 @@ static RecordManager *manager;
          
          if ([[obj objectForKey:HTTP_KEY_RESULTCODE] isEqualToString:HTTP_RESULTCODE_SUCCESS]) {
              NSLog(@"上传护理记录成功！");
-             for (RecordShouldUploadModel *model in _uploadingRecordArray) {
+             for (MassageRecordModel *model in _uploadingRecordArray) {
 //                 if([DBManager deleteRecord:model.uuid]) {
 //                     NSLog(@"deleteRecord， 删除记录成功！");
 //                 } else {
