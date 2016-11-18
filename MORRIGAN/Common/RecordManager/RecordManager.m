@@ -45,14 +45,27 @@ static RecordManager *manager;
         NSLog(@"insertRecord，添加护理记录到数据库失败！");
     }
     
+    
 //    NSArray *result = [DBManager selectUploadDatas:model.userID];
 //    NSLog(@"\n\n--------------现在数据库中需要上传的数据-------------： \n%@ \n---------------------end-------------------------", result);
+    
+    
+    // 上传护理记录数据(每次停止都传一次，如果有数据，确保数据上传到服务器)
+    [[RecordManager share] uploadDBDatas:NO];
 }
 
 - (void)uploadDBDatas:(BOOL)shouldCleanUp
 {
-    // 判断今天之前是否有数据需要上传
-    _recordBufferArray = [DBManager selectUploadDatas:[UserInfo share].userId];
+    
+    if(shouldCleanUp) {
+        // 包括今天的数据（退出账户时）
+        
+        
+    } else {
+        // 今天之前的数据
+        _recordBufferArray = [DBManager selectUploadDatas:[UserInfo share].userId];
+    }
+    
     NSLog(@"当前数据库中需要上传的护理记录天数: %ld", _recordBufferArray.count);
    
     [self uploadRecord:shouldCleanUp];
@@ -128,6 +141,7 @@ static RecordManager *manager;
              NSLog(@"上传护理记录失败！");
 
          }
+         
          _uploadingRecordArray = nil;
          _isUploading = NO;
          
@@ -139,6 +153,9 @@ static RecordManager *manager;
 //             } else {
 //                 NSLog(@"deleteAllRecord， 删除所有记录失败！");
 //             }
+             
+             // 退出账户上传数据结束时发送通知去执行退出操作
+             [[NSNotificationCenter defaultCenter]postNotificationName:kRecordManagerUploadEndNotification object:nil];
 
          } else {
              // 继续上传缓冲中的数据

@@ -8,6 +8,9 @@
 
 #import <Foundation/Foundation.h>
 
+#define kRecordManagerUploadEndNotification  @"kRecordManagerUploadEndNotification"
+
+
 @interface RecordManager : NSObject
 
 + (RecordManager *)share;
