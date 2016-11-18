@@ -60,6 +60,14 @@ static RecordManager *manager;
 
 - (void)uploadDBDatas:(BOOL)shouldCleanUp
 {
+    // 判断今天之前是否有数据需要上传
+    
+    
+    
+    
+    
+    
+    
     // 添加数据库中未上传的数据
 //    [self.recordBufferArray addObjectsFromArray:[DBManager selectAllRecord]];
 //    for (NSInteger i = 0; i < 3; i++) {
