@@ -17,6 +17,38 @@
             endingLineNumber = "256"
             landmarkName = "+selectForenoonDatas:"
             landmarkType = "7">
+            <Locations>
+               <Location
+                  shouldBeEnabled = "Yes"
+                  ignoreCount = "0"
+                  continueAfterRunningActions = "No"
+                  symbolName = "+[DBManager selectForenoonDatas:]"
+                  moduleName = "MORRIGAN"
+                  usesParentBreakpointCondition = "Yes"
+                  urlString = "file:///Users/hwju/Desktop/github/MORRIGAN/MORRIGAN/Common/DBManager/DBManager.m"
+                  timestampString = "501147659.406306"
+                  startingColumnNumber = "9223372036854775807"
+                  endingColumnNumber = "9223372036854775807"
+                  startingLineNumber = "256"
+                  endingLineNumber = "256"
+                  offsetFromSymbolStart = "116">
+               </Location>
+               <Location
+                  shouldBeEnabled = "Yes"
+                  ignoreCount = "0"
+                  continueAfterRunningActions = "No"
+                  symbolName = "__33+[DBManager selectForenoonDatas:]_block_invoke"
+                  moduleName = "MORRIGAN"
+                  usesParentBreakpointCondition = "Yes"
+                  urlString = "file:///Users/hwju/Desktop/github/MORRIGAN/MORRIGAN/Common/DBManager/DBManager.m"
+                  timestampString = "501147659.407301"
+                  startingColumnNumber = "9223372036854775807"
+                  endingColumnNumber = "9223372036854775807"
+                  startingLineNumber = "256"
+                  endingLineNumber = "256"
+                  offsetFromSymbolStart = "28">
+               </Location>
+            </Locations>
          </BreakpointContent>
       </BreakpointProxy>
       <BreakpointProxy
@@ -74,12 +106,12 @@
                   moduleName = "MORRIGAN"
                   usesParentBreakpointCondition = "Yes"
                   urlString = "file:///Users/hwju/Desktop/github/MORRIGAN/MORRIGAN/Common/DBManager/DBManager.m"
-                  timestampString = "501145843.430539"
+                  timestampString = "501147659.412505"
                   startingColumnNumber = "9223372036854775807"
                   endingColumnNumber = "9223372036854775807"
                   startingLineNumber = "250"
                   endingLineNumber = "250"
-                  offsetFromSymbolStart = "1972">
+                  offsetFromSymbolStart = "2072">
                </Location>
                <Location
                   shouldBeEnabled = "Yes"
@@ -89,12 +121,12 @@
                   moduleName = "MORRIGAN"
                   usesParentBreakpointCondition = "Yes"
                   urlString = "file:///Users/hwju/Desktop/github/MORRIGAN/MORRIGAN/Common/DBManager/DBManager.m"
-                  timestampString = "501145843.431475"
+                  timestampString = "501147659.413403"
                   startingColumnNumber = "9223372036854775807"
                   endingColumnNumber = "9223372036854775807"
                   startingLineNumber = "250"
                   endingLineNumber = "250"
-                  offsetFromSymbolStart = "94">
+                  offsetFromSymbolStart = "96">
                </Location>
                <Location
                   shouldBeEnabled = "Yes"
@@ -104,12 +136,12 @@
                   moduleName = "MORRIGAN"
                   usesParentBreakpointCondition = "Yes"
                   urlString = "file:///Users/hwju/Desktop/github/MORRIGAN/MORRIGAN/Common/DBManager/DBManager.m"
-                  timestampString = "501145843.432453"
+                  timestampString = "501147659.4143"
                   startingColumnNumber = "9223372036854775807"
                   endingColumnNumber = "9223372036854775807"
                   startingLineNumber = "250"
                   endingLineNumber = "250"
-                  offsetFromSymbolStart = "57">
+                  offsetFromSymbolStart = "64">
                </Location>
             </Locations>
          </BreakpointContent>

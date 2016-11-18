@@ -100,7 +100,7 @@ static RecordManager *manager;
     
     NSDictionary *dictionary = [NSDictionary dictionary];
     NSMutableString *infoString = [NSMutableString string];
-    [infoString appendString:@"&hlInfo=["];
+    [infoString appendString:[NSString stringWithFormat:@"?userId=%@&hlInfo=[", [UserInfo share].userId]];
     NSLog(@"正在上传的护理记录数： %ld", _uploadingRecordArray.count);
     for (NSDictionary *itemDict in _uploadingRecordArray) {
         NSLog(@"正在上传的护理记录信息: userId -> %@, date -> %@，timeLong -> %@",
@@ -124,12 +124,12 @@ static RecordManager *manager;
     }
     NSString *bodyString = [NMOANetWorking handleHTTPBodyParams:dictionary];
     NSString *resultBodyString = [NSString stringWithFormat:@"%@%@",bodyString, infoString];
-    NSLog(@"resultBodyString: %@", resultBodyString);
+    NSLog(@"infoString: %@", infoString);
    
     [[NMOANetWorking share] taskWithTag:ID_UPLOAD_RECORD
                               urlString:URL_UPLOAD_RECORD
                                httpHead:nil
-                             bodyString:resultBodyString
+                             bodyString:infoString
                      objectTaskFinished:^(NSError *error, id obj)
      {
          
