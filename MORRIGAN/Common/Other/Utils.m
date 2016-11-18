@@ -244,6 +244,22 @@
 }
 
 
++ (BOOL)isSameDay:(NSDate*)date1 date2:(NSDate*)date2
+{
+    if (!date1 || !date2) {
+        return  NO;
+    }
+    
+    NSCalendar* calendar = [NSCalendar currentCalendar];
+    
+    unsigned unitFlags = NSCalendarUnitYear | NSCalendarUnitMonth |  NSCalendarUnitDay;
+    NSDateComponents* comp1 = [calendar components:unitFlags fromDate:date1];
+    NSDateComponents* comp2 = [calendar components:unitFlags fromDate:date2];
+    
+    return [comp1 day]   == [comp2 day] &&
+    [comp1 month] == [comp2 month] &&
+    [comp1 year]  == [comp2 year];
+}
 
 
 @end
