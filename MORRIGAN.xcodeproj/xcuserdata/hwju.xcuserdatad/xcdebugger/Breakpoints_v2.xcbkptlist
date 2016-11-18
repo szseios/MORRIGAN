@@ -26,22 +26,6 @@
             ignoreCount = "0"
             continueAfterRunningActions = "No"
             filePath = "MORRIGAN/Common/DBManager/DBManager.m"
-            timestampString = "501060464.71028"
-            startingColumnNumber = "9223372036854775807"
-            endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "269"
-            endingLineNumber = "269"
-            landmarkName = "+insertData:startTime:endTime:type:"
-            landmarkType = "7">
-         </BreakpointContent>
-      </BreakpointProxy>
-      <BreakpointProxy
-         BreakpointExtensionID = "Xcode.Breakpoint.FileBreakpoint">
-         <BreakpointContent
-            shouldBeEnabled = "Yes"
-            ignoreCount = "0"
-            continueAfterRunningActions = "No"
-            filePath = "MORRIGAN/Common/DBManager/DBManager.m"
             timestampString = "501060469.590057"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
@@ -74,7 +58,7 @@
                   moduleName = "MORRIGAN"
                   usesParentBreakpointCondition = "Yes"
                   urlString = "file:///Users/hwju/Desktop/github/MORRIGAN/MORRIGAN/Common/DBManager/DBManager.m"
-                  timestampString = "501060506.307387"
+                  timestampString = "501122043.602752"
                   startingColumnNumber = "9223372036854775807"
                   endingColumnNumber = "9223372036854775807"
                   startingLineNumber = "223"
@@ -89,7 +73,7 @@
                   moduleName = "MORRIGAN"
                   usesParentBreakpointCondition = "Yes"
                   urlString = "file:///Users/hwju/Desktop/github/MORRIGAN/MORRIGAN/Common/DBManager/DBManager.m"
-                  timestampString = "501060506.308598"
+                  timestampString = "501122043.6037"
                   startingColumnNumber = "9223372036854775807"
                   endingColumnNumber = "9223372036854775807"
                   startingLineNumber = "223"
@@ -127,22 +111,6 @@
             endingColumnNumber = "9223372036854775807"
             startingLineNumber = "249"
             endingLineNumber = "249"
-            landmarkName = "+insertData:startTime:endTime:type:"
-            landmarkType = "7">
-         </BreakpointContent>
-      </BreakpointProxy>
-      <BreakpointProxy
-         BreakpointExtensionID = "Xcode.Breakpoint.FileBreakpoint">
-         <BreakpointContent
-            shouldBeEnabled = "Yes"
-            ignoreCount = "0"
-            continueAfterRunningActions = "No"
-            filePath = "MORRIGAN/Common/DBManager/DBManager.m"
-            timestampString = "501060663.872241"
-            startingColumnNumber = "9223372036854775807"
-            endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "275"
-            endingLineNumber = "275"
             landmarkName = "+insertData:startTime:endTime:type:"
             landmarkType = "7">
          </BreakpointContent>
