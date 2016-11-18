@@ -81,6 +81,53 @@
             endingLineNumber = "249"
             landmarkName = "+selectForenoonDatas:"
             landmarkType = "7">
+            <Locations>
+               <Location
+                  shouldBeEnabled = "Yes"
+                  ignoreCount = "0"
+                  continueAfterRunningActions = "No"
+                  symbolName = "__30+[DBManager selectTodayDatas:]_block_invoke"
+                  moduleName = "MORRIGAN"
+                  usesParentBreakpointCondition = "Yes"
+                  urlString = "file:///Users/hwju/Desktop/github/MORRIGAN/MORRIGAN/Common/DBManager/DBManager.m"
+                  timestampString = "501141024.999667"
+                  startingColumnNumber = "9223372036854775807"
+                  endingColumnNumber = "9223372036854775807"
+                  startingLineNumber = "250"
+                  endingLineNumber = "250"
+                  offsetFromSymbolStart = "1972">
+               </Location>
+               <Location
+                  shouldBeEnabled = "Yes"
+                  ignoreCount = "0"
+                  continueAfterRunningActions = "No"
+                  symbolName = "__copy_helper_block_.164"
+                  moduleName = "MORRIGAN"
+                  usesParentBreakpointCondition = "Yes"
+                  urlString = "file:///Users/hwju/Desktop/github/MORRIGAN/MORRIGAN/Common/DBManager/DBManager.m"
+                  timestampString = "501141025.000645"
+                  startingColumnNumber = "9223372036854775807"
+                  endingColumnNumber = "9223372036854775807"
+                  startingLineNumber = "250"
+                  endingLineNumber = "250"
+                  offsetFromSymbolStart = "94">
+               </Location>
+               <Location
+                  shouldBeEnabled = "Yes"
+                  ignoreCount = "0"
+                  continueAfterRunningActions = "No"
+                  symbolName = "__destroy_helper_block_.165"
+                  moduleName = "MORRIGAN"
+                  usesParentBreakpointCondition = "Yes"
+                  urlString = "file:///Users/hwju/Desktop/github/MORRIGAN/MORRIGAN/Common/DBManager/DBManager.m"
+                  timestampString = "501141025.001568"
+                  startingColumnNumber = "9223372036854775807"
+                  endingColumnNumber = "9223372036854775807"
+                  startingLineNumber = "250"
+                  endingLineNumber = "250"
+                  offsetFromSymbolStart = "57">
+               </Location>
+            </Locations>
          </BreakpointContent>
       </BreakpointProxy>
       <BreakpointProxy

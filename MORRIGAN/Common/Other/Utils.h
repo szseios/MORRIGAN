@@ -63,4 +63,12 @@
 + (BOOL)isSameDay:(NSDate*)date1 date2:(NSDate*)date2;
 
 
+/**
+ *
+ *  判断两个日期是否为同一小时
+ *
+ **/
++ (BOOL)isSameHour:(NSDate*)date1 date2:(NSDate*)date2;
+
+
 @end
