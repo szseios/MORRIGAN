@@ -346,7 +346,7 @@ static NSString *dbPath = nil;
             }
         }
         
-        if (success) {
+//        if (success) {
             NSString *sql = [NSString stringWithFormat:@"INSERT OR REPLACE INTO 'datas' ('user_id', 'start_time' , 'end_time' , 'type') VALUES ('%@', '%@', '%@', '%@')",
                              userID,
                              tempstartDate,
@@ -356,7 +356,7 @@ static NSString *dbPath = nil;
             if (!success) {
                 NSLog(@"按摩记录保存失败, error : %@",db.lastErrorMessage);
             }
-        }
+//        }
         
         
     }];

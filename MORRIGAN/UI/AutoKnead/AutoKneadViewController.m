@@ -10,6 +10,8 @@
 #import "FuntionButton.h"
 #import "Utils.h"
 #import "BluetoothManager.h"
+#import "RecordManager.h"
+#import "MassageRecordModel.h"
 
 #define kTagOfDefault       0        // 默认按钮tag
 #define kTagOfSoft          1000     // 轻柔按钮tag
@@ -30,6 +32,8 @@
     UIButton *_buttonStartStop;
     FuntionButton *_dragButton;
     FuntionButton *_tempButton;
+    
+    NSDate *_startDate;
 
 }
 
@@ -236,6 +240,7 @@
     // 轻柔（底部：1行－左）
     FuntionButton *funButton1 = [[FuntionButton alloc] initWithFrame:CGRectMake(buttonX, buttonY, buttonW, buttonH)];
     funButton1.buttonImage = [UIImage imageNamed:@"soft"];
+    funButton1.buttonBeenDrapImage = [UIImage imageNamed:@"select_soft"];
     [funButton1 setImage:funButton1.buttonImage forState:UIControlStateNormal];
     UIPanGestureRecognizer *panGestureRecognizer1 = [[UIPanGestureRecognizer alloc] initWithTarget:self action:@selector(dragReplyButton:)];
     [funButton1 addGestureRecognizer:panGestureRecognizer1];
@@ -252,6 +257,7 @@
     // 水波（底部：1行－中）
     FuntionButton *funButton2 = [[FuntionButton alloc] initWithFrame:CGRectMake(buttonX, buttonY, buttonW, buttonH)];
     funButton2.buttonImage = [UIImage imageNamed:@"warter"];
+    funButton2.buttonBeenDrapImage = [UIImage imageNamed:@"select_warter"];
     [funButton2 setImage:funButton2.buttonImage forState:UIControlStateNormal];
     UIPanGestureRecognizer *panGestureRecognizer2 = [[UIPanGestureRecognizer alloc] initWithTarget:self action:@selector(dragReplyButton:)];
     [funButton2 addGestureRecognizer:panGestureRecognizer2];
@@ -268,6 +274,7 @@
     // 微按（底部：1行－右）
     FuntionButton *funButton3 = [[FuntionButton alloc] initWithFrame:CGRectMake(buttonX, buttonY, buttonW, buttonH)];
     funButton3.buttonImage = [UIImage imageNamed:@"lightPress"];
+    funButton3.buttonBeenDrapImage = [UIImage imageNamed:@"select_lightPress"];
     [funButton3 setImage:funButton3.buttonImage forState:UIControlStateNormal];
     UIPanGestureRecognizer *panGestureRecognizer3 = [[UIPanGestureRecognizer alloc] initWithTarget:self action:@selector(dragReplyButton:)];
     [funButton3 addGestureRecognizer:panGestureRecognizer3];
@@ -289,6 +296,7 @@
     // 强振（底部：2行－左）
     FuntionButton *funButton4 = [[FuntionButton alloc] initWithFrame:CGRectMake(buttonX, buttonY, buttonW, buttonH)];
     funButton4.buttonImage = [UIImage imageNamed:@"strongShake"];
+    funButton4.buttonBeenDrapImage = [UIImage imageNamed:@"select_strongShake"];
     [funButton4 setImage:funButton4.buttonImage forState:UIControlStateNormal];
     UIPanGestureRecognizer *panGestureRecognizer4 = [[UIPanGestureRecognizer alloc] initWithTarget:self action:@selector(dragReplyButton:)];
     [funButton4 addGestureRecognizer:panGestureRecognizer4];
@@ -305,6 +313,7 @@
     // 动感（底部：2行－右）
     FuntionButton *funButton5 = [[FuntionButton alloc] initWithFrame:CGRectMake(buttonX, buttonY, buttonW, buttonH)];
     funButton5.buttonImage = [UIImage imageNamed:@"movingFeel"];
+    funButton5.buttonBeenDrapImage = [UIImage imageNamed:@"select_movingFeel"];
     [funButton5 setImage:funButton5.buttonImage forState:UIControlStateNormal];
     UIPanGestureRecognizer *panGestureRecognizer5 = [[UIPanGestureRecognizer alloc] initWithTarget:self action:@selector(dragReplyButton:)];
     [funButton5 addGestureRecognizer:panGestureRecognizer5];
@@ -341,6 +350,7 @@
         _dragButton.frame = targetButton.frame;
         [_dragButton addGestureRecognizer:recognizer];
         _dragButton.buttonImage = targetButton.buttonImage;
+        _dragButton.buttonBeenDrapImage = targetButton.buttonBeenDrapImage;
         _dragButton.funCodeString = targetButton.funCodeString;
         [_dragButton setImage:_dragButton.buttonImage forState:UIControlStateNormal];
         _dragButton.tag = targetButton.tag;
@@ -419,7 +429,8 @@
                 newButton.arrayIndex = button.arrayIndex;
                 newButton.tag = _dragButton.tag;
                 newButton.buttonImage = _dragButton.buttonImage;
-                [newButton setImage:newButton.buttonImage forState:UIControlStateNormal];
+                newButton.buttonBeenDrapImage = _dragButton.buttonBeenDrapImage;
+                [newButton setImage:newButton.buttonBeenDrapImage forState:UIControlStateNormal];
                 UIPanGestureRecognizer *panGestureRecognizer = [[UIPanGestureRecognizer alloc] initWithTarget:self action:@selector(topFiveButtonGesture:)];
                 [newButton addGestureRecognizer:panGestureRecognizer];
                 [self.view addSubview:newButton];
@@ -467,12 +478,6 @@
 - (void)startBtnHandler:(id)sender
 {
     
-    if (![BluetoothManager share].isConnected) {
-        UIAlertView *alert = [[UIAlertView alloc] initWithTitle:@"还未连接设备！" message:nil delegate:self cancelButtonTitle:nil otherButtonTitles:@"确定", nil];
-        [alert show];
-        return;
-    }
-    
     BluetoothOperation *operation = [[BluetoothOperation alloc] init];
     [operation setValue:@"01" index:2];
     [operation setValue:@"02" index:4];
@@ -495,22 +500,37 @@
 
     // 必须选择一个
     if(hasSelected == NO) {
-        //[MBProgressHUD showHUDByContent:@"请选择组合模式！" view: self.view];
-        UIAlertView *alert = [[UIAlertView alloc] initWithTitle:@"请选择组合模式！" message:nil delegate:self cancelButtonTitle:nil otherButtonTitles:@"确定", nil];
-        [alert show];
+        [MBProgressHUD showHUDByContent:@"请先选择组合模式" view: self.view];
+//        UIAlertView *alert = [[UIAlertView alloc] initWithTitle:@"请选择组合模式" message:nil delegate:self cancelButtonTitle:nil otherButtonTitles:@"确定", nil];
+//        [alert show];
         return;
     }
     
+    if (![BluetoothManager share].isConnected) {
+        UIAlertView *alert = [[UIAlertView alloc] initWithTitle:@"蓝牙未连接，请先连接设备再来按摩吧" message:nil delegate:self cancelButtonTitle:nil otherButtonTitles:@"确定", nil];
+        [alert show];
+        return;
+    }
+
     
     
     if(_buttonStartStop.tag == kButtonStopTag) {
         _buttonStartStop.tag = kButtonStartTag;
         [_buttonStartStop setImage:[UIImage imageNamed:@"STOP"] forState:UIControlStateNormal];
         [operation setValue:@"01" index:3];
+        _startDate = [NSDate date];
     } else {
         _buttonStartStop.tag = kButtonStopTag;
         [_buttonStartStop setImage:[UIImage imageNamed:@"START"] forState:UIControlStateNormal];
         [operation setValue:@"00" index:3];
+        
+        // 插入数据库
+        MassageRecordModel *model = [[MassageRecordModel alloc] init];
+        model.userID = [UserInfo share].userId;
+        model.startTime = _startDate;
+        model.endTime = [NSDate date];
+        model.type = MassageTypeAuto;
+        [[RecordManager share] addToDB:model];
     }
 
     

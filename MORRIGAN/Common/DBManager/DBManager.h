@@ -10,7 +10,6 @@
 #import "PeripheralModel.h"
 #import "MassageRecordModel.h"
 #import "FMDB.h"
-#import "RecordShouldUploadModel.h"
 
 @interface DBManager : NSObject
 

@@ -119,7 +119,6 @@
 		47FF16701DC9F48B00DBD493 /* UIImageView+WebCache.m in Sources */ = {isa = PBXBuildFile; fileRef = 47FF165F1DC9F48B00DBD493 /* UIImageView+WebCache.m */; };
 		47FF16711DC9F48B00DBD493 /* UIView+WebCacheOperation.m in Sources */ = {isa = PBXBuildFile; fileRef = 47FF16611DC9F48B00DBD493 /* UIView+WebCacheOperation.m */; };
 		47FF16731DC9FAE500DBD493 /* NullSafe.m in Sources */ = {isa = PBXBuildFile; fileRef = 47FF16721DC9FAE500DBD493 /* NullSafe.m */; };
-		EB1E63D01DD6D80800F28068 /* RecordShouldUploadModel.m in Sources */ = {isa = PBXBuildFile; fileRef = EB1E63CF1DD6D80800F28068 /* RecordShouldUploadModel.m */; };
 		EB20E01A1DD9A324000C2E6E /* RecordManager.m in Sources */ = {isa = PBXBuildFile; fileRef = EB20E0191DD9A324000C2E6E /* RecordManager.m */; };
 		EB21FA1E1DBF31A000DDD28A /* FuntionButton.m in Sources */ = {isa = PBXBuildFile; fileRef = EB21FA1D1DBF31A000DDD28A /* FuntionButton.m */; };
 		EB21FA1F1DBF31A000DDD28A /* FuntionButton.m in Sources */ = {isa = PBXBuildFile; fileRef = EB21FA1D1DBF31A000DDD28A /* FuntionButton.m */; };
@@ -147,6 +146,7 @@
 		EBF011841DA7883B009E8394 /* Urls.plist in Resources */ = {isa = PBXBuildFile; fileRef = EBF011801DA7883B009E8394 /* Urls.plist */; };
 		EBF011AF1DA7920A009E8394 /* Utils.m in Sources */ = {isa = PBXBuildFile; fileRef = EBF011AE1DA7920A009E8394 /* Utils.m */; };
 		EBF011B01DA7920A009E8394 /* Utils.m in Sources */ = {isa = PBXBuildFile; fileRef = EBF011AE1DA7920A009E8394 /* Utils.m */; };
+		EBFEFEAC1DDD3FC7003D8B48 /* Reachability.m in Sources */ = {isa = PBXBuildFile; fileRef = EBFEFEAB1DDD3FC7003D8B48 /* Reachability.m */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -371,8 +371,6 @@
 		47FF16601DC9F48B00DBD493 /* UIView+WebCacheOperation.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "UIView+WebCacheOperation.h"; sourceTree = "<group>"; };
 		47FF16611DC9F48B00DBD493 /* UIView+WebCacheOperation.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "UIView+WebCacheOperation.m"; sourceTree = "<group>"; };
 		47FF16721DC9FAE500DBD493 /* NullSafe.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = NullSafe.m; sourceTree = "<group>"; };
-		EB1E63CE1DD6D80800F28068 /* RecordShouldUploadModel.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = RecordShouldUploadModel.h; sourceTree = "<group>"; };
-		EB1E63CF1DD6D80800F28068 /* RecordShouldUploadModel.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = RecordShouldUploadModel.m; sourceTree = "<group>"; };
 		EB20E0181DD9A324000C2E6E /* RecordManager.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = RecordManager.h; sourceTree = "<group>"; };
 		EB20E0191DD9A324000C2E6E /* RecordManager.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = RecordManager.m; sourceTree = "<group>"; };
 		EB21FA1C1DBF31A000DDD28A /* FuntionButton.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = FuntionButton.h; sourceTree = "<group>"; };
@@ -426,6 +424,8 @@
 		EBF011801DA7883B009E8394 /* Urls.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = Urls.plist; sourceTree = "<group>"; };
 		EBF011AD1DA7920A009E8394 /* Utils.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = Utils.h; sourceTree = "<group>"; };
 		EBF011AE1DA7920A009E8394 /* Utils.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = Utils.m; sourceTree = "<group>"; };
+		EBFEFEAA1DDD3FC7003D8B48 /* Reachability.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = Reachability.h; sourceTree = "<group>"; };
+		EBFEFEAB1DDD3FC7003D8B48 /* Reachability.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = Reachability.m; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -538,8 +538,6 @@
 				3E9ED0D81DD16BAA00A6F665 /* PeripheralModel.m */,
 				3E216B301DD98C69003D52D7 /* MassageRecordModel.h */,
 				3E216B311DD98C69003D52D7 /* MassageRecordModel.m */,
-				EB1E63CE1DD6D80800F28068 /* RecordShouldUploadModel.h */,
-				EB1E63CF1DD6D80800F28068 /* RecordShouldUploadModel.m */,
 			);
 			path = Model;
 			sourceTree = "<group>";
@@ -1024,6 +1022,7 @@
 				4728EDA81DC4865E0005F9C3 /* WebAboutMorrigan */,
 				4728EDB31DC4865E0005F9C3 /* ZHRulerView */,
 				EBF011751DA7883B009E8394 /* netWorking */,
+				EBFEFEA91DDD3FC7003D8B48 /* Reachability */,
 				EBF011691DA73784009E8394 /* Other */,
 			);
 			path = Common;
@@ -1102,6 +1101,15 @@
 				EBF011791DA7883B009E8394 /* NMOANetWorking.m */,
 			);
 			path = NMOANetWorking;
+			sourceTree = "<group>";
+		};
+		EBFEFEA91DDD3FC7003D8B48 /* Reachability */ = {
+			isa = PBXGroup;
+			children = (
+				EBFEFEAA1DDD3FC7003D8B48 /* Reachability.h */,
+				EBFEFEAB1DDD3FC7003D8B48 /* Reachability.m */,
+			);
+			path = Reachability;
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
@@ -1277,6 +1285,7 @@
 				4728ED3A1DC485AB0005F9C3 /* RootViewController.m in Sources */,
 				4728EDC21DC4865E0005F9C3 /* PNPieChartDataItem.m in Sources */,
 				EB34F3AC1DCA0F0D002B15B1 /* HandKneadViewController.m in Sources */,
+				EBFEFEAC1DDD3FC7003D8B48 /* Reachability.m in Sources */,
 				4728EDC31DC4865E0005F9C3 /* PNRadarChart.m in Sources */,
 				3E216B321DD98C69003D52D7 /* MassageRecordModel.m in Sources */,
 				3E632A511DC5A47B00CC2332 /* BabyOptions.m in Sources */,
@@ -1345,7 +1354,6 @@
 				47FF16681DC9F48B00DBD493 /* SDWebImageDownloaderOperation.m in Sources */,
 				3E632A4F1DC5A47B00CC2332 /* BabyCentralManager.m in Sources */,
 				3E2AC8601DCF01D000961883 /* BindingCustomButton.m in Sources */,
-				EB1E63D01DD6D80800F28068 /* RecordShouldUploadModel.m in Sources */,
 				3EF4E0031DD0A26B0003BD7C /* FMDatabasePool.m in Sources */,
 				3EF4E0021DD0A26B0003BD7C /* FMDatabaseAdditions.m in Sources */,
 				4728EDBD1DC4865E0005F9C3 /* PNGenericChart.m in Sources */,

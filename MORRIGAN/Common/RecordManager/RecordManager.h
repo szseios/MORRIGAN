@@ -14,8 +14,11 @@
 
 - (NSString *)getStarRank;
 
+
+
+
 // 添加到待上传数组
-- (void)addToUploadArray:(RecordShouldUploadModel *)model;
+- (void)addToDB:(MassageRecordModel *)model;
 
 // 上传数据库中的数据(shouldCleanUp == YES : 用户退出或注销需要上传完成红清除数据)
 - (void)uploadDBDatas:(BOOL)shouldCleanUp;

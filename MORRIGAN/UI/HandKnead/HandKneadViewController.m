@@ -10,6 +10,7 @@
 
 #import "HandKneadViewController.h"
 #import "Utils.h"
+#import "RecordManager.h"
 
 #define kButtonUnselectedTag     1000
 #define kButtonSelectedTag       2000
@@ -40,6 +41,8 @@
     NSTimer *_timer;                    // 计时器
     NSInteger _currentTime;             // 当前计时时间
     BOOL _animationStarting;            // 动画已启动
+    
+    NSDate *_startDate;
 }
 
 @end
@@ -157,38 +160,40 @@
     _bigCircleRootView = bigCircleRootView;
     // gear大数字
     CGFloat gearNumLabelW = 70;
-    CGFloat gearNumLabelH = 90;
+    CGFloat gearNumLabelH = 120;
     if(kScreenHeight < 570) {
         // 5s
-        gearNumLabelH = 70;
+        gearNumLabelH = 90;
         gearNumLabelW = 60;
     }
-    CGFloat gearNumLabelX = bigCircleRootViewW/2 - gearNumLabelW;
-    CGFloat gearNumLabelY = bigCircleRootViewW/2 - gearNumLabelH;
+    CGFloat gearNumLabelX = bigCircleRootViewW/2 - gearNumLabelW + 10;
+    CGFloat gearNumLabelY = bigCircleRootViewW/2 - gearNumLabelH + 30;
     if(kScreenHeight < 570) {
         // 5s
         gearNumLabelX = bigCircleRootViewW/2 - gearNumLabelW + 10;
-        gearNumLabelY = bigCircleRootViewW/2 - gearNumLabelH + 15;
+        gearNumLabelY = bigCircleRootViewW/2 - gearNumLabelH + 25;
     }
     UILabel *gearNumLabel = [[UILabel alloc] initWithFrame:CGRectMake(gearNumLabelX, gearNumLabelY, gearNumLabelW, gearNumLabelH)];
-    gearNumLabel.text = @"1";
+    gearNumLabel.text = @"2";
     gearNumLabel.textColor = [UIColor whiteColor];
-    gearNumLabel.font = [UIFont italicSystemFontOfSize:100.0];
+    gearNumLabel.font = [UIFont italicSystemFontOfSize:110.0];
     if(kScreenHeight < 570) {
         // 5s
-        gearNumLabel.font = [UIFont italicSystemFontOfSize:70.0];
+        gearNumLabel.font = [UIFont italicSystemFontOfSize:90.0];
     }
     [bigCircleRootView addSubview:gearNumLabel];
     _gearNumLabel = gearNumLabel;
     // gear
     CGFloat gearLabelW = 80;
     CGFloat gearLabelH = 40;
-    CGFloat gearLabelX = gearNumLabelX + gearNumLabelW + 20;
+    CGFloat gearLabelX = gearNumLabelX + gearNumLabelW ;
+    CGFloat gearLabelY = gearNumLabelY + gearNumLabelH - gearLabelH - 10;
     if(kScreenHeight < 570) {
         // 5s
         gearLabelX = gearNumLabelX + gearNumLabelW;
+        gearLabelY = gearNumLabelY + gearNumLabelH - gearLabelH - 5;
     }
-    CGFloat gearLabelY = gearNumLabelY + gearNumLabelH - gearLabelH - 10;
+    
     UILabel *gearLabel = [[UILabel alloc] initWithFrame:CGRectMake(gearLabelX, gearLabelY, gearLabelW, gearLabelH)];
     gearLabel.text = @"gear";
     gearLabel.textColor = [UIColor whiteColor];
@@ -199,7 +204,7 @@
     CGFloat timeLabelW = 100;
     CGFloat timeLabelH = 40;
     CGFloat timeLabelX = bigCircleRootViewW/2 - timeLabelW/2;
-    CGFloat timeLabelY = bigCircleRootViewH - 50 - timeLabelH;
+    CGFloat timeLabelY = bigCircleRootViewH - 30 - timeLabelH;
     if(kScreenHeight < 570) {
         // 5s
         timeLabelY = bigCircleRootViewH - 15 - timeLabelH;
@@ -455,6 +460,9 @@
 
     _currentGear ++;
     if(_currentGear > 3) {
+        [MBProgressHUD showHUDByContent:@"当前已经是最高档位" view: self.view];
+//        UIAlertView *alert = [[UIAlertView alloc] initWithTitle:@"当前已经是最高档位" message:nil delegate:self cancelButtonTitle:nil otherButtonTitles:@"确定", nil];
+//        [alert show];
         _currentGear = 3;
     }
     _gearNumLabel.text = [NSString stringWithFormat:@"%ld", _currentGear];
@@ -473,6 +481,9 @@
     _currentGear --;
     if(_currentGear <= 0) {
         _currentGear = 1;
+        [MBProgressHUD showHUDByContent:@"当前已经是最低档位" view: self.view];
+//        UIAlertView *alert = [[UIAlertView alloc] initWithTitle:@"当前已经是最低档位" message:nil delegate:self cancelButtonTitle:nil otherButtonTitles:@"确定", nil];
+//        [alert show];
     }
     _gearNumLabel.text = [NSString stringWithFormat:@"%ld", _currentGear];
     
@@ -484,7 +495,7 @@
 {
     NSLog(@"startButtonClick");
     if (![BluetoothManager share].isConnected) {
-        UIAlertView *alert = [[UIAlertView alloc] initWithTitle:@"还未连接设备！" message:nil delegate:self cancelButtonTitle:nil otherButtonTitles:@"确定", nil];
+        UIAlertView *alert = [[UIAlertView alloc] initWithTitle:@"蓝牙未连接，请先连接设备再来按摩吧" message:nil delegate:self cancelButtonTitle:nil otherButtonTitles:@"确定", nil];
         [alert show];
         return;
     }
@@ -549,6 +560,9 @@
         // 开启动画
         [self startAnimation];
         
+        _startDate = [NSDate date];
+        
+        
     } else if(button.tag == kButtonStopTag) {
         button.tag = kButtonStartTag;
         [button setImage:[UIImage imageNamed:@"start"] forState:UIControlStateNormal];
@@ -558,6 +572,14 @@
         [self stopTimer];
         // 取消动画
         [self stopAnimation];
+        
+        // 插入数据库
+        MassageRecordModel *model = [[MassageRecordModel alloc] init];
+        model.userID = [UserInfo share].userId;
+        model.startTime = _startDate;
+        model.endTime = [NSDate date];
+        model.type = MassageTypeManual;
+        [[RecordManager share] addToDB:model];
     }
 
 }
