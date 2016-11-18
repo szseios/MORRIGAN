@@ -10,6 +10,8 @@
 #import "FuntionButton.h"
 #import "Utils.h"
 #import "BluetoothManager.h"
+#import "RecordManager.h"
+#import "MassageRecordModel.h"
 
 #define kTagOfDefault       0        // 默认按钮tag
 #define kTagOfSoft          1000     // 轻柔按钮tag
@@ -30,6 +32,8 @@
     UIButton *_buttonStartStop;
     FuntionButton *_dragButton;
     FuntionButton *_tempButton;
+    
+    NSDate *_startDate;
 
 }
 
@@ -514,10 +518,19 @@
         _buttonStartStop.tag = kButtonStartTag;
         [_buttonStartStop setImage:[UIImage imageNamed:@"STOP"] forState:UIControlStateNormal];
         [operation setValue:@"01" index:3];
+        _startDate = [NSDate date];
     } else {
         _buttonStartStop.tag = kButtonStopTag;
         [_buttonStartStop setImage:[UIImage imageNamed:@"START"] forState:UIControlStateNormal];
         [operation setValue:@"00" index:3];
+        
+        // 插入数据库
+        MassageRecordModel *model = [[MassageRecordModel alloc] init];
+        model.userID = [UserInfo share].userId;
+        model.startTime = _startDate;
+        model.endTime = [NSDate date];
+        model.type = MassageTypeAuto;
+        [[RecordManager share] addToDB:model];
     }
 
     

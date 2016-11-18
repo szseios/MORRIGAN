@@ -10,6 +10,7 @@
 
 #import "HandKneadViewController.h"
 #import "Utils.h"
+#import "RecordManager.h"
 
 #define kButtonUnselectedTag     1000
 #define kButtonSelectedTag       2000
@@ -40,6 +41,8 @@
     NSTimer *_timer;                    // 计时器
     NSInteger _currentTime;             // 当前计时时间
     BOOL _animationStarting;            // 动画已启动
+    
+    NSDate *_startDate;
 }
 
 @end
@@ -557,6 +560,9 @@
         // 开启动画
         [self startAnimation];
         
+        _startDate = [NSDate date];
+        
+        
     } else if(button.tag == kButtonStopTag) {
         button.tag = kButtonStartTag;
         [button setImage:[UIImage imageNamed:@"start"] forState:UIControlStateNormal];
@@ -566,6 +572,14 @@
         [self stopTimer];
         // 取消动画
         [self stopAnimation];
+        
+        // 插入数据库
+        MassageRecordModel *model = [[MassageRecordModel alloc] init];
+        model.userID = [UserInfo share].userId;
+        model.startTime = _startDate;
+        model.endTime = [NSDate date];
+        model.type = MassageTypeManual;
+        [[RecordManager share] addToDB:model];
     }
 
 }
