@@ -9,22 +9,6 @@
             shouldBeEnabled = "Yes"
             ignoreCount = "0"
             continueAfterRunningActions = "No"
-            filePath = "MORRIGAN/Common/RecordManager/RecordManager.m"
-            timestampString = "501037972.749296"
-            startingColumnNumber = "9223372036854775807"
-            endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "57"
-            endingLineNumber = "57"
-            landmarkName = "-addToDB:"
-            landmarkType = "7">
-         </BreakpointContent>
-      </BreakpointProxy>
-      <BreakpointProxy
-         BreakpointExtensionID = "Xcode.Breakpoint.FileBreakpoint">
-         <BreakpointContent
-            shouldBeEnabled = "Yes"
-            ignoreCount = "0"
-            continueAfterRunningActions = "No"
             filePath = "MORRIGAN/Common/DBManager/DBManager.m"
             timestampString = "501060469.590057"
             startingColumnNumber = "9223372036854775807"
@@ -79,7 +63,7 @@
             endingColumnNumber = "9223372036854775807"
             startingLineNumber = "249"
             endingLineNumber = "249"
-            landmarkName = "+selectForenoonDatas:"
+            landmarkName = "+selectTodayDatas:"
             landmarkType = "7">
             <Locations>
                <Location
@@ -90,7 +74,7 @@
                   moduleName = "MORRIGAN"
                   usesParentBreakpointCondition = "Yes"
                   urlString = "file:///Users/hwju/Desktop/github/MORRIGAN/MORRIGAN/Common/DBManager/DBManager.m"
-                  timestampString = "501141024.999667"
+                  timestampString = "501142959.624626"
                   startingColumnNumber = "9223372036854775807"
                   endingColumnNumber = "9223372036854775807"
                   startingLineNumber = "250"
@@ -105,7 +89,7 @@
                   moduleName = "MORRIGAN"
                   usesParentBreakpointCondition = "Yes"
                   urlString = "file:///Users/hwju/Desktop/github/MORRIGAN/MORRIGAN/Common/DBManager/DBManager.m"
-                  timestampString = "501141025.000645"
+                  timestampString = "501142959.62577"
                   startingColumnNumber = "9223372036854775807"
                   endingColumnNumber = "9223372036854775807"
                   startingLineNumber = "250"
@@ -120,7 +104,7 @@
                   moduleName = "MORRIGAN"
                   usesParentBreakpointCondition = "Yes"
                   urlString = "file:///Users/hwju/Desktop/github/MORRIGAN/MORRIGAN/Common/DBManager/DBManager.m"
-                  timestampString = "501141025.001568"
+                  timestampString = "501142959.626896"
                   startingColumnNumber = "9223372036854775807"
                   endingColumnNumber = "9223372036854775807"
                   startingLineNumber = "250"
