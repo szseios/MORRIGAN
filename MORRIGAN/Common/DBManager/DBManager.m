@@ -159,7 +159,7 @@ static NSString *dbPath = nil;
         NSDateComponents *todayComponents = [cal components:NSYearCalendarUnit|NSMonthCalendarUnit|NSDayCalendarUnit
                                                    fromDate:[NSDate date]];
         
-        NSString *endDate = [NSString stringWithFormat:@"%@-%@-%@ 00:00:00 +0000",
+        NSString *endDate = [NSString stringWithFormat:@"%@-%@-%@ 00:00:00 +0800",
                              @(todayComponents.year).stringValue,
                              @(todayComponents.month).stringValue,
                              @(todayComponents.day).stringValue];
@@ -182,9 +182,12 @@ static NSString *dbPath = nil;
             if (![Utils isSameDay:date date2:endTime]) {
                 //如果不是第一条记录
                 if (date) {
+                    NSDateFormatter *formatter = [[NSDateFormatter alloc] init];
+                    [formatter setDateFormat:@"yyyy-MM-dd"];
+                    NSString *dateString = [formatter stringFromDate:date];
                     NSDictionary *dictionary = @{@"userId":userID,
-                                                 @"date":date,
-                                                 @"timeLong":@(timeLong / 60)};
+                                                 @"date":dateString,
+                                                 @"timeLong":@((NSInteger)(timeLong / 60))};
                     [datas addObject:dictionary];
                 }
                 date = endTime;
@@ -195,9 +198,12 @@ static NSString *dbPath = nil;
         }
         //如果有记录,添加最后一条记录
         if (date) {
+            NSDateFormatter *formatter = [[NSDateFormatter alloc] init];
+            [formatter setDateFormat:@"yyyy-MM-dd"];
+            NSString *dateString = [formatter stringFromDate:date];
             NSDictionary *dictionary = @{@"userId":userID,
-                                         @"date":date,
-                                         @"timeLong":@(timeLong)};
+                                         @"date":dateString,
+                                         @"timeLong":@((NSInteger)(timeLong / 60))};
             [datas addObject:dictionary];
         }
         
@@ -217,11 +223,11 @@ static NSString *dbPath = nil;
         NSDateComponents *todayComponents = [cal components:NSYearCalendarUnit|NSMonthCalendarUnit|NSDayCalendarUnit
                                                    fromDate:[NSDate date]];
         
-        NSString *startDate = [NSString stringWithFormat:@"%@-%@-%@ 00:00:00 +0000",
+        NSString *startDate = [NSString stringWithFormat:@"%@-%@-%@ 00:00:00 +0800",
                                @(todayComponents.year).stringValue,
                                @(todayComponents.month).stringValue,
                                @(todayComponents.day).stringValue];
-        NSString *endDate = [NSString stringWithFormat:@"%@-%@-%@ 23:59:59 +0000",
+        NSString *endDate = [NSString stringWithFormat:@"%@-%@-%@ 23:59:59 +0800",
                              @(todayComponents.year).stringValue,
                              @(todayComponents.month).stringValue,
                              @(todayComponents.day).stringValue];
@@ -257,11 +263,11 @@ static NSString *dbPath = nil;
         NSDateComponents *todayComponents = [cal components:NSYearCalendarUnit|NSMonthCalendarUnit|NSDayCalendarUnit
                                                    fromDate:[NSDate date]];
         
-        NSString *startDate = [NSString stringWithFormat:@"%@-%@-%@ 00:00:00 +0000",
+        NSString *startDate = [NSString stringWithFormat:@"%@-%@-%@ 00:00:00 +0800",
                                @(todayComponents.year).stringValue,
                                @(todayComponents.month).stringValue,
                                @(todayComponents.day).stringValue];
-        NSString *endDate = [NSString stringWithFormat:@"%@-%@-%@ 11:59:59 +0000",
+        NSString *endDate = [NSString stringWithFormat:@"%@-%@-%@ 11:59:59 +0800",
                              @(todayComponents.year).stringValue,
                              @(todayComponents.month).stringValue,
                              @(todayComponents.day).stringValue];
@@ -297,11 +303,11 @@ static NSString *dbPath = nil;
         NSDateComponents *todayComponents = [cal components:NSYearCalendarUnit|NSMonthCalendarUnit|NSDayCalendarUnit
                                                    fromDate:[NSDate date]];
         
-        NSString *startDate = [NSString stringWithFormat:@"%@-%@-%@ 12:00:00 +0000",
+        NSString *startDate = [NSString stringWithFormat:@"%@-%@-%@ 12:00:00 +0800",
                                @(todayComponents.year).stringValue,
                                @(todayComponents.month).stringValue,
                                @(todayComponents.day).stringValue];
-        NSString *endDate = [NSString stringWithFormat:@"%@-%@-%@ 23:59:59 +0000",
+        NSString *endDate = [NSString stringWithFormat:@"%@-%@-%@ 23:59:59 +0800",
                              @(todayComponents.year).stringValue,
                              @(todayComponents.month).stringValue,
                              @(todayComponents.day).stringValue];
@@ -335,9 +341,10 @@ static NSString *dbPath = nil;
         NSCalendar *cal = [NSCalendar currentCalendar];
         
         NSDateFormatter *formatter = [[NSDateFormatter alloc] init];
-        [formatter setDateFormat:@"yyyy-MM-dd HH:mm:ss"];
+        [formatter setDateFormat:@"yyyy-MM-dd HH:mm:ss Z"];
+        [db setDateFormat:formatter];
         
-        while (end.timeIntervalSince1970 - tempstartDate.timeIntervalSince1970 > (60 * 60)) {
+        while (![Utils isSameHour:end date2:tempstartDate]) {
             NSDateComponents *tempComponents = [cal components:NSYearCalendarUnit|
                                                 NSMonthCalendarUnit|
                                                 NSDayCalendarUnit|
@@ -349,8 +356,8 @@ static NSString *dbPath = nil;
             
             NSString *sql = [NSString stringWithFormat:@"INSERT OR REPLACE INTO 'datas' ('user_id', 'start_time' , 'end_time' , 'type') VALUES ('%@', '%@', '%@', '%@')",
                              userID,
-                             tempstartDate,
-                             tempEndDate,
+                             [formatter stringFromDate:tempstartDate],
+                             [formatter stringFromDate:tempEndDate],
                              @(type).stringValue];
             success = [db executeUpdate:sql];
             
@@ -369,8 +376,8 @@ static NSString *dbPath = nil;
 //        if (success) {
             NSString *sql = [NSString stringWithFormat:@"INSERT OR REPLACE INTO 'datas' ('user_id', 'start_time' , 'end_time' , 'type') VALUES ('%@', '%@', '%@', '%@')",
                              userID,
-                             tempstartDate,
-                             end,
+                             [formatter stringFromDate:tempstartDate],
+                             [formatter stringFromDate:end],
                              @(type).stringValue];
             success = [db executeUpdate:sql];
             if (!success) {
