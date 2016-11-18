@@ -17,6 +17,8 @@
 
 + (BOOL)initApplicationsDB;
 
++ (BOOL)insertPeripherals:(NSArray *)peripherals;
+
 + (BOOL)insertPeripheral:(CBPeripheral *)peripheral;
 
 + (BOOL)deletePeripheral:(NSString *)uuid;

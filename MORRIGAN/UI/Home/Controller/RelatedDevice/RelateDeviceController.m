@@ -35,17 +35,17 @@
     [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(editDeviceName:) name:CHANGEDEVICENAMENOTIFICATION object:nil];
     
     _deviceArray = [[NSMutableArray alloc] initWithObjects:[[PeripheralModel alloc] init], nil];
-//    NSArray *peripherals = [DBManager selectPeripherals];
-//    if (peripherals) {
-//        [_deviceArray addObjectsFromArray:peripherals];
-//    }
-    
-    for (NSInteger i = 0; i< 5; i++) {
-        PeripheralModel *model = [[PeripheralModel alloc] init];
-        model.name = [NSString stringWithFormat:@"model%ld",i];
-        model.uuid = @"njvjklnsjnl";
-        [_deviceArray addObject:model];
+    NSArray *peripherals = [DBManager selectPeripherals];
+    if (peripherals) {
+        [_deviceArray addObjectsFromArray:peripherals];
     }
+    
+//    for (NSInteger i = 0; i< 5; i++) {
+//        PeripheralModel *model = [[PeripheralModel alloc] init];
+//        model.name = [NSString stringWithFormat:@"model%ld",i];
+//        model.uuid = @"njvjklnsjnl";
+//        [_deviceArray addObject:model];
+//    }
     
     UIImageView *backImageView = [[UIImageView alloc] initWithFrame:CGRectMake(0, 0, kScreenWidth, 64)];
     backImageView.image = [UIImage imageNamed:@"basicBackground"];
@@ -130,7 +130,7 @@
     }else{
         return;
     }
-                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                               }
+}
 
 #pragma mark - RelateDeviceCellDelegate
 

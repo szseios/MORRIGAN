@@ -357,6 +357,7 @@
     NSDictionary *dictionary = @{@"mobile": phoneNumber,
                                  @"password": password
                                  };
+    __weak LoginViewController *weakSelf = self;
     __block NSString *phoneNumberBlock = phoneNumber;
     __block NSString *passwordBlock = password;
     NSString *bodyString = [NMOANetWorking handleHTTPBodyParams:dictionary];
@@ -407,6 +408,9 @@
              [defaults setObject:passwordBlock forKey:kUserDefaultPasswordKey];
              [defaults synchronize];
              
+             // 登录成功后获取已绑定设备
+             [weakSelf fetchBindedDevices];
+             
              // 进入主页
              RootViewController *homeViewController = [[RootViewController alloc] init];
              NSLog(@"%@",self.navigationController);
@@ -419,6 +423,34 @@
              [alert show];
          }
          
+     }];
+}
+
+- (void)fetchBindedDevices {
+    NSDictionary *dictionary = @{@"userId":[UserInfo share].userId};
+    NSString *bodyString = [NMOANetWorking handleHTTPBodyParams:dictionary];
+    [[NMOANetWorking share] taskWithTag:ID_GET_DEVICELIST
+                              urlString:URL_GET_DEVICELIST
+                               httpHead:nil
+                             bodyString:bodyString
+                     objectTaskFinished:^(NSError *error, id obj)
+     {
+         NSString *code = [obj objectForKey:@"retCode"];
+         if ([code isEqualToString:@"000"]) {
+             NSArray *array = [obj objectForKey:@"deviceInfo"];
+             NSMutableArray *peripheals = [[NSMutableArray alloc] init];
+             for (NSDictionary *dictionary in array) {
+                 PeripheralModel *model = [[PeripheralModel alloc] init];
+                 model.name = [dictionary objectForKey:@"deviceName"];
+                 model.uuid = [dictionary objectForKey:@"mac"];
+                 model.userID = [dictionary objectForKey:@"userId"];
+                 [peripheals addObject:model];
+             }
+             [DBManager insertPeripherals:peripheals];
+         }
+         else {
+             NSLog(@"获取设备列表失败");
+         }
      }];
 }
 
