@@ -150,6 +150,11 @@ static NSString *dbPath = nil;
 + (NSArray *)selectUploadDatas:(NSString *)userID {
     __block NSMutableArray *datas;
     [[DBManager dbQueue] inDatabase:^(FMDatabase *db) {
+        
+        NSDateFormatter *formatter = [[NSDateFormatter alloc] init];
+        [formatter setDateFormat:@"yyyy-MM-dd HH:mm:ss Z"];
+        [db setDateFormat:formatter];
+        
         NSCalendar *cal = [NSCalendar currentCalendar];
         NSDateComponents *todayComponents = [cal components:NSYearCalendarUnit|NSMonthCalendarUnit|NSDayCalendarUnit
                                                    fromDate:[NSDate date]];
@@ -159,7 +164,7 @@ static NSString *dbPath = nil;
                              @(todayComponents.month).stringValue,
                              @(todayComponents.day).stringValue];
         
-        NSString *sql = [NSString stringWithFormat:@"select * from datas where end_time < '%@' and user_id = '%@'",endDate,userID];
+        NSString *sql = [NSString stringWithFormat:@"select * from datas where end_time < '%@' and user_id = '%@' order by end_time asc",endDate,userID];
         
         FMResultSet *result = [db executeQuery:sql];
         
@@ -179,7 +184,7 @@ static NSString *dbPath = nil;
                 if (date) {
                     NSDictionary *dictionary = @{@"userId":userID,
                                                  @"date":date,
-                                                 @"timeLong":@(timeLong)};
+                                                 @"timeLong":@(timeLong / 60)};
                     [datas addObject:dictionary];
                 }
                 date = endTime;
@@ -203,6 +208,11 @@ static NSString *dbPath = nil;
 + (NSArray *)selectTodayDatas:(NSString *)userID {
     __block NSMutableArray *datas;
     [[DBManager dbQueue] inDatabase:^(FMDatabase *db) {
+        
+        NSDateFormatter *formatter = [[NSDateFormatter alloc] init];
+        [formatter setDateFormat:@"yyyy-MM-dd HH:mm:ss Z"];
+        [db setDateFormat:formatter];
+        
         NSCalendar *cal = [NSCalendar currentCalendar];
         NSDateComponents *todayComponents = [cal components:NSYearCalendarUnit|NSMonthCalendarUnit|NSDayCalendarUnit
                                                    fromDate:[NSDate date]];
@@ -238,6 +248,11 @@ static NSString *dbPath = nil;
 + (NSArray *)selectForenoonDatas:(NSString *)userID {
     __block NSMutableArray *datas;
     [[DBManager dbQueue] inDatabase:^(FMDatabase *db) {
+        
+        NSDateFormatter *formatter = [[NSDateFormatter alloc] init];
+        [formatter setDateFormat:@"yyyy-MM-dd HH:mm:ss Z"];
+        [db setDateFormat:formatter];
+        
         NSCalendar *cal = [NSCalendar currentCalendar];
         NSDateComponents *todayComponents = [cal components:NSYearCalendarUnit|NSMonthCalendarUnit|NSDayCalendarUnit
                                                    fromDate:[NSDate date]];
@@ -273,6 +288,11 @@ static NSString *dbPath = nil;
 + (NSArray *)selectaAfternoonDatas:(NSString *)userID  {
     __block NSMutableArray *datas;
     [[DBManager dbQueue] inDatabase:^(FMDatabase *db) {
+        
+        NSDateFormatter *formatter = [[NSDateFormatter alloc] init];
+        [formatter setDateFormat:@"yyyy-MM-dd HH:mm:ss Z"];
+        [db setDateFormat:formatter];
+        
         NSCalendar *cal = [NSCalendar currentCalendar];
         NSDateComponents *todayComponents = [cal components:NSYearCalendarUnit|NSMonthCalendarUnit|NSDayCalendarUnit
                                                    fromDate:[NSDate date]];
