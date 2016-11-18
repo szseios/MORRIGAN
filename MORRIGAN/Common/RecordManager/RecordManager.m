@@ -54,10 +54,10 @@ static RecordManager *manager;
     [[RecordManager share] uploadDBDatas:NO];
 }
 
-- (void)uploadDBDatas:(BOOL)shouldCleanUp
+- (void)uploadDBDatas:(BOOL)isUserExist
 {
     
-    if(shouldCleanUp) {
+    if(isUserExist) {
         // 包括今天的数据（退出账户时）
         
         
@@ -68,13 +68,19 @@ static RecordManager *manager;
     
     NSLog(@"当前数据库中需要上传的护理记录天数: %ld", _recordBufferArray.count);
    
-    [self uploadRecord:shouldCleanUp];
+    [self uploadRecord:isUserExist];
+}
+
+
+- (void)cleanUpDBDatas
+{
+//    [DBManager removeAllDatas];
 }
 
 
 // 上传数据的格式
 //http://112.74.100.227:8083/rest/moli/upload-record-list?userId=b1e81e1a-f3c8-4ccb-bb3c-7317ee6c41b7&hlInfo=[{"userId":"b1e81e1a-f3c8-4ccb-bb3c-7317ee6c41b7","date":"2016-09-12","timeLong":"30"},{"userId":"b1e81e1a-f3c8-4ccb-bb3c-7317ee6c41b7","date":"2016-09-13","timeLong":"30"},{"userId":"b1e81e1a-f3c8-4ccb-bb3c-7317ee6c41b7","date":"2016-09-14","timeLong":"30"}]
-- (void)uploadRecord:(BOOL)shouldCleanUp
+- (void)uploadRecord:(BOOL)isUserExist
 {
     if(_isUploading == YES) {
         NSLog(@"护理记录正在上传中...");
@@ -145,7 +151,7 @@ static RecordManager *manager;
          _uploadingRecordArray = nil;
          _isUploading = NO;
          
-         if(shouldCleanUp) {
+         if(isUserExist) {
              // 清空数据
 //             [_recordBufferArray removeAllObjects];
 //             if([DBManager deleteAllRecord]) {
@@ -159,7 +165,7 @@ static RecordManager *manager;
 
          } else {
              // 继续上传缓冲中的数据
-             [weakSelf uploadRecord:shouldCleanUp];
+             [weakSelf uploadRecord:isUserExist];
          }
          
          
