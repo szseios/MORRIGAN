@@ -53,7 +53,7 @@ static RecordManager *manager;
         NSLog(@"insertRecord，添加到数据库失败！");
     }
     
-    NSArray *result = [DBManager selectForenoonDatas:model.userID];
+    NSArray *result = [DBManager selectUploadDatas:model.userID];
     NSLog(@"%@", result);
     
 }

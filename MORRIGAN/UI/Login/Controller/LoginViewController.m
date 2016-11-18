@@ -287,14 +287,22 @@
 //    return;
 
     
-//    MassageRecordModel *model = [[MassageRecordModel alloc] init];
-//    model.userID = @"5";
-//    model.startTime = [NSDate dateWithTimeIntervalSince1970:1479347400]; // 9:50
-//    model.endTime = [NSDate dateWithTimeIntervalSince1970:1479348600];   // 10:10
-//    model.type = MassageTypeAuto;
-//    [[RecordManager share] addToDB:model];
-////    [[RecordManager share] uploadDBDatas:YES];
-//    return;
+    
+    
+    MassageRecordModel *model1 = [[MassageRecordModel alloc] init];
+    model1.userID = @"5";
+    model1.startTime = [NSDate dateWithTimeIntervalSince1970:1479347400]; // 9:50
+    model1.endTime = [NSDate dateWithTimeIntervalSince1970:1479348600];   // 10:10
+    model1.type = MassageTypeAuto;
+    [[RecordManager share] addToDB:model1];
+    
+    MassageRecordModel *model2 = [[MassageRecordModel alloc] init];
+    model2.userID = @"5";
+    model2.startTime = [NSDate dateWithTimeIntervalSince1970:1479261000]; // 9:50
+    model2.endTime = [NSDate dateWithTimeIntervalSince1970:1479262200];   // 10:10
+    model2.type = MassageTypeManual;
+    [[RecordManager share] addToDB:model2];
+    return;
     
     
     
