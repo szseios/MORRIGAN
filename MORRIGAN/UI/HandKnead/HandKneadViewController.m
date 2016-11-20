@@ -456,7 +456,6 @@
 - (void)addButtonClick
 {
     NSLog(@"addButtonClick");
-    
 
     _currentGear ++;
     if(_currentGear > 3) {
@@ -477,7 +476,7 @@
 - (void)subtractButtonClick
 {
     NSLog(@"subtractButtonClick");
-    
+
     _currentGear --;
     if(_currentGear <= 0) {
         _currentGear = 1;
@@ -494,6 +493,26 @@
 - (void)startButtonClick:(id)sender
 {
     NSLog(@"startButtonClick");
+    
+    
+//    // 测试上传护理记录
+//    MassageRecordModel *model1 = [[MassageRecordModel alloc] init];
+//    model1.userID = [UserInfo share].userId;
+//    model1.startTime = [NSDate dateWithTimeIntervalSince1970:1479347400]; // 9:50
+//    model1.endTime = [NSDate dateWithTimeIntervalSince1970:1479348600];   // 10:10
+//    model1.type = MassageTypeAuto;
+//    [[RecordManager share] addToDB:model1];
+//    
+////    MassageRecordModel *model2 = [[MassageRecordModel alloc] init];
+////    model2.userID = [UserInfo share].userId;
+////    model2.startTime = [NSDate dateWithTimeIntervalSince1970:1479261000]; // 9:50
+////    model2.endTime = [NSDate dateWithTimeIntervalSince1970:1479262200];   // 10:10
+////    model2.type = MassageTypeManual;
+////    [[RecordManager share] addToDB:model2];
+//    return;
+//    
+    
+    
     if (![BluetoothManager share].isConnected) {
         UIAlertView *alert = [[UIAlertView alloc] initWithTitle:@"蓝牙未连接，请先连接设备再来按摩吧" message:nil delegate:self cancelButtonTitle:nil otherButtonTitles:@"确定", nil];
         [alert show];

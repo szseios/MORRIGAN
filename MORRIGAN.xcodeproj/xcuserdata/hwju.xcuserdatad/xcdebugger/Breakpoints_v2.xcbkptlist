@@ -9,30 +9,46 @@
             shouldBeEnabled = "Yes"
             ignoreCount = "0"
             continueAfterRunningActions = "No"
-            filePath = "MORRIGAN/Common/RecordManager/RecordManager.m"
-            timestampString = "501037972.749296"
-            startingColumnNumber = "9223372036854775807"
-            endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "57"
-            endingLineNumber = "57"
-            landmarkName = "-addToDB:"
-            landmarkType = "7">
-         </BreakpointContent>
-      </BreakpointProxy>
-      <BreakpointProxy
-         BreakpointExtensionID = "Xcode.Breakpoint.FileBreakpoint">
-         <BreakpointContent
-            shouldBeEnabled = "Yes"
-            ignoreCount = "0"
-            continueAfterRunningActions = "No"
             filePath = "MORRIGAN/Common/DBManager/DBManager.m"
             timestampString = "501060469.590057"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
             startingLineNumber = "256"
             endingLineNumber = "256"
-            landmarkName = "+insertData:startTime:endTime:type:"
+            landmarkName = "+selectForenoonDatas:"
             landmarkType = "7">
+            <Locations>
+               <Location
+                  shouldBeEnabled = "Yes"
+                  ignoreCount = "0"
+                  continueAfterRunningActions = "No"
+                  symbolName = "+[DBManager selectForenoonDatas:]"
+                  moduleName = "MORRIGAN"
+                  usesParentBreakpointCondition = "Yes"
+                  urlString = "file:///Users/hwju/Desktop/github/MORRIGAN/MORRIGAN/Common/DBManager/DBManager.m"
+                  timestampString = "501147659.406306"
+                  startingColumnNumber = "9223372036854775807"
+                  endingColumnNumber = "9223372036854775807"
+                  startingLineNumber = "256"
+                  endingLineNumber = "256"
+                  offsetFromSymbolStart = "116">
+               </Location>
+               <Location
+                  shouldBeEnabled = "Yes"
+                  ignoreCount = "0"
+                  continueAfterRunningActions = "No"
+                  symbolName = "__33+[DBManager selectForenoonDatas:]_block_invoke"
+                  moduleName = "MORRIGAN"
+                  usesParentBreakpointCondition = "Yes"
+                  urlString = "file:///Users/hwju/Desktop/github/MORRIGAN/MORRIGAN/Common/DBManager/DBManager.m"
+                  timestampString = "501147659.407301"
+                  startingColumnNumber = "9223372036854775807"
+                  endingColumnNumber = "9223372036854775807"
+                  startingLineNumber = "256"
+                  endingLineNumber = "256"
+                  offsetFromSymbolStart = "28">
+               </Location>
+            </Locations>
          </BreakpointContent>
       </BreakpointProxy>
       <BreakpointProxy
@@ -47,40 +63,8 @@
             endingColumnNumber = "9223372036854775807"
             startingLineNumber = "223"
             endingLineNumber = "223"
-            landmarkName = "+insertData:startTime:endTime:type:"
+            landmarkName = "+selectTodayDatas:"
             landmarkType = "7">
-            <Locations>
-               <Location
-                  shouldBeEnabled = "Yes"
-                  ignoreCount = "0"
-                  continueAfterRunningActions = "No"
-                  symbolName = "+[DBManager insertData:startTime:endTime:type:]"
-                  moduleName = "MORRIGAN"
-                  usesParentBreakpointCondition = "Yes"
-                  urlString = "file:///Users/hwju/Desktop/github/MORRIGAN/MORRIGAN/Common/DBManager/DBManager.m"
-                  timestampString = "501126391.332589"
-                  startingColumnNumber = "9223372036854775807"
-                  endingColumnNumber = "9223372036854775807"
-                  startingLineNumber = "223"
-                  endingLineNumber = "223"
-                  offsetFromSymbolStart = "153">
-               </Location>
-               <Location
-                  shouldBeEnabled = "Yes"
-                  ignoreCount = "0"
-                  continueAfterRunningActions = "No"
-                  symbolName = "__47+[DBManager insertData:startTime:endTime:type:]_block_invoke"
-                  moduleName = "MORRIGAN"
-                  usesParentBreakpointCondition = "Yes"
-                  urlString = "file:///Users/hwju/Desktop/github/MORRIGAN/MORRIGAN/Common/DBManager/DBManager.m"
-                  timestampString = "501126391.333477"
-                  startingColumnNumber = "9223372036854775807"
-                  endingColumnNumber = "9223372036854775807"
-                  startingLineNumber = "223"
-                  endingLineNumber = "223"
-                  offsetFromSymbolStart = "19">
-               </Location>
-            </Locations>
          </BreakpointContent>
       </BreakpointProxy>
       <BreakpointProxy
@@ -95,7 +79,7 @@
             endingColumnNumber = "9223372036854775807"
             startingLineNumber = "232"
             endingLineNumber = "232"
-            landmarkName = "+insertData:startTime:endTime:type:"
+            landmarkName = "+selectTodayDatas:"
             landmarkType = "7">
          </BreakpointContent>
       </BreakpointProxy>
@@ -111,72 +95,55 @@
             endingColumnNumber = "9223372036854775807"
             startingLineNumber = "249"
             endingLineNumber = "249"
-            landmarkName = "+insertData:startTime:endTime:type:"
-            landmarkType = "7">
-         </BreakpointContent>
-      </BreakpointProxy>
-      <BreakpointProxy
-         BreakpointExtensionID = "Xcode.Breakpoint.FileBreakpoint">
-         <BreakpointContent
-            shouldBeEnabled = "Yes"
-            ignoreCount = "0"
-            continueAfterRunningActions = "No"
-            filePath = "MORRIGAN/Common/DBManager/DBManager.m"
-            timestampString = "501122754.609745"
-            startingColumnNumber = "9223372036854775807"
-            endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "152"
-            endingLineNumber = "152"
-            landmarkName = "+selectForenoonDatas:"
+            landmarkName = "+selectTodayDatas:"
             landmarkType = "7">
             <Locations>
                <Location
                   shouldBeEnabled = "Yes"
                   ignoreCount = "0"
                   continueAfterRunningActions = "No"
-                  symbolName = "+[DBManager selectForenoonDatas:]"
+                  symbolName = "__30+[DBManager selectTodayDatas:]_block_invoke"
                   moduleName = "MORRIGAN"
                   usesParentBreakpointCondition = "Yes"
                   urlString = "file:///Users/hwju/Desktop/github/MORRIGAN/MORRIGAN/Common/DBManager/DBManager.m"
-                  timestampString = "501126391.338787"
+                  timestampString = "501147659.412505"
                   startingColumnNumber = "9223372036854775807"
                   endingColumnNumber = "9223372036854775807"
-                  startingLineNumber = "152"
-                  endingLineNumber = "152"
-                  offsetFromSymbolStart = "103">
+                  startingLineNumber = "250"
+                  endingLineNumber = "250"
+                  offsetFromSymbolStart = "2072">
                </Location>
                <Location
                   shouldBeEnabled = "Yes"
                   ignoreCount = "0"
                   continueAfterRunningActions = "No"
-                  symbolName = "__33+[DBManager selectForenoonDatas:]_block_invoke"
+                  symbolName = "__copy_helper_block_.164"
                   moduleName = "MORRIGAN"
                   usesParentBreakpointCondition = "Yes"
                   urlString = "file:///Users/hwju/Desktop/github/MORRIGAN/MORRIGAN/Common/DBManager/DBManager.m"
-                  timestampString = "501126391.339711"
+                  timestampString = "501147659.413403"
                   startingColumnNumber = "9223372036854775807"
                   endingColumnNumber = "9223372036854775807"
-                  startingLineNumber = "152"
-                  endingLineNumber = "152"
-                  offsetFromSymbolStart = "19">
+                  startingLineNumber = "250"
+                  endingLineNumber = "250"
+                  offsetFromSymbolStart = "96">
+               </Location>
+               <Location
+                  shouldBeEnabled = "Yes"
+                  ignoreCount = "0"
+                  continueAfterRunningActions = "No"
+                  symbolName = "__destroy_helper_block_.165"
+                  moduleName = "MORRIGAN"
+                  usesParentBreakpointCondition = "Yes"
+                  urlString = "file:///Users/hwju/Desktop/github/MORRIGAN/MORRIGAN/Common/DBManager/DBManager.m"
+                  timestampString = "501147659.4143"
+                  startingColumnNumber = "9223372036854775807"
+                  endingColumnNumber = "9223372036854775807"
+                  startingLineNumber = "250"
+                  endingLineNumber = "250"
+                  offsetFromSymbolStart = "64">
                </Location>
             </Locations>
-         </BreakpointContent>
-      </BreakpointProxy>
-      <BreakpointProxy
-         BreakpointExtensionID = "Xcode.Breakpoint.FileBreakpoint">
-         <BreakpointContent
-            shouldBeEnabled = "Yes"
-            ignoreCount = "0"
-            continueAfterRunningActions = "No"
-            filePath = "MORRIGAN/Common/DBManager/DBManager.m"
-            timestampString = "501122755.001744"
-            startingColumnNumber = "9223372036854775807"
-            endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "154"
-            endingLineNumber = "154"
-            landmarkName = "+selectForenoonDatas:"
-            landmarkType = "7">
          </BreakpointContent>
       </BreakpointProxy>
       <BreakpointProxy
@@ -191,7 +158,7 @@
             endingColumnNumber = "9223372036854775807"
             startingLineNumber = "275"
             endingLineNumber = "275"
-            landmarkName = "+insertData:startTime:endTime:type:"
+            landmarkName = "+selectForenoonDatas:"
             landmarkType = "7">
          </BreakpointContent>
       </BreakpointProxy>
@@ -207,7 +174,7 @@
             endingColumnNumber = "9223372036854775807"
             startingLineNumber = "234"
             endingLineNumber = "234"
-            landmarkName = "+insertData:startTime:endTime:type:"
+            landmarkName = "+selectTodayDatas:"
             landmarkType = "7">
          </BreakpointContent>
       </BreakpointProxy>
@@ -223,7 +190,7 @@
             endingColumnNumber = "9223372036854775807"
             startingLineNumber = "261"
             endingLineNumber = "261"
-            landmarkName = "+insertData:startTime:endTime:type:"
+            landmarkName = "+selectForenoonDatas:"
             landmarkType = "7">
          </BreakpointContent>
       </BreakpointProxy>

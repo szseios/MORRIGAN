@@ -286,18 +286,6 @@
 //    [self.navigationController pushViewController:homeViewController animated:YES];
 //    return;
 
-    
-//    MassageRecordModel *model = [[MassageRecordModel alloc] init];
-//    model.userID = @"5";
-//    model.startTime = [NSDate dateWithTimeIntervalSince1970:1479347400]; // 9:50
-//    model.endTime = [NSDate dateWithTimeIntervalSince1970:1479348600];   // 10:10
-//    model.type = MassageTypeAuto;
-//    [[RecordManager share] addToDB:model];
-////    [[RecordManager share] uploadDBDatas:YES];
-//    return;
-    
-    
-    
     if(sender) {
         UIButton *button = (UIButton *)sender;
         button.backgroundColor = [UIColor clearColor];
@@ -415,6 +403,9 @@
              RootViewController *homeViewController = [[RootViewController alloc] init];
              NSLog(@"%@",self.navigationController);
              [self.navigationController pushViewController:homeViewController animated:YES];
+             
+             // 上传护理记录数据
+             [[RecordManager share] uploadDBDatas:NO];
 
          } else {
              

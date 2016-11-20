@@ -75,9 +75,7 @@
 //    model.endTime = date2;
 //    [DBManager insertData:model.userID startTime:model.startTime endTime:model.endTime type:model.type];
     
-//    NSArray *array = [DBManager selectUploadDatas:@"1"];
-    
-    
+
     return YES;
 }
 

@@ -8,6 +8,9 @@
 
 #import <Foundation/Foundation.h>
 
+#define kRecordManagerUploadEndNotification  @"kRecordManagerUploadEndNotification"
+
+
 @interface RecordManager : NSObject
 
 + (RecordManager *)share;
@@ -20,8 +23,10 @@
 // 添加到待上传数组
 - (void)addToDB:(MassageRecordModel *)model;
 
-// 上传数据库中的数据(shouldCleanUp == YES : 用户退出或注销需要上传完成红清除数据)
-- (void)uploadDBDatas:(BOOL)shouldCleanUp;
+// 上传数据库中的数据(isUserExist == YES : 用户退出需要上传包括今天的数据并清除数据库， isUserExist == NO : 上传今天之前的数据)
+- (void)uploadDBDatas:(BOOL)isUserExist;
 
+// 清除数据库（用户注销时）
+- (void)cleanUpDBDatas;
 
 @end
