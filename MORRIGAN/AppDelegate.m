@@ -27,12 +27,14 @@
 - (BOOL)application:(UIApplication *)application didFinishLaunchingWithOptions:(NSDictionary *)launchOptions {
     // Override point for customization after application launch.
     
+    //初始化网络状态
+    [self initReachability];
     [DBManager initApplicationsDB];
     [MusicManager share];
     [BluetoothManager share];
     
     self.window = [[UIWindow alloc] initWithFrame:[[UIScreen mainScreen] bounds]];//设置窗口
-//    BTTestViewController *loginViewController = [[BTTestViewController alloc] init];
+    //BTTestViewController *loginViewController = [[BTTestViewController alloc] init];
     //AutoKneadViewController *loginViewController = [[AutoKneadViewController alloc] init];
     //HandKneadViewController *loginViewController = [[HandKneadViewController alloc] init];
     LoginViewController *loginViewController = [[LoginViewController alloc] init];
@@ -60,19 +62,20 @@
 //        [self.window makeKeyAndVisible];
     });
   
-    NSDateFormatter *dateFormatter = [[NSDateFormatter alloc] init];
-    [dateFormatter setDateFormat:@"yyyy-MM-dd HH:mm:ss"];
-    NSDate *date1 = [dateFormatter dateFromString:@"2016-11-30 04:00:01"];
-    NSDate *date2 = [dateFormatter dateFromString:@"2016-12-01 10:00:01"];
+//    NSDateFormatter *dateFormatter = [[NSDateFormatter alloc] init];
+//    [dateFormatter setDateFormat:@"yyyy-MM-dd HH:mm:ss"];
+//    NSDate *date1 = [dateFormatter dateFromString:@"2016-11-17 20:00:01"];
+//    NSDate *date2 = [dateFormatter dateFromString:@"2016-11-18 00:59:01"];
 //    [DBManager insertData:@"1" startTime:date1 endTime:date2 type:1];
     
-    MassageRecordModel *model = [[MassageRecordModel alloc] init];
-    model.userID = @"1";
-    model.type = 1;
-    model.startTime = date1;
-    model.endTime = date2;
-//    [DBManager insertMassageRecord:model];
+//    MassageRecordModel *model = [[MassageRecordModel alloc] init];
+//    model.userID = @"1";
+//    model.type = 1;
+//    model.startTime = date1;
+//    model.endTime = date2;
+//    [DBManager insertData:model.userID startTime:model.startTime endTime:model.endTime type:model.type];
     
+
     return YES;
 }
 
@@ -102,6 +105,57 @@
 - (void)applicationWillTerminate:(UIApplication *)application {
     // Called when the application is about to terminate. Save data if appropriate. See also applicationDidEnterBackground:.
 }
+
+
+#pragma mark - Reachability
+
+- (void)initReachability {
+    __block AppDelegate *appDelegate = self;
+    
+    _reach = [Reachability reachabilityWithHostname:@"e.szse.cn"];
+    _reach.reachableBlock = ^(Reachability * reachability) {
+        NSString * temp = [NSString stringWithFormat:@"网络状态改变  :  %@", reachability.currentReachabilityString];
+        NSLog(@"%@", temp);
+        
+        dispatch_after(dispatch_time(DISPATCH_TIME_NOW, (int64_t)(1 * NSEC_PER_SEC)), dispatch_get_main_queue(), ^{
+            //            [appDelegate reachabilityChanged];
+        });
+    };
+    
+    _reach.unreachableBlock = ^(Reachability * reachability) {
+        //if ([appDelegate.window.rootViewController isKindOfClass:[NMOARootViewController class]]) {
+            NSLog(@"网络状态改变  :  没有网络");
+            dispatch_after(dispatch_time(DISPATCH_TIME_NOW, (int64_t)(1 * NSEC_PER_SEC)), dispatch_get_main_queue(), ^{
+                [appDelegate unreachable];
+            });
+       // }
+    };
+    [_reach startNotifier];
+}
+
+- (BOOL)checkReachable {
+    if ([_reach currentReachabilityStatus] == NotReachable) {
+
+        UIAlertView *alert = [[UIAlertView alloc] initWithTitle:@"当前网络不可用，请检查你的网络设置。" message:nil delegate:self cancelButtonTitle:nil otherButtonTitles:@"确定", nil];
+        [alert show];
+        return NO;
+    }
+    return YES;
+}
+
+- (void)unreachable {
+    NetworkStatus status = [_reach currentReachabilityStatus];
+    if (status == NotReachable) {
+//        [MBProgressHUD showHUDByContent:@"当前网络不可用，请检查您的网络设置。"
+//                                   view:UI_Window
+//                             afterDelay:3];
+        UIAlertView *alert = [[UIAlertView alloc] initWithTitle:@"当前网络不可用，请检查你的网络设置。" message:nil delegate:self cancelButtonTitle:nil otherButtonTitles:@"确定", nil];
+        [alert show];
+    }
+    NSLog(@"当前网络状态 : %@",[_reach currentReachabilityString]);
+}
+
+
 
 
 @end

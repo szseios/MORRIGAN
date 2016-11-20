@@ -27,6 +27,8 @@
 @property (weak, nonatomic) IBOutlet UIView *bottomView;
 @property (weak, nonatomic) IBOutlet UIImageView *runloopImageView;
 
+@property (nonatomic,strong) CBPeripheral *selectedPeripheral;
+
 @end
 
 @implementation PeripheralListViewController
@@ -45,6 +47,10 @@
     [[NSNotificationCenter defaultCenter] addObserver:self
                                              selector:@selector(connectPeripheralError)
                                                  name:DisconnectPeripheral
+                                               object:nil];
+    [[NSNotificationCenter defaultCenter] addObserver:self
+                                             selector:@selector(connectPeripheralError)
+                                                 name:ConnectPeripheralTimeOut
                                                object:nil];
 }
 
@@ -125,18 +131,69 @@
 }
 
 - (void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath {
-    CBPeripheral *peripheral = [BluetoothManager share].scannedPeripherals[indexPath.row];
-    [[BluetoothManager share] connectingBlueTooth:peripheral];
+    
+    _selectedPeripheral = [BluetoothManager share].scannedPeripherals[indexPath.row];
+    PeripheralModel *model = [_linkedPeripherals objectForKey:_selectedPeripheral.identifier.UUIDString];
+    if (model) {
+        [[BluetoothManager share] connectingBlueTooth:_selectedPeripheral];
+    }
+    else {
+        NSDictionary *dictionary = @{@"userId": [UserInfo share].userId ? [UserInfo share].userId : @"",
+                                     @"mac": _selectedPeripheral.identifier.UUIDString};
+        NSString *bodyString = [NMOANetWorking handleHTTPBodyParams:dictionary];
+        __weak PeripheralListViewController *weakSelf = self;
+        [[NMOANetWorking share] taskWithTag:ID_CHECK_DEVICEBIND
+                                  urlString:URL_CHECK_DEVICEBIND
+                                   httpHead:nil
+                                 bodyString:bodyString
+                         objectTaskFinished:^(NSError *error, id obj)
+         {
+             NSString *code = [obj objectForKey:@"retCode"];
+             if ([code isEqualToString:@"000"]) {
+                 BOOL isbinded = [[obj objectForKey:@"isbinded"] boolValue];
+                 if (!isbinded) {
+                     [[BluetoothManager share] connectingBlueTooth:weakSelf.selectedPeripheral];
+                 }
+                 else {
+                     [weakSelf connectPeripheralError];
+                 }
+             }
+             else {
+                 [weakSelf connectPeripheralError];
+             }
+         }];
+    }
+    
     _bottomView.hidden = NO;
     _squareView.hidden = NO;
     self.view.userInteractionEnabled = NO;
     [self startAnimating];
+    
 }
 
 - (void)connectPeripheralSuccess {
-    PeripheralBindingFinishedViewController *ctl = [[PeripheralBindingFinishedViewController alloc] init];
-    ctl.connectSuccess = YES;
-    [self.navigationController pushViewController:ctl animated:YES];
+    
+    NSDictionary *dictionary = @{@"userId": [UserInfo share].userId ? [UserInfo share].userId : @"",
+                                 @"deviceName":_selectedPeripheral.name,
+                                 @"mac": _selectedPeripheral.identifier.UUIDString};
+    NSString *bodyString = [NMOANetWorking handleHTTPBodyParams:dictionary];
+    __weak PeripheralListViewController *weakSelf = self;
+    [[NMOANetWorking share] taskWithTag:ID_BINGDING_DEVICE
+                              urlString:URL_BINGDING_DEVICE
+                               httpHead:nil
+                             bodyString:bodyString
+                     objectTaskFinished:^(NSError *error, id obj)
+     {
+         NSString *code = [obj objectForKey:@"retCode"];
+         if ([code isEqualToString:@"000"]) {
+             PeripheralBindingFinishedViewController *ctl = [[PeripheralBindingFinishedViewController alloc] init];
+             ctl.connectSuccess = YES;
+             [weakSelf.navigationController pushViewController:ctl animated:YES];
+         }
+         else {
+             [weakSelf connectPeripheralError];
+         }
+     }];
 }
 
 - (void)connectPeripheralError {

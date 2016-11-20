@@ -13,7 +13,8 @@
 #import "UserInfo.h"
 #import "LoginManager.h"
 #import "Utils.h"
-
+#import "AppDelegate.h"
+#import "LoginViewController.h"
 
 
 #define kManButtonTag     1001
@@ -246,6 +247,11 @@
 - (void)getAuthCodeButtonClickInForgetPwd:(id)sender
 {
     NSLog(@"getAuthCodeButtonClickInForgetPwd");
+   
+    AppDelegate *appDelegate = [UIApplication sharedApplication].delegate;
+    if ([appDelegate checkReachable] == NO) {
+        return;
+    }
     
     if(_getAuthCodeButton.tag == kgetAuthCodeButtonOfGetting){
         return;
@@ -303,6 +309,12 @@
     
     UIButton *button = (UIButton *)sender;
     button.backgroundColor = [UIColor clearColor];
+    
+    AppDelegate *appDelegate = [UIApplication sharedApplication].delegate;
+    if ([appDelegate checkReachable] == NO) {
+        return;
+    }
+
     
     NSString *phoneNumber = _phoneNumbrInputView.text;
     NSString *authCode = _authCodeInputView.text;
@@ -363,7 +375,8 @@
         case 0:
         {
             if(alertView.tag == kAlertViewTagOfIntoLogin) {
-                
+                // 进入登陆界面
+                [self intoLoginPage];
                 
             }
 
@@ -387,6 +400,18 @@
 }
 
 #pragma mark - other
+
+// 进入登陆界面
+- (void)intoLoginPage
+{
+
+    NSUserDefaults *defaults = [NSUserDefaults standardUserDefaults];
+    [defaults removeObjectForKey:kUserDefaultIdKey];
+    [defaults removeObjectForKey:kUserDefaultPasswordKey];
+    [LoginManager share].autoLogin = NO;
+    [self.navigationController popViewControllerAnimated:YES];
+    
+}
 
 // 获取手机验证码
 - (void)getPhoneMsgCode
@@ -482,13 +507,13 @@
          
          
          if ([[obj objectForKey:HTTP_KEY_RESULTCODE] isEqualToString:HTTP_RESULTCODE_SUCCESS]) {
-             NSLog(@"重置密码成功！");
-             UIAlertView *alert = [[UIAlertView alloc] initWithTitle: [obj objectForKey:HTTP_KEY_RESULTMESSAGE] message:nil delegate:self cancelButtonTitle:nil otherButtonTitles:@"确定", nil];
+             NSLog(@"修改密码成功!");
+             UIAlertView *alert = [[UIAlertView alloc] initWithTitle: @"修改密码成功！点击返回登陆界面" message:nil delegate:self cancelButtonTitle:nil otherButtonTitles:@"确定", nil];
              alert.tag = kAlertViewTagOfIntoLogin;
              [alert show];
              
          } else {
-             NSLog(@"重置密码失败！");
+             NSLog(@"修改密码失败！");
              UIAlertView *alert = [[UIAlertView alloc] initWithTitle:@"重置密码失败!" message: [obj objectForKey:HTTP_KEY_RESULTMESSAGE] delegate:self cancelButtonTitle:nil otherButtonTitles:@"确定", nil];
              [alert show];
          }

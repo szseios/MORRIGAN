@@ -17,6 +17,7 @@
 #import "RootViewController.h"
 #import "ForgetPwdViewController.h"
 #import "RecordManager.h"
+#import "AppDelegate.h"
 
 @interface LoginViewController ()
 {
@@ -47,7 +48,7 @@
     {
         // 注册成功返回
         _phoneNumbrInputView.text = [UserInfo share].mobile;
-        _passwordInputView.text = [UserInfo share].password;
+        //_passwordInputView.text = [UserInfo share].password;
         
     } else {
         
@@ -266,6 +267,7 @@
 - (void)registerButtonClickInLogin:(id)sender
 {
     NSLog(@"registerButtonClickInLogin");
+    
     UIButton *button = (UIButton *)sender;
     button.backgroundColor = [UIColor clearColor];
     
@@ -278,29 +280,21 @@
 - (void)loginButtonClickInLogin:(id)sender
 {
     NSLog(@"loginButtonClickInLogin");
-    // 进入主页（测试）
+    
+////     进入主页（测试）
 //    RootViewController *homeViewController = [[RootViewController alloc] init];
 //    [self.navigationController pushViewController:homeViewController animated:YES];
 //    return;
 
-    
-//    RecordShouldUploadModel *model = [[RecordShouldUploadModel alloc] init];
-//    model.uuid = @"333";
-//    model.userId = @"5";
-//    model.dateString = @"2016-10-20";
-//    model.timeLongString = @"1:10";
-//
-//    [[RecordManager share] addToUploadArray:model];
-////    [[RecordManager share] uploadDBDatas:YES];
-//    return;
-    
-    
-    
     if(sender) {
         UIButton *button = (UIButton *)sender;
         button.backgroundColor = [UIColor clearColor];
     }
    
+    AppDelegate *appDelegate = [UIApplication sharedApplication].delegate;
+    if ([appDelegate checkReachable] == NO) {
+        return;
+    }
     
     NSString *phoneNumber = _phoneNumbrInputView.text;
     NSString *password = _passwordInputView.text;
@@ -405,6 +399,9 @@
              RootViewController *homeViewController = [[RootViewController alloc] init];
              NSLog(@"%@",self.navigationController);
              [self.navigationController pushViewController:homeViewController animated:YES];
+             
+             // 上传护理记录数据
+             [[RecordManager share] uploadDBDatas:NO];
 
          } else {
              

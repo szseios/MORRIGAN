@@ -20,9 +20,9 @@
                                             blue:250 / 255.0
                                            alpha:1];
     [_animationImageView setFrame:CGRectMake(kScreenWidth - 100,
-                                             12,
+                                             14,
                                              40,
-                                             28)];
+                                             20)];
     [self.contentView addSubview:_animationImageView];
     
     _timeLabel = [[UILabel alloc] init];
@@ -33,8 +33,8 @@
     _timeLabel.font = [UIFont systemFontOfSize:12];
     [self.contentView addSubview:_timeLabel];
     
-    CGFloat width = 3;
-    CGFloat padding = 3;
+    CGFloat width = 2;
+    CGFloat padding = 2;
     
     _barArray = [[NSMutableArray alloc] init];
     
@@ -129,7 +129,7 @@
     [UIView animateWithDuration:.2 animations:^{
         for(UIImageView* bar in _barArray){
             CGRect rect = bar.frame;
-            rect.size.height = arc4random() % 20 + 10;
+            rect.size.height = arc4random() % 15 + 4;
             rect.origin.y = 3;
             bar.frame = rect;
         }
