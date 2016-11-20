@@ -23,7 +23,7 @@
     self.view.backgroundColor = [UIColor whiteColor];
     
     UIImageView *backImageView = [[UIImageView alloc] initWithFrame:CGRectMake(0, 0, kScreenWidth, 64)];
-    backImageView.image = [UIImage imageNamed:@"basicBackground"];
+    backImageView.image = [UIImage imageWithColor:[Utils stringTOColor:@"#8c39e5"]];
     [self.view addSubview:backImageView];
     
     _textField = [[UITextField alloc] initWithFrame:CGRectMake(20, 84, kScreenWidth - 40, 30)];
@@ -46,7 +46,7 @@
 
 - (void)setUpBarView
 {
-    _barView = [[BasicBarView alloc] initWithFrame:CGRectMake(0, 20, kScreenWidth, 44) withType:superBarTypeLeftItemCancel withTitle:@"修改昵称"];
+    _barView = [[BasicBarView alloc] initWithFrame:CGRectMake(0, 20, kScreenWidth, 44) withType:superBarTypeLeftItemCancel withTitle:@"修改昵称" isShowRightButton:YES];
     [self.view addSubview:_barView];
     _barView.delegate = self;
 }

@@ -8,6 +8,7 @@
 
 #import "HomeMainView.h"
 #import "PNChart.h"
+#import "MassageRecordModel.h"
 
 @interface HomeMainView ()<UIScrollViewDelegate>
 
@@ -32,6 +33,8 @@
 @property (nonatomic , strong) PNCircleChart *circleChart;  //时间划线
 
 @property (nonatomic , strong) NSArray *haveMorriganArray;   //按摩时间数组，里面是字典，key:startTime,endTime Value:
+
+@property (nonatomic , strong) NSArray *haveEmptyArray;   //空闲时间数组，里面是字典，key:startTime,endTime Value:
 
 @property (nonatomic , strong) UILabel *electricityLabel;  //电量
 
@@ -85,7 +88,7 @@
     [self addSubview:imageView];
     
     CGFloat circleX = _viewWidth * 11.5 / 312.0;
-    CGFloat circleY = _viewHeight * 127.5 / 860.0;
+    CGFloat circleY = _viewHeight * 128.5 / 860.0;
     CGFloat circleW = _viewWidth * 261/312.0;
     _circleImageView = [[UIImageView alloc] init];
     [_circleImageView setFrame:CGRectMake(circleX, circleY, circleW, circleW)];
@@ -98,10 +101,11 @@
     [self setUpDownView];
     
     if (_haveMorriganArray) {
-        for (NSDictionary *haveDict in _haveMorriganArray) {
-            CGFloat startTime = [[haveDict objectForKey:@"startTime"] floatValue];
-            CGFloat endTime = [[haveDict objectForKey:@"endTime"] floatValue];
-            [self emptyStartTime:startTime toEndTime:endTime];
+        MassageRecordModel *model = _haveMorriganArray.lastObject;
+        [self emptyStartTime:model.startTime toEndTime:model.endTime];
+        
+        for (MassageRecordModel *model in _haveMorriganArray) {
+            [self morriganStartTime:model.startTime toEndTime:model.endTime];
         }
     }
     
@@ -111,7 +115,7 @@
 
 - (void)setUpWaveView
 {
-    CGFloat waveX = _viewWidth * 23.5 / 312.0;
+    CGFloat waveX = _viewWidth * 23 / 312.0;
     CGFloat waveY = _viewHeight * 150.5 / 860;
     CGFloat waveW = _viewWidth * 238 / 312;
     _waveView = [[UIView alloc] initWithFrame:CGRectMake(waveX, waveY, waveW, waveW)];
@@ -121,28 +125,23 @@
     
     [self addSubview:_waveView];
     
-//    self.waveLayer = [CAShapeLayer layer];
-//    self.waveLayer.strokeColor = [UIColor whiteColor].CGColor;
-//    self.waveLayer.fillColor = [UIColor whiteColor].CGColor;
-//    self.waveOffsetX = 0;
-//    
-//    self.waveShapeLayerT = [CAShapeLayer layer];
-//    self.waveShapeLayerT.fillColor = self.waveColor.CGColor;
-//    [self.layer addSublayer:self.waveShapeLayerT];
+    self.waveLayer = [CAShapeLayer layer];
+    self.waveLayer.fillColor = [UIColor colorWithRed:188/255.0 green:139/255.0 blue:238/255.0 alpha:0.5].CGColor;
+    self.waveOffsetX = 0;
     /*
      *CADisplayLink是一个能让我们以和屏幕刷新率相同的频率将内容画到屏幕上的定时器。我们在应用中创建一个新的 CADisplayLink 对象，把它添加到一个runloop中，并给它提供一个 target 和selector 在屏幕刷新的时候调用。
      */
 //    self.waveDisplayLink = [CADisplayLink displayLinkWithTarget:self selector:@selector(getCurrentWave)];
 //    [self.waveDisplayLink addToRunLoop:[NSRunLoop mainRunLoop] forMode:NSRunLoopCommonModes];
-//    [self getCurrentWave];
-//    [_waveView.layer addSublayer:_waveLayer];
+    [self getCurrentWave];
+    [_waveView.layer addSublayer:_waveLayer];
     
 }
 
 //CADispayLink相当于一个定时器 会一直绘制曲线波纹 看似在运动，其实是一直在绘画不同位置点的余弦函数曲线
 - (void)getCurrentWave {
     //offsetX决定x位置，如果想搞明白可以多试几次
-    self.waveOffsetX += 0;
+    self.waveOffsetX += 8;
     //声明第一条波曲线的路径
     CGMutablePathRef path = CGPathCreateMutable();
     //设置起始点
@@ -152,7 +151,7 @@
     CGFloat y = 0.f;
     //第一个波纹的公式
     for (float x = 0.f; x <= waveW ; x++) {
-        y = 15*sin((300 / waveW) * (x * M_PI / 90) - self.waveOffsetX * M_PI / 90) + waveW * 0.7;
+        y = 20*sin((250 / waveW) * (x * M_PI / 180) - self.waveOffsetX * M_PI / 180) + waveW * 0.7;
         CGPathAddLineToPoint(path, nil, x, y);
         x++;
     }
@@ -193,7 +192,7 @@
     _centerView.backgroundColor = [UIColor clearColor];
     [self addSubview:_centerView];
     
-    CGFloat timeLabelY = (_centerView.frame.size.width / 2) - 70;
+    CGFloat timeLabelY = (_centerView.frame.size.width / 2) - 50;
     CGFloat timeLabelW = CGRectGetWidth(_centerView.frame);
     CGFloat timeLabelH = 100;
     _timeLabel = [[UILabel alloc] initWithFrame:CGRectMake(0, timeLabelY, timeLabelW, timeLabelH)];
@@ -215,9 +214,10 @@
     CGFloat dateLabelY = CGRectGetMaxY(_timeLabel.frame);
     _dateLabel = [[UILabel alloc] initWithFrame:CGRectMake(0, dateLabelY, timeLabelW- 50, 25)];
     _dateLabel.text = dateStr;
-    _dateLabel.textColor = [UIColor whiteColor];
+    _dateLabel.textColor = [UIColor lightGrayColor];
+    _dateLabel.alpha = 0.5;
     
-    _dateLabel.font = [UIFont systemFontOfSize:(kScreenWidth > 320 ? 17 : 15)];
+    _dateLabel.font = [UIFont systemFontOfSize:(kScreenWidth > 320 ? 15 : 13)];
     [_dateLabel sizeToFit];
     _dateLabel.center = CGPointMake(_centerView.width / 2 -15, dateLabelY + 25/2);
     [_centerView addSubview:_dateLabel];
@@ -227,11 +227,11 @@
     _APMLabel.text = [self isAMOrPM] ? @"AM" : @"PM";
     _APMLabel.textColor = [UIColor whiteColor];
     _APMLabel.textAlignment = NSTextAlignmentLeft;
-    _APMLabel.font = [UIFont systemFontOfSize:(kScreenWidth > 320 ? 17 : 15)];
+    _APMLabel.font = [UIFont systemFontOfSize:(kScreenWidth > 320 ? 18 : 16)];
     [_centerView addSubview:_APMLabel];
     
-    CGFloat horizY = CGRectGetMaxY(_dateLabel.frame) + 10;
-    _horizView = [[UIView alloc] initWithFrame:CGRectMake(20,horizY , 60, 4)];
+    CGFloat horizY = CGRectGetMaxY(_dateLabel.frame);
+    _horizView = [[UIView alloc] initWithFrame:CGRectMake(20,horizY , 65, 4)];
     _horizView.backgroundColor = [UIColor clearColor];
     _horizView.center = CGPointMake(_centerView.width / 2, horizY + 15);
     [_centerView addSubview:_horizView];
@@ -241,12 +241,10 @@
     
     _lefthorizImageView = [[UIImageView alloc] initWithFrame:CGRectMake(5, 0, 25, 4)];
     _lefthorizImageView.image = [UIImage imageNamed:leftImageName];
-//    _lefthorizImageView.contentMode = UIViewContentModeCenter;
     [_horizView addSubview:_lefthorizImageView];
     
-    _righthorizImageView = [[UIImageView alloc] initWithFrame:CGRectMake(35, 0, 25, 4)];
+    _righthorizImageView = [[UIImageView alloc] initWithFrame:CGRectMake(40, 0, 25, 4)];
     _righthorizImageView.image = [UIImage imageNamed:rightImageName];
-//    _righthorizImageView.contentMode = UIViewContentModeCenter;
     [_horizView addSubview:_righthorizImageView];
     
 }
@@ -348,29 +346,57 @@
     
 }
 
-- (void)morriganStartTime:(CGFloat)startTime toEndTime:(CGFloat)endTime
+- (void)morriganStartTime:(NSDate *)startTime toEndTime:(NSDate *)endTime
 {
-    PNCircleChart *circleChart = [[PNCircleChart alloc] initWithFrame:CGRectMake(_circleImageView.x+2,_circleImageView.y+4, _circleImageView.width-4, _circleImageView.height-4) startAngle:startTime endAngle:endTime total:@360 current:@(360) clockwise:YES];
+    CGFloat startAngle = [self getAngleFromDate:startTime];
+    CGFloat endAngle = [self getAngleFromDate:endTime];
+    if (endAngle >= 720) {
+        endAngle -= 720;
+        startAngle -= 720;
+    }
+    PNCircleChart *circleChart = [[PNCircleChart alloc] initWithFrame:CGRectMake(_circleImageView.x,_circleImageView.y, _circleImageView.width, _circleImageView.height) startAngle:startAngle endAngle:endAngle total:@360 current:@(360) clockwise:YES];
     
     circleChart.backgroundColor = [UIColor clearColor];
-    circleChart.lineWidth = @12;
-    [circleChart setStrokeColor:[UIColor whiteColor]];
-    [circleChart setStrokeColorGradientStart:[UIColor redColor]];
+    circleChart.lineWidth = @9;
+    [circleChart setStrokeColor:[UIColor redColor]];
     [circleChart strokeChart];
     
     [self addSubview:circleChart];
     
 }
 
-
-- (void)emptyStartTime:(CGFloat)startTime toEndTime:(CGFloat)endTime
+- (CGFloat)getAngleFromDate:(NSDate *)date
 {
-    PNCircleChart *circleChart = [[PNCircleChart alloc] initWithFrame:CGRectMake(_circleImageView.x,_circleImageView.y, _circleImageView.width, _circleImageView.height) startAngle:startTime endAngle:endTime total:@360 current:@(360) clockwise:YES];
+    if (date) {
+        NSCalendar *calendar = [[NSCalendar alloc] initWithCalendarIdentifier:NSGregorianCalendar];
+        NSDateComponents *comps = [[NSDateComponents alloc] init];
+        NSInteger unitFlags =  NSHourCalendarUnit | NSMinuteCalendarUnit;
+        comps = [calendar components:unitFlags fromDate:date];
+        NSInteger hour = comps.hour;
+        NSInteger minute = comps.minute;
+        CGFloat angle = (CGFloat)(hour * 60 + minute);
+        
+        return angle;
+    }else{
+        return 0;
+    }
+    
+}
+
+
+- (void)emptyStartTime:(NSDate *)startTime toEndTime:(NSDate *)endTime
+{
+    CGFloat startAngle = 0;
+    CGFloat endAngle = [self getAngleFromDate:endTime];
+    if (endAngle >= 720) {
+        endAngle -= 720;
+        
+    }
+    PNCircleChart *circleChart = [[PNCircleChart alloc] initWithFrame:CGRectMake(_circleImageView.x,_circleImageView.y, _circleImageView.width, _circleImageView.height) startAngle:startAngle endAngle:endAngle total:@360 current:@(360) clockwise:YES];
     
     circleChart.backgroundColor = [UIColor clearColor];
     circleChart.lineWidth = @2;
-    [circleChart setStrokeColor:[UIColor whiteColor]];
-    [circleChart setStrokeColorGradientStart:[UIColor redColor]];
+    [circleChart setStrokeColor:[UIColor redColor]];
     [circleChart strokeChart];
     
     [self addSubview:circleChart];

@@ -21,6 +21,8 @@
 - (void)awakeFromNib {
     [super awakeFromNib];
     // Initialization code
+    _countLabel.textColor = [UIColor colorWithRed:1 green:1 blue:1 alpha:0.85];
+    _countLabel.font = [UIFont systemFontOfSize:18];
     UITapGestureRecognizer *editTap = [[UITapGestureRecognizer alloc] initWithTarget:self action:@selector(modelEdit)];
     _editImageView.userInteractionEnabled = YES;
     [_editImageView addGestureRecognizer:editTap];

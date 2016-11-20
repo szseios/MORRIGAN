@@ -26,8 +26,6 @@
 
 @property (nonatomic , strong) UIViewController *currentCtl;
 
-@property (nonatomic , strong) UIImageView *rightImageView;
-
 @end
 
 @implementation RootViewController
@@ -35,7 +33,7 @@
 - (void)viewDidLoad {
     [super viewDidLoad];    
     UIImageView *backgroudView = [[UIImageView alloc] initWithFrame:self.navigationController.view.bounds];
-    backgroudView.image = [UIImage imageNamed:@"basicBackground"];
+    backgroudView.image = [UIImage imageWithColor:[Utils stringTOColor:@"#8c39e5"]];
     [self.view addSubview:backgroudView];
     
     _homeCtl = [[HomePageController alloc] init];
@@ -49,6 +47,7 @@
     [self.view addSubview:_personCtl.view];
     [self.view addSubview:_homeCtl.view];
     
+    
 }
 
 - (void)viewWillAppear:(BOOL)animated
@@ -59,17 +58,12 @@
 - (void)leftClick
 {
     [UIView animateWithDuration:0.3 animations:^{
-        _homeCtl.view.x = kScreenWidth * 3 / 4;
+        CGAffineTransform newTransform =
+        CGAffineTransformScale(_homeCtl.view.transform, 0.9, 0.9);
+        [_homeCtl.view setTransform:newTransform];
+        _homeCtl.view.x = kScreenWidth-80;
     } completion:^(BOOL finished) {
-
-    }];
-}
-
-- (void)back
-{
-    [UIView animateWithDuration:0.3 animations:^{
-        _personCtl.view.x = -kScreenWidth * 3 / 4;
-    } completion:^(BOOL finished) {
+        
     }];
 }
 
@@ -78,6 +72,9 @@
 {
     [UIView animateWithDuration:0.3 animations:^{
         _homeCtl.view.x = 0;
+        CGAffineTransform newTransform = CGAffineTransformConcat(_homeCtl.view.transform,  CGAffineTransformInvert(_homeCtl.view.transform));
+        _homeCtl.view.center = CGPointMake(kScreenWidth / 2, kScreenHeight / 2);
+        [_homeCtl.view setTransform:newTransform];
     } completion:^(BOOL finished) {
     }];
 }
@@ -163,6 +160,8 @@
 
 - (void)registerUser
 {
+    // 上传护理记录数据
+//    [[RecordManager share] uploadDBDatas:YES];
     NSDictionary *dictionary = @{@"userId": [UserInfo share].userId?[UserInfo share].userId:@""
                                  };
     NSString *bodyString = [NMOANetWorking handleHTTPBodyParams:dictionary];

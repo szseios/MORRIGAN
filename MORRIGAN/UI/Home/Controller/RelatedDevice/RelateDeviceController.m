@@ -48,15 +48,12 @@
     }
     
     UIImageView *backImageView = [[UIImageView alloc] initWithFrame:CGRectMake(0, 0, kScreenWidth, 64)];
-    backImageView.image = [UIImage imageNamed:@"basicBackground"];
+    backImageView.image = [UIImage imageWithColor:[Utils stringTOColor:@"#8c39e5"]];
     [self.view addSubview:backImageView];
     [self setUpBarView];
     
     [self setUpCollectionView];
     
-    if (self.connectBottomView) {
-        [self.view bringSubviewToFront:self.connectBottomView];
-    }
     
     
 }
@@ -64,11 +61,12 @@
 - (void)setUpCollectionView
 {
     UICollectionViewFlowLayout *layout = [[UICollectionViewFlowLayout alloc] init];
-    CGFloat itemW = (kScreenWidth - 30) / 2;
+    CGFloat itemW = (kScreenWidth - 45) / 2;
     
     layout.itemSize = CGSizeMake(itemW, itemW);
-    CGFloat paddingX = 10;
-    layout.sectionInset = UIEdgeInsetsMake(paddingX, paddingX, paddingX, paddingX);
+    CGFloat paddingX = 15;
+    CGFloat paddingY = 13;
+    layout.sectionInset = UIEdgeInsetsMake(paddingY, paddingX, paddingY, paddingX);
     layout.minimumLineSpacing = paddingX;
     
     CGFloat collectionViewY = 64;
@@ -87,7 +85,7 @@
 
 - (void)setUpBarView
 {
-    _barView = [[BasicBarView alloc] initWithFrame:CGRectMake(0, 20, kScreenWidth, 44) withType:superBarTypeLeftItemBackAndRightItemBinding withTitle:@"关联设备"];
+    _barView = [[BasicBarView alloc] initWithFrame:CGRectMake(0, 20, kScreenWidth, 44) withType:superBarTypeLeftItemBackAndRightItemBinding withTitle:@"关联设备" isShowRightButton:YES];
     [self.view addSubview:_barView];
     _barView.delegate = self;
 }

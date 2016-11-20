@@ -12,9 +12,9 @@
 
 - (instancetype)initWithMorriganArray:(NSArray *)array withFarme:(CGRect)frame;
 
-- (void)morriganStartTime:(CGFloat)startTime toEndTime:(CGFloat)endTime;
+- (void)morriganStartTime:(NSDate *)startTime toEndTime:(NSDate *)endTime;
 
-- (void)emptyStartTime:(CGFloat)startTime toEndTime:(CGFloat)endTime;
+- (void)emptyStartTime:(NSDate*)startTime toEndTime:(NSDate*)endTime;
 
 - (void)setStarLabelAndImage:(NSString *)star;
 

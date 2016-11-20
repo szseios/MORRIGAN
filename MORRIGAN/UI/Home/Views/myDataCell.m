@@ -30,7 +30,7 @@
                 _headerImageView.hidden = NO;
                 _headerImageView.layer.cornerRadius = 20;
 //                _headerImageView.image = [UIImage imageNamed:@"defaultHeaderView"];
-                [_headerImageView sd_setImageWithURL:[NSURL URLWithString:[UserInfo share].imgUrl] placeholderImage:[UIImage imageNamed:@"defaultHeaderView"] options:SDWebImageHandleCookies | SDWebImageRetryFailed completed:^(UIImage *image, NSError *error, SDImageCacheType cacheType, NSURL *imageURL) {
+                [_headerImageView sd_setImageWithURL:[NSURL URLWithString:[UserInfo share].imgUrl] placeholderImage:[UIImage imageNamed:@"defaultHeaderView"] options:SDWebImageHandleCookies | SDWebImageRetryFailed | SDWebImageRefreshCached completed:^(UIImage *image, NSError *error, SDImageCacheType cacheType, NSURL *imageURL) {
                     
                 }];
                 _titleLabel.text = @"更换头像";
@@ -55,23 +55,34 @@
             {
                 _titleLabel.text = @"年龄";
                 NSString *temp = [UserInfo share].age;
-                _contentLabel.text = temp;
+                if (temp.length > 0) {
+                    _contentLabel.text = temp;
+                }else{
+                  _contentLabel.text = @"请输入";
+                }
+                
             }
                 break;
             case 1:
             {
                 _titleLabel.text = @"情感";
-                _contentLabel.text = [UserInfo share].emotionStr;
+                NSString *temp = [UserInfo share].emotionStr;
+                if (temp.length > 0) {
+                    _contentLabel.text = temp;
+                }else{
+                    _contentLabel.text = @"请输入";
+                }
             }
                 break;
                 
             case 2:
             {
                 _titleLabel.text = @"身高";
-                if (![[UserInfo share].high isKindOfClass:[NSNull class]]) {
-                    _contentLabel.text = [UserInfo share].high;
+                NSString *temp = [UserInfo share].high;
+                if (temp.length > 0) {
+                    _contentLabel.text = temp;
                 }else{
-                    _contentLabel.text = @"170";
+                    _contentLabel.text = @"请输入";
                 }
                 
             }
@@ -80,10 +91,11 @@
             case 3:
             {
                 _titleLabel.text = @"体重";
-                if (![[UserInfo share].weight isKindOfClass:[NSNull class]]) {
-                    _contentLabel.text = [UserInfo share].weight;
+                NSString *temp = [UserInfo share].weight;
+                if (temp.length > 0) {
+                    _contentLabel.text = temp;
                 }else{
-                    _contentLabel.text = @"50";
+                    _contentLabel.text = @"请输入";
                 }
                 
             }

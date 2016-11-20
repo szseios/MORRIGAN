@@ -29,11 +29,12 @@
     [super viewDidLoad];
     
     UIImageView *backImageView = [[UIImageView alloc] initWithFrame:CGRectMake(0, 0, kScreenWidth, 64)];
-    backImageView.image = [UIImage imageNamed:@"basicBackground"];
+    backImageView.image = [UIImage imageWithColor:[Utils stringTOColor:@"#8c39e5"]];
     [self.view addSubview:backImageView];
     // Do any additional setup after loading the view from its nib.
     _achieveButton.clipsToBounds = YES;
     _achieveButton.layer.cornerRadius = 5;
+    _achieveButton.backgroundColor = [Utils stringTOColor:@"#8c39e5"];
     [_achieveButton addTarget:self action:@selector(clickEnsure) forControlEvents:UIControlEventTouchUpInside];
     _countLabel.text = [UserInfo share].target ? [UserInfo share].target : @"60";
     
@@ -49,7 +50,7 @@
 
 - (void)setUpBarView
 {
-    _barView = [[BasicBarView alloc] initWithFrame:CGRectMake(0, 20, kScreenWidth, 44) withType:superBarTypeLeftItemCancel withTitle:@"设定目标"];
+    _barView = [[BasicBarView alloc] initWithFrame:CGRectMake(0, 20, kScreenWidth, 44) withType:superBarTypeLeftItemBackAndRightItemBinding withTitle:@"设定目标" isShowRightButton:NO];
     [self.view addSubview:_barView];
     _barView.delegate = self;
 }
@@ -101,7 +102,7 @@
 //    CGFloat viewW = 1;
 //    CGFloat viewH = 30;
 //    CGFloat viewH1 = 40;
-//    CGFloat viewX = 15;
+//    CGFloat viewX = 16;
 //    CGFloat viewY = 20;
 //    CGFloat viewY1 = 30;
 //    

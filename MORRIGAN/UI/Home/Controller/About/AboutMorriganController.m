@@ -8,6 +8,7 @@
 
 #import "AboutMorriganController.h"
 #import "WebInfoController.h"
+#import "AboutMorriganCell.h"
 
 @interface AboutMorriganController () <UITableViewDelegate, UITableViewDataSource,BasicBarViewDelegate>
 @property (weak, nonatomic) IBOutlet UITableView *aboutTableView;
@@ -25,21 +26,19 @@ static NSString *cellID = @"cellID";
     
     
     UIImageView *backImageView = [[UIImageView alloc] initWithFrame:CGRectMake(0, 0, kScreenWidth, 64)];
-    backImageView.image = [UIImage imageNamed:@"basicBackground"];
+    backImageView.image = [UIImage imageWithColor:[Utils stringTOColor:@"#8c39e5"]];
     [self.view addSubview:backImageView];
     
     // Do any additional setup after loading the view from its nib.
-    [_aboutTableView registerClass:[UITableViewCell class] forCellReuseIdentifier:cellID];
+    [_aboutTableView registerNib:[UINib nibWithNibName:@"AboutMorriganCell" bundle:nil] forCellReuseIdentifier:cellID];
     _aboutTableView.tableFooterView = [UIView new];
+    _aboutTableView.bounces = NO;
     [self setUpBarView];
-    if (self.connectBottomView) {
-        [self.view bringSubviewToFront:self.connectBottomView];
-    }
 }
 
 - (void)setUpBarView
 {
-    _barView = [[BasicBarView alloc] initWithFrame:CGRectMake(0, 20, kScreenWidth, 44) withType:superBarTypeLeftItemBackAndRightItemBinding withTitle:@"我的资料"];
+    _barView = [[BasicBarView alloc] initWithFrame:CGRectMake(0, 20, kScreenWidth, 44) withType:superBarTypeLeftItemBackAndRightItemBinding withTitle:@"关于MORRIGAN" isShowRightButton:YES];
     [self.view addSubview:_barView];
     _barView.delegate = self;
 }
@@ -68,27 +67,27 @@ static NSString *cellID = @"cellID";
 
 - (UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath
 {
-    UITableViewCell *cell = [tableView dequeueReusableCellWithIdentifier:cellID];
+    AboutMorriganCell *cell = [tableView dequeueReusableCellWithIdentifier:cellID];
     if (!cell) {
-        cell = [[UITableViewCell alloc] initWithStyle:UITableViewCellStyleDefault reuseIdentifier:cellID];
+        cell = [[AboutMorriganCell alloc] initWithStyle:UITableViewCellStyleDefault reuseIdentifier:cellID];
         
     }
-    cell.accessoryType = UITableViewCellAccessoryDisclosureIndicator;
+    
     switch (indexPath.row) {
         case 0:
         {
-            cell.textLabel.text = @"产品团队";
+            cell.titleLabel.text = @"产品团队";
         }
             break;
         case 1:
         {
-            cell.textLabel.text = @"服务条例";
+            cell.titleLabel.text = @"服务条例";
         }
             break;
             
         case 2:
         {
-            cell.textLabel.text = @"隐私政策";
+            cell.titleLabel.text = @"隐私政策";
         }
             break;
 
@@ -130,6 +129,11 @@ static NSString *cellID = @"cellID";
         default:
             break;
     }
+}
+
+- (CGFloat)tableView:(UITableView *)tableView heightForHeaderInSection:(NSInteger)section
+{
+    return 15;
 }
 
 - (void)didReceiveMemoryWarning {
