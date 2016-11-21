@@ -131,11 +131,16 @@
 }
 
 - (void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath {
+    _selectedPeripheral = [BluetoothManager share].scannedPeripherals[indexPath.row];
+    [[BluetoothManager share] connectingBlueTooth:_selectedPeripheral
+                                            index:indexPath.row];
+    return;
     
     _selectedPeripheral = [BluetoothManager share].scannedPeripherals[indexPath.row];
     PeripheralModel *model = [_linkedPeripherals objectForKey:_selectedPeripheral.identifier.UUIDString];
     if (model) {
-        [[BluetoothManager share] connectingBlueTooth:_selectedPeripheral];
+        [[BluetoothManager share] connectingBlueTooth:_selectedPeripheral
+                                                index:indexPath.row];
     }
     else {
         NSDictionary *dictionary = @{@"userId": [UserInfo share].userId ? [UserInfo share].userId : @"",
@@ -152,7 +157,8 @@
              if ([code isEqualToString:@"000"]) {
                  BOOL isbinded = [[obj objectForKey:@"isbinded"] boolValue];
                  if (!isbinded) {
-                     [[BluetoothManager share] connectingBlueTooth:weakSelf.selectedPeripheral];
+                     [[BluetoothManager share] connectingBlueTooth:weakSelf.selectedPeripheral
+                                                             index:indexPath.row];
                  }
                  else {
                      [weakSelf connectPeripheralError];
