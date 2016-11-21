@@ -18,12 +18,14 @@ NSString * const ConnectPeripheralError = @"ConnectPeripheralError";
 NSString * const ConnectPeripheralTimeOut = @"ConnectPeripheralTimeOut";
 NSString * const DisconnectPeripheral = @"DisconnectPeripheral";
 
+NSString * const ElectricQuantityChanged = @"ElectricQuantityChanged";
+
 
 @interface BluetoothManager () {
     NSTimer *_timer;
 }
 
-@property (nonatomic,strong)CBPeripheral *willConnectPeripheral;     // 将要连接的设备
+@property (nonatomic,assign)NSInteger willConnectIndex;             // 将要连接的设备在数组中的下标
 @property (nonatomic,strong)CBPeripheral *curConnectPeripheral;      // 当前连接的设备
 @property (nonatomic,strong)CBCharacteristic *sendCharacteristic;    // 写特征
 @property (nonatomic,strong)CBCharacteristic *receiveCharacteristic; // 读特征
@@ -146,10 +148,15 @@ NSString * const DisconnectPeripheral = @"DisconnectPeripheral";
                         // @"ee"是模块给客户端的应答，不处理
                         success = YES;
                     } else {
+                        NSString *order = [receiveDataHexString substringWithRange:NSMakeRange(2, 2)];
                         NSString *code = [receiveDataHexString substringWithRange:NSMakeRange(36, 2)];
                         //蓝牙设备通知app电量变化
-                        if ([code isEqualToString:@"01"]) {
+                        if ([order isEqualToString:@"55"] &&[code isEqualToString:@"01"]) {
                             success = YES;
+                            NSString *electriQuantity = [receiveDataHexString substringWithRange:NSMakeRange(4, 2)];
+                            [[NSNotificationCenter defaultCenter] postNotificationName:ElectricQuantityChanged
+                                                                                object:electriQuantity];
+                            return;
                         }
                         //蓝牙设备返回无效数据
                         else {
@@ -281,7 +288,8 @@ NSString * const DisconnectPeripheral = @"DisconnectPeripheral";
     [_baby cancelScan];
 }
 
--(void)connectingBlueTooth:(CBPeripheral *)peripheral {
+-(void)connectingBlueTooth:(CBPeripheral *)peripheral index:(NSInteger)index {
+    _willConnectIndex = index;
     _baby.having(peripheral).and.then.connectToPeripherals().discoverServices().discoverCharacteristics().begin();
 }
 

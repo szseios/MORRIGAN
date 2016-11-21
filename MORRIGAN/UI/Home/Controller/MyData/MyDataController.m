@@ -251,6 +251,14 @@ static NSString *cellIdentifier = @"cellIdentifier";
 
 - (void)sureToSelectData:(NSString *)selectData
 {
+    if(selectData == nil || selectData.length == 0) {
+        [UIView animateWithDuration:0.2 animations:^{
+            self.pickerBackgroudView.y = kScreenHeight;
+        }];
+        [self.pickerBackgroudView removeFromSuperview];
+        _pickerBackgroudView = nil;
+        return;
+    }
     _selectCell.content = selectData;
     switch (self.chooseView.pickerType) {
         case pickerViewTypeWeight:
@@ -260,7 +268,38 @@ static NSString *cellIdentifier = @"cellIdentifier";
             break;
         case pickerViewTypeAge:
         {
-            [UserInfo share].age = selectData;
+            
+            NSArray *dateArray = [selectData componentsSeparatedByString:@"-"];
+            NSInteger year = [dateArray[0] integerValue];
+            NSInteger month = [dateArray[1] integerValue];
+            NSInteger day = [dateArray[2] integerValue];
+            
+            NSDateFormatter *formatter = [[NSDateFormatter alloc] init];
+            [formatter setDateFormat:@"yyyy-MM-dd"];
+            NSString *curDateStr = [formatter stringFromDate:[NSDate date]];
+            NSArray *curDateArray = [curDateStr componentsSeparatedByString:@"-"];
+            NSInteger curYear = [curDateArray[0] integerValue];
+            NSInteger curmonth = [curDateArray[1] integerValue];
+            NSInteger curDay = [curDateArray[2] integerValue];
+            
+            NSInteger age = 0;
+            
+            if(curmonth > month) {
+                age = curYear - year;
+            } else if(curmonth == month && curDay >= day) {
+                age = curYear - year;
+            } else {
+                age = curYear - year -1;
+            }
+            
+            if(age == 0) {
+                age = 1;
+            }
+            
+            [UserInfo share].age = [NSString stringWithFormat:@"%ld", age];
+            _selectCell.content = [UserInfo share].age;
+            
+           
         }
             break;
             

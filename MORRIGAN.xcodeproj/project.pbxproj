@@ -903,7 +903,6 @@
 		EB6DBC7C1DC8216E005823B2 /* Binding */ = {
 			isa = PBXGroup;
 			children = (
-				EB6DBC8A1DC82239005823B2 /* test */,
 				3E2AC85E1DCF01D000961883 /* BindingCustomButton.h */,
 				3E2AC85F1DCF01D000961883 /* BindingCustomButton.m */,
 				EB6DBC7F1DC8216E005823B2 /* PeripheralListViewController.h */,
@@ -920,13 +919,6 @@
 				3E2AC85B1DCEF7DC00961883 /* PeripheralBindingFinishedViewController.xib */,
 			);
 			path = Binding;
-			sourceTree = "<group>";
-		};
-		EB6DBC8A1DC82239005823B2 /* test */ = {
-			isa = PBXGroup;
-			children = (
-			);
-			path = test;
 			sourceTree = "<group>";
 		};
 		EB7AD9331DA72FF6001D1DCA = {

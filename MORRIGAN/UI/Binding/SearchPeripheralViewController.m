@@ -20,6 +20,7 @@
 @implementation SearchPeripheralViewController
 
 - (void)viewWillDisappear:(BOOL)animated {
+    [super viewWillDisappear:animated];
     [self stopSearchPeripheral];
 }
 
@@ -41,6 +42,8 @@
 }
 
 - (void)startSearchPeripheral {
+    //搜索前断开已连接的设备
+    [[BluetoothManager share] unConnectingBlueTooth];
     [[BluetoothManager share] start];
     [self startAnimating];
     
