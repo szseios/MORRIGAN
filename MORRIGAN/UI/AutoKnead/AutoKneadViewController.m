@@ -551,6 +551,7 @@
 {
     // 退出时停止
     BluetoothOperation *operation = [[BluetoothOperation alloc] init];
+    [operation setValue:@"01" index:2];
     [operation setValue:@"00" index:3];
     operation.response = ^(NSString *response,long tag,NSError *error,BOOL success) {
         
