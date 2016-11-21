@@ -138,6 +138,10 @@
     arrowImageView.image = [UIImage imageNamed:@"arrowUp"];
     [self.view addSubview:arrowImageView];
     
+    if ([UserInfo share].target) {
+        NSInteger destination = ([UserInfo share].target.floatValue) * 15 - _pointerViewX;
+        _rulerScrollView.contentOffset = CGPointMake(destination, _rulerScrollView.contentOffset.y);
+    }
     
 }
 
@@ -181,7 +185,7 @@
 - (void)getRulerValueWithScrollView:(UIScrollView *)scrollView
 {
     NSInteger distance =  fabs(fabs(scrollView.contentOffset.x) - (kScreenWidth/2 - self.pointerViewX));
-    NSInteger destination = distance/15 * 15;;
+    NSInteger destination = distance/15 * 15;
     if(scrollView.contentOffset.x < 0) {
         destination = -destination;
     }

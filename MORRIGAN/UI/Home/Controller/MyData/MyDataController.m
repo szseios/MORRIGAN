@@ -390,7 +390,7 @@ static NSString *cellIdentifier = @"cellIdentifier";
 - (void)uploadheaderImage
     {
         NSDictionary *dictionary = @{
-                                     @"userId":[UserInfo share].userId,
+                                     @"userId":[UserInfo share].userId ? [UserInfo share].userId : @"",
                                      @"img":_imageStr
                                      };
         NSString *bodyString = [NMOANetWorking handleHTTPBodyParams:dictionary];
@@ -419,8 +419,8 @@ static NSString *cellIdentifier = @"cellIdentifier";
     myDataCell *cell = [_dataTableView cellForRowAtIndexPath:[NSIndexPath indexPathForRow:1 inSection:0]];
     cell.content = notice.object;
     [UserInfo share].nickName = notice.object;
-    NSDictionary *dictionary = @{@"userId": [UserInfo share].userId,
-                                 @"nickName": [UserInfo share].nickName,
+    NSDictionary *dictionary = @{@"userId": [UserInfo share].userId ? [UserInfo share].userId : @"",
+                                 @"nickName": [UserInfo share].nickName ? [UserInfo share].nickName : @"",
                                  };
     NSString *bodyString = [NMOANetWorking handleHTTPBodyParams:dictionary];
     [[NMOANetWorking share] taskWithTag:ID_EDIT_USERINFO urlString:URL_EDIT_USERINFO httpHead:nil bodyString:bodyString objectTaskFinished:^(NSError *error, id obj) {
