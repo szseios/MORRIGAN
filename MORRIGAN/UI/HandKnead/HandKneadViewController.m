@@ -174,7 +174,7 @@
         gearNumLabelY = bigCircleRootViewW/2 - gearNumLabelH + 25;
     }
     UILabel *gearNumLabel = [[UILabel alloc] initWithFrame:CGRectMake(gearNumLabelX, gearNumLabelY, gearNumLabelW, gearNumLabelH)];
-    gearNumLabel.text = @"2";
+    gearNumLabel.text = @"1";
     gearNumLabel.textColor = [UIColor whiteColor];
     gearNumLabel.font = [UIFont italicSystemFontOfSize:110.0];
     if(kScreenHeight < 570) {
