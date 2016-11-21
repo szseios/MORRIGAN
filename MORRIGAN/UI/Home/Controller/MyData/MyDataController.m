@@ -269,16 +269,36 @@ static NSString *cellIdentifier = @"cellIdentifier";
         case pickerViewTypeAge:
         {
             
-            NSString *year = [selectData substringToIndex:4];
-            if(year && year.length == 4) {
-                NSDateFormatter *formatter = [[NSDateFormatter alloc] init];
-                [formatter setDateFormat:@"yyyy"];
-                NSString *curYearStr = [formatter stringFromDate:[NSDate date]];
-    
-                NSInteger age = [curYearStr integerValue] - [year integerValue];
-                [UserInfo share].age = [NSString stringWithFormat:@"%ld", age];
-                _selectCell.content = [UserInfo share].age;
+            NSArray *dateArray = [selectData componentsSeparatedByString:@"-"];
+            NSInteger year = [dateArray[0] integerValue];
+            NSInteger month = [dateArray[1] integerValue];
+            NSInteger day = [dateArray[2] integerValue];
+            
+            NSDateFormatter *formatter = [[NSDateFormatter alloc] init];
+            [formatter setDateFormat:@"yyyy-MM-dd"];
+            NSString *curDateStr = [formatter stringFromDate:[NSDate date]];
+            NSArray *curDateArray = [curDateStr componentsSeparatedByString:@"-"];
+            NSInteger curYear = [curDateArray[0] integerValue];
+            NSInteger curmonth = [curDateArray[1] integerValue];
+            NSInteger curDay = [curDateArray[2] integerValue];
+            
+            NSInteger age = 0;
+            
+            if(curmonth > month) {
+                age = curYear - year;
+            } else if(curmonth == month && curDay >= day) {
+                age = curYear - year;
+            } else {
+                age = curYear - year -1;
             }
+            
+            if(age == 0) {
+                age = 1;
+            }
+            
+            [UserInfo share].age = [NSString stringWithFormat:@"%ld", age];
+            _selectCell.content = [UserInfo share].age;
+            
            
         }
             break;
