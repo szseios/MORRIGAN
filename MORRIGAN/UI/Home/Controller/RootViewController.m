@@ -26,8 +26,6 @@
 
 @property (nonatomic , strong) UIViewController *currentCtl;
 
-@property (nonatomic , strong) UIImageView *rightImageView;
-
 @end
 
 @implementation RootViewController
@@ -35,7 +33,10 @@
 - (void)viewDidLoad {
     [super viewDidLoad];    
     UIImageView *backgroudView = [[UIImageView alloc] initWithFrame:self.navigationController.view.bounds];
-    backgroudView.image = [UIImage imageNamed:@"basicBackground"];
+    backgroudView.image = [UIImage imageWithColor:[Utils stringTOColor:@"#8c39e5"]];
+    
+    [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(didregisterUser) name:kRecordManagerUploadEndNotification object:nil];
+    
     [self.view addSubview:backgroudView];
     
     _homeCtl = [[HomePageController alloc] init];
@@ -49,6 +50,7 @@
     [self.view addSubview:_personCtl.view];
     [self.view addSubview:_homeCtl.view];
     
+    
 }
 
 - (void)viewWillAppear:(BOOL)animated
@@ -59,17 +61,12 @@
 - (void)leftClick
 {
     [UIView animateWithDuration:0.3 animations:^{
-        _homeCtl.view.x = kScreenWidth * 3 / 4;
+        CGAffineTransform newTransform =
+        CGAffineTransformScale(_homeCtl.view.transform, 0.9, 0.9);
+        [_homeCtl.view setTransform:newTransform];
+        _homeCtl.view.x = kScreenWidth-80;
     } completion:^(BOOL finished) {
-
-    }];
-}
-
-- (void)back
-{
-    [UIView animateWithDuration:0.3 animations:^{
-        _personCtl.view.x = -kScreenWidth * 3 / 4;
-    } completion:^(BOOL finished) {
+        
     }];
 }
 
@@ -78,6 +75,9 @@
 {
     [UIView animateWithDuration:0.3 animations:^{
         _homeCtl.view.x = 0;
+        CGAffineTransform newTransform = CGAffineTransformConcat(_homeCtl.view.transform,  CGAffineTransformInvert(_homeCtl.view.transform));
+        _homeCtl.view.center = CGPointMake(kScreenWidth / 2, kScreenHeight / 2);
+        [_homeCtl.view setTransform:newTransform];
     } completion:^(BOOL finished) {
     }];
 }
@@ -163,6 +163,15 @@
 
 - (void)registerUser
 {
+    // 上传护理记录数据
+    [[RecordManager share] uploadDBDatas:YES];
+    [MBProgressHUD showHUDAddedTo:UI_Window animated:YES];
+    
+   
+}
+
+- (void)didregisterUser
+{
     NSDictionary *dictionary = @{@"userId": [UserInfo share].userId?[UserInfo share].userId:@""
                                  };
     NSString *bodyString = [NMOANetWorking handleHTTPBodyParams:dictionary];
@@ -172,7 +181,9 @@
                              bodyString:bodyString
                      objectTaskFinished:^(NSError *error, id obj)
      {
+         [MBProgressHUD hideAllHUDsForView:UI_Window animated:YES];
          if ([[obj objectForKey:HTTP_KEY_RESULTCODE] isEqualToString:HTTP_RESULTCODE_SUCCESS]) {
+             
              [MBProgressHUD showHUDByContent:@"注销成功！" view:UI_Window afterDelay:2];
              NSLog(@"注销成功！");
              // 注销登陆成功时调用这个
@@ -187,8 +198,12 @@
          
          
      }];
-    
-   
+
+}
+
+- (void)dealloc
+{
+    [[NSNotificationCenter defaultCenter] removeObserver:self];
 }
 
 /*

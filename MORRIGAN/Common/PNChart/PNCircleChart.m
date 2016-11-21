@@ -123,22 +123,25 @@ displayCountingLabel:(BOOL)displayCountingLabel
            endAngle:(CGFloat)endAngle
               total:(NSNumber *)total
             current:(NSNumber *)current
-          clockwise:(BOOL)clockwise
+          isEmpty:(BOOL)isEmpty
 {
     self = [super initWithFrame:frame];
     
     if (self) {
         _total = @72;
+//        if (isEmpty) {
+//            _current = @();
+//        }else{
+//           _current = @((NSInteger)(endAngle - startAngle) / 10);
+//        }
         _current = @((NSInteger)(endAngle - startAngle) / 10);
-        _strokeColor = PNFreshGreen;
+        _strokeColor = PNRed;
         _duration = 1.0;
         _chartType = PNChartFormatTypePercent;
-        _displayAnimated = YES;
+        _displayAnimated = NO;
         
         _displayCountingLabel = NO;
         
-//        CGFloat startAngle = clockwise ? -90.0f : 270.0f;
-//        CGFloat endAngle = clockwise ? -90.01f : 270.01f;
         
         _lineWidth = @10;
         
@@ -147,39 +150,29 @@ displayCountingLabel:(BOOL)displayCountingLabel
         
         UIBezierPath *circlePath = [UIBezierPath bezierPathWithArcCenter:CGPointMake(self.frame.size.width/2.0f, self.frame.size.height/2.0f)
                                                                   radius:(self.frame.size.height * 0.5) - ([_lineWidth floatValue]/2.0f)
-                                                              startAngle:DEGREES_TO_RADIANS(startAngle - 90.0)
-                                                                endAngle:DEGREES_TO_RADIANS(startAngle + 269.9)
-                                                               clockwise:clockwise];
+                                                              startAngle:DEGREES_TO_RADIANS(360 - 90.0)
+                                                                endAngle:DEGREES_TO_RADIANS(360 + 269.9)
+                                                               clockwise:YES];
         
         _circle               = [CAShapeLayer layer];
         _circle.path          = circlePath.CGPath;
-        _circle.lineCap       = kCALineCapRound;
+//        _circle.lineCap       = kCALineCapSquare;
         _circle.fillColor     = [UIColor clearColor].CGColor;
         _circle.lineWidth     = [_lineWidth floatValue];
         _circle.zPosition     = 1;
         
         _circleBackground             = [CAShapeLayer layer];
         _circleBackground.path        = circlePath.CGPath;
-        _circleBackground.lineCap     = kCALineCapRound;
+//        _circleBackground.lineCap     = kCALineCapSquare;
         _circleBackground.fillColor   = [UIColor clearColor].CGColor;
         _circleBackground.lineWidth   = [_lineWidth floatValue];
-        _circleBackground.strokeColor = [UIColor clearColor].CGColor;
-        _circleBackground.strokeEnd   = 1.0;
+        _circleBackground.strokeColor = [UIColor whiteColor].CGColor;
+        _circleBackground.strokeEnd   = _current.floatValue / _total.floatValue;
         _circleBackground.zPosition   = -1;
         
-        [self.layer addSublayer:_circle];
         [self.layer addSublayer:_circleBackground];
+        [self.layer addSublayer:_circle];
         
-//        _countingLabel = [[UICountingLabel alloc] initWithFrame:CGRectMake(0, 0, 100.0, 50.0)];
-//        [_countingLabel setTextAlignment:NSTextAlignmentCenter];
-//        [_countingLabel setFont:[UIFont boldSystemFontOfSize:16.0f]];
-//        [_countingLabel setTextColor:[UIColor grayColor]];
-//        [_countingLabel setBackgroundColor:[UIColor clearColor]];
-//        [_countingLabel setCenter:CGPointMake(self.frame.size.width/2.0f, self.frame.size.height/2.0f)];
-//        _countingLabel.method = UILabelCountingMethodEaseInOut;
-//        if (_displayCountingLabel) {
-//            [self addSubview:_countingLabel];
-//        }
     }
     
     return self;
@@ -189,38 +182,11 @@ displayCountingLabel:(BOOL)displayCountingLabel
 
 - (void)strokeChart
 {
-    // Add counting label
-
-//    if (_displayCountingLabel) {
-//        NSString *format;
-//        switch (self.chartType) {
-//            case PNChartFormatTypePercent:
-//                format = @"%d%%";
-//                break;
-//            case PNChartFormatTypeDollar:
-//                format = @"$%d";
-//                break;
-//            case PNChartFormatTypeDecimal:
-//                format = @"%.1f";
-//                break;
-//            case PNChartFormatTypeDecimalTwoPlaces:
-//                format = @"%.2f";
-//                break;
-//            case PNChartFormatTypeNone:
-//            default:
-//                format = @"%d";
-//                break;
-//        }
-//        self.countingLabel.format = format;
-//        [self addSubview:self.countingLabel];
-//    }
-
-
     // Add circle params
 
     _circle.lineWidth   = [_lineWidth floatValue];
-    _circleBackground.lineWidth = [_lineWidth floatValue];
-    _circleBackground.strokeEnd = 1.0;
+    _circleBackground.lineWidth = [(_lineWidth.floatValue > 5 ? _lineWidth : @9) floatValue];
+    _circleBackground.strokeEnd = [_current floatValue] / [_total floatValue];
     _circle.strokeColor = _strokeColor.CGColor;
     _circle.strokeEnd   = [_current floatValue] / [_total floatValue];
 
@@ -230,9 +196,9 @@ displayCountingLabel:(BOOL)displayCountingLabel
         // Add gradient
         self.gradientMask = [CAShapeLayer layer];
         self.gradientMask.fillColor = [[UIColor clearColor] CGColor];
-        self.gradientMask.strokeColor = [[UIColor blackColor] CGColor];
+        self.gradientMask.strokeColor = [[UIColor whiteColor] CGColor];
         self.gradientMask.lineWidth = _circle.lineWidth;
-        self.gradientMask.lineCap = kCALineCapRound;
+//        self.gradientMask.lineCap = kCALineCapRound;
         CGRect gradientFrame = CGRectMake(0, 0, 2*self.bounds.size.width, 2*self.bounds.size.height);
         self.gradientMask.frame = gradientFrame;
         self.gradientMask.path = _circle.path;
@@ -241,7 +207,7 @@ displayCountingLabel:(BOOL)displayCountingLabel
         gradientLayer.startPoint = CGPointMake(0.5,1.0);
         gradientLayer.endPoint = CGPointMake(0.5,0.0);
         gradientLayer.frame = gradientFrame;
-        UIColor *endColor = (_strokeColor ? _strokeColor : [UIColor greenColor]);
+        UIColor *endColor = (_strokeColor ? _strokeColor : [UIColor clearColor]);
         NSArray *colors = @[
                             (id)endColor.CGColor,
                             (id)_strokeColorGradientStart.CGColor

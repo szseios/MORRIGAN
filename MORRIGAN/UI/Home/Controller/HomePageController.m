@@ -16,6 +16,7 @@
 #import "AutoKneadViewController.h"
 #import "HandKneadViewController.h"
 #import "RecordManager.h"
+#import "MassageRecordModel.h"
 
 @interface HomePageController () <BasicBarViewDelegate,UIAlertViewDelegate>
 
@@ -33,7 +34,7 @@
 
 @property (nonatomic , strong) HomeMainView *mainView;
 
-@property (nonatomic , assign) BOOL isLeft;
+//@property (nonatomic , assign) BOOL isLeft;
 
 
 
@@ -45,7 +46,7 @@
     [super viewDidLoad];
 //    
     UIImageView *upBackImage = [[UIImageView alloc] initWithFrame:CGRectMake(0, 0, self.view.width, self.view.height)];
-    upBackImage.image = [UIImage imageNamed:@"upBackgroud"];
+    upBackImage.image =[UIImage imageWithColor:[Utils stringTOColor:@"#8c39e5"]];
     [self.view addSubview:upBackImage];
     
     UIImageView *downBackImage = [[UIImageView alloc] initWithFrame:CGRectMake(0, self.view.height - (kScreenHeight > 568 ? 180 : 170), self.view.width, (kScreenHeight > 568 ? 180 : 170))];
@@ -61,10 +62,7 @@
     self.view.userInteractionEnabled = YES;
     [self.view addGestureRecognizer:tap];
     
-    if (self.connectBottomView) {
-        
-        [self.view bringSubviewToFront:self.connectBottomView];
-        
+    if (![BluetoothManager share].isConnected) {
        UIAlertView *alert = [[UIAlertView alloc] initWithTitle:@"还未连接设备" message:nil delegate:self cancelButtonTitle:@"取消" otherButtonTitles:@"连接", nil];
         [alert show];
     }
@@ -84,7 +82,7 @@
 
 - (void)setUpBarView
 {
-    _barView = [[BasicBarView alloc] initWithFrame:CGRectMake(0, 20, kScreenWidth, 44) withType:superBarTypeleftItemMove withTitle:@"M O R R I G A N"];
+    _barView = [[BasicBarView alloc] initWithFrame:CGRectMake(0, 20, kScreenWidth, 44) withType:superBarTypeleftItemMove withTitle:@"M O R R I G A N"  isShowRightButton:YES];
     [self.view addSubview:_barView];
     _barView.delegate = self;
 }
@@ -92,14 +90,19 @@
 - (void)setUpHomeMainView
 {
     CGFloat mainViewW = kScreenWidth * 0.75 + (kScreenWidth > 320 ? 30 : 10); //kScreenWidth > 320 ? 300 : 220;
-    CGFloat mainViewH = mainViewW / 624 * 860.0;
+    CGFloat mainViewH = mainViewW / 623 * 860.0;
     CGFloat mainViewX = (kScreenWidth - mainViewW) /2 + (kScreenWidth > 320 ? 20 : 15); //kScreenWidth > 320 ? 50 : 20;
+    MassageRecordModel *model = [[MassageRecordModel alloc] init];
+    model.startTime = [NSDate dateWithTimeIntervalSinceNow:-60*60*1];
+    model.endTime = [NSDate dateWithTimeIntervalSinceNow:60*60*0];
     
-    NSDictionary *temDic = @{@"startTime":@90,@"endTime":@180};
-    NSDictionary *temDic1 = @{@"startTime":@270,@"endTime":@310};
-    NSDictionary *temDic3 = @{@"startTime":@200,@"endTime":@260};
-    NSArray *array = @[temDic,temDic1,temDic3];
-    _mainView = [[HomeMainView alloc] initWithMorriganArray:array withFarme:CGRectMake(mainViewX, 74, mainViewW, mainViewH)];
+    MassageRecordModel *model1 = [[MassageRecordModel alloc] init];
+    model1.startTime = [NSDate dateWithTimeIntervalSinceNow:-60*60*3];;
+    model1.endTime = [NSDate dateWithTimeIntervalSinceNow:-60*60*2];
+    
+    NSArray *arra = @[model1,model];
+//    NSArray *array = [DBManager selectForenoonDatas:[UserInfo share].userId];
+    _mainView = [[HomeMainView alloc] initWithMorriganArray:arra withFarme:CGRectMake(mainViewX, 74, mainViewW, mainViewH)];
     _mainView.backgroundColor = [UIColor clearColor];
     
     [self.view addSubview:_mainView];
@@ -108,7 +111,7 @@
 
 - (void)setUpCircleView
 {
-    [_mainView morriganStartTime:90 toEndTime:240];
+//    [_mainView morriganStartTime:90 toEndTime:240];
 }
 
 - (void)setUpBottomView
@@ -225,6 +228,17 @@
     if (buttonIndex == 1) {
         [self clickBingdingDevice];
     }
+}
+
+- (void)setIsLeft:(BOOL)isLeft
+{
+    _isLeft = isLeft;
+    if (isLeft) {
+        self.view.size = CGSizeMake(kScreenWidth * (kScreenHeight - 64) * kScreenHeight,  kScreenHeight-250);
+    }else{
+        self.view.size = CGSizeMake(kScreenWidth,  kScreenHeight);
+    }
+    [self.view setNeedsDisplay];
 }
 
 

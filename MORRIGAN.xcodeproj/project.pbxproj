@@ -44,6 +44,8 @@
 		3EF7958D1DAA0A5E00E5EBC6 /* Common.m in Sources */ = {isa = PBXBuildFile; fileRef = 3EF795881DAA0A5E00E5EBC6 /* Common.m */; };
 		3EF7958E1DAA0A5E00E5EBC6 /* PCSEQVisualizer.m in Sources */ = {isa = PBXBuildFile; fileRef = 3EF7958A1DAA0A5E00E5EBC6 /* PCSEQVisualizer.m */; };
 		3EF7958F1DAA0A5E00E5EBC6 /* UIImage+Color.m in Sources */ = {isa = PBXBuildFile; fileRef = 3EF7958C1DAA0A5E00E5EBC6 /* UIImage+Color.m */; };
+		471ECC371DDD8F9400719B32 /* AboutMorriganCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 471ECC351DDD8F9400719B32 /* AboutMorriganCell.m */; };
+		471ECC381DDD8F9400719B32 /* AboutMorriganCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = 471ECC361DDD8F9400719B32 /* AboutMorriganCell.xib */; };
 		4724C2041DC8BF5700B18902 /* MBProgressHUD.m in Sources */ = {isa = PBXBuildFile; fileRef = 4724C2031DC8BF5700B18902 /* MBProgressHUD.m */; };
 		4728ED371DC485AB0005F9C3 /* HomePageController.m in Sources */ = {isa = PBXBuildFile; fileRef = 4728ED301DC485AB0005F9C3 /* HomePageController.m */; };
 		4728ED381DC485AB0005F9C3 /* HomePageSuperController.m in Sources */ = {isa = PBXBuildFile; fileRef = 4728ED321DC485AB0005F9C3 /* HomePageSuperController.m */; };
@@ -102,6 +104,8 @@
 		4728EDD31DC4865E0005F9C3 /* ZHRulerView.m in Sources */ = {isa = PBXBuildFile; fileRef = 4728EDB71DC4865E0005F9C3 /* ZHRulerView.m */; };
 		4728EDD61DC486A40005F9C3 /* UIView+Extension.m in Sources */ = {isa = PBXBuildFile; fileRef = 4728EDD51DC486A40005F9C3 /* UIView+Extension.m */; };
 		47EF55DE1DDAC4CA00ED655E /* EditDeviceNameController.m in Sources */ = {isa = PBXBuildFile; fileRef = 47EF55DD1DDAC4CA00ED655E /* EditDeviceNameController.m */; };
+		47F06FC51DDBE21C00D47D78 /* PersonalCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 47F06FC31DDBE21C00D47D78 /* PersonalCell.m */; };
+		47F06FC61DDBE21C00D47D78 /* PersonalCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = 47F06FC41DDBE21C00D47D78 /* PersonalCell.xib */; };
 		47FF16621DC9F48B00DBD493 /* MKAnnotationView+WebCache.m in Sources */ = {isa = PBXBuildFile; fileRef = 47FF16421DC9F48B00DBD493 /* MKAnnotationView+WebCache.m */; };
 		47FF16631DC9F48B00DBD493 /* NSData+ImageContentType.m in Sources */ = {isa = PBXBuildFile; fileRef = 47FF16441DC9F48B00DBD493 /* NSData+ImageContentType.m */; };
 		47FF16641DC9F48B00DBD493 /* SDImageCache.m in Sources */ = {isa = PBXBuildFile; fileRef = 47FF16461DC9F48B00DBD493 /* SDImageCache.m */; };
@@ -235,6 +239,9 @@
 		3EF7958A1DAA0A5E00E5EBC6 /* PCSEQVisualizer.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = PCSEQVisualizer.m; sourceTree = "<group>"; };
 		3EF7958B1DAA0A5E00E5EBC6 /* UIImage+Color.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "UIImage+Color.h"; sourceTree = "<group>"; };
 		3EF7958C1DAA0A5E00E5EBC6 /* UIImage+Color.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "UIImage+Color.m"; sourceTree = "<group>"; };
+		471ECC341DDD8F9400719B32 /* AboutMorriganCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = AboutMorriganCell.h; sourceTree = "<group>"; };
+		471ECC351DDD8F9400719B32 /* AboutMorriganCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = AboutMorriganCell.m; sourceTree = "<group>"; };
+		471ECC361DDD8F9400719B32 /* AboutMorriganCell.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = AboutMorriganCell.xib; sourceTree = "<group>"; };
 		4724C2021DC8BF5700B18902 /* MBProgressHUD.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MBProgressHUD.h; sourceTree = "<group>"; };
 		4724C2031DC8BF5700B18902 /* MBProgressHUD.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = MBProgressHUD.m; sourceTree = "<group>"; };
 		4728ED2F1DC485AB0005F9C3 /* HomePageController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = HomePageController.h; sourceTree = "<group>"; };
@@ -337,6 +344,9 @@
 		4728EDD51DC486A40005F9C3 /* UIView+Extension.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "UIView+Extension.m"; sourceTree = "<group>"; };
 		47EF55DC1DDAC4CA00ED655E /* EditDeviceNameController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = EditDeviceNameController.h; sourceTree = "<group>"; };
 		47EF55DD1DDAC4CA00ED655E /* EditDeviceNameController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = EditDeviceNameController.m; sourceTree = "<group>"; };
+		47F06FC21DDBE21C00D47D78 /* PersonalCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = PersonalCell.h; sourceTree = "<group>"; };
+		47F06FC31DDBE21C00D47D78 /* PersonalCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = PersonalCell.m; sourceTree = "<group>"; };
+		47F06FC41DDBE21C00D47D78 /* PersonalCell.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = PersonalCell.xib; sourceTree = "<group>"; };
 		47FF16411DC9F48B00DBD493 /* MKAnnotationView+WebCache.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "MKAnnotationView+WebCache.h"; sourceTree = "<group>"; };
 		47FF16421DC9F48B00DBD493 /* MKAnnotationView+WebCache.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "MKAnnotationView+WebCache.m"; sourceTree = "<group>"; };
 		47FF16431DC9F48B00DBD493 /* NSData+ImageContentType.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "NSData+ImageContentType.h"; sourceTree = "<group>"; };
@@ -701,6 +711,12 @@
 				4728ED791DC485F50005F9C3 /* myDataCell.h */,
 				4728ED7A1DC485F50005F9C3 /* myDataCell.m */,
 				4728ED7B1DC485F50005F9C3 /* myDataCell.xib */,
+				47F06FC21DDBE21C00D47D78 /* PersonalCell.h */,
+				47F06FC31DDBE21C00D47D78 /* PersonalCell.m */,
+				47F06FC41DDBE21C00D47D78 /* PersonalCell.xib */,
+				471ECC341DDD8F9400719B32 /* AboutMorriganCell.h */,
+				471ECC351DDD8F9400719B32 /* AboutMorriganCell.m */,
+				471ECC361DDD8F9400719B32 /* AboutMorriganCell.xib */,
 			);
 			path = Views;
 			sourceTree = "<group>";
@@ -1220,6 +1236,7 @@
 				4728ED641DC485BA0005F9C3 /* HistoryDataCell.xib in Resources */,
 				3EF4DFF41DD091E70003BD7C /* music02.mp3 in Resources */,
 				3EF4DFF31DD091E70003BD7C /* music01.mp3 in Resources */,
+				471ECC381DDD8F9400719B32 /* AboutMorriganCell.xib in Resources */,
 				EB534AD51DA9D924007AA325 /* MusicViewController.xib in Resources */,
 				4728ED6A1DC485BA0005F9C3 /* RelateDeviceCell.xib in Resources */,
 				4728ED6F1DC485BA0005F9C3 /* SetTargetController.xib in Resources */,
@@ -1236,6 +1253,7 @@
 				EB6DBC871DC8216E005823B2 /* PeripheralListViewController.xib in Resources */,
 				4728ED601DC485BA0005F9C3 /* AboutMorriganController.xib in Resources */,
 				3E9304AD1DCA1081001D08A2 /* SearchPeripheralTableViewCell.xib in Resources */,
+				47F06FC61DDBE21C00D47D78 /* PersonalCell.xib in Resources */,
 				4728ED661DC485BA0005F9C3 /* MyDataController.xib in Resources */,
 				3EF795851DA9EDFC00E5EBC6 /* MusicTableViewCell.xib in Resources */,
 			);
@@ -1304,6 +1322,7 @@
 				47FF166D1DC9F48B00DBD493 /* UIImage+MultiFormat.m in Sources */,
 				4728ED611DC485BA0005F9C3 /* WebInfoController.m in Sources */,
 				4728EDBC1DC4865E0005F9C3 /* PNColor.m in Sources */,
+				471ECC371DDD8F9400719B32 /* AboutMorriganCell.m in Sources */,
 				47EF55DE1DDAC4CA00ED655E /* EditDeviceNameController.m in Sources */,
 				47FF16661DC9F48B00DBD493 /* SDWebImageDecoder.m in Sources */,
 				4728ED7E1DC485F50005F9C3 /* HomeMainView.m in Sources */,
@@ -1351,6 +1370,7 @@
 				4728EDBD1DC4865E0005F9C3 /* PNGenericChart.m in Sources */,
 				4728EDD21DC4865E0005F9C3 /* ZHRulerScrollView.m in Sources */,
 				47FF16711DC9F48B00DBD493 /* UIView+WebCacheOperation.m in Sources */,
+				47F06FC51DDBE21C00D47D78 /* PersonalCell.m in Sources */,
 				EB534AD21DA9D924007AA325 /* MusicManager.m in Sources */,
 				EB34F3B41DCA1732002B15B1 /* LoginBaseController.m in Sources */,
 				3EF7958F1DAA0A5E00E5EBC6 /* UIImage+Color.m in Sources */,

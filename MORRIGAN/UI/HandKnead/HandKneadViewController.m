@@ -31,6 +31,7 @@
     UIImageView *_bigCircleRootView;
     UILabel *_gearNumLabel;            // 档位显示label
     UILabel *_timeLabel;               // 计时显示label
+    UIButton *_startButton;            // 开始／停止按钮
     UIButton *_leftChestButton;        // 左胸按钮
     UIButton *_rightChestButton;       // 右胸按钮
     
@@ -61,6 +62,8 @@
     
     [self viewInit];
     [super viewDidLoad];
+    
+    [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(bluetoothDisConnectHandlerInHandkneed) name:DisconnectPeripheral object:nil];
     
 }
 
@@ -174,7 +177,7 @@
         gearNumLabelY = bigCircleRootViewW/2 - gearNumLabelH + 25;
     }
     UILabel *gearNumLabel = [[UILabel alloc] initWithFrame:CGRectMake(gearNumLabelX, gearNumLabelY, gearNumLabelW, gearNumLabelH)];
-    gearNumLabel.text = @"2";
+    gearNumLabel.text = @"1";
     gearNumLabel.textColor = [UIColor whiteColor];
     gearNumLabel.font = [UIFont italicSystemFontOfSize:110.0];
     if(kScreenHeight < 570) {
@@ -283,6 +286,7 @@
     [startButton setImage:[UIImage imageNamed:@"start"] forState:UIControlStateNormal];
     [startButton  addTarget:self action:@selector(startButtonClick:) forControlEvents: UIControlEventTouchUpInside];
     [addStartSubtractRootView addSubview:startButton];
+    _startButton = startButton;
     
     
     // 左胸
@@ -519,7 +523,7 @@
         return;
     }
     
-    [self updateStartStopState:(UIButton *)sender];
+    [self updateStartStopState:_startButton];
    
     [self sendData];
     
@@ -732,10 +736,40 @@
 }
 
 
+- (void)bluetoothDisConnectHandlerInHandkneed
+{
+    if(_startButton.tag == kButtonStopTag) {
+        
+        _startButton.tag = kButtonStartTag;
+        [_startButton setImage:[UIImage imageNamed:@"START"] forState:UIControlStateNormal];
+        
+        // 停止计时
+        [self stopTimer];
+        // 取消动画
+        [self stopAnimation];
+     
+        
+        // 插入数据库
+        MassageRecordModel *model = [[MassageRecordModel alloc] init];
+        model.userID = [UserInfo share].userId;
+        model.startTime = _startDate;
+        model.endTime = [NSDate date];
+        model.type = MassageTypeAuto;
+        [[RecordManager share] addToDB:model];
+    }
+    
+}
+
 - (void)didReceiveMemoryWarning {
     [super didReceiveMemoryWarning];
     // Dispose of any resources that can be recreated.
 }
+
+-(void)dealloc
+{
+    [[NSNotificationCenter defaultCenter] removeObserver:self];
+}
+
 
 /*
 #pragma mark - Navigation
