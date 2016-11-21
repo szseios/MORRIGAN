@@ -251,6 +251,14 @@ static NSString *cellIdentifier = @"cellIdentifier";
 
 - (void)sureToSelectData:(NSString *)selectData
 {
+    if(selectData == nil || selectData.length == 0) {
+        [UIView animateWithDuration:0.2 animations:^{
+            self.pickerBackgroudView.y = kScreenHeight;
+        }];
+        [self.pickerBackgroudView removeFromSuperview];
+        _pickerBackgroudView = nil;
+        return;
+    }
     _selectCell.content = selectData;
     switch (self.chooseView.pickerType) {
         case pickerViewTypeWeight:
