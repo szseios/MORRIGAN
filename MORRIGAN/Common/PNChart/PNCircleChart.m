@@ -129,12 +129,15 @@ displayCountingLabel:(BOOL)displayCountingLabel
     
     if (self) {
         _total = @72;
-//        if (isEmpty) {
-//            _current = @();
-//        }else{
-//           _current = @((NSInteger)(endAngle - startAngle) / 10);
-//        }
-        _current = @((NSInteger)(endAngle - startAngle) / 10);
+        CGFloat start;
+        if (isEmpty) {
+            _current = @(endAngle/ 10);
+            start = 0;
+        }else{
+           _current = @((NSInteger)(endAngle - startAngle) / 10);
+            start = startAngle;
+        }
+//        _current = @((NSInteger)(endAngle - startAngle) / 10);
         _strokeColor = PNRed;
         _duration = 1.0;
         _chartType = PNChartFormatTypePercent;
@@ -150,20 +153,20 @@ displayCountingLabel:(BOOL)displayCountingLabel
         
         UIBezierPath *circlePath = [UIBezierPath bezierPathWithArcCenter:CGPointMake(self.frame.size.width/2.0f, self.frame.size.height/2.0f)
                                                                   radius:(self.frame.size.height * 0.5) - ([_lineWidth floatValue]/2.0f)
-                                                              startAngle:DEGREES_TO_RADIANS(360 - 90.0)
-                                                                endAngle:DEGREES_TO_RADIANS(360 + 269.9)
+                                                              startAngle:DEGREES_TO_RADIANS(start - 90.0)
+                                                                endAngle:DEGREES_TO_RADIANS(start + 269.9)
                                                                clockwise:YES];
         
         _circle               = [CAShapeLayer layer];
         _circle.path          = circlePath.CGPath;
-//        _circle.lineCap       = kCALineCapSquare;
+        _circle.lineCap       = kCALineCapRound;
         _circle.fillColor     = [UIColor clearColor].CGColor;
         _circle.lineWidth     = [_lineWidth floatValue];
         _circle.zPosition     = 1;
         
         _circleBackground             = [CAShapeLayer layer];
         _circleBackground.path        = circlePath.CGPath;
-//        _circleBackground.lineCap     = kCALineCapSquare;
+        _circleBackground.lineCap     = kCALineCapRound;
         _circleBackground.fillColor   = [UIColor clearColor].CGColor;
         _circleBackground.lineWidth   = [_lineWidth floatValue];
         _circleBackground.strokeColor = [UIColor whiteColor].CGColor;
@@ -185,7 +188,7 @@ displayCountingLabel:(BOOL)displayCountingLabel
     // Add circle params
 
     _circle.lineWidth   = [_lineWidth floatValue];
-    _circleBackground.lineWidth = [(_lineWidth.floatValue > 5 ? _lineWidth : @9) floatValue];
+    _circleBackground.lineWidth = [(_lineWidth.floatValue > 5 ? _lineWidth : @10) floatValue];
     _circleBackground.strokeEnd = [_current floatValue] / [_total floatValue];
     _circle.strokeColor = _strokeColor.CGColor;
     _circle.strokeEnd   = [_current floatValue] / [_total floatValue];
@@ -198,7 +201,7 @@ displayCountingLabel:(BOOL)displayCountingLabel
         self.gradientMask.fillColor = [[UIColor clearColor] CGColor];
         self.gradientMask.strokeColor = [[UIColor whiteColor] CGColor];
         self.gradientMask.lineWidth = _circle.lineWidth;
-//        self.gradientMask.lineCap = kCALineCapRound;
+        self.gradientMask.lineCap = kCALineCapRound;
         CGRect gradientFrame = CGRectMake(0, 0, 2*self.bounds.size.width, 2*self.bounds.size.height);
         self.gradientMask.frame = gradientFrame;
         self.gradientMask.path = _circle.path;

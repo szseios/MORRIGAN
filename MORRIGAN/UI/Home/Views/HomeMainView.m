@@ -88,7 +88,7 @@
     [self addSubview:imageView];
     
     CGFloat circleX = _viewWidth * 11.5 / 312.0;
-    CGFloat circleY = _viewHeight * 128.5 / 860.0;
+    CGFloat circleY = _viewHeight * 129.5 / 860.0;
     CGFloat circleW = _viewWidth * 261/312.0;
     _circleImageView = [[UIImageView alloc] init];
     [_circleImageView setFrame:CGRectMake(circleX, circleY, circleW, circleW)];
@@ -357,7 +357,7 @@
     PNCircleChart *circleChart = [[PNCircleChart alloc] initWithFrame:CGRectMake(_circleImageView.x,_circleImageView.y, _circleImageView.width, _circleImageView.height) startAngle:startAngle endAngle:endAngle total:@360 current:@(360) isEmpty:NO];
     
     circleChart.backgroundColor = [UIColor clearColor];
-    circleChart.lineWidth = @9;
+    circleChart.lineWidth = @10;
     [circleChart setStrokeColor:[UIColor redColor]];
     [circleChart strokeChart];
     
@@ -387,10 +387,10 @@
 
 - (void)emptyStartTime:(NSDate *)startTime toEndTime:(NSDate *)endTime
 {
-    CGFloat startAngle = 0;
+    CGFloat startAngle = [self getAngleFromDate:startTime];
     CGFloat endAngle = [self getAngleFromDate:endTime];
-    if (endAngle >= 720) {
-        endAngle -= 720;
+    if (startAngle >= 720) {
+        startAngle -= 720;
         
     }
     PNCircleChart *circleChart = [[PNCircleChart alloc] initWithFrame:CGRectMake(_circleImageView.x,_circleImageView.y, _circleImageView.width, _circleImageView.height) startAngle:startAngle endAngle:endAngle total:@360 current:@(360) isEmpty:YES];
