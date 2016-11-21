@@ -44,7 +44,9 @@
 
 - (void)viewDidLoad {
     [super viewDidLoad];
-//    
+//
+//    [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(getElectricity:) name:ElectricQuantityChanged object:nil];
+    [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(firstGetElectricity:) name:ConnectPeripheralSuccess object:nil];
     UIImageView *upBackImage = [[UIImageView alloc] initWithFrame:CGRectMake(0, 0, self.view.width, self.view.height)];
     upBackImage.image =[UIImage imageWithColor:[Utils stringTOColor:@"#8c39e5"]];
     [self.view addSubview:upBackImage];
@@ -63,8 +65,8 @@
     [self.view addGestureRecognizer:tap];
     
     if (![BluetoothManager share].isConnected) {
-       UIAlertView *alert = [[UIAlertView alloc] initWithTitle:@"还未连接设备" message:nil delegate:self cancelButtonTitle:@"取消" otherButtonTitles:@"连接", nil];
-        [alert show];
+//       UIAlertView *alert = [[UIAlertView alloc] initWithTitle:@"还未连接设备" message:nil delegate:self cancelButtonTitle:@"取消" otherButtonTitles:@"连接", nil];
+//        [alert show];
     }
     [self setUpHomeMainView];
     
@@ -241,7 +243,22 @@
     [self.view setNeedsDisplay];
 }
 
+//电量变化
+- (void)getElectricity:(NSNotification *)notice
+{
+    [_mainView setElectricityPersent:[notice.object floatValue]];
+}
 
+//第一次主动获取电量
+- (void)firstGetElectricity:(NSNotification *)notice
+{
+    BluetoothOperation *operation = [[BluetoothOperation alloc] init];
+    [operation setValue:@"03" index:2];
+    [[BluetoothManager share] writeValueByOperation:operation];
+    operation.response = ^(NSString *response,long tag,NSError *error,BOOL success) {
+        
+    };
+}
 - (void)didReceiveMemoryWarning {
     [super didReceiveMemoryWarning];
     // Dispose of any resources that can be recreated.
