@@ -260,7 +260,18 @@ static NSString *cellIdentifier = @"cellIdentifier";
             break;
         case pickerViewTypeAge:
         {
-            [UserInfo share].age = selectData;
+            
+            NSString *year = [selectData substringToIndex:4];
+            if(year && year.length == 4) {
+                NSDateFormatter *formatter = [[NSDateFormatter alloc] init];
+                [formatter setDateFormat:@"yyyy"];
+                NSString *curYearStr = [formatter stringFromDate:[NSDate date]];
+    
+                NSInteger age = [curYearStr integerValue] - [year integerValue];
+                [UserInfo share].age = [NSString stringWithFormat:@"%ld", age];
+                _selectCell.content = [UserInfo share].age;
+            }
+           
         }
             break;
             
