@@ -299,13 +299,13 @@ static NSString *cellIdentifier = @"cellIdentifier";
     else if ([[UserInfo share].emotionStr isEqualToString:@"单身"]) {
         [UserInfo share].emotion = @"S";
     }
-        NSDictionary *dictionary = @{@"userId": [UserInfo share].userId,
-                                     @"high": [UserInfo share].high,
-                                     @"weight":[UserInfo share].weight,
-                                     @"age":[UserInfo share].age,
-                                     @"nickName":[UserInfo share].nickName,
-                                     @"target":[UserInfo share].target,
-                                     @"emotion":[UserInfo share].emotion,
+    NSDictionary *dictionary = @{@"userId": [UserInfo share].userId ? [UserInfo share].userId : @"",
+                                     @"high": [UserInfo share].high ? [UserInfo share].high : @"",
+                                     @"weight":[UserInfo share].weight ? [UserInfo share].weight : @"",
+                                     @"age":[UserInfo share].age ? [UserInfo share].age : @"",
+                                     @"nickName":[UserInfo share].nickName ? [UserInfo share].nickName : @"",
+                                     @"target":[UserInfo share].target ? [UserInfo share].target : @"",
+                                     @"emotion":[UserInfo share].emotion ? [UserInfo share].emotion : @"",
                                      };
         NSString *bodyString = [NMOANetWorking handleHTTPBodyParams:dictionary];
         [[NMOANetWorking share] taskWithTag:ID_EDIT_USERINFO

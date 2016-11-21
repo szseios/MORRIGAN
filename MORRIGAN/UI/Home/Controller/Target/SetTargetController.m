@@ -134,7 +134,7 @@
     pointerView.alpha = 0.7;
     [self.view addSubview:pointerView];
     
-    UIImageView *arrowImageView = [[UIImageView alloc] initWithFrame:CGRectMake(kScreenWidth/2 - 3, rulerY + viewY + 43, 6, 4)];
+    UIImageView *arrowImageView = [[UIImageView alloc] initWithFrame:CGRectMake(self.pointerViewX - 3, rulerY + viewY + 43, 6, 4)];
     arrowImageView.image = [UIImage imageNamed:@"arrowUp"];
     [self.view addSubview:arrowImageView];
     
@@ -154,14 +154,6 @@
     [self targetAchieve];
 }
 
-#pragma mark - ZHRulerViewDelegate
-
--(void)getRulerValue:(CGFloat)rulerValue withScrollRulerView:(ZHRulerView *)rulerView
-{
-    _countLabel.text = [NSString stringWithFormat:@"%.0lf",rulerValue];
-    [UserInfo share].target = _countLabel.text;
-}
-
 - (void)didReceiveMemoryWarning {
     [super didReceiveMemoryWarning];
     // Dispose of any resources that can be recreated.
@@ -177,33 +169,17 @@
 
 - (void)scrollViewWillEndDragging:(UIScrollView *)scrollView withVelocity:(CGPoint)velocity targetContentOffset:(inout CGPoint *)targetContentOffset
 {
-    NSLog(@"scrollViewWillEndDragging: %lf",scrollView.contentOffset.x);
-   // scrollView.contentOffset = CGPointMake(-200, scrollView.contentOffset.y);
-    
-    
-//    CGPoint orifinalTargetContentOffset = CGPointMake(targetContentOffset->x, targetContentOffset->y);
-//    CGFloat offSetX = (orifinalTargetContentOffset.x + kScreenWidth /2) * 100;
-//    NSInteger count = (NSInteger)offSetX % 1400 ;
-//    if (count > 700) {
-//        offSetX += 1400 - count;
-//    }else{
-//        offSetX -= count;
-//    }
-//    NSInteger number = (NSInteger)offSetX / 1400;
-//    _countLabel.text = [NSString stringWithFormat:@"%.0ld",number];
-//    scrollView.contentOffset = CGPointMake((number * 1400 - kScreenWidth /2 * 100) / 100.0, scrollView.contentOffset.y);
-//    NSLog(@"scrollViewWillEndDragging:%lf",orifinalTargetContentOffset.x);
+    [self getRulerValueWithScrollView:scrollView];
 }
 
 
 - (void)scrollViewDidEndDecelerating:(UIScrollView *)scrollView
 {
-    
-//    CGFloat offSetX = scrollView.contentOffset.x + kScreenWidth /2;
-//    NSInteger count = (NSInteger)offSetX / 15.25 ;
-//    _countLabel.text = [NSString stringWithFormat:@"%.0ld",count];
-//    scrollView.contentOffset = CGPointMake(count * 15.25, scrollView.contentOffset.y);
-    NSLog(@"scrollViewDidEndDecelerating:%lf",scrollView.contentOffset.x);
+    [self getRulerValueWithScrollView:scrollView];
+}
+
+- (void)getRulerValueWithScrollView:(UIScrollView *)scrollView
+{
     NSInteger distance =  fabs(fabs(scrollView.contentOffset.x) - (kScreenWidth/2 - self.pointerViewX));
     NSInteger destination = distance/15 * 15;;
     if(scrollView.contentOffset.x < 0) {
@@ -211,16 +187,22 @@
     }
     scrollView.contentOffset = CGPointMake(destination, scrollView.contentOffset.y);
     
-    
-    
     // 计算当前停止的刻度
     NSInteger index = fabs(destination)/15;
+    
     if(destination < 0) {
         index = fabs(index - self.pointerViewX/15);
     } else {
         index = index + self.pointerViewX/15;
     }
+    if (index > 180) {
+        index = 180;
+        scrollView.contentOffset = CGPointMake(destination - 15, scrollView.contentOffset.y);
+    }
     NSLog(@"当前刻度数：%ld", index);
+    _countLabel.text = [NSString stringWithFormat:@"%ld",index];
+    [UserInfo share].target = _countLabel.text;
+    
 }
 
 
