@@ -34,6 +34,9 @@
     [super viewDidLoad];    
     UIImageView *backgroudView = [[UIImageView alloc] initWithFrame:self.navigationController.view.bounds];
     backgroudView.image = [UIImage imageWithColor:[Utils stringTOColor:@"#8c39e5"]];
+    
+    [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(didregisterUser) name:kRecordManagerUploadEndNotification object:nil];
+    
     [self.view addSubview:backgroudView];
     
     _homeCtl = [[HomePageController alloc] init];
@@ -161,7 +164,14 @@
 - (void)registerUser
 {
     // 上传护理记录数据
-//    [[RecordManager share] uploadDBDatas:YES];
+    [[RecordManager share] uploadDBDatas:YES];
+    [MBProgressHUD showHUDAddedTo:UI_Window animated:YES];
+    
+   
+}
+
+- (void)didregisterUser
+{
     NSDictionary *dictionary = @{@"userId": [UserInfo share].userId?[UserInfo share].userId:@""
                                  };
     NSString *bodyString = [NMOANetWorking handleHTTPBodyParams:dictionary];
@@ -171,7 +181,9 @@
                              bodyString:bodyString
                      objectTaskFinished:^(NSError *error, id obj)
      {
+         [MBProgressHUD hideAllHUDsForView:UI_Window animated:YES];
          if ([[obj objectForKey:HTTP_KEY_RESULTCODE] isEqualToString:HTTP_RESULTCODE_SUCCESS]) {
+             
              [MBProgressHUD showHUDByContent:@"注销成功！" view:UI_Window afterDelay:2];
              NSLog(@"注销成功！");
              // 注销登陆成功时调用这个
@@ -186,8 +198,12 @@
          
          
      }];
-    
-   
+
+}
+
+- (void)dealloc
+{
+    [[NSNotificationCenter defaultCenter] removeObserver:self];
 }
 
 /*

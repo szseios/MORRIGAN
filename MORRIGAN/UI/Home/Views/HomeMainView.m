@@ -354,7 +354,7 @@
         endAngle -= 720;
         startAngle -= 720;
     }
-    PNCircleChart *circleChart = [[PNCircleChart alloc] initWithFrame:CGRectMake(_circleImageView.x,_circleImageView.y, _circleImageView.width, _circleImageView.height) startAngle:startAngle endAngle:endAngle total:@360 current:@(360) clockwise:YES];
+    PNCircleChart *circleChart = [[PNCircleChart alloc] initWithFrame:CGRectMake(_circleImageView.x,_circleImageView.y, _circleImageView.width, _circleImageView.height) startAngle:startAngle endAngle:endAngle total:@360 current:@(360) isEmpty:NO];
     
     circleChart.backgroundColor = [UIColor clearColor];
     circleChart.lineWidth = @9;
@@ -374,6 +374,7 @@
         comps = [calendar components:unitFlags fromDate:date];
         NSInteger hour = comps.hour;
         NSInteger minute = comps.minute;
+        
         CGFloat angle = (CGFloat)(hour * 60 + minute);
         
         return angle;
@@ -392,7 +393,7 @@
         endAngle -= 720;
         
     }
-    PNCircleChart *circleChart = [[PNCircleChart alloc] initWithFrame:CGRectMake(_circleImageView.x,_circleImageView.y, _circleImageView.width, _circleImageView.height) startAngle:startAngle endAngle:endAngle total:@360 current:@(360) clockwise:YES];
+    PNCircleChart *circleChart = [[PNCircleChart alloc] initWithFrame:CGRectMake(_circleImageView.x,_circleImageView.y, _circleImageView.width, _circleImageView.height) startAngle:startAngle endAngle:endAngle total:@360 current:@(360) isEmpty:YES];
     
     circleChart.backgroundColor = [UIColor clearColor];
     circleChart.lineWidth = @2;
@@ -506,6 +507,9 @@
 {
     _upBackgroundView.height = _upView.height * persent;
     _upBackgroundView.y = _upView.height - _upBackgroundView.height;
+    NSMutableAttributedString *attributeString = [[NSMutableAttributedString alloc] initWithString:[NSString stringWithFormat:@"%ld%%",(NSInteger)persent*100]];
+    [attributeString setAttributes:@{NSFontAttributeName:[UIFont systemFontOfSize:20]} range:NSMakeRange(0, 2)];
+    _electricityLabel.attributedText = attributeString;
     [self setNeedsDisplay];
 }
 
@@ -513,6 +517,7 @@
 {
     NSMutableAttributedString *attributeString = [[NSMutableAttributedString alloc] initWithString:[NSString stringWithFormat:@"%@star",starStr]];
     [attributeString setAttributes:@{NSFontAttributeName:[UIFont systemFontOfSize:18]} range:NSMakeRange(0, starStr.length)];
+    
     _starLabel.attributedText = attributeString;
 }
 

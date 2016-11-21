@@ -92,18 +92,16 @@
     CGFloat mainViewW = kScreenWidth * 0.75 + (kScreenWidth > 320 ? 30 : 10); //kScreenWidth > 320 ? 300 : 220;
     CGFloat mainViewH = mainViewW / 623 * 860.0;
     CGFloat mainViewX = (kScreenWidth - mainViewW) /2 + (kScreenWidth > 320 ? 20 : 15); //kScreenWidth > 320 ? 50 : 20;
-    
-//    NSDictionary *temDic = @{@"startTime":@90,@"endTime":@180};
-//    NSDictionary *temDic1 = @{@"startTime":@270,@"endTime":@310};
-//    NSDictionary *temDic3 = @{@"startTime":@200,@"endTime":@260};
-//    NSArray *array = @[temDic,temDic1,temDic3];
     MassageRecordModel *model = [[MassageRecordModel alloc] init];
-    model.startTime = [NSDate date];
-    model.endTime = [NSDate dateWithTimeIntervalSinceNow:60*60*2];
-//    model.startTime = [NSDate dateWithTimeIntervalSinceNow:60*60*8];
-//    model.endTime = [NSDate dateWithTimeInterval:60*60*2 sinceDate:model.startTime];
-    NSArray *arra = @[model];
-    NSArray *array = [DBManager selectForenoonDatas:[UserInfo share].userId];
+    model.startTime = [NSDate dateWithTimeIntervalSinceNow:-60*60*1];
+    model.endTime = [NSDate dateWithTimeIntervalSinceNow:60*60*0];
+    
+    MassageRecordModel *model1 = [[MassageRecordModel alloc] init];
+    model1.startTime = [NSDate dateWithTimeIntervalSinceNow:-60*60*3];;
+    model1.endTime = [NSDate dateWithTimeIntervalSinceNow:-60*60*2];
+    
+    NSArray *arra = @[model1,model];
+//    NSArray *array = [DBManager selectForenoonDatas:[UserInfo share].userId];
     _mainView = [[HomeMainView alloc] initWithMorriganArray:arra withFarme:CGRectMake(mainViewX, 74, mainViewW, mainViewH)];
     _mainView.backgroundColor = [UIColor clearColor];
     

@@ -123,12 +123,17 @@ displayCountingLabel:(BOOL)displayCountingLabel
            endAngle:(CGFloat)endAngle
               total:(NSNumber *)total
             current:(NSNumber *)current
-          clockwise:(BOOL)clockwise
+          isEmpty:(BOOL)isEmpty
 {
     self = [super initWithFrame:frame];
     
     if (self) {
         _total = @72;
+//        if (isEmpty) {
+//            _current = @();
+//        }else{
+//           _current = @((NSInteger)(endAngle - startAngle) / 10);
+//        }
         _current = @((NSInteger)(endAngle - startAngle) / 10);
         _strokeColor = PNRed;
         _duration = 1.0;
@@ -137,8 +142,6 @@ displayCountingLabel:(BOOL)displayCountingLabel
         
         _displayCountingLabel = NO;
         
-//        CGFloat startAngle = clockwise ? -90.0f : 270.0f;
-//        CGFloat endAngle = clockwise ? -90.01f : 270.01f;
         
         _lineWidth = @10;
         
@@ -147,15 +150,9 @@ displayCountingLabel:(BOOL)displayCountingLabel
         
         UIBezierPath *circlePath = [UIBezierPath bezierPathWithArcCenter:CGPointMake(self.frame.size.width/2.0f, self.frame.size.height/2.0f)
                                                                   radius:(self.frame.size.height * 0.5) - ([_lineWidth floatValue]/2.0f)
-                                                              startAngle:DEGREES_TO_RADIANS(startAngle - 90.0)
-                                                                endAngle:DEGREES_TO_RADIANS(startAngle + 269.9)
-                                                               clockwise:clockwise];
-        
-        UIBezierPath *shadowPath = [UIBezierPath bezierPathWithArcCenter:CGPointMake(self.frame.size.width/2.0f, self.frame.size.height/2.0f)
-                                                                  radius:(self.frame.size.height * 0.5) - ([_lineWidth floatValue]/2.0f)
-                                                              startAngle:DEGREES_TO_RADIANS(startAngle - 90.0)
-                                                                endAngle:DEGREES_TO_RADIANS(startAngle + 269.9)
-                                                               clockwise:clockwise];
+                                                              startAngle:DEGREES_TO_RADIANS(360 - 90.0)
+                                                                endAngle:DEGREES_TO_RADIANS(360 + 269.9)
+                                                               clockwise:YES];
         
         _circle               = [CAShapeLayer layer];
         _circle.path          = circlePath.CGPath;
@@ -173,8 +170,9 @@ displayCountingLabel:(BOOL)displayCountingLabel
         _circleBackground.strokeEnd   = _current.floatValue / _total.floatValue;
         _circleBackground.zPosition   = -1;
         
-        [self.layer addSublayer:_circle];
         [self.layer addSublayer:_circleBackground];
+        [self.layer addSublayer:_circle];
+        
     }
     
     return self;
@@ -187,7 +185,7 @@ displayCountingLabel:(BOOL)displayCountingLabel
     // Add circle params
 
     _circle.lineWidth   = [_lineWidth floatValue];
-    _circleBackground.lineWidth = [_lineWidth floatValue];
+    _circleBackground.lineWidth = [(_lineWidth.floatValue > 5 ? _lineWidth : @9) floatValue];
     _circleBackground.strokeEnd = [_current floatValue] / [_total floatValue];
     _circle.strokeColor = _strokeColor.CGColor;
     _circle.strokeEnd   = [_current floatValue] / [_total floatValue];

@@ -18,7 +18,7 @@ typedef NS_ENUM (NSUInteger, PNChartFormatType) {
     PNChartFormatTypeDecimalTwoPlaces,
 };
 
-#define DEGREES_TO_RADIANS(angle) ((angle) / 180.0 * M_PI)
+#define DEGREES_TO_RADIANS(angle) ((angle) / 360.0 * M_PI)
 
 @interface PNCircleChart : UIView
 
@@ -60,7 +60,7 @@ displayCountingLabel:(BOOL)displayCountingLabel
            endAngle:(CGFloat)endAngle
               total:(NSNumber *)total
             current:(NSNumber *)current
-          clockwise:(BOOL)clockwise;
+          isEmpty:(BOOL)isEmpty;
 
 @property (strong, nonatomic) UICountingLabel *countingLabel;
 @property (nonatomic) UIColor *strokeColor;

@@ -25,5 +25,6 @@
 #import "SearchPeripheralViewController.h"
 #import "DBManager.h"
 #import "UIImage+Color.h"
+#import "RecordManager.h"
 #endif
 
