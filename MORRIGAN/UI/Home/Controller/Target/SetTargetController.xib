@@ -57,9 +57,9 @@
                     <constraints>
                         <constraint firstAttribute="height" constant="35" id="ZrT-IL-WeG"/>
                     </constraints>
-                    <fontDescription key="fontDescription" type="system" pointSize="20"/>
+                    <fontDescription key="fontDescription" type="system" pointSize="18"/>
                     <color key="tintColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
-                    <state key="normal" title="完成" backgroundImage="basicBackground">
+                    <state key="normal" title="完成">
                         <color key="titleColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                     </state>
                 </button>
@@ -104,6 +104,5 @@
     </objects>
     <resources>
         <image name="arrowDown" width="16" height="12"/>
-        <image name="basicBackground" width="375" height="667"/>
     </resources>
 </document>

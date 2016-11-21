@@ -121,6 +121,18 @@ static  CGFloat const pointViewH=60;
         [self.delegate getRulerValue:value withScrollRulerView:self];
     }
 }
+
+- (void)scrollViewWillEndDragging:(UIScrollView *)scrollView withVelocity:(CGPoint)velocity targetContentOffset:(inout CGPoint *)targetContentOffset
+{
+    
+    CGPoint orifinalTargetContentOffset = CGPointMake(targetContentOffset->x, targetContentOffset->y);
+    CGFloat offSetX = (orifinalTargetContentOffset.x);
+    CGFloat value = _mixNuber+round(offSetX);
+    [scrollView setContentOffset:CGPointMake(value, orifinalTargetContentOffset.y) animated:YES];
+    
+    NSLog(@"scrollViewWillEndDragging:%lf",orifinalTargetContentOffset.x);
+}
+
 -(UIView *)hitTest:(CGPoint)point withEvent:(UIEvent *)event{
     
     UIView *view=[super hitTest:point withEvent:event];

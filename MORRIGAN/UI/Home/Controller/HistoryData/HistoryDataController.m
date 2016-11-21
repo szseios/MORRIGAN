@@ -49,7 +49,7 @@ static NSString *cellID = @"DataCellID";
     [super viewDidLoad];
     self.view.backgroundColor = [UIColor whiteColor];
     UIImageView *backImageView = [[UIImageView alloc] initWithFrame:CGRectMake(0, 0, kScreenWidth, 114)];
-    backImageView.image = [UIImage imageNamed:@"basicBackground"];
+    backImageView.image = [UIImage imageWithColor:[Utils stringTOColor:@"#8c39e5"]];
     [self.view addSubview:backImageView];
     [self getDataFromService];
     _titleArray = @[@"今日目标",@"今日护养",@"剩余目标值"];
@@ -57,42 +57,43 @@ static NSString *cellID = @"DataCellID";
     [self setUpBarView];
     [self setUpSegmentPageView];
     [self setUpDayBarChatView];
-    [self setUpWeekBarChatView];
     [self setUpBottomView];
-    
-    if (self.connectBottomView) {
-        [self.view bringSubviewToFront:self.connectBottomView];
-    }
 }
 
 - (void)getDataFromService
 {
     _weekDataArray = [NSMutableArray array];
+    NSString *daStr = @"netWorkFinish";
+    const char *queueName = [daStr UTF8String];
+    dispatch_queue_t myQueue = dispatch_queue_create(queueName, DISPATCH_QUEUE_SERIAL);
     
-    __weak HistoryDataController *blockSelf = self;
-    NSDictionary *dictionary = @{@"userId": [UserInfo share].userId ? [UserInfo share].userId : @"",
-                                 };
-    NSString *bodyString = [NMOANetWorking handleHTTPBodyParams:dictionary];
-    [[NMOANetWorking share] taskWithTag:ID_GET_RECORD urlString:URL_GET_RECORD httpHead:nil bodyString:bodyString objectTaskFinished:^(NSError *error, id obj) {
-        
-        if ([[obj objectForKey:HTTP_KEY_RESULTCODE] isEqualToString:HTTP_RESULTCODE_SUCCESS]) {
-            NSArray *hlarray = [obj objectForKey:@"hlInfo"];
-            if (hlarray) {
-                for (NSDictionary *dict in hlarray) {
-                    NSString *timeLong = [dict objectForKey:@"timeLong"];
-                    [blockSelf.weekDataArray addObject:timeLong];
+    dispatch_async(myQueue, ^{
+        __weak HistoryDataController *blockSelf = self;
+        NSDictionary *dictionary = @{@"userId": [UserInfo share].userId ? [UserInfo share].userId : @"",
+                                     };
+        NSString *bodyString = [NMOANetWorking handleHTTPBodyParams:dictionary];
+        [[NMOANetWorking share] taskWithTag:ID_GET_RECORD urlString:URL_GET_RECORD httpHead:nil bodyString:bodyString objectTaskFinished:^(NSError *error, id obj) {
+            
+            if ([[obj objectForKey:HTTP_KEY_RESULTCODE] isEqualToString:HTTP_RESULTCODE_SUCCESS]) {
+                NSArray *hlarray = [obj objectForKey:@"hlInfo"];
+                if (hlarray) {
+                    for (NSDictionary *dict in hlarray) {
+                        NSString *timeLong = [dict objectForKey:@"timeLong"];
+                        [blockSelf.weekDataArray addObject:timeLong];
+                    }
                 }
+            }else{
+                [MBProgressHUD showHUDByContent:[obj objectForKey:@"retMsg"] view:UI_Window afterDelay:2];
             }
-        }else{
-            [MBProgressHUD showHUDByContent:[obj objectForKey:@"retMsg"] view:UI_Window afterDelay:2];
-        }
-    }];
+        }];
+        
+    });
 
 }
 
 - (void)setUpBarView
 {
-    _barView = [[BasicBarView alloc] initWithFrame:CGRectMake(0, 20, kScreenWidth, 44) withType:superBarTypeLeftItemBackAndRightItemBinding withTitle:@"今日一览"];
+    _barView = [[BasicBarView alloc] initWithFrame:CGRectMake(0, 20, kScreenWidth, 44) withType:superBarTypeLeftItemBackAndRightItemBinding withTitle:@"今日一览" isShowRightButton:NO];
     [self.view addSubview:_barView];
     _barView.delegate = self;
 }
@@ -100,7 +101,7 @@ static NSString *cellID = @"DataCellID";
 - (void)setUpSegmentPageView
 {
     _pageSegmente = [[UISegmentedControl alloc] initWithItems:@[@"日",@"周"]];
-    [_pageSegmente setFrame:CGRectMake(40, 74, kScreenWidth - 80, 30)];
+    [_pageSegmente setFrame:CGRectMake(15, 75, kScreenWidth - 30, 30)];
     [self.view addSubview:_pageSegmente];
     [_pageSegmente setTintColor:[UIColor whiteColor]];
     [_pageSegmente setBackgroundImage:[UIImage imageNamed:@"basicBackground"] forState:UIControlStateNormal barMetrics:UIBarMetricsCompact];
@@ -110,7 +111,7 @@ static NSString *cellID = @"DataCellID";
 
 - (void)setUpDayBarChatView
 {
-    UIView *chatView = [[UIView alloc] initWithFrame:CGRectMake(0, 114, kScreenWidth, 250)];
+    UIView *chatView = [[UIView alloc] initWithFrame:CGRectMake(0, 117, kScreenWidth, 250)];
     
     UIImageView *backImageView = [[UIImageView alloc] initWithFrame:chatView.bounds];
     backImageView.image = [UIImage imageNamed:@"basicBackground"];
@@ -121,8 +122,8 @@ static NSString *cellID = @"DataCellID";
     _dayView.backgroundColor = [UIColor clearColor];
     [self.view addSubview:_dayView];
     
-    CGFloat labelY = 0;
-    _minuteDataLabel = [[UILabel alloc] initWithFrame:CGRectMake(10, labelY, 60, 60)];
+    CGFloat labelY = 31;
+    _minuteDataLabel = [[UILabel alloc] initWithFrame:CGRectMake(15, labelY, 60, 60)];
     _minuteDataLabel.textColor = [UIColor whiteColor];
     _minuteDataLabel.textAlignment = NSTextAlignmentRight;
     _minuteDataLabel.font = [UIFont systemFontOfSize:35];
@@ -143,41 +144,77 @@ static NSString *cellID = @"DataCellID";
     _dateLabel.text = dateStr;
     [_dayView addSubview:_dateLabel];
     
-    static NSNumberFormatter *barChartFormatter;
-    if (!barChartFormatter){
-        barChartFormatter = [[NSNumberFormatter alloc] init];
-        barChartFormatter.numberStyle = NSNumberFormatterCurrencyStyle;
-        barChartFormatter.allowsFloats = NO;
-        barChartFormatter.maximumFractionDigits = 0;
+    CGFloat dayBarViewY = 210;
+    CGFloat dayBarViewX = 10;
+    CGFloat dayBarViewW = kScreenWidth - 20;
+    
+    UIView *lineView = [[UIView alloc] initWithFrame:CGRectMake(dayBarViewX, dayBarViewY, dayBarViewW, 2)];
+    lineView.backgroundColor = [UIColor colorWithRed:0.9 green:0.9 blue:0.9 alpha:0.9];
+    [_dayView addSubview:lineView];
+    
+    CGFloat barX = (kScreenWidth - 20) / 24;
+    CGFloat barW = barX/2;
+    CGFloat mostBarH = dayBarViewY;
+    for (NSInteger i = 0; i < 24; i++) {
+        UIView *bar = [[UIView alloc] initWithFrame:CGRectMake(barX * i+13, mostBarH - 5, barW, 5)];
+        bar.backgroundColor = [UIColor whiteColor];
+        bar.tag = 1000 + i;
+        [_dayView addSubview:bar];
+        
+        if (i == 0 || i == 4 || i == 9 || i == 14 || i == 19 || i == 23 ) {
+            UILabel *label = [self setUpLabelWithInteger:i];
+            [_dayView addSubview:label];
+        }
+        
     }
     
-    CGFloat dayBarViewH = 180;
-    CGFloat dayBarViewY = 50;
-    _dayBarChat = [[PNBarChart alloc] initWithFrame:CGRectMake(10, dayBarViewY, kScreenWidth-20, dayBarViewH)];
-    _dayBarChat.backgroundColor = [UIColor clearColor];
-    _dayBarChat.yLabelFormatter = ^(CGFloat yValue){
-        return [barChartFormatter stringFromNumber:[NSNumber numberWithFloat:yValue]];
-    };
     
-    _dayBarChat.yChartLabelWidth = 0.0;
-    _dayBarChat.chartMarginLeft = 0.0;
-    _dayBarChat.chartMarginRight = 0.0;
-    _dayBarChat.chartMarginTop = 0.0;
-    _dayBarChat.chartMarginBottom = 5.0;
-    _dayBarChat.xLabelSkip = 6;
-    _dayBarChat.labelMarginTop = 0.0;
-    _dayBarChat.showChartBorder = YES;
-    _dayBarChat.yMaxValue = 60;
-    [_dayBarChat setXLabels:@[@1,@2,@3,@4,@5,@6,@7,@8,@9,@10,@11,@12,@13,@14,@15,@16,@17,@18,@19,@20,@21,@22,@23,@24]];
+//    static NSNumberFormatter *barChartFormatter;
+//    if (!barChartFormatter){
+//        barChartFormatter = [[NSNumberFormatter alloc] init];
+//        barChartFormatter.numberStyle = NSNumberFormatterCurrencyStyle;
+//        barChartFormatter.allowsFloats = NO;
+//        barChartFormatter.maximumFractionDigits = 0;
+//    }
     
-    [_dayBarChat setYValues:@[@0,@0,@0,@0,@0.0,@0,@0,@0,@0,@0,@0,@0,@0,@0,@0,@0,@0,@0,@0,@0,@0,@0,@0,@0]];
-    [_dayBarChat setStrokeColor:PNWhite];
-    [_dayBarChat strokeChart];
-    
-    _dayBarChat.delegate = self;
-    [_dayView addSubview:_dayBarChat];
+//    CGFloat dayBarViewH = 180;
+//    CGFloat dayBarViewY = 50;
+//    _dayBarChat = [[PNBarChart alloc] initWithFrame:CGRectMake(10, dayBarViewY, kScreenWidth-20, dayBarViewH)];
+//    _dayBarChat.backgroundColor = [UIColor clearColor];
+//    _dayBarChat.yLabelFormatter = ^(CGFloat yValue){
+//        return [barChartFormatter stringFromNumber:[NSNumber numberWithFloat:yValue]];
+//    };
+//    
+//    _dayBarChat.yChartLabelWidth = 0.0;
+//    _dayBarChat.chartMarginLeft = 0.0;
+//    _dayBarChat.chartMarginRight = 0.0;
+//    _dayBarChat.chartMarginTop = 0.0;
+//    _dayBarChat.chartMarginBottom = 5.0;
+//    _dayBarChat.xLabelSkip = 6;
+//    _dayBarChat.labelMarginTop = 0.0;
+//    _dayBarChat.showChartBorder = YES;
+//    _dayBarChat.yMaxValue = 60;
+//    [_dayBarChat setXLabels:@[@1,@2,@3,@4,@5,@6,@7,@8,@9,@10,@11,@12,@13,@14,@15,@16,@17,@18,@19,@20,@21,@22,@23,@24]];
+//    
+//    [_dayBarChat setYValues:@[@0,@0,@0,@0,@0.0,@0,@0,@0,@0,@0,@0,@0,@0,@0,@0,@0,@0,@0,@0,@0,@0,@0,@0,@0]];
+//    [_dayBarChat setStrokeColor:PNWhite];
+//    [_dayBarChat strokeChart];
+//    
+////    _dayBarChat.delegate = self;
+//    [_dayView addSubview:_dayBarChat];
 }
 
+- (UILabel *)setUpLabelWithInteger:(NSInteger)i
+{
+    CGFloat barLabelX = (kScreenWidth - 20) / 24;
+    CGFloat addX = (i >= 9 ? 10 : 13);
+    UILabel *label = [[UILabel alloc] initWithFrame:CGRectMake(barLabelX * i + addX, 215, 30, 20)];
+    label.text = (i == 23 ? [NSString stringWithFormat:@"%ld时",i+1] : [NSString stringWithFormat:@"%ld",i+1]);
+    label.font = [UIFont systemFontOfSize:10];
+    label.textColor = [UIColor colorWithRed:0.9 green:0.9 blue:0.9 alpha:0.9];
+//    label.textAlignment = NSTextAlignmentCenter;
+    return label;
+}
 - (void)setUpWeekBarChatView
 {
     _weekView = [[UIView alloc] initWithFrame:_dayView.frame];
@@ -271,51 +308,51 @@ static NSString *cellID = @"DataCellID";
     NSInteger backCount;
     NSInteger aheadCount;
     switch (week) {
-        case 0:
-        {
-            backCount = 7;
-            aheadCount = 0;
-        }
-            break;
         case 1:
         {
             backCount = 6;
-            aheadCount = 1;
+            aheadCount = 0;
         }
             break;
             
         case 2:
         {
-            backCount = 5;
-            aheadCount = 2;
+            backCount = 0;
+            aheadCount = 5;
         }
             break;
             
         case 3:
         {
-            backCount = 4;
-            aheadCount = 3;
+            backCount = 1;
+            aheadCount = 5;
         }
             break;
             
         case 4:
         {
-            backCount = 3;
+            backCount = 2;
             aheadCount = 4;
         }
             break;
             
         case 5:
         {
-            backCount = 2;
-            aheadCount = 5;
+            backCount = 3;
+            aheadCount = 3;
         }
             break;
             
         case 6:
         {
-            backCount = 1;
-            aheadCount = 6;
+            backCount = 4;
+            aheadCount = 2;
+        }
+            break;
+        case 7:
+        {
+            backCount = 5;
+            aheadCount = 1;
         }
             break;
             
@@ -343,6 +380,9 @@ static NSString *cellID = @"DataCellID";
         _titleArray = @[@"今日目标",@"今日护养",@"剩余目标值"];
         [_bottomTableView reloadData];
     }else{
+        if (!_weekView) {
+            [self setUpWeekBarChatView];
+        }
         _dayView.hidden = YES;
         _weekView.hidden = NO;
         _titleArray = @[@"今日目标",@"今日护养",@"剩余目标值",@"平均养护"];

@@ -42,7 +42,7 @@ typedef enum : NSUInteger {
 
 @property (nonatomic , weak) id<BasicBarViewDelegate> delegate;
 
-- (instancetype)initWithFrame:(CGRect)frame withType:(superBarType)type withTitle:(NSString *)title;
+- (instancetype)initWithFrame:(CGRect)frame withType:(superBarType)type withTitle:(NSString *)title isShowRightButton:(BOOL)showRightButton;
 
 - (void)setRightButtonEnable:(BOOL)enable;
 

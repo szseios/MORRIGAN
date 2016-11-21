@@ -38,7 +38,7 @@
     
     
     UIImageView *backImageView = [[UIImageView alloc] initWithFrame:CGRectMake(0, 0, kScreenWidth, 64)];
-    backImageView.image = [UIImage imageNamed:@"basicBackground"];
+    backImageView.image = [UIImage imageWithColor:[Utils stringTOColor:@"#8c39e5"]];
     [self.view addSubview:backImageView];
     
     
@@ -68,7 +68,7 @@
 
 - (void)setUpBarView
 {
-    _barView = [[BasicBarView alloc] initWithFrame:CGRectMake(0, 20, kScreenWidth, 44) withType:superBarTypeLeftItemBackAndRightItemBinding withTitle:_webTitle];
+    _barView = [[BasicBarView alloc] initWithFrame:CGRectMake(0, 20, kScreenWidth, 44) withType:superBarTypeLeftItemBackAndRightItemBinding withTitle:_webTitle isShowRightButton:YES];
     [self.view addSubview:_barView];
     _barView.delegate = self;
 }

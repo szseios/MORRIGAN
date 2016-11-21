@@ -20,4 +20,6 @@
 
 @property (nonatomic , weak) id<HomePageControllerDelegate> delegate;
 
+@property (nonatomic , assign) BOOL isLeft;
+
 @end

@@ -15,6 +15,7 @@
 #import "RelateDeviceController.h"
 #import "HistoryDataController.h"
 #import "LoginViewController.h"
+#import "PersonalCell.h"
 
 
 @interface PersonalController ()<UITableViewDelegate,UITableViewDataSource,UIAlertViewDelegate>
@@ -40,34 +41,32 @@ static NSString *cellIdentifier = @"cellIdentifier";
     backgroudView.image = [UIImage imageNamed:@"basicBackground"];
     [self.view addSubview:backgroudView];
     
-    CGFloat cellWidth = kScreenWidth * 3 / 4;
+    CGFloat cellWidth = kScreenWidth-80;
     _personalTableView = [[UITableView alloc] initWithFrame:CGRectMake(0, 0,cellWidth ,self.view.height) style:UITableViewStyleGrouped];
     _personalTableView.delegate = self;
     _personalTableView.dataSource = self;
     _personalTableView.backgroundColor = [UIColor clearColor];
-    [_personalTableView registerClass:[UITableViewCell class] forCellReuseIdentifier:cellIdentifier];
+    [_personalTableView registerNib:[UINib nibWithNibName:@"PersonalCell" bundle:nil] forCellReuseIdentifier:cellIdentifier];
     [self.view addSubview:_personalTableView];
     
     //headerView
-    _headerView = [[UIView alloc] initWithFrame:CGRectMake(0, 0, cellWidth, 120)];
-    _headerImageView = [[UIImageView alloc] initWithFrame:CGRectMake(20, 35, 80, 80)];
+    _headerView = [[UIView alloc] initWithFrame:CGRectMake(0, 0, cellWidth, 103)];
+    _headerImageView = [[UIImageView alloc] initWithFrame:CGRectMake(15, 37, 51, 51)];
     _headerImageView.clipsToBounds = YES;
-    _headerImageView.layer.cornerRadius = 40;
+    _headerImageView.layer.cornerRadius = _headerImageView.width / 2;
 //    headerImageView.image = [UIImage imageNamed:@"defaultHeaderView"];
     
-    [_headerImageView sd_setImageWithURL:[NSURL URLWithString:[UserInfo share].imgUrl] placeholderImage:[UIImage imageNamed:@"defaultHeaderView"] options:SDWebImageHandleCookies | SDWebImageRetryFailed completed:^(UIImage *image, NSError *error, SDImageCacheType cacheType, NSURL *imageURL) {
+    [_headerImageView sd_setImageWithURL:[NSURL URLWithString:[UserInfo share].imgUrl] placeholderImage:[UIImage imageNamed:@"defaultHeaderView"] options:SDWebImageHandleCookies | SDWebImageRetryFailed | SDWebImageRefreshCached completed:^(UIImage *image, NSError *error, SDImageCacheType cacheType, NSURL *imageURL) {
         
     }];
-    
-//    UITapGestureRecognizer *tap = [[UITapGestureRecognizer alloc] initWithTarget:self action:@selector(selectHeaderImage)];
-//    [_headerImageView addGestureRecognizer:tap];
     [_headerView addSubview:_headerImageView];
     
-    CGFloat nameLabelY = _headerImageView.height / 2 + 15;
-    _nameLabel = [[UILabel alloc] initWithFrame: CGRectMake(120, nameLabelY, cellWidth - 120, 40)];
+    CGFloat nameLabelY = _headerImageView.height / 2 + 17;
+    CGFloat nameLabelX = CGRectGetMaxX(_headerImageView.frame) + 17;
+    _nameLabel = [[UILabel alloc] initWithFrame: CGRectMake(nameLabelX, nameLabelY, cellWidth - nameLabelX, 34)];
     _nameLabel.text = [UserInfo share].nickName ? [UserInfo share].nickName : @"";
-    _nameLabel.font = [UIFont systemFontOfSize:14];
-    _nameLabel.textColor = [UIColor whiteColor];
+    _nameLabel.font = [UIFont systemFontOfSize:18];
+    _nameLabel.textColor = [Utils stringTOColor:@"#ffffff"];
     [_headerView addSubview:_nameLabel];
     
     _personalTableView.tableHeaderView = _headerView;
@@ -107,40 +106,37 @@ static NSString *cellIdentifier = @"cellIdentifier";
 
 - (UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath
 {
-    UITableViewCell *cell = [tableView dequeueReusableCellWithIdentifier:cellIdentifier];
+    PersonalCell *cell = [tableView dequeueReusableCellWithIdentifier:cellIdentifier];
     cell.backgroundColor = [UIColor clearColor];
     if (!cell) {
-        cell = [[UITableViewCell alloc] initWithStyle:UITableViewCellStyleDefault reuseIdentifier:cellIdentifier];
+        cell = [[PersonalCell alloc] init];
     }
-    cell.accessoryType = UITableViewCellAccessoryDisclosureIndicator;
-    cell.textLabel.text = @"我的资料";
-    cell.textLabel.textColor = [UIColor whiteColor];
     if (indexPath.section == 0) {
         switch (indexPath.row) {
             case 0:
             {
-                cell.textLabel.text = @"我的资料";
-                cell.imageView.image = [UIImage imageNamed:@"icon_header"];
+                cell.titleLabel.text = @"我的资料";
+                cell.leftImageView.image = [UIImage imageNamed:@"icon_header"];
             }
                 break;
             case 1:
             {
-                cell.textLabel.text = @"设定目标";
-                cell.imageView.image = [UIImage imageNamed:@"icon_setTarget"];
+                cell.titleLabel.text = @"设定目标";
+                cell.leftImageView.image = [UIImage imageNamed:@"icon_setTarget"];
             }
                 break;
                 
             case 2:
             {
-                cell.textLabel.text = @"历史记录";
-                cell.imageView.image = [UIImage imageNamed:@"icon_history"];
+                cell.titleLabel.text = @"历史记录";
+                cell.leftImageView.image = [UIImage imageNamed:@"icon_history"];
             }
                 break;
                 
             case 3:
             {
-                cell.textLabel.text = @"关联设备";
-                cell.imageView.image = [UIImage imageNamed:@"icon_linkDevice"];
+                cell.titleLabel.text = @"关联设备";
+                cell.leftImageView.image = [UIImage imageNamed:@"icon_linkDevice"];
             }
                 break;
 
@@ -153,21 +149,21 @@ static NSString *cellIdentifier = @"cellIdentifier";
         switch (indexPath.row) {
             case 0:
             {
-                cell.textLabel.text = @"关于摩莉";
-                cell.imageView.image = [UIImage imageNamed:@"icon_aboutMORRIGAN"];
+                cell.titleLabel.text = @"关于摩莉";
+                cell.leftImageView.image = [UIImage imageNamed:@"icon_aboutMORRIGAN"];
             }
                 break;
             case 1:
             {
-                cell.textLabel.text = @"意见反馈";
-                cell.imageView.image = [UIImage imageNamed:@"icon_feekBack"];
+                cell.titleLabel.text = @"意见反馈";
+                cell.leftImageView.image = [UIImage imageNamed:@"icon_feekBack"];
             }
                 break;
                 
             case 2:
             {
-                cell.textLabel.text = @"注销用户信息";
-                cell.imageView.image = [UIImage imageNamed:@"icon_logout"];
+                cell.titleLabel.text = @"注销用户信息";
+                cell.leftImageView.image = [UIImage imageNamed:@"icon_logout"];
             }
                 break;
 
@@ -181,21 +177,38 @@ static NSString *cellIdentifier = @"cellIdentifier";
 
 - (UIView *)tableView:(UITableView *)tableView viewForHeaderInSection:(NSInteger)section
 {
-    UILabel *label = [[UILabel alloc] initWithFrame:CGRectMake(10, 0, 150, 44)];
-    label.textColor = [UIColor whiteColor];
+    UIView *sectionView = [[UIView alloc] initWithFrame:CGRectMake(0, 0,kScreenWidth-80 , 32)];
+    sectionView.backgroundColor = [Utils stringTOColor:@"#8d03d6"];
+    
+    UILabel *label = [[UILabel alloc] initWithFrame:CGRectMake(15, 0, 150, 32)];
+    label.textColor = [Utils stringTOColor:@"#ffffff"];
+    label.alpha = 0.4;
+    label.font = [UIFont systemFontOfSize:16];
     if (section == 0) {
         
         label.text = @"按摩时";
-        return label;
+        
     }else{
         label.text = @"关于应用";
-        return label;
+       
     }
+    [sectionView addSubview:label];
+    return sectionView;
+}
+
+- (CGFloat)tableView:(UITableView *)tableView heightForRowAtIndexPath:(NSIndexPath *)indexPath
+{
+    return 46;
 }
 
 - (CGFloat)tableView:(UITableView *)tableView heightForHeaderInSection:(NSInteger)section
 {
-    return 44;
+    return 32;
+}
+
+- (CGFloat)tableView:(UITableView *)tableView heightForFooterInSection:(NSInteger)section
+{
+    return 0.01;
 }
 
 - (void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath

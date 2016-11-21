@@ -26,18 +26,19 @@
     [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(hiddenLabel) name:UITextViewTextDidChangeNotification object:nil];
     
     UIImageView *backImageView = [[UIImageView alloc] initWithFrame:CGRectMake(0, 0, kScreenWidth, 64)];
-    backImageView.image = [UIImage imageNamed:@"basicBackground"];
+    backImageView.image = [UIImage imageWithColor:[Utils stringTOColor:@"#8c39e5"]];
     [self.view addSubview:backImageView];
     
     [self setUpBarView];
     if (self.connectBottomView) {
         [self.view bringSubviewToFront:self.connectBottomView];
     }
+    [_suggestTextView becomeFirstResponder];
 }
 
 - (void)setUpBarView
 {
-    _barView = [[BasicBarView alloc] initWithFrame:CGRectMake(0, 20, kScreenWidth, 44) withType:superBarTypeLeftItemCancel withTitle:@"意见反馈"];
+    _barView = [[BasicBarView alloc] initWithFrame:CGRectMake(0, 20, kScreenWidth, 44) withType:superBarTypeLeftItemCancel withTitle:@"意见反馈" isShowRightButton:YES];
     [self.view addSubview:_barView];
     _barView.delegate = self;
     [_barView setRightButtonEnable:NO];

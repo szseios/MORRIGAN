@@ -18,12 +18,13 @@
 
 @implementation BasicBarView
 
-- (instancetype)initWithFrame:(CGRect)frame withType:(superBarType)type withTitle:(NSString *)title
+- (instancetype)initWithFrame:(CGRect)frame withType:(superBarType)type withTitle:(NSString *)title isShowRightButton:(BOOL)showRightButton
 {
     self = [super initWithFrame:frame];
     if (self) {
         _type = type;
         _title = title;
+        _showRightButton = showRightButton;
         self.backgroundColor = [UIColor clearColor];
         [self setUpBasicBarView];
     }
@@ -39,9 +40,13 @@
     _titleLabel.font = [UIFont systemFontOfSize:20];
     [self addSubview:_titleLabel];
     
-    _backButton = [[UIButton alloc] initWithFrame:CGRectMake(20, 0, 40, self.height)];
-    _rightButton = [[UIButton alloc] initWithFrame:CGRectMake(self.width - 60, 0, 40, self.height)];
-    
+    _backButton = [[UIButton alloc] initWithFrame:CGRectMake(15, 0, 40, self.height)];
+    _rightButton = [[UIButton alloc] initWithFrame:CGRectMake(self.width - 55, 0, 40, self.height)];
+    if (_showRightButton) {
+        _rightButton.hidden = NO;
+    }else{
+        _rightButton.hidden = YES;
+    }
     switch (_type) {
         case superBarTypeNormal:
         {
@@ -56,9 +61,6 @@
             
             [_rightButton addTarget:self action:@selector(bindingDevice) forControlEvents:UIControlEventTouchUpInside];
             [_rightButton setImage:[UIImage imageNamed:@"icon_rightItem_link"] forState:UIControlStateNormal];
-            
-            [self addSubview:_backButton];
-            [self addSubview:_rightButton];
         }
             break;
             
@@ -69,9 +71,6 @@
             
             [_rightButton addTarget:self action:@selector(ensureClick) forControlEvents:UIControlEventTouchUpInside];
             [_rightButton setTitle:@"确定" forState:UIControlStateNormal];
-            
-            [self addSubview:_backButton];
-            [self addSubview:_rightButton];
         }
             break;
             
@@ -82,15 +81,16 @@
             
             [_rightButton addTarget:self action:@selector(bindingDevice) forControlEvents:UIControlEventTouchUpInside];
             [_rightButton setImage:[UIImage imageNamed:@"icon_rightItem_link"] forState:UIControlStateNormal];
-            
-            [self addSubview:_backButton];
-            [self addSubview:_rightButton];
         }
             break;
             
         default:
             break;
     }
+    
+    
+    [self addSubview:_backButton];
+    [self addSubview:_rightButton];
 }
 
 - (void)backClick

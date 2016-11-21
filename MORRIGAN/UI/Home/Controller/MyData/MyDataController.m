@@ -57,7 +57,7 @@ static NSString *cellIdentifier = @"cellIdentifier";
     self.view.backgroundColor = [UIColor whiteColor];
     
     UIImageView *backImageView = [[UIImageView alloc] initWithFrame:CGRectMake(0, 0, kScreenWidth, 64)];
-    backImageView.image = [UIImage imageNamed:@"basicBackground"];
+    backImageView.image = [UIImage imageWithColor:[Utils stringTOColor:@"#8c39e5"]];
     [self.view addSubview:backImageView];
     
     [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(changeNickName:) name:CHANGENICKNAME object:nil];
@@ -80,7 +80,7 @@ static NSString *cellIdentifier = @"cellIdentifier";
 
 - (void)setUpBarView
 {
-    _barView = [[BasicBarView alloc] initWithFrame:CGRectMake(0, 20, kScreenWidth, 44) withType:superBarTypeLeftItemBackAndRightItemBinding withTitle:@"我的资料"];
+    _barView = [[BasicBarView alloc] initWithFrame:CGRectMake(0, 20, kScreenWidth, 44) withType:superBarTypeLeftItemBackAndRightItemBinding withTitle:@"我的资料" isShowRightButton:NO];
     [self.view addSubview:_barView];
     _barView.delegate = self;
 }
@@ -310,13 +310,13 @@ static NSString *cellIdentifier = @"cellIdentifier";
     else if ([[UserInfo share].emotionStr isEqualToString:@"单身"]) {
         [UserInfo share].emotion = @"S";
     }
-        NSDictionary *dictionary = @{@"userId": [UserInfo share].userId,
-                                     @"high": [UserInfo share].high,
-                                     @"weight":[UserInfo share].weight,
-                                     @"age":[UserInfo share].age,
-                                     @"nickName":[UserInfo share].nickName,
-                                     @"target":[UserInfo share].target,
-                                     @"emotion":[UserInfo share].emotion,
+    NSDictionary *dictionary = @{@"userId": [UserInfo share].userId ? [UserInfo share].userId : @"",
+                                     @"high": [UserInfo share].high ? [UserInfo share].high : @"",
+                                     @"weight":[UserInfo share].weight ? [UserInfo share].weight : @"",
+                                     @"age":[UserInfo share].age ? [UserInfo share].age : @"",
+                                     @"nickName":[UserInfo share].nickName ? [UserInfo share].nickName : @"",
+                                     @"target":[UserInfo share].target ? [UserInfo share].target : @"",
+                                     @"emotion":[UserInfo share].emotion ? [UserInfo share].emotion : @"",
                                      };
         NSString *bodyString = [NMOANetWorking handleHTTPBodyParams:dictionary];
         [[NMOANetWorking share] taskWithTag:ID_EDIT_USERINFO
@@ -401,7 +401,7 @@ static NSString *cellIdentifier = @"cellIdentifier";
 - (void)uploadheaderImage
     {
         NSDictionary *dictionary = @{
-                                     @"userId":[UserInfo share].userId,
+                                     @"userId":[UserInfo share].userId ? [UserInfo share].userId : @"",
                                      @"img":_imageStr
                                      };
         NSString *bodyString = [NMOANetWorking handleHTTPBodyParams:dictionary];
@@ -430,8 +430,8 @@ static NSString *cellIdentifier = @"cellIdentifier";
     myDataCell *cell = [_dataTableView cellForRowAtIndexPath:[NSIndexPath indexPathForRow:1 inSection:0]];
     cell.content = notice.object;
     [UserInfo share].nickName = notice.object;
-    NSDictionary *dictionary = @{@"userId": [UserInfo share].userId,
-                                 @"nickName": [UserInfo share].nickName,
+    NSDictionary *dictionary = @{@"userId": [UserInfo share].userId ? [UserInfo share].userId : @"",
+                                 @"nickName": [UserInfo share].nickName ? [UserInfo share].nickName : @"",
                                  };
     NSString *bodyString = [NMOANetWorking handleHTTPBodyParams:dictionary];
     [[NMOANetWorking share] taskWithTag:ID_EDIT_USERINFO urlString:URL_EDIT_USERINFO httpHead:nil bodyString:bodyString objectTaskFinished:^(NSError *error, id obj) {
