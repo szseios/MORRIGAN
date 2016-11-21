@@ -20,11 +20,11 @@
             ignoreCount = "0"
             continueAfterRunningActions = "No"
             filePath = "MORRIGAN/Common/DBManager/DBManager.m"
-            timestampString = "501140850.317029"
+            timestampString = "501143914.703038"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "347"
-            endingLineNumber = "347"
+            startingLineNumber = "366"
+            endingLineNumber = "366"
             landmarkName = "+insertData:startTime:endTime:type:"
             landmarkType = "7">
          </BreakpointContent>

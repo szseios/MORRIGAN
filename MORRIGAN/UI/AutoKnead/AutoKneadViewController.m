@@ -46,6 +46,8 @@
     
     [self viewInit];
     [super viewDidLoad];
+    
+    [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(bluetoothDisConnectHandlerInAutoKnead) name:DisconnectPeripheral object:nil];
 }
 
 
@@ -551,6 +553,7 @@
 {
     // 退出时停止
     BluetoothOperation *operation = [[BluetoothOperation alloc] init];
+    [operation setValue:@"01" index:2];
     [operation setValue:@"00" index:3];
     operation.response = ^(NSString *response,long tag,NSError *error,BOOL success) {
         
@@ -561,10 +564,33 @@
     [self.navigationController popViewControllerAnimated:YES];
 }
 
+- (void)bluetoothDisConnectHandlerInAutoKnead
+{
+    if(_buttonStartStop.tag == kButtonStartTag) {
+  
+        _buttonStartStop.tag = kButtonStopTag;
+        [_buttonStartStop setImage:[UIImage imageNamed:@"START"] forState:UIControlStateNormal];
+       
+        // 插入数据库
+        MassageRecordModel *model = [[MassageRecordModel alloc] init];
+        model.userID = [UserInfo share].userId;
+        model.startTime = _startDate;
+        model.endTime = [NSDate date];
+        model.type = MassageTypeAuto;
+        [[RecordManager share] addToDB:model];
+    }
+
+}
+
 
 - (void)didReceiveMemoryWarning {
     [super didReceiveMemoryWarning];
     // Dispose of any resources that can be recreated.
+}
+
+-(void)dealloc
+{
+    [[NSNotificationCenter defaultCenter] removeObserver:self];
 }
 
 /*

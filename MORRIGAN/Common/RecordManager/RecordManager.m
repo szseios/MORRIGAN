@@ -88,6 +88,10 @@ static RecordManager *manager;
     }
     if(_recordBufferArray == nil || _recordBufferArray.count == 0) {
         NSLog(@"没有护理记录需上传！");
+        if(isUserExist) {
+            // 退出账户上传数据结束时发送通知去执行退出操作
+            [[NSNotificationCenter defaultCenter]postNotificationName:kRecordManagerUploadEndNotification object:nil];
+        }
         return;
     }
     __weak RecordManager *weakSelf = self;

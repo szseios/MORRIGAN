@@ -34,5 +34,7 @@ extern NSString * const DisconnectPeripheral;
 
 - (void)writeValueByOperation:(BluetoothOperation *)operation;
 
+//断开所有已连接设备
+-(void)unConnectingBlueTooth;
 
 @end

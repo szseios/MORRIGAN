@@ -21,6 +21,8 @@
 
 @property (nonatomic , strong) UIScrollView *rulerScrollView;
 
+@property (nonatomic , assign) NSInteger pointerViewX;
+
 @end
 
 @implementation SetTargetController
@@ -102,7 +104,7 @@
     CGFloat viewW = 1;
     CGFloat viewH = 30;
     CGFloat viewH1 = 40;
-    CGFloat viewX = 16;
+    CGFloat viewX = 15;
     CGFloat viewY = 20;
     CGFloat viewY1 = 30;
     
@@ -125,7 +127,9 @@
         
     }
     //添加指针view
-    UIView *pointerView=[[UIView alloc] initWithFrame:CGRectMake(kScreenWidth/2 - 0.8, rulerY + viewY, 1.6, 40)];
+    NSInteger count =  kScreenWidth/2/15;
+    self.pointerViewX = (count + viewW) * 15;
+    UIView *pointerView=[[UIView alloc] initWithFrame:CGRectMake(self.pointerViewX, rulerY + viewY, 1.6, 40)];
     pointerView.backgroundColor=[UIColor purpleColor];
     pointerView.alpha = 0.7;
     [self.view addSubview:pointerView];
@@ -173,19 +177,22 @@
 
 - (void)scrollViewWillEndDragging:(UIScrollView *)scrollView withVelocity:(CGPoint)velocity targetContentOffset:(inout CGPoint *)targetContentOffset
 {
-
-    CGPoint orifinalTargetContentOffset = CGPointMake(targetContentOffset->x, targetContentOffset->y);
-    CGFloat offSetX = (orifinalTargetContentOffset.x + kScreenWidth /2) * 100;
-    NSInteger count = (NSInteger)offSetX % 1400 ;
-    if (count > 700) {
-        offSetX += 1400 - count;
-    }else{
-        offSetX -= count;
-    }
-    NSInteger number = (NSInteger)offSetX / 1400;
-    _countLabel.text = [NSString stringWithFormat:@"%.0ld",number];
-    scrollView.contentOffset = CGPointMake((number * 1400 - kScreenWidth /2 * 100) / 100.0, scrollView.contentOffset.y);
-    NSLog(@"scrollViewWillEndDragging:%lf",orifinalTargetContentOffset.x);
+    NSLog(@"scrollViewWillEndDragging: %lf",scrollView.contentOffset.x);
+    scrollView.contentOffset = CGPointMake(-200, scrollView.contentOffset.y);
+    
+    
+//    CGPoint orifinalTargetContentOffset = CGPointMake(targetContentOffset->x, targetContentOffset->y);
+//    CGFloat offSetX = (orifinalTargetContentOffset.x + kScreenWidth /2) * 100;
+//    NSInteger count = (NSInteger)offSetX % 1400 ;
+//    if (count > 700) {
+//        offSetX += 1400 - count;
+//    }else{
+//        offSetX -= count;
+//    }
+//    NSInteger number = (NSInteger)offSetX / 1400;
+//    _countLabel.text = [NSString stringWithFormat:@"%.0ld",number];
+//    scrollView.contentOffset = CGPointMake((number * 1400 - kScreenWidth /2 * 100) / 100.0, scrollView.contentOffset.y);
+//    NSLog(@"scrollViewWillEndDragging:%lf",orifinalTargetContentOffset.x);
 }
 
 
@@ -196,9 +203,25 @@
 //    NSInteger count = (NSInteger)offSetX / 15.25 ;
 //    _countLabel.text = [NSString stringWithFormat:@"%.0ld",count];
 //    scrollView.contentOffset = CGPointMake(count * 15.25, scrollView.contentOffset.y);
-     NSLog(@"scrollViewDidEndDecelerating:%lf",scrollView.contentOffset.x);
+    NSLog(@"scrollViewDidEndDecelerating:%lf",scrollView.contentOffset.x);
+    NSInteger distance =  fabs(fabs(scrollView.contentOffset.x) - (kScreenWidth/2 - self.pointerViewX));
+    NSInteger destination = distance/15 * 15;;
+    if(scrollView.contentOffset.x < 0) {
+        destination = -destination;
+    }
+    scrollView.contentOffset = CGPointMake(destination, scrollView.contentOffset.y);
+    
+    
+    
+    // 计算当前停止的刻度
+    NSInteger index = fabs(destination)/15;
+    if(destination < 0) {
+        index = fabs(index - self.pointerViewX/15);
+    } else {
+        index = index + self.pointerViewX/15;
+    }
+    NSLog(@"当前刻度数：%ld", index);
 }
-
 
 
 - (void)dealloc

@@ -173,27 +173,38 @@
 
 - (void)connectPeripheralSuccess {
     
-    NSDictionary *dictionary = @{@"userId": [UserInfo share].userId ? [UserInfo share].userId : @"",
-                                 @"deviceName":_selectedPeripheral.name,
-                                 @"mac": _selectedPeripheral.identifier.UUIDString};
-    NSString *bodyString = [NMOANetWorking handleHTTPBodyParams:dictionary];
-    __weak PeripheralListViewController *weakSelf = self;
-    [[NMOANetWorking share] taskWithTag:ID_BINGDING_DEVICE
-                              urlString:URL_BINGDING_DEVICE
-                               httpHead:nil
-                             bodyString:bodyString
-                     objectTaskFinished:^(NSError *error, id obj)
-     {
-         NSString *code = [obj objectForKey:@"retCode"];
-         if ([code isEqualToString:@"000"]) {
-             PeripheralBindingFinishedViewController *ctl = [[PeripheralBindingFinishedViewController alloc] init];
-             ctl.connectSuccess = YES;
-             [weakSelf.navigationController pushViewController:ctl animated:YES];
-         }
-         else {
-             [weakSelf connectPeripheralError];
-         }
-     }];
+    PeripheralModel *model = [_linkedPeripherals objectForKey:_selectedPeripheral.identifier.UUIDString];
+    // 设备已绑定
+    if (model) {
+        PeripheralBindingFinishedViewController *ctl = [[PeripheralBindingFinishedViewController alloc] init];
+        ctl.connectSuccess = YES;
+        [self.navigationController pushViewController:ctl animated:YES];
+    }
+    // 设备未绑定,连接设备成功后开始绑定设备
+    else {
+        NSDictionary *dictionary = @{@"userId": [UserInfo share].userId ? [UserInfo share].userId : @"",
+                                     @"deviceName":_selectedPeripheral.name,
+                                     @"mac": _selectedPeripheral.identifier.UUIDString};
+        NSString *bodyString = [NMOANetWorking handleHTTPBodyParams:dictionary];
+        __weak PeripheralListViewController *weakSelf = self;
+        [[NMOANetWorking share] taskWithTag:ID_BINGDING_DEVICE
+                                  urlString:URL_BINGDING_DEVICE
+                                   httpHead:nil
+                                 bodyString:bodyString
+                         objectTaskFinished:^(NSError *error, id obj)
+         {
+             NSString *code = [obj objectForKey:@"retCode"];
+             if ([code isEqualToString:@"000"]) {
+                 PeripheralBindingFinishedViewController *ctl = [[PeripheralBindingFinishedViewController alloc] init];
+                 ctl.connectSuccess = YES;
+                 [weakSelf.navigationController pushViewController:ctl animated:YES];
+             }
+             else {
+                 [weakSelf connectPeripheralError];
+                 [[BluetoothManager share] unConnectingBlueTooth];
+             }
+         }];
+    }
 }
 
 - (void)connectPeripheralError {

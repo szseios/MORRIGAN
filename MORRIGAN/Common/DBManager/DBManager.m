@@ -57,7 +57,7 @@ static NSString *dbPath = nil;
 
 + (BOOL)createPeripheralsTable:(FMDatabase *)db {
     BOOL success = NO;
-    NSString *sql = @"CREATE TABLE IF NOT EXISTS 'peripherals' ('uuid' TEXT PRIMARY KEY NOT NULL , 'name' TEXT NOT NULL)";
+    NSString *sql = @"CREATE TABLE IF NOT EXISTS 'peripherals' ('uuid' TEXT PRIMARY KEY NOT NULL , 'name' TEXT NOT NULL , 'user_id' TEXT NOT NULL)";
     success = [db executeUpdate:sql];
     return success;
 }
@@ -73,14 +73,33 @@ static NSString *dbPath = nil;
 
 #pragma mark - 设备
 
++ (BOOL)insertPeripherals:(NSArray *)peripherals {
+    __block BOOL success = NO;
+    [[DBManager dbQueue] inTransaction:^(FMDatabase *db, BOOL *rollback) {
+        
+        for (PeripheralModel *model in peripherals) {
+            NSString *sql = [NSString stringWithFormat:@"INSERT OR REPLACE INTO 'peripherals' ('uuid', 'name' ,'user_id') VALUES ('%@', '%@', '%@')",
+                             model.uuid,
+                             model.name,
+                             model.userID];
+            success = [db executeUpdate:sql];
+            if (!success) {
+                *rollback = YES;
+                break;
+            }
+        }
+    }];
+    return success;
+}
 
 + (BOOL)insertPeripheral:(CBPeripheral *)peripheral {
 
     __block BOOL success = NO;
     [[DBManager dbQueue] inDatabase:^(FMDatabase *db) {
-        NSString *sql = [NSString stringWithFormat:@"INSERT OR REPLACE INTO 'peripherals' ('uuid', 'name') VALUES ('%@', '%@')",
+        NSString *sql = [NSString stringWithFormat:@"INSERT OR REPLACE INTO 'peripherals' ('uuid', 'name' ,'user_id') VALUES ('%@', '%@', '%@')",
                          peripheral.identifier.UUIDString,
-                         peripheral.name];
+                         peripheral.name,
+                         [UserInfo share].userId?[UserInfo share].userId:@""];
         success = [db executeUpdate:sql];
         
     }];
@@ -112,7 +131,7 @@ static NSString *dbPath = nil;
 + (NSArray *)selectPeripherals {
     __block NSMutableArray *array;
     [[DBManager dbQueue] inDatabase:^(FMDatabase *db) {
-        NSString *sql = [NSString stringWithFormat:@"SELECT * FROM 'peripherals'"];
+        NSString *sql = [NSString stringWithFormat:@"SELECT * FROM 'peripherals' WHERE user_id = '%@'",[UserInfo share].userId];
         FMResultSet *result = [db executeQuery:sql];
         while (result.next) {
             if (!array) {
@@ -130,7 +149,7 @@ static NSString *dbPath = nil;
 + (NSDictionary *)selectLinkedPeripherals {
     __block NSMutableDictionary *dictionary;
     [[DBManager dbQueue] inDatabase:^(FMDatabase *db) {
-        NSString *sql = [NSString stringWithFormat:@"SELECT * FROM 'peripherals'"];
+        NSString *sql = [NSString stringWithFormat:@"SELECT * FROM 'peripherals' WHERE user_id = '%@'",[UserInfo share].userId];
         FMResultSet *result = [db executeQuery:sql];
         while (result.next) {
             if (!dictionary) {
