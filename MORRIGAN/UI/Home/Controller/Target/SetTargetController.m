@@ -21,6 +21,8 @@
 
 @property (nonatomic , strong) UIScrollView *rulerScrollView;
 
+@property (nonatomic , assign) NSInteger pointerViewX;
+
 @end
 
 @implementation SetTargetController
@@ -82,57 +84,59 @@
 //
     CGRect rulerFrame = CGRectMake(rulerX, rulerY, rulerWidth, rulerHeight);
     
-    ZHRulerView *rulerView = [[ZHRulerView alloc] initWithMixNuber:5 maxNuber:180 showType:rulerViewshowHorizontalType rulerMultiple:10];
-    _rulerView = rulerView;
-    rulerView.round = YES;
-    rulerView.defaultVaule = [UserInfo share].target ? [[UserInfo share].target integerValue] : 60;
-    rulerView.delegate = self;
-    rulerView.frame = rulerFrame;
+//    ZHRulerView *rulerView = [[ZHRulerView alloc] initWithMixNuber:5 maxNuber:180 showType:rulerViewshowHorizontalType rulerMultiple:10];
+//    _rulerView = rulerView;
+//    rulerView.round = YES;
+//    rulerView.defaultVaule = [UserInfo share].target ? [[UserInfo share].target integerValue] : 60;
+//    rulerView.delegate = self;
+//    rulerView.frame = rulerFrame;
+//    
+//    [self.view addSubview:rulerView];
+    _rulerScrollView = [[UIScrollView alloc] initWithFrame:CGRectMake(rulerX, rulerY, rulerWidth, rulerHeight)];
+    _rulerScrollView.delegate = self;
+    _rulerScrollView.backgroundColor = [UIColor clearColor];
+    _rulerScrollView.contentSize = CGSizeMake(180*15, rulerHeight);
+    _rulerScrollView.showsHorizontalScrollIndicator = NO;
+    _rulerScrollView.contentInset = UIEdgeInsetsMake(0, kScreenWidth/2, 0, kScreenWidth/2);
     
-    [self.view addSubview:rulerView];
-//    _rulerScrollView = [[UIScrollView alloc] initWithFrame:CGRectMake(rulerX, rulerY, rulerWidth, rulerHeight)];
-//    _rulerScrollView.delegate = self;
-//    _rulerScrollView.backgroundColor = [UIColor clearColor];
-//    _rulerScrollView.contentSize = CGSizeMake(180*15, rulerHeight);
-//    _rulerScrollView.showsHorizontalScrollIndicator = NO;
-//    _rulerScrollView.contentInset = UIEdgeInsetsMake(0, kScreenWidth/2, 0, kScreenWidth/2);
-//    
-//    [self.view addSubview:_rulerScrollView];
-//    CGFloat viewW = 1;
-//    CGFloat viewH = 30;
-//    CGFloat viewH1 = 40;
-//    CGFloat viewX = 15;
-//    CGFloat viewY = 20;
-//    CGFloat viewY1 = 30;
-//    
-//    for (NSInteger i = 0; i <= 180; i++) {
-//        UIView *view = [[UIView alloc] initWithFrame:CGRectMake(viewX * i, i%5 == 0 ? viewY : viewY1, viewW, i%5 == 0 ?viewH1 : viewH)];
-//        view.alpha = 0.4;
-//        view.backgroundColor = [UIColor blackColor];
-//        if (i %5 == 0) {
-//            view.backgroundColor = [UIColor blackColor];
-//            if (i % 10 == 0) {
-//                UILabel *label = [[UILabel alloc] initWithFrame:CGRectMake(view.x-20, view.y + view.height + 20, 40, 25)];
-//                label.text = [NSString stringWithFormat:@"%ld",i];
-//                label.textAlignment = NSTextAlignmentCenter;
-//                label.textColor = [UIColor blackColor];
-//                [_rulerScrollView addSubview:label];
-//                
-//            }
-//        }
-//        [_rulerScrollView addSubview:view];
-//        
-//    }
-//    //添加指针view
-//    UIView *pointerView=[[UIView alloc] initWithFrame:CGRectMake(kScreenWidth/2 - 0.8, rulerY + viewY, 1.6, 40)];
-//    pointerView.backgroundColor=[UIColor purpleColor];
-//    pointerView.alpha = 0.7;
-//    [self.view addSubview:pointerView];
-//    
-//    UIImageView *arrowImageView = [[UIImageView alloc] initWithFrame:CGRectMake(kScreenWidth/2 - 3, rulerY + viewY + 43, 6, 4)];
-//    arrowImageView.image = [UIImage imageNamed:@"arrowUp"];
-//    [self.view addSubview:arrowImageView];
-//    
+    [self.view addSubview:_rulerScrollView];
+    CGFloat viewW = 1;
+    CGFloat viewH = 30;
+    CGFloat viewH1 = 40;
+    CGFloat viewX = 15;
+    CGFloat viewY = 20;
+    CGFloat viewY1 = 30;
+    
+    for (NSInteger i = 0; i <= 180; i++) {
+        UIView *view = [[UIView alloc] initWithFrame:CGRectMake(viewX * i, i%5 == 0 ? viewY : viewY1, viewW, i%5 == 0 ?viewH1 : viewH)];
+        view.alpha = 0.4;
+        view.backgroundColor = [UIColor blackColor];
+        if (i %5 == 0) {
+            view.backgroundColor = [UIColor blackColor];
+            if (i % 10 == 0) {
+                UILabel *label = [[UILabel alloc] initWithFrame:CGRectMake(view.x-20, view.y + view.height + 20, 40, 25)];
+                label.text = [NSString stringWithFormat:@"%ld",i];
+                label.textAlignment = NSTextAlignmentCenter;
+                label.textColor = [UIColor blackColor];
+                [_rulerScrollView addSubview:label];
+                
+            }
+        }
+        [_rulerScrollView addSubview:view];
+        
+    }
+    //添加指针view
+    NSInteger count =  kScreenWidth/2/15;
+    self.pointerViewX = (count + viewW) * 15;
+    UIView *pointerView=[[UIView alloc] initWithFrame:CGRectMake(self.pointerViewX, rulerY + viewY, 1.6, 40)];
+    pointerView.backgroundColor=[UIColor purpleColor];
+    pointerView.alpha = 0.7;
+    [self.view addSubview:pointerView];
+    
+    UIImageView *arrowImageView = [[UIImageView alloc] initWithFrame:CGRectMake(kScreenWidth/2 - 3, rulerY + viewY + 43, 6, 4)];
+    arrowImageView.image = [UIImage imageNamed:@"arrowUp"];
+    [self.view addSubview:arrowImageView];
+    
     
 }
 
@@ -172,19 +176,22 @@
 
 - (void)scrollViewWillEndDragging:(UIScrollView *)scrollView withVelocity:(CGPoint)velocity targetContentOffset:(inout CGPoint *)targetContentOffset
 {
-
-    CGPoint orifinalTargetContentOffset = CGPointMake(targetContentOffset->x, targetContentOffset->y);
-    CGFloat offSetX = (orifinalTargetContentOffset.x + kScreenWidth /2) * 100;
-    NSInteger count = (NSInteger)offSetX % 1400 ;
-    if (count > 700) {
-        offSetX += 1400 - count;
-    }else{
-        offSetX -= count;
-    }
-    NSInteger number = (NSInteger)offSetX / 1400;
-    _countLabel.text = [NSString stringWithFormat:@"%.0ld",number];
-    scrollView.contentOffset = CGPointMake((number * 1400 - kScreenWidth /2 * 100) / 100.0, scrollView.contentOffset.y);
-    NSLog(@"scrollViewWillEndDragging:%lf",orifinalTargetContentOffset.x);
+    NSLog(@"scrollViewWillEndDragging: %lf",scrollView.contentOffset.x);
+    scrollView.contentOffset = CGPointMake(-200, scrollView.contentOffset.y);
+    
+    
+//    CGPoint orifinalTargetContentOffset = CGPointMake(targetContentOffset->x, targetContentOffset->y);
+//    CGFloat offSetX = (orifinalTargetContentOffset.x + kScreenWidth /2) * 100;
+//    NSInteger count = (NSInteger)offSetX % 1400 ;
+//    if (count > 700) {
+//        offSetX += 1400 - count;
+//    }else{
+//        offSetX -= count;
+//    }
+//    NSInteger number = (NSInteger)offSetX / 1400;
+//    _countLabel.text = [NSString stringWithFormat:@"%.0ld",number];
+//    scrollView.contentOffset = CGPointMake((number * 1400 - kScreenWidth /2 * 100) / 100.0, scrollView.contentOffset.y);
+//    NSLog(@"scrollViewWillEndDragging:%lf",orifinalTargetContentOffset.x);
 }
 
 
@@ -195,9 +202,25 @@
 //    NSInteger count = (NSInteger)offSetX / 15.25 ;
 //    _countLabel.text = [NSString stringWithFormat:@"%.0ld",count];
 //    scrollView.contentOffset = CGPointMake(count * 15.25, scrollView.contentOffset.y);
-     NSLog(@"scrollViewDidEndDecelerating:%lf",scrollView.contentOffset.x);
+    NSLog(@"scrollViewDidEndDecelerating:%lf",scrollView.contentOffset.x);
+    NSInteger distance =  fabs(fabs(scrollView.contentOffset.x) - (kScreenWidth/2 - self.pointerViewX));
+    NSInteger destination = distance/15 * 15;;
+    if(scrollView.contentOffset.x < 0) {
+        destination = -destination;
+    }
+    scrollView.contentOffset = CGPointMake(destination, scrollView.contentOffset.y);
+    
+    
+    
+    // 计算当前停止的刻度
+    NSInteger index = fabs(destination)/15;
+    if(destination < 0) {
+        index = fabs(index - self.pointerViewX/15);
+    } else {
+        index = index + self.pointerViewX/15;
+    }
+    NSLog(@"当前刻度数：%ld", index);
 }
-
 
 
 - (void)dealloc
