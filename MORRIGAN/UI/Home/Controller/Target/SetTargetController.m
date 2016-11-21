@@ -178,7 +178,7 @@
 - (void)scrollViewWillEndDragging:(UIScrollView *)scrollView withVelocity:(CGPoint)velocity targetContentOffset:(inout CGPoint *)targetContentOffset
 {
     NSLog(@"scrollViewWillEndDragging: %lf",scrollView.contentOffset.x);
-    scrollView.contentOffset = CGPointMake(-200, scrollView.contentOffset.y);
+   // scrollView.contentOffset = CGPointMake(-200, scrollView.contentOffset.y);
     
     
 //    CGPoint orifinalTargetContentOffset = CGPointMake(targetContentOffset->x, targetContentOffset->y);
