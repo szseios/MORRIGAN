@@ -25,7 +25,6 @@ NSString * const ElectricQuantityChanged = @"ElectricQuantityChanged";
     NSTimer *_timer;
 }
 
-@property (nonatomic,assign)NSInteger willConnectIndex;             // 将要连接的设备在数组中的下标
 @property (nonatomic,strong)CBPeripheral *curConnectPeripheral;      // 当前连接的设备
 @property (nonatomic,strong)CBCharacteristic *sendCharacteristic;    // 写特征
 @property (nonatomic,strong)CBCharacteristic *receiveCharacteristic; // 读特征
@@ -33,6 +32,7 @@ NSString * const ElectricQuantityChanged = @"ElectricQuantityChanged";
 @property (nonatomic,strong)NSMutableArray *operationQueue;          //operation队列
 @property (nonatomic,strong)BluetoothOperation *currentOperation;    //正在操作的operation
 @property (nonatomic,assign)BOOL writing;                            //是否正在写数据
+@property (nonatomic,assign)BOOL manualDisconnect;                   //是否手动断开连接
 
 
 @end
@@ -54,6 +54,9 @@ NSString * const ElectricQuantityChanged = @"ElectricQuantityChanged";
         _baby = [BabyBluetooth shareBabyBluetooth];
         _operationQueue = [[NSMutableArray alloc] init];
         _scannedPeripherals = [[NSMutableArray alloc] init];
+        _macAddresses = [[NSMutableArray alloc] init];
+        
+        _manualDisconnect = NO;
         [self babyDelegate];
         
     }
@@ -71,9 +74,29 @@ NSString * const ElectricQuantityChanged = @"ElectricQuantityChanged";
     
     //扫描到设备的委托
     [_baby setBlockOnDiscoverToPeripherals:^(CBCentralManager *central, CBPeripheral *peripheral, NSDictionary *advertisementData, NSNumber *RSSI) {
-        NSLog(@"搜索到了设备:%@",peripheral.name);
         if (![weakSelf.scannedPeripherals containsObject:peripheral]) {
             [weakSelf.scannedPeripherals addObject:peripheral];
+            NSArray *array = [advertisementData objectForKey:@"kCBAdvDataServiceUUIDs"];
+            NSMutableString *macAddress;
+            if (array.count) {
+                macAddress = [[NSMutableString alloc] init];
+                for (NSInteger i = 0; i < array.count - 1; i++) {
+                    NSUUID *uuid = [array objectAtIndex:i];
+                    NSString *string = uuid.UUIDString;
+                    if (i == 0) {
+                        [macAddress appendFormat:@"%@:%@",
+                         [string substringWithRange:NSMakeRange(0, 2)],
+                         [string substringWithRange:NSMakeRange(2, 2)]];
+                    }
+                    else {
+                        [macAddress appendFormat:@":%@:%@",
+                         [string substringWithRange:NSMakeRange(0, 2)],
+                         [string substringWithRange:NSMakeRange(2, 2)]];
+                    }
+                }
+                [weakSelf.macAddresses addObject:macAddress];
+            }
+            NSLog(@"搜索到了设备:%@   MAC : %@",peripheral.name,macAddress);
         }
     }];
     
@@ -86,7 +109,7 @@ NSString * const ElectricQuantityChanged = @"ElectricQuantityChanged";
         [[NSNotificationCenter defaultCenter] postNotificationName:ConnectPeripheralSuccess
                                                             object:nil];
         //连接成功后保存为已绑定设备信息
-        if (![DBManager insertPeripheral:peripheral]) {
+        if (![DBManager insertPeripheral:peripheral macAddress:weakSelf.willConnectMacAddress]) {
             NSLog(@"保存已绑定设备信息失败.  peripheral.name : %@",peripheral.name);
         }
     }];
@@ -229,6 +252,15 @@ NSString * const ElectricQuantityChanged = @"ElectricQuantityChanged";
         
     }];
     
+    [_baby setBlockOnCancelAllPeripheralsConnectionBlock:^(CBCentralManager *centralManager) {
+        NSLog(@"setBlockOnCancelAllPeripheralsConnectionBlock");
+        NSLog(@"成功取消所有外设连接");
+        weakSelf.currentOperation = nil;
+        weakSelf.curConnectPeripheral = nil;
+        weakSelf.isConnected = NO;
+        weakSelf.writing = NO;
+    }];
+    
     //设备断开连接的委托
     [_baby setBlockOnDisconnect:^(CBCentralManager *central, CBPeripheral *peripheral, NSError *error) {
         NSLog(@"设备：%@断开连接",peripheral.name);
@@ -238,18 +270,15 @@ NSString * const ElectricQuantityChanged = @"ElectricQuantityChanged";
         weakSelf.writing = NO;
         //通知断开蓝牙设备
         [[NSNotificationCenter defaultCenter] postNotificationName:DisconnectPeripheral
-                                                            object:nil];
+                                                            object:@(weakSelf.manualDisconnect)];
         [weakSelf endTimer];
-    }];
-    
-    
-    [_baby setBlockOnCancelAllPeripheralsConnectionBlock:^(CBCentralManager *centralManager) {
-        NSLog(@"setBlockOnCancelAllPeripheralsConnectionBlock");
-        NSLog(@"成功取消所有外设连接");
-        weakSelf.currentOperation = nil;
-        weakSelf.curConnectPeripheral = nil;
-        weakSelf.isConnected = NO;
-        weakSelf.writing = NO;
+        
+        //如果是手动断开连接
+        if (weakSelf.manualDisconnect) {
+            
+            weakSelf.manualDisconnect = NO;
+        }
+        
     }];
     
     [_baby setBlockOnCancelScanBlock:^(CBCentralManager *centralManager) {
@@ -288,12 +317,12 @@ NSString * const ElectricQuantityChanged = @"ElectricQuantityChanged";
     [_baby cancelScan];
 }
 
--(void)connectingBlueTooth:(CBPeripheral *)peripheral index:(NSInteger)index {
-    _willConnectIndex = index;
+-(void)connectingBlueTooth:(CBPeripheral *)peripheral {
     _baby.having(peripheral).and.then.connectToPeripherals().discoverServices().discoverCharacteristics().begin();
 }
 
 -(void)unConnectingBlueTooth {
+    _manualDisconnect = YES;
     [_baby cancelAllPeripheralsConnection];
 }
 
@@ -303,6 +332,10 @@ NSString * const ElectricQuantityChanged = @"ElectricQuantityChanged";
 #pragma mark - 往连接的设备写数据
 
 - (void)writeValueByOperation:(BluetoothOperation *)operation {
+    if (!_isConnected) {
+        NSLog(@"未连接上蓝牙设备");
+        return;
+    }
     _currentOperation = operation;
     [_operationQueue addObject:operation];
     if (!_writing) {

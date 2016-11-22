@@ -19,6 +19,7 @@
     NSTimer *_timer;
     NSIndexPath *_selectedIndexPath;
     CGFloat _beganY;
+    NSDate *_startDate;
 }
 @property (weak, nonatomic) IBOutlet UIImageView *musicTopBackgoundView;
 @property (weak, nonatomic) IBOutlet UIView *musicView;
@@ -256,6 +257,8 @@
                                 forState:UIControlStateHighlighted];
     }
     else if ([[MusicManager share] isPlaying]) {
+        //暂停时,记录按摩结束时间
+        [self recordEndDate];
         [[MusicManager share] pause];
         [_pcseView stop];
         [_startButton setBackgroundImage:[UIImage imageNamed:@"music_play"]
@@ -362,6 +365,8 @@
     
     [_pcseView stop];
     [_pcseView start];
+    //播放音乐时,记录开始按摩时间
+    [self recordStartDate];
 }
 
 
@@ -464,6 +469,24 @@
     return NO;
 }
 
+- (void)recordStartDate {
+    if (!_startDate) {
+        _startDate = [NSDate date];
+    }
+}
+
+- (void)recordEndDate {
+    if (_startDate) {
+        [DBManager insertData:[UserInfo share].userId
+                    startTime:_startDate
+                      endTime:[NSDate date]
+                         type:MassageTypeMusic];
+        _startDate = nil;
+    }
+}
+
+
+
 - (IBAction)connectPeripheral:(id)sender {
     SearchPeripheralViewController *ctl = [[SearchPeripheralViewController alloc] init];
     [self.navigationController pushViewController:ctl animated:YES];
@@ -473,6 +496,7 @@
 {
     [MusicManager share].delegate = nil;
     [[MusicManager share] stop];
+    [self recordEndDate];
 }
 
 

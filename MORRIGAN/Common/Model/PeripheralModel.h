@@ -12,9 +12,8 @@
 @interface PeripheralModel : NSObject
 
 @property (nonatomic,copy) NSString *userID;
-@property (nonatomic,copy) NSString *uuid;
 @property (nonatomic,copy) NSString *name;
+@property (nonatomic,copy) NSString *macAddress;
 
-@property (nonatomic,strong) CBPeripheral *peripheral;
 
 @end

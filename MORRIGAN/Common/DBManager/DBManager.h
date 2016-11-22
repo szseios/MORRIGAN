@@ -19,7 +19,8 @@
 
 + (BOOL)insertPeripherals:(NSArray *)peripherals;
 
-+ (BOOL)insertPeripheral:(CBPeripheral *)peripheral;
++ (BOOL)insertPeripheral:(CBPeripheral *)peripheral
+              macAddress:(NSString *)macAddress;
 
 + (BOOL)deletePeripheral:(NSString *)uuid;
 

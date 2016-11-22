@@ -79,7 +79,7 @@ static RecordManager *manager;
 
 
 // 上传数据的格式
-//http://112.74.100.227:8083/rest/moli/upload-record-list?userId=b1e81e1a-f3c8-4ccb-bb3c-7317ee6c41b7&hlInfo=[{"userId":"b1e81e1a-f3c8-4ccb-bb3c-7317ee6c41b7","date":"2016-09-12","timeLong":"30"},{"userId":"b1e81e1a-f3c8-4ccb-bb3c-7317ee6c41b7","date":"2016-09-13","timeLong":"30"},{"userId":"b1e81e1a-f3c8-4ccb-bb3c-7317ee6c41b7","date":"2016-09-14","timeLong":"30"}]
+//http://112.74.100.227:8083/rest/moli/upload-record-list?userId=b1e81e1a-f3c8-4ccb-bb3c-7317ee6c41b7&hlInfo=[{"userId":"b1e81e1a-f3c8-4ccb-bb3c-7317ee6c41b7","date":"2016-09-12","timeLong":"30","goalLong":"30"},{"userId":"b1e81e1a-f3c8-4ccb-bb3c-7317ee6c41b7","date":"2016-09-13","timeLong":"30","goalLong":"30"},{"userId":"b1e81e1a-f3c8-4ccb-bb3c-7317ee6c41b7","date":"2016-09-14","timeLong":"30","goalLong":"30"}]
 - (void)uploadRecord:(BOOL)isUserExist
 {
     if(_isUploading == YES) {
@@ -107,16 +107,17 @@ static RecordManager *manager;
     [infoString appendString:[NSString stringWithFormat:@"?userId=%@&hlInfo=[", [UserInfo share].userId]];
     NSLog(@"正在上传的护理记录数： %ld", _uploadingRecordArray.count);
     for (NSDictionary *itemDict in _uploadingRecordArray) {
-        NSLog(@"正在上传的护理记录信息: userId -> %@, date -> %@，timeLong -> %@",
-              [itemDict objectForKey:@"userId"],
-              [itemDict objectForKey:@"date"],
-              [itemDict objectForKey:@"timeLong"]
-              );
+//        NSLog(@"正在上传的护理记录信息: userId -> %@, date -> %@，timeLong -> %@",
+//              [itemDict objectForKey:@"userId"],
+//              [itemDict objectForKey:@"date"],
+//              [itemDict objectForKey:@"timeLong"]
+//              );
         
-        [infoString appendString:[NSString stringWithFormat:@"{\"userId\":\"%@\",\"date\":\"%@\",\"timeLong\":\"%@\"}",
+        [infoString appendString:[NSString stringWithFormat:@"{\"userId\":\"%@\",\"date\":\"%@\",\"timeLong\":\"%@\",\"goalLong\":\"%@\"}",
                                   [itemDict objectForKey:@"userId"],
                                   [itemDict objectForKey:@"date"],
-                                  [itemDict objectForKey:@"timeLong"]
+                                  [itemDict objectForKey:@"timeLong"],
+                                  [UserInfo share].target == nil ? @"" : [UserInfo share].target
                                   ]];
         if(itemDict != [_uploadingRecordArray lastObject]) {
             [infoString appendString:@","];
@@ -127,8 +128,7 @@ static RecordManager *manager;
         
     }
     NSString *bodyString = [NMOANetWorking handleHTTPBodyParams:dictionary];
-    NSString *resultBodyString = [NSString stringWithFormat:@"%@%@",bodyString, infoString];
-    NSLog(@"infoString: %@", infoString);
+    NSLog(@"正在上传护理记录请求: %@/%@", URL_UPLOAD_RECORD, infoString);
    
     [[NMOANetWorking share] taskWithTag:ID_UPLOAD_RECORD
                               urlString:URL_UPLOAD_RECORD
@@ -169,11 +169,10 @@ static RecordManager *manager;
 
          } else {
              // 继续上传缓冲中的数据
+             NSLog(@"继续上传护理记录...");
              [weakSelf uploadRecord:isUserExist];
          }
-         
-         
-         
+  
          
      }];
 }

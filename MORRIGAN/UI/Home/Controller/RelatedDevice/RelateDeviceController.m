@@ -159,7 +159,7 @@
 {
     NSDictionary *dictionary = @{
                                  @"userId":[UserInfo share].userId,
-                                 @"mac":_model.uuid
+                                 @"mac":_model.macAddress
                                  };
     NSString *bodyString = [NMOANetWorking handleHTTPBodyParams:dictionary];
     [[NMOANetWorking share] taskWithTag:ID_UNBINGDING_DEVICE
@@ -172,7 +172,7 @@
              [MBProgressHUD showHUDByContent:@"解除绑定成功！" view:UI_Window afterDelay:2];
              [_deviceArray removeObject:_model];
              [self.collectionView reloadData];
-             [DBManager deletePeripheral:_model.uuid];
+             [DBManager deletePeripheral:_model.macAddress];
              NSLog(@"解除绑定成功！");
          }else{
              [MBProgressHUD showHUDByContent:@"解除绑定失败！" view:UI_Window afterDelay:2];

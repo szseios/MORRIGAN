@@ -514,7 +514,7 @@
 ////    model2.type = MassageTypeManual;
 ////    [[RecordManager share] addToDB:model2];
 //    return;
-//    
+    
     
     
     if (![BluetoothManager share].isConnected) {

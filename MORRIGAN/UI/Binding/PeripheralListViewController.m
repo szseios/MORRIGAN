@@ -17,6 +17,7 @@
 
 @interface PeripheralListViewController () <UITableViewDelegate,UITableViewDataSource> {
     NSDictionary *_linkedPeripherals;            //已绑定的设备
+    NSString *_selectedMacAddress;
 }
 
 @property (weak, nonatomic) IBOutlet UIButton *backButton;
@@ -121,9 +122,11 @@
     cell.linkedIcon.hidden = YES;
     
     CBPeripheral *peripheral = [BluetoothManager share].scannedPeripherals[indexPath.row];
+    NSString *macAddress = [BluetoothManager share].macAddresses[indexPath.row];
+    
     cell.numberLabel.text = [NSString stringWithFormat:@"设备%@",@(indexPath.row + 1).stringValue];
     cell.nameLabel.text = peripheral.name;
-    PeripheralModel *model = [_linkedPeripherals objectForKey:peripheral.identifier.UUIDString];
+    PeripheralModel *model = [_linkedPeripherals objectForKey:macAddress];
     if (model) {
         cell.linkedIcon.hidden = NO;
     }
@@ -131,20 +134,18 @@
 }
 
 - (void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath {
-    _selectedPeripheral = [BluetoothManager share].scannedPeripherals[indexPath.row];
-    [[BluetoothManager share] connectingBlueTooth:_selectedPeripheral
-                                            index:indexPath.row];
-    return;
     
     _selectedPeripheral = [BluetoothManager share].scannedPeripherals[indexPath.row];
-    PeripheralModel *model = [_linkedPeripherals objectForKey:_selectedPeripheral.identifier.UUIDString];
+    _selectedMacAddress = [BluetoothManager share].macAddresses[indexPath.row];
+    [BluetoothManager share].willConnectMacAddress = _selectedMacAddress;
+    
+    PeripheralModel *model = [_linkedPeripherals objectForKey:_selectedMacAddress];
     if (model) {
-        [[BluetoothManager share] connectingBlueTooth:_selectedPeripheral
-                                                index:indexPath.row];
+        [[BluetoothManager share] connectingBlueTooth:_selectedPeripheral];
     }
     else {
         NSDictionary *dictionary = @{@"userId": [UserInfo share].userId ? [UserInfo share].userId : @"",
-                                     @"mac": _selectedPeripheral.identifier.UUIDString};
+                                     @"mac": _selectedMacAddress};
         NSString *bodyString = [NMOANetWorking handleHTTPBodyParams:dictionary];
         __weak PeripheralListViewController *weakSelf = self;
         [[NMOANetWorking share] taskWithTag:ID_CHECK_DEVICEBIND
@@ -157,10 +158,12 @@
              if ([code isEqualToString:@"000"]) {
                  BOOL isbinded = [[obj objectForKey:@"isbinded"] boolValue];
                  if (!isbinded) {
-                     [[BluetoothManager share] connectingBlueTooth:weakSelf.selectedPeripheral
-                                                             index:indexPath.row];
+                     [[BluetoothManager share] connectingBlueTooth:weakSelf.selectedPeripheral];
                  }
                  else {
+                     [MBProgressHUD showHUDByContent:@"设备已被绑定"
+                                                view:UI_Window
+                                          afterDelay:2.5];
                      [weakSelf connectPeripheralError];
                  }
              }
@@ -179,7 +182,7 @@
 
 - (void)connectPeripheralSuccess {
     
-    PeripheralModel *model = [_linkedPeripherals objectForKey:_selectedPeripheral.identifier.UUIDString];
+    PeripheralModel *model = [_linkedPeripherals objectForKey:_selectedMacAddress];
     // 设备已绑定
     if (model) {
         PeripheralBindingFinishedViewController *ctl = [[PeripheralBindingFinishedViewController alloc] init];
@@ -190,7 +193,7 @@
     else {
         NSDictionary *dictionary = @{@"userId": [UserInfo share].userId ? [UserInfo share].userId : @"",
                                      @"deviceName":_selectedPeripheral.name,
-                                     @"mac": _selectedPeripheral.identifier.UUIDString};
+                                     @"mac": _selectedMacAddress};
         NSString *bodyString = [NMOANetWorking handleHTTPBodyParams:dictionary];
         __weak PeripheralListViewController *weakSelf = self;
         [[NMOANetWorking share] taskWithTag:ID_BINGDING_DEVICE
