@@ -50,6 +50,16 @@
     }
 }
 
+- (void)viewWillAppear:(BOOL)animated
+{
+    [super viewWillAppear:animated];
+    
+    if ([UserInfo share].target) {
+        NSInteger destination = ([UserInfo share].target.floatValue) * 15 - _pointerViewX;
+        _rulerScrollView.contentOffset = CGPointMake(destination, _rulerScrollView.contentOffset.y);
+    }
+}
+
 - (void)setUpBarView
 {
     _barView = [[BasicBarView alloc] initWithFrame:CGRectMake(0, 20, kScreenWidth, 44) withType:superBarTypeLeftItemBackAndRightItemBinding withTitle:@"设定目标" isShowRightButton:NO];
@@ -137,12 +147,6 @@
     UIImageView *arrowImageView = [[UIImageView alloc] initWithFrame:CGRectMake(self.pointerViewX - 3, rulerY + viewY + 43, 6, 4)];
     arrowImageView.image = [UIImage imageNamed:@"arrowUp"];
     [self.view addSubview:arrowImageView];
-    
-    if ([UserInfo share].target) {
-        NSInteger destination = ([UserInfo share].target.floatValue) * 15 - _pointerViewX;
-        _rulerScrollView.contentOffset = CGPointMake(destination, _rulerScrollView.contentOffset.y);
-    }
-    
 }
 
 #pragma mark - BasicBarViewDelegate

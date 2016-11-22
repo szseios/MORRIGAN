@@ -131,7 +131,7 @@ displayCountingLabel:(BOOL)displayCountingLabel
         _total = @72;
         CGFloat start;
         if (isEmpty) {
-            _current = @(endAngle/ 10);
+            _current = @(endAngle/ 10 + 18);
             start = 0;
         }else{
            _current = @((NSInteger)(endAngle - startAngle) / 10);
@@ -159,14 +159,14 @@ displayCountingLabel:(BOOL)displayCountingLabel
         
         _circle               = [CAShapeLayer layer];
         _circle.path          = circlePath.CGPath;
-        _circle.lineCap       = kCALineCapRound;
+//        _circle.lineCap       = kCALineCapRound;
         _circle.fillColor     = [UIColor clearColor].CGColor;
         _circle.lineWidth     = [_lineWidth floatValue];
         _circle.zPosition     = 1;
         
         _circleBackground             = [CAShapeLayer layer];
         _circleBackground.path        = circlePath.CGPath;
-        _circleBackground.lineCap     = kCALineCapRound;
+//        _circleBackground.lineCap     = kCALineCapRound;
         _circleBackground.fillColor   = [UIColor clearColor].CGColor;
         _circleBackground.lineWidth   = [_lineWidth floatValue];
         _circleBackground.strokeColor = [UIColor whiteColor].CGColor;
@@ -201,7 +201,7 @@ displayCountingLabel:(BOOL)displayCountingLabel
         self.gradientMask.fillColor = [[UIColor clearColor] CGColor];
         self.gradientMask.strokeColor = [[UIColor whiteColor] CGColor];
         self.gradientMask.lineWidth = _circle.lineWidth;
-        self.gradientMask.lineCap = kCALineCapRound;
+//        self.gradientMask.lineCap = kCALineCapRound;
         CGRect gradientFrame = CGRectMake(0, 0, 2*self.bounds.size.width, 2*self.bounds.size.height);
         self.gradientMask.frame = gradientFrame;
         self.gradientMask.path = _circle.path;

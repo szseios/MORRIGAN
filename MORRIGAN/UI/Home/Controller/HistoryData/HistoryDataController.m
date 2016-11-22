@@ -10,6 +10,7 @@
 #import "HistoryDataCell.h"
 #import "PNChartDelegate.h"
 #import "PNChart.h"
+#import "MassageRecordModel.h"
 
 @interface HistoryDataController () <BasicBarViewDelegate,UITableViewDelegate,UITableViewDataSource,PNChartDelegate>
 
@@ -48,7 +49,7 @@ static NSString *cellID = @"DataCellID";
 - (void)viewDidLoad {
     [super viewDidLoad];
     self.view.backgroundColor = [UIColor whiteColor];
-    UIImageView *backImageView = [[UIImageView alloc] initWithFrame:CGRectMake(0, 0, kScreenWidth, 114)];
+    UIImageView *backImageView = [[UIImageView alloc] initWithFrame:CGRectMake(0, 0, kScreenWidth, 115)];
     backImageView.image = [UIImage imageWithColor:[Utils stringTOColor:@"#8c39e5"]];
     [self.view addSubview:backImageView];
     [self getDataFromService];
@@ -62,6 +63,9 @@ static NSString *cellID = @"DataCellID";
 
 - (void)getDataFromService
 {
+    
+    
+    
     _weekDataArray = [NSMutableArray array];
     NSString *daStr = @"netWorkFinish";
     const char *queueName = [daStr UTF8String];
@@ -111,7 +115,7 @@ static NSString *cellID = @"DataCellID";
 
 - (void)setUpDayBarChatView
 {
-    UIView *chatView = [[UIView alloc] initWithFrame:CGRectMake(0, 117, kScreenWidth, 250)];
+    UIView *chatView = [[UIView alloc] initWithFrame:CGRectMake(0, 115, kScreenWidth, 250)];
     
     UIImageView *backImageView = [[UIImageView alloc] initWithFrame:chatView.bounds];
     backImageView.image = [UIImage imageNamed:@"basicBackground"];
@@ -127,10 +131,13 @@ static NSString *cellID = @"DataCellID";
     _minuteDataLabel.textColor = [UIColor whiteColor];
     _minuteDataLabel.textAlignment = NSTextAlignmentRight;
     _minuteDataLabel.font = [UIFont systemFontOfSize:35];
-    _minuteDataLabel.text = @"88";
+     _minuteDataLabel.text = [UserInfo share].target ? [UserInfo share].target : @"--";
+    [_minuteDataLabel sizeToFit];
+   
     [_dayView addSubview:_minuteDataLabel];
     
-    UILabel *unitLabel = [[UILabel alloc] initWithFrame:CGRectMake(70, 20, 40, 30)];
+    CGFloat unitLabelX = CGRectGetMaxX(_minuteDataLabel.frame) + 2;
+    UILabel *unitLabel = [[UILabel alloc] initWithFrame:CGRectMake(unitLabelX, labelY, 40, 30)];
     unitLabel.textColor = [UIColor whiteColor];
     unitLabel.text = @"分钟";
     [_dayView addSubview:unitLabel];
@@ -385,7 +392,7 @@ static NSString *cellID = @"DataCellID";
         }
         _dayView.hidden = YES;
         _weekView.hidden = NO;
-        _titleArray = @[@"今日目标",@"今日护养",@"剩余目标值",@"平均养护"];
+        _titleArray = @[@"本周目标",@"今日护养",@"剩余目标值",@"平均养护"];
         [_bottomTableView reloadData];
     }
 }

@@ -45,7 +45,7 @@
 - (void)viewDidLoad {
     [super viewDidLoad];
 //
-//    [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(getElectricity:) name:ElectricQuantityChanged object:nil];
+    [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(getElectricity:) name:ElectricQuantityChanged object:nil];
     [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(firstGetElectricity:) name:ConnectPeripheralSuccess object:nil];
     UIImageView *upBackImage = [[UIImageView alloc] initWithFrame:CGRectMake(0, 0, self.view.width, self.view.height)];
     upBackImage.image =[UIImage imageWithColor:[Utils stringTOColor:@"#8c39e5"]];
@@ -95,12 +95,12 @@
     CGFloat mainViewH = mainViewW / 623 * 860.0;
     CGFloat mainViewX = (kScreenWidth - mainViewW) /2 + (kScreenWidth > 320 ? 20 : 15); //kScreenWidth > 320 ? 50 : 20;
     MassageRecordModel *model = [[MassageRecordModel alloc] init];
-    model.startTime = [NSDate dateWithTimeIntervalSinceNow:-60*60*1];
+    model.startTime = [NSDate dateWithTimeIntervalSinceNow:-60*5];
     model.endTime = [NSDate dateWithTimeIntervalSinceNow:60*60*0];
     
     MassageRecordModel *model1 = [[MassageRecordModel alloc] init];
-    model1.startTime = [NSDate dateWithTimeIntervalSinceNow:-60*60*3];;
-    model1.endTime = [NSDate dateWithTimeIntervalSinceNow:-60*60*2];
+    model1.startTime = [NSDate dateWithTimeIntervalSinceNow:-60*15];;
+    model1.endTime = [NSDate dateWithTimeIntervalSinceNow:-60*30];
     
     NSArray *arra = @[model1,model];
 //    NSArray *array = [DBManager selectForenoonDatas:[UserInfo share].userId];
@@ -256,6 +256,10 @@
     [operation setValue:@"03" index:2];
     [[BluetoothManager share] writeValueByOperation:operation];
     operation.response = ^(NSString *response,long tag,NSError *error,BOOL success) {
+        if (success) {
+            NSString *electriQuantity = [response substringWithRange:NSMakeRange(4, 2)];
+            [_mainView setElectricityPersent:[electriQuantity floatValue]];
+        }
         
     };
 }
