@@ -161,6 +161,9 @@
                      [[BluetoothManager share] connectingBlueTooth:weakSelf.selectedPeripheral];
                  }
                  else {
+                     [MBProgressHUD showHUDByContent:@"设备已被绑定"
+                                                view:UI_Window
+                                          afterDelay:2.5];
                      [weakSelf connectPeripheralError];
                  }
              }
