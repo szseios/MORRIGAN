@@ -79,6 +79,9 @@
     if (starStr && starStr.length > 0) {
         [_mainView setStarLabelAndImage:starStr];
     }
+//        NSArray *ForenoonArray = [DBManager selectForenoonDatas:[UserInfo share].userId];
+//        NSArray *AfternoonArray = [DBManager selectaAfternoonDatas:[UserInfo share].userId];
+//    [_mainView refreshLatestDataForAMMorrigan:ForenoonArray PMMorrigan:AfternoonArray];
     
 }
 
@@ -99,12 +102,13 @@
     model.endTime = [NSDate dateWithTimeIntervalSinceNow:60*60*0];
     
     MassageRecordModel *model1 = [[MassageRecordModel alloc] init];
-    model1.startTime = [NSDate dateWithTimeIntervalSinceNow:-60*15];;
-    model1.endTime = [NSDate dateWithTimeIntervalSinceNow:-60*30];
+    model1.startTime = [NSDate dateWithTimeIntervalSinceNow:-60*55];;
+    model1.endTime = [NSDate dateWithTimeIntervalSinceNow:-60*35];
     
     NSArray *arra = @[model1,model];
-//    NSArray *array = [DBManager selectForenoonDatas:[UserInfo share].userId];
-    _mainView = [[HomeMainView alloc] initWithMorriganArray:arra withFarme:CGRectMake(mainViewX, 74, mainViewW, mainViewH)];
+//    NSArray *ForenoonArray = [DBManager selectForenoonDatas:[UserInfo share].userId];
+//    NSArray *AfternoonArray = [DBManager selectaAfternoonDatas:[UserInfo share].userId];
+    _mainView = [[HomeMainView alloc] initWithAMMorriganArray:arra PMMorriganTime:nil  withFarme:CGRectMake(mainViewX, 74, mainViewW, mainViewH)];
     _mainView.backgroundColor = [UIColor clearColor];
     
     [self.view addSubview:_mainView];
@@ -113,25 +117,25 @@
 
 - (void)setUpCircleView
 {
-//    [_mainView morriganStartTime:90 toEndTime:240];
+    
 }
 
 - (void)setUpBottomView
 {
     CGFloat bottomViewY = self.view.height - (kScreenHeight > 568 ? 150 : 140);
-    CGFloat bottomViewW = self.view.width;
-    _bottomView = [[UIView alloc] initWithFrame:CGRectMake(0, bottomViewY, bottomViewW, 150)];
+    CGFloat bottomViewW = self.view.width - 60;
+    _bottomView = [[UIView alloc] initWithFrame:CGRectMake(30, bottomViewY, bottomViewW, 150)];
     
     
-    CGFloat buttonW = 100;
-    CGFloat buttonY = 0;
-    CGFloat labelY = 90;
-    CGFloat bottonX = (bottomViewW - 300) / 4;
+    CGFloat buttonW = kScreenHeight > 568 ? 100 : 80;
+    CGFloat buttonY = 10;
+    CGFloat labelY = kScreenHeight > 568 ? 100 : 80;;
+    CGFloat bottonX = (bottomViewW - buttonW * 3) / 2;
     CGFloat labelH = 20;
     
-    _handButton = [[HomePageButton alloc] initWithFrame:CGRectMake(bottonX , buttonY, buttonW, buttonW) withImageName:@"handMorrigan"];
+    _handButton = [[HomePageButton alloc] initWithFrame:CGRectMake(0 , buttonY, buttonW, buttonW) withImageName:@"handMorrigan"];
     [_handButton addTarget:self action:@selector(pushHandlePage) forControlEvents:UIControlEventTouchUpInside];
-    UILabel *handLabel = [[UILabel alloc] initWithFrame:CGRectMake(bottonX, labelY, buttonW, labelH)];
+    UILabel *handLabel = [[UILabel alloc] initWithFrame:CGRectMake(0, labelY, buttonW, labelH)];
     handLabel.textAlignment = NSTextAlignmentCenter;
     handLabel.text = @"手动按摩";
     handLabel.textColor = [UIColor purpleColor];
