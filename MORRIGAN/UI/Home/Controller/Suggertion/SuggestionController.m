@@ -30,9 +30,12 @@
     [self.view addSubview:backImageView];
     
     [self setUpBarView];
-    if (self.connectBottomView) {
-        [self.view bringSubviewToFront:self.connectBottomView];
-    }
+    
+}
+
+- (void)viewDidAppear:(BOOL)animated
+{
+    [super viewDidAppear:animated];
     [_suggestTextView becomeFirstResponder];
 }
 

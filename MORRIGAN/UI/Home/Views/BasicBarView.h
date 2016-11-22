@@ -46,4 +46,6 @@ typedef enum : NSUInteger {
 
 - (void)setRightButtonEnable:(BOOL)enable;
 
+- (void)setTitleLabelText:(NSString *)title;
+
 @end

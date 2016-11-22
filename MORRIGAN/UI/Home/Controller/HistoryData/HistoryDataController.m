@@ -63,9 +63,6 @@ static NSString *cellID = @"DataCellID";
 
 - (void)getDataFromService
 {
-    
-    
-    
     _weekDataArray = [NSMutableArray array];
     NSString *daStr = @"netWorkFinish";
     const char *queueName = [daStr UTF8String];
@@ -77,7 +74,6 @@ static NSString *cellID = @"DataCellID";
                                      };
         NSString *bodyString = [NMOANetWorking handleHTTPBodyParams:dictionary];
         [[NMOANetWorking share] taskWithTag:ID_GET_RECORD urlString:URL_GET_RECORD httpHead:nil bodyString:bodyString objectTaskFinished:^(NSError *error, id obj) {
-            
             if ([[obj objectForKey:HTTP_KEY_RESULTCODE] isEqualToString:HTTP_RESULTCODE_SUCCESS]) {
                 NSArray *hlarray = [obj objectForKey:@"hlInfo"];
                 if (hlarray) {
@@ -386,6 +382,7 @@ static NSString *cellID = @"DataCellID";
         _weekView.hidden = YES;
         _titleArray = @[@"今日目标",@"今日护养",@"剩余目标值"];
         [_bottomTableView reloadData];
+        [_barView setTitleLabelText:@"今日一览"];
     }else{
         if (!_weekView) {
             [self setUpWeekBarChatView];
@@ -394,6 +391,7 @@ static NSString *cellID = @"DataCellID";
         _weekView.hidden = NO;
         _titleArray = @[@"本周目标",@"今日护养",@"剩余目标值",@"平均养护"];
         [_bottomTableView reloadData];
+        [_barView setTitleLabelText:@"本周一阅"];
     }
 }
 

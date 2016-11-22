@@ -33,7 +33,9 @@
 
 @property (nonatomic , strong) PNCircleChart *circleChart;  //时间划线
 
-@property (nonatomic , strong) NSArray *haveMorriganArray;   //按摩时间数组，里面是字典，key:startTime,endTime Value:
+@property (nonatomic , strong) NSArray *AMMorriganArray;   //上午按摩时间数组
+
+@property (nonatomic , strong) NSArray *PMMorriganArray;   //下午按摩时间数组
 
 @property (nonatomic , strong) NSArray *haveEmptyArray;   //空闲时间数组，里面是字典，key:startTime,endTime Value:
 
@@ -67,11 +69,12 @@
 
 @implementation HomeMainView
 
-- (instancetype)initWithMorriganArray:(NSArray *)array withFarme:(CGRect)frame;
+- (instancetype)initWithAMMorriganArray:(NSArray *)AMArray PMMorriganTime:(NSArray *)PMArray withFarme:(CGRect)frame
 {
     self = [super initWithFrame:frame];
     if (self) {
-        _haveMorriganArray = array;
+        _AMMorriganArray = AMArray;
+        _PMMorriganArray = PMArray;
     }
     return self;
 }
@@ -98,17 +101,7 @@
     _circleImageView.backgroundColor = [UIColor clearColor];
     _circleImageView.image = [UIImage imageNamed:@"round_scale_all"];
     [self addSubview:_circleImageView];
-    
-    if (_haveMorriganArray) {
-        MassageRecordModel *model = _haveMorriganArray.lastObject;
-        [self emptyStartTime:model.startTime toEndTime:model.endTime];
-        
-        for (MassageRecordModel *model in _haveMorriganArray) {
-            [self morriganStartTime:model.startTime toEndTime:model.endTime];
-            NSInteger time = [self getDidMorriganTime:model];
-            _didMorriganTime += time;
-        }
-    }
+    [self refreshLatestDataForAMMorrigan:_AMMorriganArray PMMorrigan:_PMMorriganArray];
     
     [self setUpWaveView];
     [self setUpCenterView];
@@ -233,12 +226,12 @@
     _dateLabel.center = CGPointMake(_centerView.width / 2 -15, dateLabelY + 25/2);
     [_centerView addSubview:_dateLabel];
     
-    CGFloat APMLabelX = CGRectGetMaxX(_dateLabel.frame) - 10;
-    _APMLabel = [[UILabel alloc] initWithFrame:CGRectMake(APMLabelX + 10, dateLabelY, 50, 25)];
+    CGFloat APMLabelX = CGRectGetMaxX(_dateLabel.frame)+5;
+    _APMLabel = [[UILabel alloc] initWithFrame:CGRectMake(APMLabelX, dateLabelY-3, 50, 25)];
     _APMLabel.text = [self isAMOrPM] ? @"AM" : @"PM";
     _APMLabel.textColor = [UIColor whiteColor];
     _APMLabel.textAlignment = NSTextAlignmentLeft;
-    _APMLabel.font = [UIFont systemFontOfSize:(kScreenWidth > 320 ? 22 : 20)];
+    _APMLabel.font = [UIFont systemFontOfSize:(kScreenWidth > 320 ? 24 : 22)];
     [_centerView addSubview:_APMLabel];
     
     CGFloat horizY = CGRectGetMaxY(_dateLabel.frame);
@@ -443,19 +436,26 @@
 
 - (void)scrollViewDidEndDecelerating:(UIScrollView *)scrollView
 {
+    
+}
+
+- (void)scrollViewDidScroll:(UIScrollView *)scrollView
+{
     CGFloat offsetX =  _centerView.width;
     CGFloat offsetXX = scrollView.contentOffset.x;
-    
     if ( offsetXX >= offsetX / 2) {
         _APMLabel.text = @"AM";
         _righthorizImageView.image = [UIImage imageNamed:@"empty_rect"];
         _lefthorizImageView.image = [UIImage imageNamed:@"full_rect"];
+        [self showCircleWithAM:YES];
         
     }else{
         _APMLabel.text = @"PM";
         _righthorizImageView.image = [UIImage imageNamed:@"full_rect"];
         _lefthorizImageView.image = [UIImage imageNamed:@"empty_rect"];
+        [self showCircleWithAM:NO];
     }
+    [self bringSubviewToFront:_scrollView];
 }
 
 - (void)refreshData:(NSNotification *)notification
@@ -569,6 +569,60 @@
     return theImage;
 }
 
+- (void)refreshLatestDataForAMMorrigan:(NSArray *)AMMorriganArray PMMorrigan:(NSArray *)PMMorriganArray
+{
+    if ([self isAMOrPM]) {
+        [self showCircleWithAM:YES];
+    }else{
+       [self showCircleWithAM:NO];
+    }
+    
+}
+
+- (void)showCircleWithAM:(BOOL)isAM
+{
+    for (UIView *subView in self.subviews) {
+        if ([subView isKindOfClass:[CircleChartView class]]) {
+            [subView removeFromSuperview];
+        }
+    }
+    if (isAM) {
+        
+        if (_AMMorriganArray && _AMMorriganArray.count > 0) {
+            MassageRecordModel *model = _AMMorriganArray.lastObject;
+            [self emptyStartTime:model.startTime toEndTime:model.endTime];
+            
+            for (MassageRecordModel *model in _AMMorriganArray) {
+                [self morriganStartTime:model.startTime toEndTime:model.endTime];
+                NSInteger time = [self getDidMorriganTime:model];
+                _didMorriganTime += time;
+            }
+        }
+        if (_PMMorriganArray && _PMMorriganArray.count > 0) {
+            for (MassageRecordModel *model in _PMMorriganArray) {
+                NSInteger time = [self getDidMorriganTime:model];
+                _didMorriganTime += time;
+            }
+        }
+
+    }else{
+        if (_AMMorriganArray) {
+            for (MassageRecordModel *model in _AMMorriganArray) {
+                NSInteger time = [self getDidMorriganTime:model];
+                _didMorriganTime += time;
+            }
+        }
+        if (_PMMorriganArray) {
+            MassageRecordModel *model = _PMMorriganArray.lastObject;
+            [self emptyStartTime:model.startTime toEndTime:model.endTime];
+            for (MassageRecordModel *model in _PMMorriganArray) {
+                [self morriganStartTime:model.startTime toEndTime:model.endTime];
+                NSInteger time = [self getDidMorriganTime:model];
+                _didMorriganTime += time;
+            }
+        }
+    }
+}
 
 
 - (void)dealloc
