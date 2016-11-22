@@ -77,6 +77,7 @@
         
         if ([[obj objectForKey:HTTP_KEY_RESULTCODE] isEqualToString:HTTP_RESULTCODE_SUCCESS]) {
             [MBProgressHUD showHUDByContent:@"修改目标成功！" view:UI_Window afterDelay:2];
+            [UserInfo share].target = _countLabel.text;
             NSLog(@"修改目标成功！");
             [self.navigationController popViewControllerAnimated:YES];
         }else{
@@ -209,7 +210,7 @@
     }
     NSLog(@"当前刻度数：%ld", index);
     _countLabel.text = [NSString stringWithFormat:@"%ld",index];
-    [UserInfo share].target = _countLabel.text;
+    
     
 }
 
