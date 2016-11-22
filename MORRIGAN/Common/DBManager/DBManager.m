@@ -57,7 +57,7 @@ static NSString *dbPath = nil;
 
 + (BOOL)createPeripheralsTable:(FMDatabase *)db {
     BOOL success = NO;
-    NSString *sql = @"CREATE TABLE IF NOT EXISTS 'peripherals' ('uuid' TEXT PRIMARY KEY NOT NULL , 'name' TEXT NOT NULL , 'user_id' TEXT NOT NULL)";
+    NSString *sql = @"CREATE TABLE IF NOT EXISTS 'peripherals' ('mac' TEXT PRIMARY KEY NOT NULL , 'name' TEXT NOT NULL , 'user_id' TEXT NOT NULL)";
     success = [db executeUpdate:sql];
     return success;
 }
@@ -78,8 +78,8 @@ static NSString *dbPath = nil;
     [[DBManager dbQueue] inTransaction:^(FMDatabase *db, BOOL *rollback) {
         
         for (PeripheralModel *model in peripherals) {
-            NSString *sql = [NSString stringWithFormat:@"INSERT OR REPLACE INTO 'peripherals' ('uuid', 'name' ,'user_id') VALUES ('%@', '%@', '%@')",
-                             model.uuid,
+            NSString *sql = [NSString stringWithFormat:@"INSERT OR REPLACE INTO 'peripherals' ('mac','name' ,'user_id') VALUES ('%@','%@', '%@')",
+                             model.macAddress,
                              model.name,
                              model.userID];
             success = [db executeUpdate:sql];
@@ -92,12 +92,12 @@ static NSString *dbPath = nil;
     return success;
 }
 
-+ (BOOL)insertPeripheral:(CBPeripheral *)peripheral {
++ (BOOL)insertPeripheral:(CBPeripheral *)peripheral macAddress:(NSString *)macAddress {
 
     __block BOOL success = NO;
     [[DBManager dbQueue] inDatabase:^(FMDatabase *db) {
-        NSString *sql = [NSString stringWithFormat:@"INSERT OR REPLACE INTO 'peripherals' ('uuid', 'name' ,'user_id') VALUES ('%@', '%@', '%@')",
-                         peripheral.identifier.UUIDString,
+        NSString *sql = [NSString stringWithFormat:@"INSERT OR REPLACE INTO 'peripherals' ('mac','name' ,'user_id') VALUES ('%@', '%@', '%@')",
+                         macAddress,
                          peripheral.name,
                          [UserInfo share].userId?[UserInfo share].userId:@""];
         success = [db executeUpdate:sql];
@@ -110,19 +110,19 @@ static NSString *dbPath = nil;
     
     __block BOOL success = NO;
     [[DBManager dbQueue] inDatabase:^(FMDatabase *db) {
-        NSString *sql = [NSString stringWithFormat:@"UPDATE 'peripherals' SET name = '%@' WHERE uuid = '%@'",
+        NSString *sql = [NSString stringWithFormat:@"UPDATE 'peripherals' SET name = '%@' WHERE mac = '%@'",
                          model.name,
-                         model.uuid];
+                         model.macAddress];
         success = [db executeUpdate:sql];
     }];
     return success;
 }
 
 
-+ (BOOL)deletePeripheral:(NSString *)uuid {
++ (BOOL)deletePeripheral:(NSString *)macAddress {
     __block BOOL success = NO;
     [[DBManager dbQueue] inDatabase:^(FMDatabase *db) {
-        NSString *sql = [NSString stringWithFormat:@"DELETE FROM 'peripherals' WHERE uuid = '%@'",uuid];
+        NSString *sql = [NSString stringWithFormat:@"DELETE FROM 'peripherals' WHERE mac = '%@'",macAddress];
         success = [db executeUpdate:sql];
     }];
     return success;
@@ -138,7 +138,7 @@ static NSString *dbPath = nil;
                 array = [[NSMutableArray alloc] init];
             }
             PeripheralModel *model = [[PeripheralModel alloc] init];
-            model.uuid = [result stringForColumn:@"uuid"];
+            model.macAddress = [result stringForColumn:@"mac"];
             model.name = [result stringForColumn:@"name"];
             [array addObject:model];
         }
@@ -156,9 +156,9 @@ static NSString *dbPath = nil;
                 dictionary = [[NSMutableDictionary alloc] init];
             }
             PeripheralModel *model = [[PeripheralModel alloc] init];
-            model.uuid = [result stringForColumn:@"uuid"];
+            model.macAddress = [result stringForColumn:@"mac"];
             model.name = [result stringForColumn:@"name"];
-            [dictionary setObject:model forKey:model.uuid];
+            [dictionary setObject:model forKey:model.macAddress];
         }
     }];
     return dictionary;

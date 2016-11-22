@@ -25,7 +25,6 @@ NSString * const ElectricQuantityChanged = @"ElectricQuantityChanged";
     NSTimer *_timer;
 }
 
-@property (nonatomic,assign)NSInteger willConnectIndex;             // 将要连接的设备在数组中的下标
 @property (nonatomic,strong)CBPeripheral *curConnectPeripheral;      // 当前连接的设备
 @property (nonatomic,strong)CBCharacteristic *sendCharacteristic;    // 写特征
 @property (nonatomic,strong)CBCharacteristic *receiveCharacteristic; // 读特征
@@ -54,6 +53,7 @@ NSString * const ElectricQuantityChanged = @"ElectricQuantityChanged";
         _baby = [BabyBluetooth shareBabyBluetooth];
         _operationQueue = [[NSMutableArray alloc] init];
         _scannedPeripherals = [[NSMutableArray alloc] init];
+        _macAddresses = [[NSMutableArray alloc] init];
         [self babyDelegate];
         
     }
@@ -71,9 +71,29 @@ NSString * const ElectricQuantityChanged = @"ElectricQuantityChanged";
     
     //扫描到设备的委托
     [_baby setBlockOnDiscoverToPeripherals:^(CBCentralManager *central, CBPeripheral *peripheral, NSDictionary *advertisementData, NSNumber *RSSI) {
-        NSLog(@"搜索到了设备:%@",peripheral.name);
         if (![weakSelf.scannedPeripherals containsObject:peripheral]) {
             [weakSelf.scannedPeripherals addObject:peripheral];
+            NSArray *array = [advertisementData objectForKey:@"kCBAdvDataServiceUUIDs"];
+            NSMutableString *macAddress;
+            if (array.count) {
+                macAddress = [[NSMutableString alloc] init];
+                for (NSInteger i = 0; i < array.count - 1; i++) {
+                    NSUUID *uuid = [array objectAtIndex:i];
+                    NSString *string = uuid.UUIDString;
+                    if (i == 0) {
+                        [macAddress appendFormat:@"%@:%@",
+                         [string substringWithRange:NSMakeRange(0, 2)],
+                         [string substringWithRange:NSMakeRange(2, 2)]];
+                    }
+                    else {
+                        [macAddress appendFormat:@":%@:%@",
+                         [string substringWithRange:NSMakeRange(0, 2)],
+                         [string substringWithRange:NSMakeRange(2, 2)]];
+                    }
+                }
+                [weakSelf.macAddresses addObject:macAddress];
+            }
+            NSLog(@"搜索到了设备:%@   MAC : %@",peripheral.name,macAddress);
         }
     }];
     
@@ -86,7 +106,7 @@ NSString * const ElectricQuantityChanged = @"ElectricQuantityChanged";
         [[NSNotificationCenter defaultCenter] postNotificationName:ConnectPeripheralSuccess
                                                             object:nil];
         //连接成功后保存为已绑定设备信息
-        if (![DBManager insertPeripheral:peripheral]) {
+        if (![DBManager insertPeripheral:peripheral macAddress:weakSelf.willConnectMacAddress]) {
             NSLog(@"保存已绑定设备信息失败.  peripheral.name : %@",peripheral.name);
         }
     }];
@@ -288,8 +308,7 @@ NSString * const ElectricQuantityChanged = @"ElectricQuantityChanged";
     [_baby cancelScan];
 }
 
--(void)connectingBlueTooth:(CBPeripheral *)peripheral index:(NSInteger)index {
-    _willConnectIndex = index;
+-(void)connectingBlueTooth:(CBPeripheral *)peripheral {
     _baby.having(peripheral).and.then.connectToPeripherals().discoverServices().discoverCharacteristics().begin();
 }
 

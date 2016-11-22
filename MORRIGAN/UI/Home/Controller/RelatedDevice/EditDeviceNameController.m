@@ -80,7 +80,7 @@
     NSDictionary *dictionary = @{
                                  @"userId":[UserInfo share].userId,
                                  @"deviceName":_textField.text,
-                                 @"mac":_model.uuid
+                                 @"mac":_model.macAddress
                                  };
     NSString *bodyString = [NMOANetWorking handleHTTPBodyParams:dictionary];
     [[NMOANetWorking share] taskWithTag:ID_EDIT_DEVICENAME

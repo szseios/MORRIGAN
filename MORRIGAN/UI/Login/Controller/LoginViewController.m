@@ -433,7 +433,7 @@
              for (NSDictionary *dictionary in array) {
                  PeripheralModel *model = [[PeripheralModel alloc] init];
                  model.name = [dictionary objectForKey:@"deviceName"];
-                 model.uuid = [dictionary objectForKey:@"mac"];
+                 model.macAddress = [dictionary objectForKey:@"mac"];
                  model.userID = [dictionary objectForKey:@"userId"];
                  [peripheals addObject:model];
              }

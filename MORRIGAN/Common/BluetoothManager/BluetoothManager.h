@@ -24,9 +24,9 @@ extern NSString * const ElectricQuantityChanged;        //设备电池电量变�
 
 @property (nonatomic,assign)BOOL isConnected;
 
-@property (nonatomic,strong)NSMutableArray *scannedPeripherals;              //扫描到的所有设备
-@property (nonatomic,strong)NSMutableArray *advDataServiceUUIDs;
-@property (nonatomic,strong)PeripheralModel *willConnectPeripheralModel;     // 将要连接的设备
+@property (nonatomic,strong)NSMutableArray *scannedPeripherals;              // 扫描到的所有设备
+@property (nonatomic,strong)NSMutableArray *macAddresses;                    // 设备的MAC地址
+@property (nonatomic,strong)NSString *willConnectMacAddress;                        // 将要连接的设备的MAC地址
 
 + (BluetoothManager *)share;
 
@@ -34,8 +34,7 @@ extern NSString * const ElectricQuantityChanged;        //设备电池电量变�
 
 - (void)stop;
 
--(void)connectingBlueTooth:(CBPeripheral *)peripheral
-                     index:(NSInteger)index;
+-(void)connectingBlueTooth:(CBPeripheral *)peripheral;
 
 - (void)writeValueByOperation:(BluetoothOperation *)operation;
 
