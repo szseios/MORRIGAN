@@ -141,7 +141,7 @@ static NSString *cellID = @"DataCellID";
 - (void)updateWeekBarView
 {
     [_weekMinuteDataLabel removeFromSuperview];
-    CGFloat labelY = 31;
+    CGFloat labelY = 20;
     _weekMinuteDataLabel = [[UILabel alloc] initWithFrame:CGRectMake(15, labelY, 60, 60)];
     _weekMinuteDataLabel.textColor = [UIColor whiteColor];
     _weekMinuteDataLabel.textAlignment = NSTextAlignmentRight;
@@ -153,7 +153,7 @@ static NSString *cellID = @"DataCellID";
     
     [_weekUnitLabel removeFromSuperview];
     CGFloat unitLabelX = CGRectGetMaxX(_weekMinuteDataLabel.frame) + 2;
-    _weekUnitLabel = [[UILabel alloc] initWithFrame:CGRectMake(unitLabelX, labelY, 40, 30)];
+    _weekUnitLabel = [[UILabel alloc] initWithFrame:CGRectMake(unitLabelX, labelY+10, 40, 30)];
     _weekUnitLabel.textColor = [UIColor whiteColor];
     _weekUnitLabel.text = @"分钟";
     [_weekView addSubview:_weekUnitLabel];
@@ -218,7 +218,7 @@ static NSString *cellID = @"DataCellID";
     _dayView.backgroundColor = [UIColor clearColor];
     [self.view addSubview:_dayView];
     
-    CGFloat labelY = 31;
+    CGFloat labelY = 20;
     _minuteDataLabel = [[UILabel alloc] initWithFrame:CGRectMake(15, labelY, 60, 60)];
     _minuteDataLabel.textColor = [UIColor whiteColor];
     _minuteDataLabel.textAlignment = NSTextAlignmentRight;
@@ -229,12 +229,12 @@ static NSString *cellID = @"DataCellID";
     [_dayView addSubview:_minuteDataLabel];
     
     CGFloat unitLabelX = CGRectGetMaxX(_minuteDataLabel.frame) + 2;
-    UILabel *unitLabel = [[UILabel alloc] initWithFrame:CGRectMake(unitLabelX, labelY, 40, 30)];
+    UILabel *unitLabel = [[UILabel alloc] initWithFrame:CGRectMake(unitLabelX, labelY+10, 40, 30)];
     unitLabel.textColor = [UIColor whiteColor];
     unitLabel.text = @"分钟";
     [_dayView addSubview:unitLabel];
     
-    _dateLabel = [[UILabel alloc] initWithFrame:CGRectMake(100, 20, kScreenWidth - 120, 30)];
+    _dateLabel = [[UILabel alloc] initWithFrame:CGRectMake(100, 25, kScreenWidth - 120, 30)];
     _dateLabel.textColor = [UIColor whiteColor];
     _dateLabel.textAlignment = NSTextAlignmentRight;
     NSDateFormatter *fomatter = [[NSDateFormatter alloc] init];
@@ -304,7 +304,7 @@ static NSString *cellID = @"DataCellID";
     _weekView.backgroundColor = [UIColor clearColor];
     [self.view addSubview:_weekView];
     
-    CGFloat labelY = 31;
+    CGFloat labelY = 20;
     _weekMinuteDataLabel = [[UILabel alloc] initWithFrame:CGRectMake(15, labelY, 60, 60)];
     _weekMinuteDataLabel.textColor = [UIColor whiteColor];
     _weekMinuteDataLabel.textAlignment = NSTextAlignmentRight;
@@ -320,7 +320,7 @@ static NSString *cellID = @"DataCellID";
     _weekUnitLabel.text = @"分钟";
     [_weekView addSubview:_weekUnitLabel];
     
-    _weekDateLabel = [[UILabel alloc] initWithFrame:CGRectMake(100, 20, kScreenWidth - 120, 30)];
+    _weekDateLabel = [[UILabel alloc] initWithFrame:CGRectMake(100, 25, kScreenWidth - 120, 30)];
     _weekDateLabel.textColor = [UIColor whiteColor];
     _weekDateLabel.textAlignment = NSTextAlignmentRight;
     _weekDateLabel.text = [self currentWeekFirstDayToLastDay];
@@ -463,11 +463,13 @@ static NSString *cellID = @"DataCellID";
         _weekView.hidden = YES;
         _titleArray = @[@"今日目标",@"今日护养",@"剩余目标值"];
         [_bottomTableView reloadData];
+        [_barView setTitleLabelText:@"今日一览"];
     }else{
         _dayView.hidden = YES;
         _weekView.hidden = NO;
         _titleArray = @[@"本周目标",@"本周护养",@"剩余目标值",@"平均养护"];
         [_bottomTableView reloadData];
+        [_barView setTitleLabelText:@"本周一阅"];
     }
 }
 
