@@ -7,6 +7,7 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		3E1EF0C11DE42F7800B7B2E6 /* ReconnectView.m in Sources */ = {isa = PBXBuildFile; fileRef = 3E1EF0C01DE42F7800B7B2E6 /* ReconnectView.m */; };
 		3E216B321DD98C69003D52D7 /* MassageRecordModel.m in Sources */ = {isa = PBXBuildFile; fileRef = 3E216B311DD98C69003D52D7 /* MassageRecordModel.m */; };
 		3E2539791DAA3DA800CB1EF8 /* ForgetPwdViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 3E2539761DAA3DA800CB1EF8 /* ForgetPwdViewController.m */; };
 		3E25397E1DAA3DDA00CB1EF8 /* UserInfo.m in Sources */ = {isa = PBXBuildFile; fileRef = 3E25397D1DAA3DDA00CB1EF8 /* UserInfo.m */; };
@@ -172,6 +173,8 @@
 /* End PBXContainerItemProxy section */
 
 /* Begin PBXFileReference section */
+		3E1EF0BF1DE42F7800B7B2E6 /* ReconnectView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ReconnectView.h; sourceTree = "<group>"; };
+		3E1EF0C01DE42F7800B7B2E6 /* ReconnectView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ReconnectView.m; sourceTree = "<group>"; };
 		3E216B301DD98C69003D52D7 /* MassageRecordModel.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MassageRecordModel.h; sourceTree = "<group>"; };
 		3E216B311DD98C69003D52D7 /* MassageRecordModel.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = MassageRecordModel.m; sourceTree = "<group>"; };
 		3E2539751DAA3DA800CB1EF8 /* ForgetPwdViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ForgetPwdViewController.h; sourceTree = "<group>"; };
@@ -922,6 +925,8 @@
 				3E2AC8591DCEF7DC00961883 /* PeripheralBindingFinishedViewController.h */,
 				3E2AC85A1DCEF7DC00961883 /* PeripheralBindingFinishedViewController.m */,
 				3E2AC85B1DCEF7DC00961883 /* PeripheralBindingFinishedViewController.xib */,
+				3E1EF0BF1DE42F7800B7B2E6 /* ReconnectView.h */,
+				3E1EF0C01DE42F7800B7B2E6 /* ReconnectView.m */,
 			);
 			path = Binding;
 			sourceTree = "<group>";
@@ -1287,6 +1292,7 @@
 			files = (
 				4728EDD31DC4865E0005F9C3 /* ZHRulerView.m in Sources */,
 				3E632A531DC5A47B00CC2332 /* BabyRhythm.m in Sources */,
+				3E1EF0C11DE42F7800B7B2E6 /* ReconnectView.m in Sources */,
 				4728EDBB1DC4865E0005F9C3 /* PNCircleChart.m in Sources */,
 				3E632A541DC5A47B00CC2332 /* BabySpeaker.m in Sources */,
 				4728ED631DC485BA0005F9C3 /* HistoryDataCell.m in Sources */,

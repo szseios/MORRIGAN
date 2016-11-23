@@ -7,6 +7,7 @@
 //
 
 #import "BluetoothManager.h"
+#import "ReconnectView.h"
 
 static BluetoothManager *manager;
 static NSString * const ServiceUUID = @"56FF";
@@ -29,10 +30,14 @@ NSString * const ElectricQuantityChanged = @"ElectricQuantityChanged";
 @property (nonatomic,strong)CBCharacteristic *sendCharacteristic;    // 写特征
 @property (nonatomic,strong)CBCharacteristic *receiveCharacteristic; // 读特征
 
-@property (nonatomic,strong)NSMutableArray *operationQueue;          //operation队列
 @property (nonatomic,strong)BluetoothOperation *currentOperation;    //正在操作的operation
-@property (nonatomic,assign)BOOL writing;                            //是否正在写数据
 @property (nonatomic,assign)BOOL manualDisconnect;                   //是否手动断开连接
+
+@property (nonatomic,assign)BOOL reconnect;                          //是否要重新连接  YES:需要重新连接
+
+@property (nonatomic,strong)ReconnectView *reconnectView;
+
+@property (nonatomic,copy)NSString *lastConnectedAddress;                //已连接上设备的MAC地址
 
 
 @end
@@ -52,11 +57,12 @@ NSString * const ElectricQuantityChanged = @"ElectricQuantityChanged";
     self = [super init];
     if (self) {
         _baby = [BabyBluetooth shareBabyBluetooth];
-        _operationQueue = [[NSMutableArray alloc] init];
+//        _operationQueue = [[NSMutableArray alloc] init];
         _scannedPeripherals = [[NSMutableArray alloc] init];
         _macAddresses = [[NSMutableArray alloc] init];
         
         _manualDisconnect = NO;
+        _reconnect = YES;
         [self babyDelegate];
         
     }
@@ -97,17 +103,27 @@ NSString * const ElectricQuantityChanged = @"ElectricQuantityChanged";
                 [weakSelf.macAddresses addObject:macAddress];
             }
             NSLog(@"搜索到了设备:%@   MAC : %@",peripheral.name,macAddress);
+            
+            //如果不是手动断开连接,并且需要重连
+            if (weakSelf.reconnect && [weakSelf.lastConnectedAddress isEqualToString:macAddress]) {
+                weakSelf.reconnect = NO;
+                [weakSelf connectingBlueTooth:peripheral];
+            }
+            
         }
     }];
     
     //设备连接成功的委托
     [_baby setBlockOnConnected:^(CBCentralManager *central, CBPeripheral *peripheral) {
         NSLog(@"设备：%@连接成功",peripheral.name);
-        _curConnectPeripheral = peripheral;
-        _isConnected = YES;
+        weakSelf.curConnectPeripheral = peripheral;
+        weakSelf.isConnected = YES;
+        weakSelf.reconnect = YES;
+        weakSelf.manualDisconnect = NO;
         //通知连接蓝牙设备成功
         [[NSNotificationCenter defaultCenter] postNotificationName:ConnectPeripheralSuccess
                                                             object:nil];
+        [weakSelf hideConnectView];
         //连接成功后保存为已绑定设备信息
         if (![DBManager insertPeripheral:peripheral macAddress:weakSelf.willConnectMacAddress]) {
             NSLog(@"保存已绑定设备信息失败.  peripheral.name : %@",peripheral.name);
@@ -120,13 +136,6 @@ NSString * const ElectricQuantityChanged = @"ElectricQuantityChanged";
         for (CBService *service in peripheral.services) {
             NSLog(@"搜索到服务:%@",service.UUID.UUIDString);
         }
-        //找到cell并修改detaisText
-//        for (int i=0;i<peripherals.count;i++) {
-//            UITableViewCell *cell = [weakSelf.tableView cellForRowAtIndexPath:[NSIndexPath indexPathForRow:i inSection:0]];
-//            if ([cell.textLabel.text isEqualToString:peripheral.name]) {
-//                cell.detailTextLabel.text = [NSString stringWithFormat:@"%lu个service",(unsigned long)peripheral.services.count];
-//            }
-//        }
     }];
     
     __block BabyBluetooth *weakBaby = _baby;
@@ -150,7 +159,6 @@ NSString * const ElectricQuantityChanged = @"ElectricQuantityChanged";
         if (weakSelf.sendCharacteristic && weakSelf.receiveCharacteristic) {
             [weakBaby notify:weakSelf.curConnectPeripheral characteristic:weakSelf.receiveCharacteristic block:^(CBPeripheral *peripheral, CBCharacteristic *characteristics, NSError *error) {
                 NSLog(@"receive characteristics : %@",characteristics);
-                weakSelf.writing = NO;
                 // 本次接收的数据
                 NSData *receiveData = [characteristics value];
                 NSLog(@"完整接收：%@ [长度：%ld]", receiveData, (unsigned long)receiveData.length);
@@ -171,10 +179,10 @@ NSString * const ElectricQuantityChanged = @"ElectricQuantityChanged";
                         // @"ee"是模块给客户端的应答，不处理
                         success = YES;
                     } else {
-                        NSString *order = [receiveDataHexString substringWithRange:NSMakeRange(2, 2)];
+                        NSString *order = [receiveDataHexString substringWithRange:NSMakeRange(4, 2)];
                         NSString *code = [receiveDataHexString substringWithRange:NSMakeRange(36, 2)];
                         //蓝牙设备通知app电量变化
-                        if ([order isEqualToString:@"55"] &&[code isEqualToString:@"01"]) {
+                        if ([order isEqualToString:@"02"] &&[code isEqualToString:@"01"]) {
                             success = YES;
                             NSString *electriQuantity = [receiveDataHexString substringWithRange:NSMakeRange(4, 2)];
                             [[NSNotificationCenter defaultCenter] postNotificationName:ElectricQuantityChanged
@@ -196,13 +204,6 @@ NSString * const ElectricQuantityChanged = @"ElectricQuantityChanged";
                 if (weakSelf.currentOperation.response) {
                     weakSelf.currentOperation.response(receiveDataHexString,weakSelf.currentOperation.tag,responseError,success);
                 }
-                
-                [weakSelf.operationQueue removeObject:weakSelf.currentOperation];
-                weakSelf.currentOperation = nil;
-                if (weakSelf.operationQueue.count > 0) {
-                    weakSelf.currentOperation = weakSelf.operationQueue[0];
-                    [weakSelf writeValueByOperation:weakSelf.currentOperation];
-                }
 
             }];
             
@@ -213,7 +214,7 @@ NSString * const ElectricQuantityChanged = @"ElectricQuantityChanged";
     //写数据成功的block
     [_baby setBlockOnDidWriteValueForCharacteristic:^(CBCharacteristic *characteristic, NSError *error) {
         if (!error) {
-            NSLog(@"发送成功：%@", characteristic.value);
+//            NSLog(@"发送成功：%@", characteristic.value);
         } else {
             NSLog(@"发送失败：%@   error : %@", characteristic.value,error);
         }
@@ -249,7 +250,7 @@ NSString * const ElectricQuantityChanged = @"ElectricQuantityChanged";
         [[NSNotificationCenter defaultCenter] postNotificationName:ConnectPeripheralError
                                                             object:nil];
         [weakSelf endTimer];
-        
+        [weakSelf hideConnectView];
     }];
     
     [_baby setBlockOnCancelAllPeripheralsConnectionBlock:^(CBCentralManager *centralManager) {
@@ -258,16 +259,15 @@ NSString * const ElectricQuantityChanged = @"ElectricQuantityChanged";
         weakSelf.currentOperation = nil;
         weakSelf.curConnectPeripheral = nil;
         weakSelf.isConnected = NO;
-        weakSelf.writing = NO;
     }];
     
     //设备断开连接的委托
     [_baby setBlockOnDisconnect:^(CBCentralManager *central, CBPeripheral *peripheral, NSError *error) {
         NSLog(@"设备：%@断开连接",peripheral.name);
+        
         weakSelf.currentOperation = nil;
-        weakSelf.curConnectPeripheral = nil;
         weakSelf.isConnected = NO;
-        weakSelf.writing = NO;
+        weakSelf.curConnectPeripheral = nil;
         //通知断开蓝牙设备
         [[NSNotificationCenter defaultCenter] postNotificationName:DisconnectPeripheral
                                                             object:@(weakSelf.manualDisconnect)];
@@ -278,7 +278,15 @@ NSString * const ElectricQuantityChanged = @"ElectricQuantityChanged";
             
             weakSelf.manualDisconnect = NO;
         }
-        
+        else {
+            //如果不是手动断开连接,并且需要重连
+            if (weakSelf.reconnect) {
+                [weakSelf showConnectView];
+                weakSelf.lastConnectedAddress = weakSelf.willConnectMacAddress;
+                [weakSelf startReconnectPeripheralTimer];
+                [weakSelf start];
+            }
+        }
     }];
     
     [_baby setBlockOnCancelScanBlock:^(CBCentralManager *centralManager) {
@@ -323,6 +331,7 @@ NSString * const ElectricQuantityChanged = @"ElectricQuantityChanged";
 
 -(void)unConnectingBlueTooth {
     _manualDisconnect = YES;
+    _lastConnectedAddress = nil;
     [_baby cancelAllPeripheralsConnection];
 }
 
@@ -332,19 +341,21 @@ NSString * const ElectricQuantityChanged = @"ElectricQuantityChanged";
 #pragma mark - 往连接的设备写数据
 
 - (void)writeValueByOperation:(BluetoothOperation *)operation {
+    
+    _currentOperation = operation;
+    //如果指令是停止播放音乐
+    if (operation.tag == MUSIC_STOP_TAG) {
+        [self writeValue:[operation getData]];
+        return;
+    }
     if (!_isConnected) {
         NSLog(@"未连接上蓝牙设备");
         return;
     }
-    _currentOperation = operation;
-    [_operationQueue addObject:operation];
-    if (!_writing) {
-        [self writeValue:[operation getData]];
-    }
+    [self writeValue:[operation getData]];
 }
 
 - (void)writeValue:(NSData *)data {
-    _writing = YES;
     if(self.curConnectPeripheral == nil || self.sendCharacteristic == nil || !data){
         NSLog(@"curConnectPeripheral 或 sendCharacteristic 为空，取消发送！");
         return;
@@ -370,7 +381,7 @@ NSString * const ElectricQuantityChanged = @"ElectricQuantityChanged";
 // 判断接收的数据是否有效
 - (BOOL)isValidOfReceiveData:(NSString *)receiveDataHexString
 {
-    NSLog(@"receiveDataHexString：%@ [长度：%ld]", receiveDataHexString, receiveDataHexString.length);
+//    NSLog(@"receiveDataHexString：%@ [长度：%ld]", receiveDataHexString, receiveDataHexString.length);
     // 检查是否是20字节
     if(receiveDataHexString.length != 20*2) {
         return NO;
@@ -388,7 +399,7 @@ NSString * const ElectricQuantityChanged = @"ElectricQuantityChanged";
     }
     verifyIntValue = verifyIntValue % 256;
     NSInteger receiveVerifyIntValue = [Utils hexToInt:[receiveDataHexString substringWithRange:NSMakeRange(38, 2)]];
-    NSLog(@"verifyIntValue: %ld  ,  receiveVerifyIntValue: %ld", verifyIntValue, receiveVerifyIntValue);
+//    NSLog(@"verifyIntValue: %ld  ,  receiveVerifyIntValue: %ld", verifyIntValue, receiveVerifyIntValue);
     if(verifyIntValue != receiveVerifyIntValue) {
         return NO;
     }
@@ -396,7 +407,7 @@ NSString * const ElectricQuantityChanged = @"ElectricQuantityChanged";
     return YES;
 }
 
-#pragma mark - 
+#pragma mark -
 
 - (void)startConnectPeripheralTimer {
     if (!_timer) {
@@ -405,7 +416,19 @@ NSString * const ElectricQuantityChanged = @"ElectricQuantityChanged";
     }
     _timer = [NSTimer scheduledTimerWithTimeInterval:30
                                               target:self
-                                            selector:@selector(ConnectPeripheralTimeOut)
+                                            selector:@selector(connectPeripheralTimeOut)
+                                            userInfo:nil
+                                             repeats:NO];
+}
+
+- (void)startReconnectPeripheralTimer {
+    if (!_timer) {
+        [_timer invalidate];
+        _timer = nil;
+    }
+    _timer = [NSTimer scheduledTimerWithTimeInterval:10
+                                              target:self
+                                            selector:@selector(reconnectPeripheralTimeOut)
                                             userInfo:nil
                                              repeats:NO];
 }
@@ -429,22 +452,34 @@ NSString * const ElectricQuantityChanged = @"ElectricQuantityChanged";
     }
 }
 
-- (void)ConnectPeripheralTimeOut {
+- (void)connectPeripheralTimeOut {
     [[NSNotificationCenter defaultCenter] postNotificationName:ConnectPeripheralTimeOut
                                                         object:nil];
+}
+
+- (void)reconnectPeripheralTimeOut {
+    [self hideConnectView];
 }
 
 - (void)writeDataTimeOut {
     if (_currentOperation.response) {
         NSError *responseError = [[NSError alloc] initWithDomain:@"" code:-888 userInfo:@{@"message":@"蓝牙设备返回数据无效"}];
         _currentOperation.response(nil,_currentOperation.tag,responseError,NO);
-        
-        [_operationQueue removeObject:_currentOperation];
-        _currentOperation = nil;
-        if (_operationQueue.count > 0) {
-            _currentOperation = _operationQueue[0];
-            [self writeValueByOperation:_currentOperation];
-        }
+    }
+}
+
+#pragma mark - 重连
+
+- (void)showConnectView {
+    [self hideConnectView];
+    _reconnectView = [[ReconnectView alloc] initWithFrame:UI_Window.bounds];
+    [UI_Window addSubview:_reconnectView];
+}
+
+- (void)hideConnectView {
+    if (_reconnectView) {
+        [_reconnectView removeFromSuperview];
+        _reconnectView = nil;
     }
 }
 

@@ -60,6 +60,7 @@
         nav.navigationBarHidden = YES;
         self.window.rootViewController = nav;
 //        [self.window makeKeyAndVisible];
+
     });
   
 //    NSDateFormatter *dateFormatter = [[NSDateFormatter alloc] init];

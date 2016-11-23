@@ -107,6 +107,13 @@ static MusicManager *manager = nil;
     [_player stop];
     _player = nil;
     [self pauseGetPeakPower];
+    
+    BluetoothOperation *operation = [[BluetoothOperation alloc] init];
+    operation.tag = MUSIC_STOP_TAG;
+    [operation setValue:@"01" index:2];
+    [operation setValue:@"00" index:3];
+    [operation setValue:@"03" index:4];
+    [[BluetoothManager share] writeValueByOperation:operation];
 }
 
 - (void)pause {
@@ -114,6 +121,7 @@ static MusicManager *manager = nil;
     [self pauseGetPeakPower];
     
     BluetoothOperation *operation = [[BluetoothOperation alloc] init];
+    operation.tag = MUSIC_STOP_TAG;
     [operation setValue:@"01" index:2];
     [operation setValue:@"00" index:3];
     [operation setValue:@"03" index:4];
@@ -125,7 +133,7 @@ static MusicManager *manager = nil;
         [_timer invalidate];
         _timer = nil;
     }
-    _timer = [NSTimer scheduledTimerWithTimeInterval:3 target:self selector:@selector(getPeakPower) userInfo:nil repeats:YES];
+    _timer = [NSTimer scheduledTimerWithTimeInterval:1 target:self selector:@selector(getPeakPower) userInfo:nil repeats:YES];
     [_timer fire];
 }
 
@@ -137,12 +145,13 @@ static MusicManager *manager = nil;
 }
 
 - (void)getPeakPower {
-    [_player updateMeters];
+    [_player updateMeters];                                                                      
     int16_t peakPower = [_player peakPowerForChannel:0] + 160;
     int16_t peakPower2 = [_player peakPowerForChannel:1] + 160;
-    NSLog(@"getPeakPower1 : %@   , 2 : %@",@(peakPower).stringValue,@(peakPower2).stringValue);
+    NSLog(@"getPeakPower 1 : %@   , 2 : %@",@(peakPower).stringValue,@(peakPower2).stringValue);
     
     BluetoothOperation *operation = [[BluetoothOperation alloc] init];
+    operation.tag = MUSIC_PEAKPOWER_TAG;
     [operation setValue:@"01" index:2];
     [operation setValue:@"01" index:3];
     [operation setValue:@"03" index:4];

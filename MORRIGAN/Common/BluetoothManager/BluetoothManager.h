@@ -11,6 +11,9 @@
 #import "BluetoothOperation.h"
 #import "PeripheralModel.h"
 
+#define MUSIC_STOP_TAG 1            //停止播放音乐
+#define MUSIC_PEAKPOWER_TAG 2       //音乐分贝大小
+
 extern NSString * const ConnectPeripheralSuccess;
 extern NSString * const ConnectPeripheralError;
 extern NSString * const ConnectPeripheralTimeOut;
