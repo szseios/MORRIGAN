@@ -463,6 +463,11 @@
     NSString *time = [UserInfo share].target;
     if (!time) {
         time = @"60";
+    }else{
+        if (_didMorriganTime && _didMorriganTime > 0) {
+            NSInteger tempTime = labs(time.integerValue - _didMorriganTime);
+            time = [NSString stringWithFormat:@"%ld",tempTime];
+        }
     }
     NSMutableAttributedString *attributeString = [[NSMutableAttributedString alloc] initWithString:[NSString stringWithFormat:@"%@min",time]];
     [attributeString setAttributes:@{NSFontAttributeName:[UIFont systemFontOfSize:60]} range:NSMakeRange(0, time.length)];
@@ -581,6 +586,7 @@
 
 - (void)showCircleWithAM:(BOOL)isAM
 {
+    _didMorriganTime = 0;
     for (UIView *subView in self.subviews) {
         if ([subView isKindOfClass:[CircleChartView class]]) {
             [subView removeFromSuperview];

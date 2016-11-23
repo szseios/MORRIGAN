@@ -65,8 +65,8 @@
     [self.view addGestureRecognizer:tap];
     
     if (![BluetoothManager share].isConnected) {
-//       UIAlertView *alert = [[UIAlertView alloc] initWithTitle:@"还未连接设备" message:nil delegate:self cancelButtonTitle:@"取消" otherButtonTitles:@"连接", nil];
-//        [alert show];
+       UIAlertView *alert = [[UIAlertView alloc] initWithTitle:@"还未连接设备" message:nil delegate:self cancelButtonTitle:@"取消" otherButtonTitles:@"连接", nil];
+        [alert show];
     }
     [self setUpHomeMainView];
     
@@ -79,9 +79,9 @@
     if (starStr && starStr.length > 0) {
         [_mainView setStarLabelAndImage:starStr];
     }
-//        NSArray *ForenoonArray = [DBManager selectForenoonDatas:[UserInfo share].userId];
-//        NSArray *AfternoonArray = [DBManager selectaAfternoonDatas:[UserInfo share].userId];
-//    [_mainView refreshLatestDataForAMMorrigan:ForenoonArray PMMorrigan:AfternoonArray];
+        NSArray *ForenoonArray = [DBManager selectForenoonDatas:[UserInfo share].userId];
+        NSArray *AfternoonArray = [DBManager selectaAfternoonDatas:[UserInfo share].userId];
+    [_mainView refreshLatestDataForAMMorrigan:ForenoonArray PMMorrigan:AfternoonArray];
     
 }
 
@@ -97,18 +97,18 @@
     CGFloat mainViewW = kScreenWidth * 0.75 + (kScreenWidth > 320 ? 30 : 10); //kScreenWidth > 320 ? 300 : 220;
     CGFloat mainViewH = mainViewW / 623 * 860.0;
     CGFloat mainViewX = (kScreenWidth - mainViewW) /2 + (kScreenWidth > 320 ? 20 : 15); //kScreenWidth > 320 ? 50 : 20;
-    MassageRecordModel *model = [[MassageRecordModel alloc] init];
-    model.startTime = [NSDate dateWithTimeIntervalSinceNow:-60*5];
-    model.endTime = [NSDate dateWithTimeIntervalSinceNow:60*60*0];
-    
-    MassageRecordModel *model1 = [[MassageRecordModel alloc] init];
-    model1.startTime = [NSDate dateWithTimeIntervalSinceNow:-60*55];;
-    model1.endTime = [NSDate dateWithTimeIntervalSinceNow:-60*35];
-    
-    NSArray *arra = @[model1,model];
-//    NSArray *ForenoonArray = [DBManager selectForenoonDatas:[UserInfo share].userId];
-//    NSArray *AfternoonArray = [DBManager selectaAfternoonDatas:[UserInfo share].userId];
-    _mainView = [[HomeMainView alloc] initWithAMMorriganArray:arra PMMorriganTime:nil  withFarme:CGRectMake(mainViewX, 74, mainViewW, mainViewH)];
+//    MassageRecordModel *model = [[MassageRecordModel alloc] init];
+//    model.startTime = [NSDate dateWithTimeIntervalSinceNow:-60*5];
+//    model.endTime = [NSDate dateWithTimeIntervalSinceNow:60*60*0];
+//    
+//    MassageRecordModel *model1 = [[MassageRecordModel alloc] init];
+//    model1.startTime = [NSDate dateWithTimeIntervalSinceNow:-60*55];;
+//    model1.endTime = [NSDate dateWithTimeIntervalSinceNow:-60*35];
+//    
+//    NSArray *arra = @[model1,model];
+    NSArray *ForenoonArray = [DBManager selectForenoonDatas:[UserInfo share].userId];
+    NSArray *AfternoonArray = [DBManager selectaAfternoonDatas:[UserInfo share].userId];
+    _mainView = [[HomeMainView alloc] initWithAMMorriganArray:ForenoonArray PMMorriganTime:AfternoonArray  withFarme:CGRectMake(mainViewX, 74, mainViewW, mainViewH)];
     _mainView.backgroundColor = [UIColor clearColor];
     
     [self.view addSubview:_mainView];

@@ -104,6 +104,9 @@
 		4728EDD21DC4865E0005F9C3 /* ZHRulerScrollView.m in Sources */ = {isa = PBXBuildFile; fileRef = 4728EDB51DC4865E0005F9C3 /* ZHRulerScrollView.m */; };
 		4728EDD31DC4865E0005F9C3 /* ZHRulerView.m in Sources */ = {isa = PBXBuildFile; fileRef = 4728EDB71DC4865E0005F9C3 /* ZHRulerView.m */; };
 		4728EDD61DC486A40005F9C3 /* UIView+Extension.m in Sources */ = {isa = PBXBuildFile; fileRef = 4728EDD51DC486A40005F9C3 /* UIView+Extension.m */; };
+		47EA2ABE1DE55AC10020A17A /* NSDate+CalculateDay.m in Sources */ = {isa = PBXBuildFile; fileRef = 47EA2ABD1DE55AC10020A17A /* NSDate+CalculateDay.m */; };
+		47EA2AC31DE55C480020A17A /* DateHelper.m in Sources */ = {isa = PBXBuildFile; fileRef = 47EA2AC01DE55C480020A17A /* DateHelper.m */; };
+		47EA2AC41DE55C480020A17A /* KMDatePickerDateModel.m in Sources */ = {isa = PBXBuildFile; fileRef = 47EA2AC21DE55C480020A17A /* KMDatePickerDateModel.m */; };
 		47EF55DE1DDAC4CA00ED655E /* EditDeviceNameController.m in Sources */ = {isa = PBXBuildFile; fileRef = 47EF55DD1DDAC4CA00ED655E /* EditDeviceNameController.m */; };
 		47F06FC51DDBE21C00D47D78 /* PersonalCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 47F06FC31DDBE21C00D47D78 /* PersonalCell.m */; };
 		47F06FC61DDBE21C00D47D78 /* PersonalCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = 47F06FC41DDBE21C00D47D78 /* PersonalCell.xib */; };
@@ -346,6 +349,12 @@
 		4728EDB71DC4865E0005F9C3 /* ZHRulerView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ZHRulerView.m; sourceTree = "<group>"; };
 		4728EDD41DC486A40005F9C3 /* UIView+Extension.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "UIView+Extension.h"; sourceTree = "<group>"; };
 		4728EDD51DC486A40005F9C3 /* UIView+Extension.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "UIView+Extension.m"; sourceTree = "<group>"; };
+		47EA2ABC1DE55AC10020A17A /* NSDate+CalculateDay.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "NSDate+CalculateDay.h"; sourceTree = "<group>"; };
+		47EA2ABD1DE55AC10020A17A /* NSDate+CalculateDay.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "NSDate+CalculateDay.m"; sourceTree = "<group>"; };
+		47EA2ABF1DE55C480020A17A /* DateHelper.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = DateHelper.h; sourceTree = "<group>"; };
+		47EA2AC01DE55C480020A17A /* DateHelper.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = DateHelper.m; sourceTree = "<group>"; };
+		47EA2AC11DE55C480020A17A /* KMDatePickerDateModel.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = KMDatePickerDateModel.h; sourceTree = "<group>"; };
+		47EA2AC21DE55C480020A17A /* KMDatePickerDateModel.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = KMDatePickerDateModel.m; sourceTree = "<group>"; };
 		47EF55DC1DDAC4CA00ED655E /* EditDeviceNameController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = EditDeviceNameController.h; sourceTree = "<group>"; };
 		47EF55DD1DDAC4CA00ED655E /* EditDeviceNameController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = EditDeviceNameController.m; sourceTree = "<group>"; };
 		47F06FC21DDBE21C00D47D78 /* PersonalCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = PersonalCell.h; sourceTree = "<group>"; };
@@ -1060,6 +1069,12 @@
 				EBF011AE1DA7920A009E8394 /* Utils.m */,
 				3E8A433B1DBF3EAE00DE76A8 /* MusicList.plist */,
 				47FF16721DC9FAE500DBD493 /* NullSafe.m */,
+				47EA2ABC1DE55AC10020A17A /* NSDate+CalculateDay.h */,
+				47EA2ABD1DE55AC10020A17A /* NSDate+CalculateDay.m */,
+				47EA2ABF1DE55C480020A17A /* DateHelper.h */,
+				47EA2AC01DE55C480020A17A /* DateHelper.m */,
+				47EA2AC11DE55C480020A17A /* KMDatePickerDateModel.h */,
+				47EA2AC21DE55C480020A17A /* KMDatePickerDateModel.m */,
 			);
 			path = Other;
 			sourceTree = "<group>";
@@ -1301,6 +1316,7 @@
 				4724C2041DC8BF5700B18902 /* MBProgressHUD.m in Sources */,
 				47FF16641DC9F48B00DBD493 /* SDImageCache.m in Sources */,
 				3EF4E0051DD0A26B0003BD7C /* FMResultSet.m in Sources */,
+				47EA2AC31DE55C480020A17A /* DateHelper.m in Sources */,
 				4728ED671DC485BA0005F9C3 /* NickNameController.m in Sources */,
 				3E632A501DC5A47B00CC2332 /* BabyDefine.m in Sources */,
 				4728ED3A1DC485AB0005F9C3 /* RootViewController.m in Sources */,
@@ -1318,6 +1334,7 @@
 				EB21FA1E1DBF31A000DDD28A /* FuntionButton.m in Sources */,
 				3EF7958E1DAA0A5E00E5EBC6 /* PCSEQVisualizer.m in Sources */,
 				4728EDB81DC4865E0005F9C3 /* PNBar.m in Sources */,
+				47EA2AC41DE55C480020A17A /* KMDatePickerDateModel.m in Sources */,
 				47FF166E1DC9F48B00DBD493 /* UIImage+WebP.m in Sources */,
 				4728EDBA1DC4865E0005F9C3 /* PNChartLabel.m in Sources */,
 				3E632A591DC5A51E00CC2332 /* BluetoothManager.m in Sources */,
@@ -1344,6 +1361,7 @@
 				47FF166C1DC9F48B00DBD493 /* UIImage+GIF.m in Sources */,
 				4728ED5F1DC485BA0005F9C3 /* AboutMorriganController.m in Sources */,
 				4728EDC81DC4865E0005F9C3 /* UICountingLabel.m in Sources */,
+				47EA2ABE1DE55AC10020A17A /* NSDate+CalculateDay.m in Sources */,
 				4728EDBE1DC4865E0005F9C3 /* PNLineChart.m in Sources */,
 				EBF011831DA7883B009E8394 /* SZSEURLSessionDownloadTask.m in Sources */,
 				EB34F3AB1DCA0F0D002B15B1 /* AutoKneadViewController.m in Sources */,

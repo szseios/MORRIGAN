@@ -39,6 +39,13 @@
     [_suggestTextView becomeFirstResponder];
 }
 
+
+- (void)viewWillDisappear:(BOOL)animated
+{
+    [super viewWillDisappear:animated];
+    [_suggestTextView resignFirstResponder];
+}
+
 - (void)setUpBarView
 {
     _barView = [[BasicBarView alloc] initWithFrame:CGRectMake(0, 20, kScreenWidth, 44) withType:superBarTypeLeftItemCancel withTitle:@"意见反馈" isShowRightButton:YES];

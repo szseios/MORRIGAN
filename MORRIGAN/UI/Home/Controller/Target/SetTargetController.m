@@ -95,15 +95,6 @@
     CGFloat rulerHeight = 235;
 //
     CGRect rulerFrame = CGRectMake(rulerX, rulerY, rulerWidth, rulerHeight);
-    
-//    ZHRulerView *rulerView = [[ZHRulerView alloc] initWithMixNuber:5 maxNuber:180 showType:rulerViewshowHorizontalType rulerMultiple:10];
-//    _rulerView = rulerView;
-//    rulerView.round = YES;
-//    rulerView.defaultVaule = [UserInfo share].target ? [[UserInfo share].target integerValue] : 60;
-//    rulerView.delegate = self;
-//    rulerView.frame = rulerFrame;
-//    
-//    [self.view addSubview:rulerView];
     _rulerScrollView = [[UIScrollView alloc] initWithFrame:CGRectMake(rulerX, rulerY, rulerWidth, rulerHeight)];
     _rulerScrollView.delegate = self;
     _rulerScrollView.backgroundColor = [UIColor clearColor];
