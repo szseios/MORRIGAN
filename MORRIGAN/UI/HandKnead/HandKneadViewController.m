@@ -506,7 +506,7 @@
 //    model1.endTime = [NSDate dateWithTimeIntervalSince1970:1479348600];   // 10:10
 //    model1.type = MassageTypeAuto;
 //    [[RecordManager share] addToDB:model1];
-//    
+//
 ////    MassageRecordModel *model2 = [[MassageRecordModel alloc] init];
 ////    model2.userID = [UserInfo share].userId;
 ////    model2.startTime = [NSDate dateWithTimeIntervalSince1970:1479261000]; // 9:50
@@ -515,6 +515,14 @@
 ////    [[RecordManager share] addToDB:model2];
 //    return;
     
+    
+//    MassageRecordModel *model1 = [[MassageRecordModel alloc] init];
+//    model1.userID = [UserInfo share].userId;
+//    model1.startTime = [NSDate dateWithTimeIntervalSince1970:1479773400]; // 8:30
+//    model1.endTime = [NSDate dateWithTimeIntervalSince1970:1479777000];   // 8:40
+//    model1.type = MassageTypeAuto;
+////    [[RecordManager share] addToDB:model1];
+//    return;
     
     
     if (![BluetoothManager share].isConnected) {

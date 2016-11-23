@@ -10,7 +10,7 @@
 
 @interface HomeMainView : UIView
 
-- (instancetype)initWithMorriganArray:(NSArray *)array withFarme:(CGRect)frame;
+- (instancetype)initWithAMMorriganArray:(NSArray *)AMArray PMMorriganTime:(NSArray *)PMArray withFarme:(CGRect)frame;
 
 - (void)morriganStartTime:(NSDate *)startTime toEndTime:(NSDate *)endTime;
 
@@ -19,5 +19,7 @@
 - (void)setStarLabelAndImage:(NSString *)star;
 
 - (void)setElectricityPersent:(CGFloat)persent;
+
+- (void)refreshLatestDataForAMMorrigan:(NSArray *)AMMorriganArray PMMorrigan:(NSArray *)PMMorriganArray;
 
 @end

@@ -107,6 +107,7 @@
 		47EF55DE1DDAC4CA00ED655E /* EditDeviceNameController.m in Sources */ = {isa = PBXBuildFile; fileRef = 47EF55DD1DDAC4CA00ED655E /* EditDeviceNameController.m */; };
 		47F06FC51DDBE21C00D47D78 /* PersonalCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 47F06FC31DDBE21C00D47D78 /* PersonalCell.m */; };
 		47F06FC61DDBE21C00D47D78 /* PersonalCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = 47F06FC41DDBE21C00D47D78 /* PersonalCell.xib */; };
+		47F270311DE3C65800473AA3 /* CircleChartView.m in Sources */ = {isa = PBXBuildFile; fileRef = 47F270301DE3C65800473AA3 /* CircleChartView.m */; };
 		47FF16621DC9F48B00DBD493 /* MKAnnotationView+WebCache.m in Sources */ = {isa = PBXBuildFile; fileRef = 47FF16421DC9F48B00DBD493 /* MKAnnotationView+WebCache.m */; };
 		47FF16631DC9F48B00DBD493 /* NSData+ImageContentType.m in Sources */ = {isa = PBXBuildFile; fileRef = 47FF16441DC9F48B00DBD493 /* NSData+ImageContentType.m */; };
 		47FF16641DC9F48B00DBD493 /* SDImageCache.m in Sources */ = {isa = PBXBuildFile; fileRef = 47FF16461DC9F48B00DBD493 /* SDImageCache.m */; };
@@ -350,6 +351,8 @@
 		47F06FC21DDBE21C00D47D78 /* PersonalCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = PersonalCell.h; sourceTree = "<group>"; };
 		47F06FC31DDBE21C00D47D78 /* PersonalCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = PersonalCell.m; sourceTree = "<group>"; };
 		47F06FC41DDBE21C00D47D78 /* PersonalCell.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = PersonalCell.xib; sourceTree = "<group>"; };
+		47F2702F1DE3C65800473AA3 /* CircleChartView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CircleChartView.h; sourceTree = "<group>"; };
+		47F270301DE3C65800473AA3 /* CircleChartView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = CircleChartView.m; sourceTree = "<group>"; };
 		47FF16411DC9F48B00DBD493 /* MKAnnotationView+WebCache.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "MKAnnotationView+WebCache.h"; sourceTree = "<group>"; };
 		47FF16421DC9F48B00DBD493 /* MKAnnotationView+WebCache.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "MKAnnotationView+WebCache.m"; sourceTree = "<group>"; };
 		47FF16431DC9F48B00DBD493 /* NSData+ImageContentType.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "NSData+ImageContentType.h"; sourceTree = "<group>"; };
@@ -709,6 +712,8 @@
 				4728ED741DC485F50005F9C3 /* ChooseDataView.m */,
 				4728ED751DC485F50005F9C3 /* HomeMainView.h */,
 				4728ED761DC485F50005F9C3 /* HomeMainView.m */,
+				47F2702F1DE3C65800473AA3 /* CircleChartView.h */,
+				47F270301DE3C65800473AA3 /* CircleChartView.m */,
 				4728ED771DC485F50005F9C3 /* HomePageButton.h */,
 				4728ED781DC485F50005F9C3 /* HomePageButton.m */,
 				4728ED791DC485F50005F9C3 /* myDataCell.h */,
@@ -1375,6 +1380,7 @@
 				3EF4E0021DD0A26B0003BD7C /* FMDatabaseAdditions.m in Sources */,
 				4728EDBD1DC4865E0005F9C3 /* PNGenericChart.m in Sources */,
 				4728EDD21DC4865E0005F9C3 /* ZHRulerScrollView.m in Sources */,
+				47F270311DE3C65800473AA3 /* CircleChartView.m in Sources */,
 				47FF16711DC9F48B00DBD493 /* UIView+WebCacheOperation.m in Sources */,
 				47F06FC51DDBE21C00D47D78 /* PersonalCell.m in Sources */,
 				EB534AD21DA9D924007AA325 /* MusicManager.m in Sources */,

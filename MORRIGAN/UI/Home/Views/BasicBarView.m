@@ -130,6 +130,13 @@
     }
     _rightButton.enabled = enable;
 }
+
+- (void)setTitleLabelText:(NSString *)title
+{
+    _titleLabel.text = title;
+    [self setNeedsDisplay];
+}
+
 /*
 // Only override drawRect: if you perform custom drawing.
 // An empty implementation adversely affects performance during animation.

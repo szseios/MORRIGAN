@@ -45,7 +45,7 @@
 - (void)viewDidLoad {
     [super viewDidLoad];
 //
-//    [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(getElectricity:) name:ElectricQuantityChanged object:nil];
+    [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(getElectricity:) name:ElectricQuantityChanged object:nil];
     [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(firstGetElectricity:) name:ConnectPeripheralSuccess object:nil];
     UIImageView *upBackImage = [[UIImageView alloc] initWithFrame:CGRectMake(0, 0, self.view.width, self.view.height)];
     upBackImage.image =[UIImage imageWithColor:[Utils stringTOColor:@"#8c39e5"]];
@@ -79,6 +79,9 @@
     if (starStr && starStr.length > 0) {
         [_mainView setStarLabelAndImage:starStr];
     }
+//        NSArray *ForenoonArray = [DBManager selectForenoonDatas:[UserInfo share].userId];
+//        NSArray *AfternoonArray = [DBManager selectaAfternoonDatas:[UserInfo share].userId];
+//    [_mainView refreshLatestDataForAMMorrigan:ForenoonArray PMMorrigan:AfternoonArray];
     
 }
 
@@ -95,16 +98,17 @@
     CGFloat mainViewH = mainViewW / 623 * 860.0;
     CGFloat mainViewX = (kScreenWidth - mainViewW) /2 + (kScreenWidth > 320 ? 20 : 15); //kScreenWidth > 320 ? 50 : 20;
     MassageRecordModel *model = [[MassageRecordModel alloc] init];
-    model.startTime = [NSDate dateWithTimeIntervalSinceNow:-60*60*1];
+    model.startTime = [NSDate dateWithTimeIntervalSinceNow:-60*5];
     model.endTime = [NSDate dateWithTimeIntervalSinceNow:60*60*0];
     
     MassageRecordModel *model1 = [[MassageRecordModel alloc] init];
-    model1.startTime = [NSDate dateWithTimeIntervalSinceNow:-60*60*3];;
-    model1.endTime = [NSDate dateWithTimeIntervalSinceNow:-60*60*2];
+    model1.startTime = [NSDate dateWithTimeIntervalSinceNow:-60*55];;
+    model1.endTime = [NSDate dateWithTimeIntervalSinceNow:-60*35];
     
     NSArray *arra = @[model1,model];
-//    NSArray *array = [DBManager selectForenoonDatas:[UserInfo share].userId];
-    _mainView = [[HomeMainView alloc] initWithMorriganArray:arra withFarme:CGRectMake(mainViewX, 74, mainViewW, mainViewH)];
+//    NSArray *ForenoonArray = [DBManager selectForenoonDatas:[UserInfo share].userId];
+//    NSArray *AfternoonArray = [DBManager selectaAfternoonDatas:[UserInfo share].userId];
+    _mainView = [[HomeMainView alloc] initWithAMMorriganArray:arra PMMorriganTime:nil  withFarme:CGRectMake(mainViewX, 74, mainViewW, mainViewH)];
     _mainView.backgroundColor = [UIColor clearColor];
     
     [self.view addSubview:_mainView];
@@ -113,25 +117,25 @@
 
 - (void)setUpCircleView
 {
-//    [_mainView morriganStartTime:90 toEndTime:240];
+    
 }
 
 - (void)setUpBottomView
 {
     CGFloat bottomViewY = self.view.height - (kScreenHeight > 568 ? 150 : 140);
-    CGFloat bottomViewW = self.view.width;
-    _bottomView = [[UIView alloc] initWithFrame:CGRectMake(0, bottomViewY, bottomViewW, 150)];
+    CGFloat bottomViewW = self.view.width - 60;
+    _bottomView = [[UIView alloc] initWithFrame:CGRectMake(30, bottomViewY, bottomViewW, 150)];
     
     
-    CGFloat buttonW = 100;
-    CGFloat buttonY = 0;
-    CGFloat labelY = 90;
-    CGFloat bottonX = (bottomViewW - 300) / 4;
+    CGFloat buttonW = kScreenHeight > 568 ? 100 : 80;
+    CGFloat buttonY = 10;
+    CGFloat labelY = kScreenHeight > 568 ? 100 : 80;;
+    CGFloat bottonX = (bottomViewW - buttonW * 3) / 2;
     CGFloat labelH = 20;
     
-    _handButton = [[HomePageButton alloc] initWithFrame:CGRectMake(bottonX , buttonY, buttonW, buttonW) withImageName:@"handMorrigan"];
+    _handButton = [[HomePageButton alloc] initWithFrame:CGRectMake(0 , buttonY, buttonW, buttonW) withImageName:@"handMorrigan"];
     [_handButton addTarget:self action:@selector(pushHandlePage) forControlEvents:UIControlEventTouchUpInside];
-    UILabel *handLabel = [[UILabel alloc] initWithFrame:CGRectMake(bottonX, labelY, buttonW, labelH)];
+    UILabel *handLabel = [[UILabel alloc] initWithFrame:CGRectMake(0, labelY, buttonW, labelH)];
     handLabel.textAlignment = NSTextAlignmentCenter;
     handLabel.text = @"手动按摩";
     handLabel.textColor = [UIColor purpleColor];
@@ -256,6 +260,10 @@
     [operation setValue:@"03" index:2];
     [[BluetoothManager share] writeValueByOperation:operation];
     operation.response = ^(NSString *response,long tag,NSError *error,BOOL success) {
+        if (success) {
+            NSString *electriQuantity = [response substringWithRange:NSMakeRange(4, 2)];
+            [_mainView setElectricityPersent:[electriQuantity floatValue]];
+        }
         
     };
 }

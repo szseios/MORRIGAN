@@ -10,6 +10,8 @@
 #import "HistoryDataCell.h"
 #import "PNChartDelegate.h"
 #import "PNChart.h"
+#import "MassageRecordModel.h"
+#import "DBManager.h"
 
 @interface HistoryDataController () <BasicBarViewDelegate,UITableViewDelegate,UITableViewDataSource,PNChartDelegate>
 
@@ -48,7 +50,7 @@ static NSString *cellID = @"DataCellID";
 - (void)viewDidLoad {
     [super viewDidLoad];
     self.view.backgroundColor = [UIColor whiteColor];
-    UIImageView *backImageView = [[UIImageView alloc] initWithFrame:CGRectMake(0, 0, kScreenWidth, 114)];
+    UIImageView *backImageView = [[UIImageView alloc] initWithFrame:CGRectMake(0, 0, kScreenWidth, 115)];
     backImageView.image = [UIImage imageWithColor:[Utils stringTOColor:@"#8c39e5"]];
     [self.view addSubview:backImageView];
     [self getDataFromService];
@@ -73,7 +75,6 @@ static NSString *cellID = @"DataCellID";
                                      };
         NSString *bodyString = [NMOANetWorking handleHTTPBodyParams:dictionary];
         [[NMOANetWorking share] taskWithTag:ID_GET_RECORD urlString:URL_GET_RECORD httpHead:nil bodyString:bodyString objectTaskFinished:^(NSError *error, id obj) {
-            
             if ([[obj objectForKey:HTTP_KEY_RESULTCODE] isEqualToString:HTTP_RESULTCODE_SUCCESS]) {
                 NSArray *hlarray = [obj objectForKey:@"hlInfo"];
                 if (hlarray) {
@@ -111,7 +112,8 @@ static NSString *cellID = @"DataCellID";
 
 - (void)setUpDayBarChatView
 {
-    UIView *chatView = [[UIView alloc] initWithFrame:CGRectMake(0, 117, kScreenWidth, 250)];
+    
+    UIView *chatView = [[UIView alloc] initWithFrame:CGRectMake(0, 115, kScreenWidth, 250)];
     
     UIImageView *backImageView = [[UIImageView alloc] initWithFrame:chatView.bounds];
     backImageView.image = [UIImage imageNamed:@"basicBackground"];
@@ -127,10 +129,13 @@ static NSString *cellID = @"DataCellID";
     _minuteDataLabel.textColor = [UIColor whiteColor];
     _minuteDataLabel.textAlignment = NSTextAlignmentRight;
     _minuteDataLabel.font = [UIFont systemFontOfSize:35];
-    _minuteDataLabel.text = @"88";
+     _minuteDataLabel.text = [UserInfo share].target ? [UserInfo share].target : @"--";
+    [_minuteDataLabel sizeToFit];
+   
     [_dayView addSubview:_minuteDataLabel];
     
-    UILabel *unitLabel = [[UILabel alloc] initWithFrame:CGRectMake(70, 20, 40, 30)];
+    CGFloat unitLabelX = CGRectGetMaxX(_minuteDataLabel.frame) + 2;
+    UILabel *unitLabel = [[UILabel alloc] initWithFrame:CGRectMake(unitLabelX, labelY, 40, 30)];
     unitLabel.textColor = [UIColor whiteColor];
     unitLabel.text = @"分钟";
     [_dayView addSubview:unitLabel];
@@ -155,11 +160,23 @@ static NSString *cellID = @"DataCellID";
     CGFloat barX = (kScreenWidth - 20) / 24;
     CGFloat barW = barX/2;
     CGFloat mostBarH = dayBarViewY;
+    NSDictionary *todatSecDict = [self getTodatSecDict];
+    CGRect secLabelFame = CGRectMake(0, 0, 0, 0);
+    NSInteger maxSec = 0;
     for (NSInteger i = 0; i < 24; i++) {
-        UIView *bar = [[UIView alloc] initWithFrame:CGRectMake(barX * i+13, mostBarH - 5, barW, 5)];
+        NSString *hourKey = i+1 < 10 ? [NSString stringWithFormat:@"0%ld",i+1] : [NSString stringWithFormat:@"%ld",i+1];
+        NSInteger sec = [[todatSecDict objectForKey:hourKey] integerValue];
+        CGFloat h = sec*2.5 + 5;
+        UIView *bar = [[UIView alloc] initWithFrame:CGRectMake(barX * i+13, mostBarH - h, barW, h)];
         bar.backgroundColor = [UIColor whiteColor];
         bar.tag = 1000 + i;
         [_dayView addSubview:bar];
+        
+        // 保存最大分钟数时顶部label的frame
+        if(sec > maxSec) {
+            maxSec = sec;
+            secLabelFame = CGRectMake(barX * i+13 - 3, mostBarH - h - 15 , barW + 7, 15.0);
+        }
         
         if (i == 0 || i == 4 || i == 9 || i == 14 || i == 19 || i == 23 ) {
             UILabel *label = [self setUpLabelWithInteger:i];
@@ -167,6 +184,13 @@ static NSString *cellID = @"DataCellID";
         }
         
     }
+    
+    // 在最大分钟数顶部添加label
+    UILabel *secLabel = [[UILabel alloc] initWithFrame:secLabelFame];
+    secLabel.text = [NSString stringWithFormat:@"%ld", maxSec];
+    secLabel.textColor = [UIColor whiteColor];
+    secLabel.font = [UIFont systemFontOfSize:10.0];
+    [_dayView addSubview:secLabel];
     
     
 //    static NSNumberFormatter *barChartFormatter;
@@ -292,6 +316,7 @@ static NSString *cellID = @"DataCellID";
     _bottomTableView.dataSource = self;
     [_bottomTableView registerNib:[UINib nibWithNibName:@"HistoryDataCell" bundle:nil] forCellReuseIdentifier:cellID];
     _bottomTableView.tableFooterView = [UIView new];
+    [_bottomTableView setBounces:NO];
     
     [self.view addSubview:_bottomTableView];
 }
@@ -379,14 +404,16 @@ static NSString *cellID = @"DataCellID";
         _weekView.hidden = YES;
         _titleArray = @[@"今日目标",@"今日护养",@"剩余目标值"];
         [_bottomTableView reloadData];
+        [_barView setTitleLabelText:@"今日一览"];
     }else{
         if (!_weekView) {
             [self setUpWeekBarChatView];
         }
         _dayView.hidden = YES;
         _weekView.hidden = NO;
-        _titleArray = @[@"今日目标",@"今日护养",@"剩余目标值",@"平均养护"];
+        _titleArray = @[@"本周目标",@"本周护养",@"剩余目标值",@"平均养护"];
         [_bottomTableView reloadData];
+        [_barView setTitleLabelText:@"本周一阅"];
     }
 }
 
@@ -418,8 +445,97 @@ static NSString *cellID = @"DataCellID";
 - (UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath
 {
     HistoryDataCell *cell = [tableView dequeueReusableCellWithIdentifier:cellID forIndexPath:indexPath];
-    [cell setTitle:_titleArray[indexPath.row] minuteCount:nil withIndexPath:indexPath];
+    cell.selectionStyle = UITableViewCellSelectionStyleNone;
+    NSString *minuteCount = nil;
+    switch (indexPath.row) {
+        case 0:
+        {
+            minuteCount = _dayView.hidden == NO ? [UserInfo share].target : [NSString stringWithFormat:@"%ld", [[UserInfo share].target integerValue] * 7];  // 周暂时乘7
+ 
+        }
+            break;
+        case 1:
+        {
+            minuteCount = _dayView.hidden == NO ?  [self getTodaySecondsString] : nil;  // 周暂时nil
+           
+        }
+            break;
+        case 2:
+        {
+            minuteCount = _dayView.hidden == NO ?  [self getTodayResidueSecondsString] : nil;  // 周暂时nil
+        }
+            break;
+            
+        default:
+            break;
+    }
+    
+    [cell setTitle:_titleArray[indexPath.row] minuteCount:minuteCount withIndexPath:indexPath];
     return cell;
+}
+
+
+// 获取今天养护分钟
+- (NSString *)getTodaySecondsString
+{
+    NSDictionary *todatSecDict = [self getTodatSecDict];
+    if(todatSecDict != nil && todatSecDict.count > 0) {
+        NSInteger seconds = 0;
+    
+        for (NSString *key in todatSecDict.allKeys) {
+            NSInteger sec = [[todatSecDict objectForKey:key] integerValue];
+            seconds += sec;
+        }
+
+        return [NSString stringWithFormat:@"%ld",seconds];
+    }
+    
+    return nil;
+}
+
+// 获取今天剩余养护分钟
+- (NSString *)getTodayResidueSecondsString
+{
+    NSString *todaySecondString = [self getTodaySecondsString];
+    if(todaySecondString == nil) {
+        return [UserInfo share].target;
+    }
+    NSInteger todaySeconds = [todaySecondString integerValue];
+    NSInteger target = [[UserInfo share].target integerValue];
+    if(todaySeconds > target) {
+        return @"0";
+    }
+
+    return [NSString stringWithFormat:@"%ld", target - todaySeconds];
+}
+
+// 获取今天各小时养护分钟字典（key：时， value：分中数）
+-(NSDictionary *)getTodatSecDict
+{
+    NSMutableDictionary *hourResultDict = [NSMutableDictionary dictionary];
+    NSArray *todayRecordArray = [DBManager selectTodayDatas: [UserInfo share].userId];
+    if(todayRecordArray != nil && todayRecordArray.count > 0) {
+        for (NSInteger i = 0; i < todayRecordArray.count; i++) {
+            MassageRecordModel *model = todayRecordArray[i];
+            NSDateFormatter *dateFormatter = [[NSDateFormatter alloc] init];
+            [dateFormatter setDateFormat:@"HH:mm"];
+            NSArray *temp = [[dateFormatter stringFromDate:model.startTime] componentsSeparatedByString:@":"];
+            NSLog(@"getTodaySecondsString ---> 开始 %@:%@", temp[0], temp[1]);
+            NSInteger startDateInt = [temp[0] integerValue] * 60 + [temp[1] integerValue];
+            temp = [[dateFormatter stringFromDate:model.endTime] componentsSeparatedByString:@":"];
+            NSLog(@"getTodaySecondsString ---> 停止 %@:%@", temp[0], temp[1]);
+            NSInteger endDateInt = [temp[0] integerValue] * 60 + [temp[1] integerValue];
+            NSInteger sec = endDateInt - startDateInt;
+            NSLog(@"getTodaySecondsString ----------> 分中数:%ld", sec);
+            
+            [hourResultDict setValue:[NSNumber numberWithInteger:sec] forKey:temp[0]];
+        }
+    }
+    for (NSString *key in hourResultDict.allKeys) {
+        NSLog(@"第 %@ 小时，养护 %ld 分钟", key, [[hourResultDict objectForKey:key] integerValue]);
+    }
+    
+    return hourResultDict;
 }
 
 
