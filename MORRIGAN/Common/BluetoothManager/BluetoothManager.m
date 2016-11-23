@@ -120,9 +120,7 @@ NSString * const ElectricQuantityChanged = @"ElectricQuantityChanged";
         weakSelf.isConnected = YES;
         weakSelf.reconnect = YES;
         weakSelf.manualDisconnect = NO;
-        //通知连接蓝牙设备成功
-        [[NSNotificationCenter defaultCenter] postNotificationName:ConnectPeripheralSuccess
-                                                            object:nil];
+        
         [weakSelf hideConnectView];
         //连接成功后保存为已绑定设备信息
         if (![DBManager insertPeripheral:peripheral macAddress:weakSelf.willConnectMacAddress]) {
@@ -157,6 +155,11 @@ NSString * const ElectricQuantityChanged = @"ElectricQuantityChanged";
         
         
         if (weakSelf.sendCharacteristic && weakSelf.receiveCharacteristic) {
+            
+            //通知连接蓝牙设备成功
+            [[NSNotificationCenter defaultCenter] postNotificationName:ConnectPeripheralSuccess
+                                                                object:nil];
+            
             [weakBaby notify:weakSelf.curConnectPeripheral characteristic:weakSelf.receiveCharacteristic block:^(CBPeripheral *peripheral, CBCharacteristic *characteristics, NSError *error) {
                 NSLog(@"receive characteristics : %@",characteristics);
                 // 本次接收的数据

@@ -133,7 +133,11 @@ static MusicManager *manager = nil;
         [_timer invalidate];
         _timer = nil;
     }
-    _timer = [NSTimer scheduledTimerWithTimeInterval:1 target:self selector:@selector(getPeakPower) userInfo:nil repeats:YES];
+    _timer = [NSTimer scheduledTimerWithTimeInterval:1
+                                              target:self
+                                            selector:@selector(getPeakPower)
+                                            userInfo:nil
+                                             repeats:YES];
     [_timer fire];
 }
 
