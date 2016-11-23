@@ -20,6 +20,7 @@
     _minuteLabel.textAlignment = NSTextAlignmentRight;
     if (minute) {
         _emptyImage.hidden = YES;
+        _minuteLabel.hidden = NO;
         _minuteLabel.text = minute;
     }else{
         _emptyImage.hidden = NO;
