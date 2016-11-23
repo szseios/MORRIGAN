@@ -285,41 +285,6 @@ static NSString *cellID = @"DataCellID";
     secLabel.textColor = [UIColor whiteColor];
     secLabel.font = [UIFont systemFontOfSize:10.0];
     [_dayView addSubview:secLabel];
-    
-    
-//    static NSNumberFormatter *barChartFormatter;
-//    if (!barChartFormatter){
-//        barChartFormatter = [[NSNumberFormatter alloc] init];
-//        barChartFormatter.numberStyle = NSNumberFormatterCurrencyStyle;
-//        barChartFormatter.allowsFloats = NO;
-//        barChartFormatter.maximumFractionDigits = 0;
-//    }
-    
-//    CGFloat dayBarViewH = 180;
-//    CGFloat dayBarViewY = 50;
-//    _dayBarChat = [[PNBarChart alloc] initWithFrame:CGRectMake(10, dayBarViewY, kScreenWidth-20, dayBarViewH)];
-//    _dayBarChat.backgroundColor = [UIColor clearColor];
-//    _dayBarChat.yLabelFormatter = ^(CGFloat yValue){
-//        return [barChartFormatter stringFromNumber:[NSNumber numberWithFloat:yValue]];
-//    };
-//    
-//    _dayBarChat.yChartLabelWidth = 0.0;
-//    _dayBarChat.chartMarginLeft = 0.0;
-//    _dayBarChat.chartMarginRight = 0.0;
-//    _dayBarChat.chartMarginTop = 0.0;
-//    _dayBarChat.chartMarginBottom = 5.0;
-//    _dayBarChat.xLabelSkip = 6;
-//    _dayBarChat.labelMarginTop = 0.0;
-//    _dayBarChat.showChartBorder = YES;
-//    _dayBarChat.yMaxValue = 60;
-//    [_dayBarChat setXLabels:@[@1,@2,@3,@4,@5,@6,@7,@8,@9,@10,@11,@12,@13,@14,@15,@16,@17,@18,@19,@20,@21,@22,@23,@24]];
-//    
-//    [_dayBarChat setYValues:@[@0,@0,@0,@0,@0.0,@0,@0,@0,@0,@0,@0,@0,@0,@0,@0,@0,@0,@0,@0,@0,@0,@0,@0,@0]];
-//    [_dayBarChat setStrokeColor:PNWhite];
-//    [_dayBarChat strokeChart];
-//    
-////    _dayBarChat.delegate = self;
-//    [_dayView addSubview:_dayBarChat];
 }
 
 - (UILabel *)setUpLabelWithInteger:(NSInteger)i
@@ -399,73 +364,6 @@ static NSString *cellID = @"DataCellID";
         barX = barX + 2*barW;
     }
     _weekView.hidden = YES;
-
-    
-//    _weekView = [[UIView alloc] initWithFrame:_dayView.frame];
-//    _weekView.backgroundColor = [UIColor clearColor];
-//    [self.view addSubview:_weekView];
-//    
-//
-//    _weekMinuteDataLabel = [[UILabel alloc] initWithFrame:CGRectMake(10, 0, 70, 60)];
-//    _weekMinuteDataLabel.textColor = [UIColor whiteColor];
-//    _weekMinuteDataLabel.textAlignment = NSTextAlignmentRight;
-//    _weekMinuteDataLabel.font = [UIFont systemFontOfSize:35];
-//    _weekMinuteDataLabel.text = @"--";
-//    [_weekView addSubview:_weekMinuteDataLabel];
-//    
-//    UILabel *unitLabel = [[UILabel alloc] initWithFrame:CGRectMake(80, 20, 40, 30)];
-//    unitLabel.textColor = [UIColor whiteColor];
-//    unitLabel.text = @"分钟";
-//    [_weekView addSubview:unitLabel];
-//    
-//    _weekDateLabel = [[UILabel alloc] initWithFrame:CGRectMake(100, 20, kScreenWidth - 120, 30)];
-//    _weekDateLabel.textColor = [UIColor whiteColor];
-//    _weekDateLabel.textAlignment = NSTextAlignmentRight;
-//    _weekDateLabel.text = [self currentWeekFirstDayToLastDay];
-//    [_weekView addSubview:_weekDateLabel];
-//    
-//    static NSNumberFormatter *barChartFormatter;
-//    if (!barChartFormatter){
-//        barChartFormatter = [[NSNumberFormatter alloc] init];
-//        barChartFormatter.numberStyle = NSNumberFormatterCurrencyStyle;
-//        barChartFormatter.allowsFloats = NO;
-//        barChartFormatter.maximumFractionDigits = 0;
-//    }
-//    
-//    CGFloat dayBarViewH = 180;
-//    CGFloat dayBarViewY = 50;
-//    _weekBarChat = [[PNBarChart alloc] initWithFrame:CGRectMake(10, dayBarViewY, kScreenWidth-20, dayBarViewH)];
-//    _weekBarChat.backgroundColor = [UIColor clearColor];
-//    _weekBarChat.yLabelFormatter = ^(CGFloat yValue){
-//        return [barChartFormatter stringFromNumber:[NSNumber numberWithFloat:yValue]];
-//    };
-//    
-//    _weekBarChat.yChartLabelWidth = 0.0;
-//    _weekBarChat.chartMarginLeft = 0.0;
-//    _weekBarChat.chartMarginRight = 0.0;
-//    _weekBarChat.chartMarginTop = 0.0;
-//    _weekBarChat.chartMarginBottom = 5.0;
-//    _weekBarChat.labelMarginTop = 0.0;
-//    _weekBarChat.showChartBorder = YES;
-//    _weekBarChat.isShowWeekLabel = YES;
-//    _weekBarChat.yMaxValue = 60;
-//    [_weekBarChat setXLabels:@[@1,@2,@3,@4,@5,@6,@7]];
-//    if (_weekDataArray.count > 0) {
-//       [_weekBarChat setYValues:_weekDataArray];
-//    }else{
-//        if (_weekDataArray && _weekDataArray.count == 7) {
-//            [_weekBarChat setYValues:_weekDataArray];
-//        }else{
-//          [_weekBarChat setYValues:@[@0,@0,@0,@0,@0,@0,@0]];
-//        }
-//        
-//    }
-//    [_weekBarChat setStrokeColor:PNWhite];
-//    [_weekBarChat strokeChart];
-//    
-//    _weekBarChat.delegate = self;
-//    [_weekView addSubview:_weekBarChat];
-//    _weekView.hidden = YES;
     
 }
 
