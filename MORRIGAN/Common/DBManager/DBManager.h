@@ -40,5 +40,11 @@
 
 + (NSArray *)selectUploadDatas:(NSString *)userID;
 
+//删除所有数据
++ (BOOL)deleteAllDatas;
+
+//删除今天之前的历史数据
++ (BOOL)deleteHistoryDatas;
+
 
 @end

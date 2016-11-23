@@ -409,10 +409,29 @@ static NSString *dbPath = nil;
     return success;
 }
 
-+ (BOOL)deleteData {
++ (BOOL)deleteAllDatas {
     __block BOOL success = NO;
     [[DBManager dbQueue] inDatabase:^(FMDatabase *db) {
         NSString *sql = [NSString stringWithFormat:@"DELETE FROM 'datas'"];
+        success = [db executeUpdate:sql];
+    }];
+    return success;
+}
+
++ (BOOL)deleteHistoryDatas {
+    __block BOOL success = NO;
+    [[DBManager dbQueue] inDatabase:^(FMDatabase *db) {
+        
+        NSCalendar *cal = [NSCalendar currentCalendar];
+        NSDateComponents *todayComponents = [cal components:NSYearCalendarUnit|NSMonthCalendarUnit|NSDayCalendarUnit
+                                                   fromDate:[NSDate date]];
+        
+        NSString *date = [NSString stringWithFormat:@"%@-%@-%@ 00:00:00 +0800",
+                          @(todayComponents.year).stringValue,
+                          @(todayComponents.month).stringValue,
+                          @(todayComponents.day).stringValue];
+        
+        NSString *sql = [NSString stringWithFormat:@"DELETE FROM 'datas' where end_time < '%@'",date];
         success = [db executeUpdate:sql];
     }];
     return success;
