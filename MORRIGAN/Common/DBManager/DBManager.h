@@ -38,6 +38,10 @@
 
 + (NSArray *)selectaAfternoonDatas:(NSString *)userID;
 
+//获取当前用户所有历史记录
++ (NSArray *)selectAllUploadDatas:(NSString *)userID;
+
+//获取当前用户今天之前的所有历史记录
 + (NSArray *)selectUploadDatas:(NSString *)userID;
 
 //删除所有数据

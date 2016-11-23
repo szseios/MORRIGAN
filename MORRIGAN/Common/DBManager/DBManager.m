@@ -166,6 +166,61 @@ static NSString *dbPath = nil;
 
 #pragma mark - 数据
 
++ (NSArray *)selectAllUploadDatas:(NSString *)userID {
+    __block NSMutableArray *datas;
+    [[DBManager dbQueue] inDatabase:^(FMDatabase *db) {
+        
+        NSDateFormatter *formatter = [[NSDateFormatter alloc] init];
+        [formatter setDateFormat:@"yyyy-MM-dd HH:mm:ss Z"];
+        [db setDateFormat:formatter];
+        
+        NSString *sql = [NSString stringWithFormat:@"select * from datas where user_id = '%@' order by end_time asc",userID];
+        
+        FMResultSet *result = [db executeQuery:sql];
+        
+        NSDate *date;
+        NSTimeInterval timeLong = 0.0;
+        
+        while (result.next) {
+            if (!datas) {
+                datas = [[NSMutableArray alloc] init];
+            }
+            NSDate *startTime = [result dateForColumn:@"start_time"];
+            NSDate *endTime = [result dateForColumn:@"end_time"];
+            NSTimeInterval interval = endTime.timeIntervalSince1970 - startTime.timeIntervalSince1970;
+            
+            if (![Utils isSameDay:date date2:endTime]) {
+                //如果不是第一条记录
+                if (date) {
+                    NSDateFormatter *formatter = [[NSDateFormatter alloc] init];
+                    [formatter setDateFormat:@"yyyy-MM-dd"];
+                    NSString *dateString = [formatter stringFromDate:date];
+                    NSDictionary *dictionary = @{@"userId":userID,
+                                                 @"date":dateString,
+                                                 @"timeLong":@((NSInteger)(timeLong / 60))};
+                    [datas addObject:dictionary];
+                }
+                date = endTime;
+                timeLong = 0.0;
+            }
+            
+            timeLong += interval;
+        }
+        //如果有记录,添加最后一条记录
+        if (date) {
+            NSDateFormatter *formatter = [[NSDateFormatter alloc] init];
+            [formatter setDateFormat:@"yyyy-MM-dd"];
+            NSString *dateString = [formatter stringFromDate:date];
+            NSDictionary *dictionary = @{@"userId":userID,
+                                         @"date":dateString,
+                                         @"timeLong":@((NSInteger)(timeLong / 60))};
+            [datas addObject:dictionary];
+        }
+        
+    }];
+    return datas;
+}
+
 + (NSArray *)selectUploadDatas:(NSString *)userID {
     __block NSMutableArray *datas;
     [[DBManager dbQueue] inDatabase:^(FMDatabase *db) {
