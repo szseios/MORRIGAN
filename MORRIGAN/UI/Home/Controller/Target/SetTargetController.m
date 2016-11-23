@@ -211,7 +211,7 @@
     NSLog(@"当前刻度数：%ld", index);
     _countLabel.text = [NSString stringWithFormat:@"%ld",index];
     
-    
+    [UserInfo share].target = _countLabel.text;
 }
 
 
