@@ -417,7 +417,7 @@
 
 - (void)emptyStartTime:(NSDate *)startTime toEndTime:(NSDate *)endTime
 {
-    CGFloat startAngle = 0;
+    CGFloat startAngle = [self getAngleFromDate:startTime isStart:YES];
     CGFloat endAngle = [self getAngleFromDate:endTime isStart:NO];
     if (endAngle >= 720) {
         endAngle -= 720;
@@ -595,8 +595,9 @@
     if (isAM) {
         
         if (_AMMorriganArray && _AMMorriganArray.count > 0) {
+            MassageRecordModel *firstModel = _AMMorriganArray.firstObject;
             MassageRecordModel *model = _AMMorriganArray.lastObject;
-            [self emptyStartTime:model.startTime toEndTime:model.endTime];
+            [self emptyStartTime:firstModel.startTime toEndTime:model.endTime];
             
             for (MassageRecordModel *model in _AMMorriganArray) {
                 [self morriganStartTime:model.startTime toEndTime:model.endTime];
@@ -619,8 +620,9 @@
             }
         }
         if (_PMMorriganArray) {
+            MassageRecordModel *firstModel = _PMMorriganArray.firstObject;
             MassageRecordModel *model = _PMMorriganArray.lastObject;
-            [self emptyStartTime:model.startTime toEndTime:model.endTime];
+            [self emptyStartTime:firstModel.startTime toEndTime:model.endTime];
             for (MassageRecordModel *model in _PMMorriganArray) {
                 [self morriganStartTime:model.startTime toEndTime:model.endTime];
                 NSInteger time = [self getDidMorriganTime:model];
