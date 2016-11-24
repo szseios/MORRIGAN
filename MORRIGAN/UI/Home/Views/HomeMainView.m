@@ -285,7 +285,7 @@
     
     _upBackgroundView = [[UIImageView alloc] initWithFrame:_upView.bounds];
     _upBackgroundView.image =  [self createImageWithColor:[Utils stringTOColor:@"#a743c7"]];
-    _upBackgroundView.height = _upView.height * 0.2;
+    _upBackgroundView.height = _upView.height * 0;
     _upBackgroundView.y = _upView.height - _upBackgroundView.height;
     [_upView addSubview:_upBackgroundView];
     
@@ -297,10 +297,10 @@
     _electricityLabel = [[UILabel alloc] initWithFrame:CGRectMake(persentLabelX, persentLabelY, persentLabelW, persentLabelH)];
     _electricityLabel.textColor = [UIColor whiteColor];
     _electricityLabel.textAlignment = NSTextAlignmentCenter;
-    NSInteger persent = 20;
+    NSInteger persent = 0;
     _electricityLabel.font = [UIFont systemFontOfSize:10];
     NSMutableAttributedString *attributeString = [[NSMutableAttributedString alloc] initWithString:[NSString stringWithFormat:@"%ld%%",persent]];
-    [attributeString setAttributes:@{NSFontAttributeName:[UIFont systemFontOfSize:20]} range:NSMakeRange(0, 2)];
+    [attributeString setAttributes:@{NSFontAttributeName:[UIFont systemFontOfSize:20]} range:NSMakeRange(0, attributeString.length - 1)];
     _electricityLabel.attributedText = attributeString;
     [_upView addSubview:_electricityLabel];
     
@@ -417,7 +417,7 @@
 
 - (void)emptyStartTime:(NSDate *)startTime toEndTime:(NSDate *)endTime
 {
-    CGFloat startAngle = 0;
+    CGFloat startAngle = [self getAngleFromDate:startTime isStart:YES];
     CGFloat endAngle = [self getAngleFromDate:endTime isStart:NO];
     if (endAngle >= 720) {
         endAngle -= 720;
@@ -458,6 +458,7 @@
     [self bringSubviewToFront:_scrollView];
 }
 
+//目标变化通知
 - (void)refreshData:(NSNotification *)notification
 {
     NSString *time = [UserInfo share].target;
@@ -485,6 +486,7 @@
     return hour < 12 ? YES : NO;
 }
 
+//星级评定
 - (void)setStarLabelAndImage:(NSString *)star
 {
     if (star) {
@@ -544,12 +546,13 @@
     
 }
 
+//设置电量变化
 - (void)setElectricityPersent:(CGFloat)persent
 {
     _upBackgroundView.height = _upView.height * persent;
     _upBackgroundView.y = _upView.height - _upBackgroundView.height;
     NSMutableAttributedString *attributeString = [[NSMutableAttributedString alloc] initWithString:[NSString stringWithFormat:@"%ld%%",(NSInteger)persent*100]];
-    [attributeString setAttributes:@{NSFontAttributeName:[UIFont systemFontOfSize:20]} range:NSMakeRange(0, 2)];
+    [attributeString setAttributes:@{NSFontAttributeName:[UIFont systemFontOfSize:20]} range:NSMakeRange(0, attributeString.length - 1)];
     _electricityLabel.attributedText = attributeString;
     [self setNeedsDisplay];
 }
@@ -595,8 +598,9 @@
     if (isAM) {
         
         if (_AMMorriganArray && _AMMorriganArray.count > 0) {
+            MassageRecordModel *firstModel = _AMMorriganArray.firstObject;
             MassageRecordModel *model = _AMMorriganArray.lastObject;
-            [self emptyStartTime:model.startTime toEndTime:model.endTime];
+            [self emptyStartTime:firstModel.startTime toEndTime:model.endTime];
             
             for (MassageRecordModel *model in _AMMorriganArray) {
                 [self morriganStartTime:model.startTime toEndTime:model.endTime];
@@ -619,8 +623,9 @@
             }
         }
         if (_PMMorriganArray) {
+            MassageRecordModel *firstModel = _PMMorriganArray.firstObject;
             MassageRecordModel *model = _PMMorriganArray.lastObject;
-            [self emptyStartTime:model.startTime toEndTime:model.endTime];
+            [self emptyStartTime:firstModel.startTime toEndTime:model.endTime];
             for (MassageRecordModel *model in _PMMorriganArray) {
                 [self morriganStartTime:model.startTime toEndTime:model.endTime];
                 NSInteger time = [self getDidMorriganTime:model];

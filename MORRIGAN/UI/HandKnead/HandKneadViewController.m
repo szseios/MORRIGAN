@@ -82,7 +82,7 @@
 
     
     // 返回按钮
-    UIButton *backButton = [[UIButton alloc]initWithFrame:CGRectMake(15, 26, 42, 40)];
+    UIButton *backButton = [[UIButton alloc]initWithFrame:CGRectMake(15, 26, 32, 32)];
     [backButton setImage:[UIImage imageNamed:@"back"] forState:UIControlStateNormal];
     [backButton setImage:[UIImage imageNamed:@"back"] forState:UIControlStateHighlighted];
     [backButton addTarget:self action:@selector(backButtonHandleInHandkneed) forControlEvents:UIControlEventTouchUpInside];
@@ -97,11 +97,11 @@
     titleLabel.textAlignment = NSTextAlignmentCenter;
     [self.view addSubview:titleLabel];
     
-    // 连接蓝牙按钮
-    UIButton *linkButton = [[UIButton alloc]initWithFrame:CGRectMake(kScreenWidth - 15 - 40, 26, 45, 45)];
-    [linkButton setImage:[UIImage imageNamed:@"icon_rightItem_link"] forState:UIControlStateNormal];
-    [linkButton addTarget:self action:@selector(bindingDeviceInHandkneed) forControlEvents:UIControlEventTouchUpInside];
-    [self.view addSubview:linkButton];
+//    // 连接蓝牙按钮
+//    UIButton *linkButton = [[UIButton alloc]initWithFrame:CGRectMake(kScreenWidth - 15 - 40, 26, 45, 45)];
+//    [linkButton setImage:[UIImage imageNamed:@"icon_rightItem_link"] forState:UIControlStateNormal];
+//    [linkButton addTarget:self action:@selector(bindingDeviceInHandkneed) forControlEvents:UIControlEventTouchUpInside];
+//    [self.view addSubview:linkButton];
     
     
     

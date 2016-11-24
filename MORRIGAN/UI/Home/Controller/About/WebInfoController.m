@@ -59,11 +59,6 @@
     NSURL *url = [NSURL fileURLWithPath:path];
     NSURLRequest *request = [NSURLRequest requestWithURL:url];
     [_webView loadRequest:request];
-    
-    if (self.connectBottomView) {
-        [self.view bringSubviewToFront:self.connectBottomView];
-    }
-    
 }
 
 - (void)setUpBarView
@@ -71,6 +66,21 @@
     _barView = [[BasicBarView alloc] initWithFrame:CGRectMake(0, 20, kScreenWidth, 44) withType:superBarTypeLeftItemBackAndRightItemBinding withTitle:_webTitle isShowRightButton:YES];
     [self.view addSubview:_barView];
     _barView.delegate = self;
+}
+
+- (void)viewWillAppear:(BOOL)animated
+{
+    [super viewWillAppear:animated];
+    //如果没有连上蓝牙设备,开始执行动画
+    if (![BluetoothManager share].isConnected) {
+        [_barView startFlashing];
+    }
+}
+
+- (void)viewWillDisappear:(BOOL)animated
+{
+    [super viewWillDisappear:animated];
+    [_barView stopFlashing];
 }
 
 #pragma mark - BasicBarViewDelegate

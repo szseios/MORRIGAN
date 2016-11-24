@@ -82,7 +82,16 @@
         NSArray *ForenoonArray = [DBManager selectForenoonDatas:[UserInfo share].userId];
         NSArray *AfternoonArray = [DBManager selectaAfternoonDatas:[UserInfo share].userId];
     [_mainView refreshLatestDataForAMMorrigan:ForenoonArray PMMorrigan:AfternoonArray];
-    
+    //如果没有连上蓝牙设备,开始执行动画
+    if (![BluetoothManager share].isConnected) {
+        [_barView startFlashing];
+    }
+}
+
+- (void)viewWillDisappear:(BOOL)animated
+{
+    [super viewWillDisappear:animated];
+    [_barView stopFlashing];
 }
 
 - (void)setUpBarView
@@ -97,15 +106,6 @@
     CGFloat mainViewW = kScreenWidth * 0.75 + (kScreenWidth > 320 ? 30 : 10); //kScreenWidth > 320 ? 300 : 220;
     CGFloat mainViewH = mainViewW / 623 * 860.0;
     CGFloat mainViewX = (kScreenWidth - mainViewW) /2 + (kScreenWidth > 320 ? 20 : 15); //kScreenWidth > 320 ? 50 : 20;
-//    MassageRecordModel *model = [[MassageRecordModel alloc] init];
-//    model.startTime = [NSDate dateWithTimeIntervalSinceNow:-60*5];
-//    model.endTime = [NSDate dateWithTimeIntervalSinceNow:60*60*0];
-//    
-//    MassageRecordModel *model1 = [[MassageRecordModel alloc] init];
-//    model1.startTime = [NSDate dateWithTimeIntervalSinceNow:-60*55];;
-//    model1.endTime = [NSDate dateWithTimeIntervalSinceNow:-60*35];
-//    
-//    NSArray *arra = @[model1,model];
     NSArray *ForenoonArray = [DBManager selectForenoonDatas:[UserInfo share].userId];
     NSArray *AfternoonArray = [DBManager selectaAfternoonDatas:[UserInfo share].userId];
     _mainView = [[HomeMainView alloc] initWithAMMorriganArray:ForenoonArray PMMorriganTime:AfternoonArray  withFarme:CGRectMake(mainViewX, 74, mainViewW, mainViewH)];
