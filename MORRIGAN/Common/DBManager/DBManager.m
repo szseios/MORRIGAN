@@ -346,7 +346,7 @@ static NSString *dbPath = nil;
                              @(todayComponents.month).stringValue,
                              @(todayComponents.day).stringValue];
         
-        NSString *sql = [NSString stringWithFormat:@"select * from datas where start_time >= '%@' and  end_time <= '%@' and user_id = '%@'",startDate,endDate,userID];
+        NSString *sql = [NSString stringWithFormat:@"select * from datas where start_time >= '%@' and  end_time <= '%@' and user_id = '%@' order by end_time asc",startDate,endDate,userID];
         
         FMResultSet *result = [db executeQuery:sql];
         while (result.next) {
@@ -386,7 +386,7 @@ static NSString *dbPath = nil;
                              @(todayComponents.month).stringValue,
                              @(todayComponents.day).stringValue];
         
-        NSString *sql = [NSString stringWithFormat:@"select * from datas where start_time >= '%@' and  end_time <= '%@' and user_id = '%@'",startDate,endDate,userID];
+        NSString *sql = [NSString stringWithFormat:@"select * from datas where start_time >= '%@' and  end_time <= '%@' and user_id = '%@' order by end_time asc",startDate,endDate,userID];
         
         FMResultSet *result = [db executeQuery:sql];
         while (result.next) {
