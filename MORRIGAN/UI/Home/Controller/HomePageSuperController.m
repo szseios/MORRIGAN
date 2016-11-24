@@ -8,13 +8,32 @@
 
 #import "HomePageSuperController.h"
 
-@interface HomePageSuperController ()
+@interface HomePageSuperController () {
+    UIButton *_searchButton;
+}
 
 
 
 @end
 
 @implementation HomePageSuperController
+
+- (void)viewWillAppear:(BOOL)animated {
+    [super viewWillAppear:animated];
+    
+    //如果没有连上蓝牙设备,开始执行动画
+    if (![BluetoothManager share].isConnected) {
+        [self startFlashing];
+    }
+    
+}
+
+- (void)viewWillDisappear:(BOOL)animated {
+    [super viewWillDisappear:animated];
+    
+    [self stopFlashing];
+    
+}
 
 
 - (void)viewDidLoad {
@@ -34,22 +53,52 @@
 //        [self.view bringSubviewToFront:_connectBottomView];
 //    }
     
-//    [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(hiddenConnectView) name:ConnectPeripheralSuccess object:nil];
-//    [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(showConnectView) name:DisconnectPeripheral object:nil];
-}
-
-- (void)hiddenConnectView
-{
-    if (_connectBottomView) {
-        _connectBottomView.hidden = YES;
+    [[NSNotificationCenter defaultCenter] addObserver:self
+                                             selector:@selector(stopFlashing)
+                                                 name:ConnectPeripheralSuccess object:nil];
+    [[NSNotificationCenter defaultCenter] addObserver:self
+                                             selector:@selector(startFlashing)
+                                                 name:DisconnectPeripheral
+                                               object:nil];
+    
+    _searchButton = [[UIButton alloc] initWithFrame:CGRectMake(kScreenWidth - 26 - 32,
+                                                               26,
+                                                               32,
+                                                               32)];
+    [_searchButton setBackgroundImage:[UIImage imageNamed:@"icon_rightItem_link"]
+                             forState:UIControlStateNormal];
+    [_searchButton addTarget:self
+                      action:@selector(clickSearchButton)
+            forControlEvents:UIControlEventTouchUpInside];
+    
+    [self.view addSubview:_searchButton];
+    
+    //如果没有连上蓝牙设备,开始执行动画
+    if (![BluetoothManager share].isConnected) {
+        [self startFlashing];
     }
 }
 
-- (void)showConnectView
+- (void)stopFlashing
 {
-    if (_connectBottomView) {
-        _connectBottomView.hidden = NO;
-    }
+    [_searchButton.layer removeAllAnimations];
+}
+
+- (void)startFlashing
+{
+    CABasicAnimation *animation = [CABasicAnimation animationWithKeyPath:@"opacity"];
+    animation.repeatCount = NSIntegerMax;
+    animation.fromValue = @(1);
+    animation.toValue = @(0.3);
+    animation.autoreverses = YES;
+    animation.duration = 0.5;
+    
+    [_searchButton.layer addAnimation:animation forKey:nil];
+}
+
+- (void)clickSearchButton {
+    SearchPeripheralViewController *ctl = [[SearchPeripheralViewController alloc] init];
+    [self.navigationController pushViewController:ctl animated:YES];
 }
 
 - (void)didReceiveMemoryWarning {
