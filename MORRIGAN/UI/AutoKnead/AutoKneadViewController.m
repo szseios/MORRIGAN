@@ -66,10 +66,10 @@
     
     
     // 返回按钮
-    CGFloat backButtonW = 42.0;
+    CGFloat backButtonW = 32.0;
     if(kScreenHeight < 570) {
         // 5s
-        backButtonW = 35.0;
+        backButtonW = 32.0;
     }
     UIButton *backButton = [[UIButton alloc]initWithFrame:CGRectMake(15, 26, backButtonW, backButtonW)];
     [backButton setImage:[UIImage imageNamed:@"back"] forState:UIControlStateNormal];
@@ -95,11 +95,11 @@
     titleLabel.textAlignment = NSTextAlignmentCenter;
     [self.view addSubview:titleLabel];
     
-    // 连接蓝牙按钮
-    UIButton *linkButton = [[UIButton alloc]initWithFrame:CGRectMake(kScreenWidth - 15 - 40, 26, backButtonW, backButtonW)];
-    [linkButton setImage:[UIImage imageNamed:@"icon_rightItem_link"] forState:UIControlStateNormal];
-    [linkButton addTarget:self action:@selector(bindingDeviceInAutoKnead) forControlEvents:UIControlEventTouchUpInside];
-    [self.view addSubview:linkButton];
+//    // 连接蓝牙按钮
+//    UIButton *linkButton = [[UIButton alloc]initWithFrame:CGRectMake(kScreenWidth - 15 - 40, 26, backButtonW, backButtonW)];
+//    [linkButton setImage:[UIImage imageNamed:@"icon_rightItem_link"] forState:UIControlStateNormal];
+//    [linkButton addTarget:self action:@selector(bindingDeviceInAutoKnead) forControlEvents:UIControlEventTouchUpInside];
+//    [self.view addSubview:linkButton];
     
     
     CGFloat buttonW = 60.0;
