@@ -99,7 +99,9 @@ static NSString *cellIdentifier = @"cellIdentifier";
         // 注销登陆成功时调用这个
         NSUserDefaults *defaults = [NSUserDefaults standardUserDefaults];
         [defaults removeObjectForKey:kUserDefaultIdKey];
-        [defaults removeObjectForKey:kUserDefaultPasswordKey];;
+        [defaults removeObjectForKey:kUserDefaultPasswordKey];
+        // 上传护理记录数据
+        [[RecordManager share] uploadDBDatas:NO];
         [self.navigationController pushViewController:loginViewController animated:NO];
     }
 }

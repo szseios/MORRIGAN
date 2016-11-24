@@ -48,8 +48,6 @@
 
 @property (nonatomic , strong) NSMutableArray *weekDataArray;
 
-@property (nonatomic , assign) NSInteger weekTarget;
-
 @property (nonatomic , assign) NSInteger weekTimeLong;
 
 @property (nonatomic , assign) BOOL loadRecordDataSucceed;
@@ -109,15 +107,10 @@ static NSString *cellID = @"DataCellID";
                     _loadRecordDataSucceed = YES;
                     for (NSDictionary *dict in hlarray) {
                         NSString *timeLong = [dict objectForKey:@"timeLong"];
-                        NSString *goalLong = [dict objectForKey:@"goalLong"];
                         if([timeLong integerValue] > 180) {
                             timeLong = @"180";
                         }
-                        if([goalLong integerValue] > 180) {
-                            goalLong = @"180";
-                        }
                         [blockSelf.weekDataArray addObject:timeLong];
-                        _weekTarget = _weekTarget + [goalLong integerValue];
                         _weekTimeLong = _weekTimeLong + [timeLong integerValue];
                     }
                 }
@@ -146,7 +139,7 @@ static NSString *cellID = @"DataCellID";
     _weekMinuteDataLabel.textColor = [UIColor whiteColor];
     _weekMinuteDataLabel.textAlignment = NSTextAlignmentRight;
     _weekMinuteDataLabel.font = [UIFont systemFontOfSize:35];
-    _weekMinuteDataLabel.text = [NSString stringWithFormat:@"%ld", _weekTarget];
+    _weekMinuteDataLabel.text = [NSString stringWithFormat:@"%ld", _weekTimeLong];
     [_weekMinuteDataLabel sizeToFit];
     [_weekView addSubview:_weekMinuteDataLabel];
 
@@ -219,20 +212,7 @@ static NSString *cellID = @"DataCellID";
     [self.view addSubview:_dayView];
     
     CGFloat labelY = 20;
-    _minuteDataLabel = [[UILabel alloc] initWithFrame:CGRectMake(15, labelY, 60, 60)];
-    _minuteDataLabel.textColor = [UIColor whiteColor];
-    _minuteDataLabel.textAlignment = NSTextAlignmentRight;
-    _minuteDataLabel.font = [UIFont systemFontOfSize:35];
-     _minuteDataLabel.text = [UserInfo share].target ? [UserInfo share].target : @"--";
-    [_minuteDataLabel sizeToFit];
-   
-    [_dayView addSubview:_minuteDataLabel];
     
-    CGFloat unitLabelX = CGRectGetMaxX(_minuteDataLabel.frame) + 2;
-    UILabel *unitLabel = [[UILabel alloc] initWithFrame:CGRectMake(unitLabelX, labelY+10, 40, 30)];
-    unitLabel.textColor = [UIColor whiteColor];
-    unitLabel.text = @"分钟";
-    [_dayView addSubview:unitLabel];
     
     _dateLabel = [[UILabel alloc] initWithFrame:CGRectMake(100, 25, kScreenWidth - 120, 30)];
     _dateLabel.textColor = [UIColor whiteColor];
@@ -257,6 +237,7 @@ static NSString *cellID = @"DataCellID";
     NSDictionary *todatSecDict = [self getTodatSecDict];
     CGRect secLabelFame = CGRectMake(0, 0, 0, 0);
     NSInteger maxSec = 0;
+    NSInteger allSec = 0;
     for (NSInteger i = 0; i < 24; i++) {
         NSString *hourKey = i+1 < 10 ? [NSString stringWithFormat:@"0%ld",i+1] : [NSString stringWithFormat:@"%ld",i+1];
         NSInteger sec = [[todatSecDict objectForKey:hourKey] integerValue];
@@ -265,6 +246,8 @@ static NSString *cellID = @"DataCellID";
         bar.backgroundColor = [UIColor whiteColor];
         bar.tag = 1000 + i;
         [_dayView addSubview:bar];
+        
+        allSec = allSec + sec;
         
         // 保存最大分钟数时顶部label的frame
         if(sec > maxSec) {
@@ -278,6 +261,23 @@ static NSString *cellID = @"DataCellID";
         }
         
     }
+    
+    
+    _minuteDataLabel = [[UILabel alloc] initWithFrame:CGRectMake(15, labelY, 60, 60)];
+    _minuteDataLabel.textColor = [UIColor whiteColor];
+    _minuteDataLabel.textAlignment = NSTextAlignmentRight;
+    _minuteDataLabel.font = [UIFont systemFontOfSize:35];
+    _minuteDataLabel.text = allSec > 0 ? [NSString stringWithFormat:@"%ld", allSec] : @"--";
+    [_minuteDataLabel sizeToFit];
+    [_dayView addSubview:_minuteDataLabel];
+    
+    CGFloat unitLabelX = CGRectGetMaxX(_minuteDataLabel.frame) + 2;
+    UILabel *unitLabel = [[UILabel alloc] initWithFrame:CGRectMake(unitLabelX, labelY+10, 40, 30)];
+    unitLabel.textColor = [UIColor whiteColor];
+    unitLabel.text = @"分钟";
+    [_dayView addSubview:unitLabel];
+   
+    
     
     // 在最大分钟数顶部添加label
     UILabel *secLabel = [[UILabel alloc] initWithFrame:secLabelFame];
@@ -506,7 +506,7 @@ static NSString *cellID = @"DataCellID";
     switch (indexPath.row) {
         case 0:
         {
-            minuteCount = _dayView.hidden == NO ? [UserInfo share].target : (_loadRecordDataSucceed ? [NSString stringWithFormat:@"%ld", _weekTarget] : nil);
+            minuteCount = _dayView.hidden == NO ? [UserInfo share].target : [NSString stringWithFormat:@"%ld",[[UserInfo share].target integerValue]*7];
  
         }
             break;
@@ -518,7 +518,7 @@ static NSString *cellID = @"DataCellID";
             break;
         case 2:
         {
-            minuteCount = _dayView.hidden == NO ?  [self getTodayResidueSecondsString] : (_weekTarget - _weekTimeLong > 0 ? [NSString stringWithFormat:@"%ld", _weekTarget - _weekTimeLong] : (_loadRecordDataSucceed ? @"0" : nil));
+            minuteCount = _dayView.hidden == NO ?  [self getTodayResidueSecondsString] : ([[UserInfo share].target integerValue]*7 - _weekTimeLong > 0 ? [NSString stringWithFormat:@"%ld", [[UserInfo share].target integerValue]*7 - _weekTimeLong] : (_loadRecordDataSucceed ? @"0" : nil));
         }
             break;
             

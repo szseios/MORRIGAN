@@ -515,11 +515,11 @@
 ////    [[RecordManager share] addToDB:model2];
 //    return;
     
-    
+//    
 //    MassageRecordModel *model1 = [[MassageRecordModel alloc] init];
 //    model1.userID = [UserInfo share].userId;
-//    model1.startTime = [NSDate dateWithTimeIntervalSince1970:1479687600]; // 8:20
-//    model1.endTime = [NSDate dateWithTimeIntervalSince1970:1479694800];   // 10:20
+//    model1.startTime = [NSDate dateWithTimeIntervalSince1970:1479946200]; // 8:10
+//    model1.endTime = [NSDate dateWithTimeIntervalSince1970:1479957000];   // 11:10
 //    model1.type = MassageTypeAuto;
 //    [[RecordManager share] addToDB:model1];
 //    return;
