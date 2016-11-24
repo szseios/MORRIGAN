@@ -48,15 +48,11 @@
 
 @property (nonatomic , strong) NSMutableArray *weekDataArray;
 
-@property (nonatomic , assign) NSInteger weekTarget;
-
 @property (nonatomic , assign) NSInteger weekTimeLong;
 
-@property (nonatomic , assign) BOOL loadRecordDataSucceed;
+@property (nonatomic , assign) NSInteger todayAllSec;
 
-
-
-
+@property (nonatomic , assign) NSInteger todayIndexInWeek;
 
 @end
 
@@ -106,18 +102,17 @@ static NSString *cellID = @"DataCellID";
                 NSArray *hlarray = [obj objectForKey:@"hlInfo"];
                 NSLog(@"一周记录：%@",hlarray);
                 if (hlarray) {
-                    _loadRecordDataSucceed = YES;
-                    for (NSDictionary *dict in hlarray) {
+                    for (NSInteger i = 0; i < hlarray.count; i++) {
+                        NSDictionary *dict = hlarray[i];
                         NSString *timeLong = [dict objectForKey:@"timeLong"];
-                        NSString *goalLong = [dict objectForKey:@"goalLong"];
                         if([timeLong integerValue] > 180) {
                             timeLong = @"180";
                         }
-                        if([goalLong integerValue] > 180) {
-                            goalLong = @"180";
+                        if(_todayIndexInWeek == i) {
+                             [blockSelf.weekDataArray addObject:[NSString stringWithFormat:@"%ld", _todayAllSec]];
+                        } else {
+                            [blockSelf.weekDataArray addObject:timeLong];
                         }
-                        [blockSelf.weekDataArray addObject:timeLong];
-                        _weekTarget = _weekTarget + [goalLong integerValue];
                         _weekTimeLong = _weekTimeLong + [timeLong integerValue];
                     }
                 }
@@ -129,7 +124,6 @@ static NSString *cellID = @"DataCellID";
                 
                 
             }else{
-                _loadRecordDataSucceed = false;
                 [MBProgressHUD showHUDByContent:[obj objectForKey:@"retMsg"] view:UI_Window afterDelay:2];
             }
         }];
@@ -146,7 +140,7 @@ static NSString *cellID = @"DataCellID";
     _weekMinuteDataLabel.textColor = [UIColor whiteColor];
     _weekMinuteDataLabel.textAlignment = NSTextAlignmentRight;
     _weekMinuteDataLabel.font = [UIFont systemFontOfSize:35];
-    _weekMinuteDataLabel.text = [NSString stringWithFormat:@"%ld", _weekTarget];
+    _weekMinuteDataLabel.text = [NSString stringWithFormat:@"%ld", _weekTimeLong];
     [_weekMinuteDataLabel sizeToFit];
     [_weekView addSubview:_weekMinuteDataLabel];
 
@@ -219,20 +213,7 @@ static NSString *cellID = @"DataCellID";
     [self.view addSubview:_dayView];
     
     CGFloat labelY = 20;
-    _minuteDataLabel = [[UILabel alloc] initWithFrame:CGRectMake(15, labelY, 60, 60)];
-    _minuteDataLabel.textColor = [UIColor whiteColor];
-    _minuteDataLabel.textAlignment = NSTextAlignmentRight;
-    _minuteDataLabel.font = [UIFont systemFontOfSize:35];
-     _minuteDataLabel.text = [UserInfo share].target ? [UserInfo share].target : @"--";
-    [_minuteDataLabel sizeToFit];
-   
-    [_dayView addSubview:_minuteDataLabel];
     
-    CGFloat unitLabelX = CGRectGetMaxX(_minuteDataLabel.frame) + 2;
-    UILabel *unitLabel = [[UILabel alloc] initWithFrame:CGRectMake(unitLabelX, labelY+10, 40, 30)];
-    unitLabel.textColor = [UIColor whiteColor];
-    unitLabel.text = @"分钟";
-    [_dayView addSubview:unitLabel];
     
     _dateLabel = [[UILabel alloc] initWithFrame:CGRectMake(100, 25, kScreenWidth - 120, 30)];
     _dateLabel.textColor = [UIColor whiteColor];
@@ -256,7 +237,7 @@ static NSString *cellID = @"DataCellID";
     CGFloat mostBarH = dayBarViewY;
     NSDictionary *todatSecDict = [self getTodatSecDict];
     CGRect secLabelFame = CGRectMake(0, 0, 0, 0);
-    NSInteger maxSec = 0;
+    NSInteger todayMaxSec = 0;
     for (NSInteger i = 0; i < 24; i++) {
         NSString *hourKey = i+1 < 10 ? [NSString stringWithFormat:@"0%ld",i+1] : [NSString stringWithFormat:@"%ld",i+1];
         NSInteger sec = [[todatSecDict objectForKey:hourKey] integerValue];
@@ -266,9 +247,11 @@ static NSString *cellID = @"DataCellID";
         bar.tag = 1000 + i;
         [_dayView addSubview:bar];
         
+        _todayAllSec = _todayAllSec + sec;
+        
         // 保存最大分钟数时顶部label的frame
-        if(sec > maxSec) {
-            maxSec = sec;
+        if(sec > todayMaxSec) {
+            todayMaxSec = sec;
             secLabelFame = CGRectMake(barX * i+13 - 3, mostBarH - h - 15 , barW + 7, 15.0);
         }
         
@@ -278,11 +261,29 @@ static NSString *cellID = @"DataCellID";
         }
         
     }
+    _weekTimeLong = _weekTimeLong + _todayAllSec;
+    
+    _minuteDataLabel = [[UILabel alloc] initWithFrame:CGRectMake(15, labelY, 60, 60)];
+    _minuteDataLabel.textColor = [UIColor whiteColor];
+    _minuteDataLabel.textAlignment = NSTextAlignmentRight;
+    _minuteDataLabel.font = [UIFont systemFontOfSize:35];
+    _minuteDataLabel.text = _todayAllSec > 0 ? [NSString stringWithFormat:@"%ld", _todayAllSec] : @"--";
+    [_minuteDataLabel sizeToFit];
+    [_dayView addSubview:_minuteDataLabel];
+    
+    CGFloat unitLabelX = CGRectGetMaxX(_minuteDataLabel.frame) + 2;
+    UILabel *unitLabel = [[UILabel alloc] initWithFrame:CGRectMake(unitLabelX, labelY+10, 40, 30)];
+    unitLabel.textColor = [UIColor whiteColor];
+    unitLabel.text = @"分钟";
+    [_dayView addSubview:unitLabel];
+   
+    
     
     // 在最大分钟数顶部添加label
     UILabel *secLabel = [[UILabel alloc] initWithFrame:secLabelFame];
-    secLabel.text = [NSString stringWithFormat:@"%ld", maxSec];
+    secLabel.text = [NSString stringWithFormat:@"%ld", todayMaxSec];
     secLabel.textColor = [UIColor whiteColor];
+    secLabel.textAlignment = NSTextAlignmentCenter;
     secLabel.font = [UIFont systemFontOfSize:10.0];
     [_dayView addSubview:secLabel];
 }
@@ -349,8 +350,7 @@ static NSString *cellID = @"DataCellID";
             _weekBarViewArray = [NSMutableArray array];
         }
         [_weekBarViewArray addObject:bar];
-        
-        
+
         // 星期label
         UILabel *label = [[UILabel alloc] initWithFrame:CGRectMake(barX, 215, barW, 20)];
         label.text = [kWeekFormatDict objectForKey:[NSString stringWithFormat:@"%ld" ,i]];
@@ -443,6 +443,7 @@ static NSString *cellID = @"DataCellID";
         default:
             break;
     }
+    _todayIndexInWeek = aheadCount;
     NSDateFormatter *formatter = [[NSDateFormatter alloc] init];
     [formatter setDateFormat:@"MM月dd日"];
     NSDate *backDate = [NSDate dateWithTimeIntervalSinceNow:-24*60*60*backCount];
@@ -506,25 +507,25 @@ static NSString *cellID = @"DataCellID";
     switch (indexPath.row) {
         case 0:
         {
-            minuteCount = _dayView.hidden == NO ? [UserInfo share].target : (_loadRecordDataSucceed ? [NSString stringWithFormat:@"%ld", _weekTarget] : nil);
+            minuteCount = _dayView.hidden == NO ? [UserInfo share].target : [NSString stringWithFormat:@"%ld",[[UserInfo share].target integerValue]*7];
  
         }
             break;
         case 1:
         {
-            minuteCount = _dayView.hidden == NO ?  [self getTodaySecondsString] : (_loadRecordDataSucceed ? [NSString stringWithFormat:@"%ld", _weekTimeLong] : nil);
+            minuteCount = _dayView.hidden == NO ?  [self getTodaySecondsString] : (_weekTimeLong > 0 ? [NSString stringWithFormat:@"%ld", _weekTimeLong] : nil);
            
         }
             break;
         case 2:
         {
-            minuteCount = _dayView.hidden == NO ?  [self getTodayResidueSecondsString] : (_weekTarget - _weekTimeLong > 0 ? [NSString stringWithFormat:@"%ld", _weekTarget - _weekTimeLong] : (_loadRecordDataSucceed ? @"0" : nil));
+            minuteCount = _dayView.hidden == NO ?  [self getTodayResidueSecondsString] : ([[UserInfo share].target integerValue]*7 - _weekTimeLong > 0 ? [NSString stringWithFormat:@"%ld", [[UserInfo share].target integerValue]*7 - _weekTimeLong] : nil);
         }
             break;
             
         case 3:
         {
-            minuteCount = _loadRecordDataSucceed ? [NSString stringWithFormat:@"%ld", _weekTimeLong/7] : nil;
+            minuteCount = _weekTimeLong/7 > 0 ? [NSString stringWithFormat:@"%ld", _weekTimeLong/7] : nil;
         }
             break;
             
@@ -585,6 +586,9 @@ static NSString *cellID = @"DataCellID";
 {
     NSMutableDictionary *hourResultDict = [NSMutableDictionary dictionary];
     NSArray *todayRecordArray = [DBManager selectTodayDatas: [UserInfo share].userId];
+    NSLog(@"selectTodayDatas ：%@", todayRecordArray);
+    NSString *hourString = @"";
+    NSInteger allSecinhour = 0;
     if(todayRecordArray != nil && todayRecordArray.count > 0) {
         for (NSInteger i = 0; i < todayRecordArray.count; i++) {
             MassageRecordModel *model = todayRecordArray[i];
@@ -601,8 +605,13 @@ static NSString *cellID = @"DataCellID";
                 sec = 180;
             }
             NSLog(@"getTodaySecondsString ----------> 分中数:%ld", sec);
-            
-            [hourResultDict setValue:[NSNumber numberWithInteger:sec] forKey:temp[0]];
+            if(![hourString isEqualToString:temp[0]]) {
+                hourString = temp[0];
+                allSecinhour = sec;
+            } else {
+                allSecinhour = allSecinhour + sec;
+            }
+            [hourResultDict setValue:[NSNumber numberWithInteger:allSecinhour] forKey:temp[0]];
         }
     }
     for (NSString *key in hourResultDict.allKeys) {

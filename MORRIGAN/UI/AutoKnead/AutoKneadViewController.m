@@ -449,6 +449,10 @@
 
 - (void)topFiveButtonGesture:(UIPanGestureRecognizer *)recognizer {
     
+    if(_buttonStartStop.tag == kButtonStartTag) {
+        return;
+    }
+    
     if (recognizer.state == UIGestureRecognizerStateBegan) {
         
     } else if (recognizer.state == UIGestureRecognizerStateChanged) {

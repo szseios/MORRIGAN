@@ -59,7 +59,7 @@ static RecordManager *manager;
     
     if(isUserExist) {
         // 包括今天的数据（退出账户时）
-        
+        _recordBufferArray = [DBManager selectAllUploadDatas:[UserInfo share].userId];
         
     } else {
         // 今天之前的数据
@@ -139,13 +139,13 @@ static RecordManager *manager;
          
          if ([[obj objectForKey:HTTP_KEY_RESULTCODE] isEqualToString:HTTP_RESULTCODE_SUCCESS]) {
              NSLog(@"上传护理记录成功！");
-//             for (MassageRecordModel *model in _uploadingRecordArray) {
-//                 if([DBManager deleteRecord:model.uuid]) {
-//                     NSLog(@"deleteRecord， 删除记录成功！");
-//                 } else {
-//                     NSLog(@"deleteRecord， 删除记录失败！");
-//                 }
-//             }
+        
+             if([DBManager deleteHistoryDatas]) {
+                 NSLog(@"deleteHistoryDatas， 删除历史记录成功！");
+             } else {
+                 NSLog(@"deleteHistoryDatas， 删除历史记录失败！");
+             }
+           
              
          } else {
              NSLog(@"上传护理记录失败！");
@@ -157,12 +157,11 @@ static RecordManager *manager;
          
          if(isUserExist) {
              // 清空数据
-//             [_recordBufferArray removeAllObjects];
-//             if([DBManager deleteAllRecord]) {
-//                 NSLog(@"deleteAllRecord， 删除所有记录成功！");
-//             } else {
-//                 NSLog(@"deleteAllRecord， 删除所有记录失败！");
-//             }
+             if([DBManager deleteAllDatas]) {
+                 NSLog(@"deleteAllDatas， 删除所有记录成功！");
+             } else {
+                 NSLog(@"deleteAllDatas， 删除所有记录失败！");
+             }
              
              // 退出账户上传数据结束时发送通知去执行退出操作
              [[NSNotificationCenter defaultCenter]postNotificationName:kRecordManagerUploadEndNotification object:nil];

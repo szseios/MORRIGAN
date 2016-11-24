@@ -63,17 +63,17 @@
 
     });
   
-    NSDateFormatter *dateFormatter = [[NSDateFormatter alloc] init];
-    [dateFormatter setDateFormat:@"yyyy-MM-dd HH:mm:ss"];
-    NSDate *date1 = [dateFormatter dateFromString:@"2016-11-17 20:00:01"];
-    NSDate *date2 = [dateFormatter dateFromString:@"2016-11-23 00:59:01"];
-    
-    MassageRecordModel *model = [[MassageRecordModel alloc] init];
-    model.userID = @"1";
-    model.type = 1;
-    model.startTime = date1;
-    model.endTime = date2;
-    [DBManager insertData:model.userID startTime:model.startTime endTime:model.endTime type:model.type];
+//    NSDateFormatter *dateFormatter = [[NSDateFormatter alloc] init];
+//    [dateFormatter setDateFormat:@"yyyy-MM-dd HH:mm:ss"];
+//    NSDate *date1 = [dateFormatter dateFromString:@"2016-11-17 20:00:01"];
+//    NSDate *date2 = [dateFormatter dateFromString:@"2016-11-23 00:59:01"];
+//    
+//    MassageRecordModel *model = [[MassageRecordModel alloc] init];
+//    model.userID = @"1";
+//    model.type = 1;
+//    model.startTime = date1;
+//    model.endTime = date2;
+//    [DBManager insertData:model.userID startTime:model.startTime endTime:model.endTime type:model.type];
     
 
     return YES;
