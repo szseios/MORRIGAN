@@ -61,7 +61,7 @@
                                                  name:DisconnectPeripheral
                                                object:nil];
     
-    _searchButton = [[UIButton alloc] initWithFrame:CGRectMake(kScreenWidth - 26 - 32,
+    _searchButton = [[UIButton alloc] initWithFrame:CGRectMake(kScreenWidth - 15 - 32,
                                                                26,
                                                                32,
                                                                32)];
