@@ -19,7 +19,9 @@
 #import "RecordManager.h"
 #import "AppDelegate.h"
 
-@interface LoginViewController ()
+#define kAlertViewTagOfIntoRegister  1000
+
+@interface LoginViewController () <UIAlertViewDelegate>
 {
     UITextField *_phoneNumbrInputView;
     UITextField *_passwordInputView;
@@ -280,6 +282,7 @@
 - (void)loginButtonClickInLogin:(id)sender
 {
     NSLog(@"loginButtonClickInLogin");
+
     
 ////     进入主页（测试）
 //    RootViewController *homeViewController = [[RootViewController alloc] init];
@@ -410,8 +413,20 @@
          } else {
              
              NSLog(@"登陆失败！");
-             UIAlertView *alert = [[UIAlertView alloc] initWithTitle:[obj objectForKey:HTTP_KEY_RESULTMESSAGE] == nil ? @"登陆失败！": [obj objectForKey:HTTP_KEY_RESULTMESSAGE] message:nil delegate:self cancelButtonTitle:nil otherButtonTitles:@"确定", nil];
-             [alert show];
+             
+             // 如果用户没有注册，弹出注册对话框
+             BOOL userNotRegister = YES;
+             if(userNotRegister) {
+                 UIAlertView *alert = [[UIAlertView alloc] initWithTitle: @"该账号不存在，请先注册" message:nil delegate:self cancelButtonTitle:@"取消" otherButtonTitles:@"注册", nil];
+                 alert.tag = kAlertViewTagOfIntoRegister;
+                 [alert show];
+
+             } else {
+                 
+                 UIAlertView *alert = [[UIAlertView alloc] initWithTitle:[obj objectForKey:HTTP_KEY_RESULTMESSAGE] == nil ? @"登陆失败！": [obj objectForKey:HTTP_KEY_RESULTMESSAGE] message:nil delegate:self cancelButtonTitle:nil otherButtonTitles:@"确定", nil];
+                 [alert show];
+             }
+  
          }
          
      }];
@@ -443,6 +458,27 @@
              NSLog(@"获取设备列表失败");
          }
      }];
+}
+
+#pragma mark - UIAlertViewDelegate
+-(void)alertView:(UIAlertView *)alertView clickedButtonAtIndex:(NSInteger)buttonIndex
+{
+    switch (buttonIndex) {
+        case 1:
+        {
+            if(alertView.tag == kAlertViewTagOfIntoRegister) {
+                
+                // 进入注册界面
+                RegisterViewController *registerViewController = [[RegisterViewController alloc] init];
+                [self.navigationController pushViewController:registerViewController animated:YES];
+            }
+            
+        }
+            break;
+            
+        default:
+            break;
+    }
 }
 
 

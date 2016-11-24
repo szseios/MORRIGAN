@@ -264,9 +264,25 @@
     UIView *registerAndLoginBtnRootView = [[UIView alloc]initWithFrame:CGRectMake(registerAndLoginBtnRootViewX, registerAndLoginBtnRootViewY, registerAndLoginBtnRootViewW, registerAndLoginBtnRootViewH)];
     registerAndLoginBtnRootView.backgroundColor = [UIColor clearColor];
     [self.rootView addSubview:registerAndLoginBtnRootView];
-    // 注册
+    
+    // 登陆
     CGFloat buttonW = (registerAndLoginBtnRootViewW - registerAndLoginBtnRootViewSpace)/2;
-    UIButton *registerBtnView = [[UIButton alloc] initWithFrame:CGRectMake(0, 0, buttonW, registerAndLoginBtnRootViewH)];
+    UIButton *loginBtnView = [[UIButton alloc] initWithFrame:CGRectMake(0, 0, buttonW, registerAndLoginBtnRootViewH)];
+    [loginBtnView setTitle:@"登陆" forState:UIControlStateNormal];
+    //loginBtnView.backgroundColor = [UIColor orangeColor];
+    loginBtnView.backgroundColor = [UIColor clearColor];
+    [loginBtnView setTitleColor:[UIColor colorWithRed:255.0 green:255.0 blue:255.0 alpha:0.8]forState:UIControlStateNormal];
+    [loginBtnView addTarget:self action:@selector(registerAndLoginButtonClickInRegisterSetBg:) forControlEvents:UIControlEventTouchDown];
+    [loginBtnView addTarget:self action:@selector(loginButtonClickInRegister:) forControlEvents:UIControlEventTouchUpInside];
+    [loginBtnView.layer setCornerRadius:6.0]; //设置矩形四个圆角半径
+    [loginBtnView.layer setBorderWidth:1.0]; //边框宽度
+    CGColorSpaceRef colorSpace = CGColorSpaceCreateDeviceRGB();
+    CGColorRef colorref = CGColorCreate(colorSpace,(CGFloat[]){ 1, 1, 1, 0.8 });
+    [loginBtnView.layer setBorderColor:colorref];//边框颜色
+    [registerAndLoginBtnRootView addSubview:loginBtnView];
+    
+    // 注册
+    UIButton *registerBtnView = [[UIButton alloc] initWithFrame:CGRectMake(buttonW + registerAndLoginBtnRootViewSpace, 0, buttonW, registerAndLoginBtnRootViewH)];
     [registerBtnView setTitle:@"注册" forState:UIControlStateNormal];
     //registerBtnView.backgroundColor = [UIColor blueColor];
     registerBtnView.backgroundColor = [UIColor clearColor];
@@ -276,22 +292,9 @@
     [registerBtnView.layer setMasksToBounds:YES];
     [registerBtnView.layer setCornerRadius:6.0]; //设置矩形四个圆角半径
     [registerBtnView.layer setBorderWidth:1.0]; //边框宽度
-    CGColorSpaceRef colorSpace = CGColorSpaceCreateDeviceRGB();
-    CGColorRef colorref = CGColorCreate(colorSpace,(CGFloat[]){ 1, 1, 1, 0.8 });
     [registerBtnView.layer setBorderColor:colorref];//边框颜色
     [registerAndLoginBtnRootView addSubview:registerBtnView];
-    // 登陆
-    UIButton *loginBtnView = [[UIButton alloc] initWithFrame:CGRectMake(buttonW + registerAndLoginBtnRootViewSpace, 0, buttonW, registerAndLoginBtnRootViewH)];
-    [loginBtnView setTitle:@"登陆" forState:UIControlStateNormal];
-    //loginBtnView.backgroundColor = [UIColor orangeColor];
-    loginBtnView.backgroundColor = [UIColor clearColor];
-    [loginBtnView setTitleColor:[UIColor colorWithRed:255.0 green:255.0 blue:255.0 alpha:0.8]forState:UIControlStateNormal];
-    [loginBtnView addTarget:self action:@selector(registerAndLoginButtonClickInRegisterSetBg:) forControlEvents:UIControlEventTouchDown];
-    [loginBtnView addTarget:self action:@selector(loginButtonClickInRegister:) forControlEvents:UIControlEventTouchUpInside];
-    [loginBtnView.layer setCornerRadius:6.0]; //设置矩形四个圆角半径
-    [loginBtnView.layer setBorderWidth:1.0]; //边框宽度
-    [loginBtnView.layer setBorderColor:colorref];//边框颜色
-    [registerAndLoginBtnRootView addSubview:loginBtnView];
+
     
     
 }
