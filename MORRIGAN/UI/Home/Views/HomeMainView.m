@@ -285,7 +285,7 @@
     
     _upBackgroundView = [[UIImageView alloc] initWithFrame:_upView.bounds];
     _upBackgroundView.image =  [self createImageWithColor:[Utils stringTOColor:@"#a743c7"]];
-    _upBackgroundView.height = _upView.height * 0.2;
+    _upBackgroundView.height = _upView.height * 0;
     _upBackgroundView.y = _upView.height - _upBackgroundView.height;
     [_upView addSubview:_upBackgroundView];
     
