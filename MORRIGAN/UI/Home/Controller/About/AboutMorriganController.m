@@ -36,6 +36,21 @@ static NSString *cellID = @"cellID";
     [self setUpBarView];
 }
 
+- (void)viewWillAppear:(BOOL)animated
+{
+    [super viewWillAppear:animated];
+    //如果没有连上蓝牙设备,开始执行动画
+    if (![BluetoothManager share].isConnected) {
+        [_barView startFlashing];
+    }
+}
+
+- (void)viewWillDisappear:(BOOL)animated
+{
+    [super viewWillDisappear:animated];
+    [_barView stopFlashing];
+}
+
 - (void)setUpBarView
 {
     _barView = [[BasicBarView alloc] initWithFrame:CGRectMake(0, 20, kScreenWidth, 44) withType:superBarTypeLeftItemBackAndRightItemBinding withTitle:@"关于MORRIGAN" isShowRightButton:YES];

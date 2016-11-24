@@ -82,7 +82,16 @@
         NSArray *ForenoonArray = [DBManager selectForenoonDatas:[UserInfo share].userId];
         NSArray *AfternoonArray = [DBManager selectaAfternoonDatas:[UserInfo share].userId];
     [_mainView refreshLatestDataForAMMorrigan:ForenoonArray PMMorrigan:AfternoonArray];
-    
+    //如果没有连上蓝牙设备,开始执行动画
+    if (![BluetoothManager share].isConnected) {
+        [_barView startFlashing];
+    }
+}
+
+- (void)viewWillDisappear:(BOOL)animated
+{
+    [super viewWillDisappear:animated];
+    [_barView stopFlashing];
 }
 
 - (void)setUpBarView

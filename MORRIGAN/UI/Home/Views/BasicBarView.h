@@ -48,4 +48,8 @@ typedef enum : NSUInteger {
 
 - (void)setTitleLabelText:(NSString *)title;
 
+- (void)startFlashing;
+
+- (void)stopFlashing;
+
 @end

@@ -33,6 +33,14 @@
 
 - (void)setUpBasicBarView
 {
+    
+    [[NSNotificationCenter defaultCenter] addObserver:self
+                                             selector:@selector(stopFlashing)
+                                                 name:ConnectPeripheralSuccess object:nil];
+    [[NSNotificationCenter defaultCenter] addObserver:self
+                                             selector:@selector(startFlashing)
+                                                 name:DisconnectPeripheral
+                                               object:nil];
     _titleLabel = [[UILabel alloc] initWithFrame:CGRectMake(0, 0, self.width, self.height)];
     _titleLabel.textColor = [UIColor whiteColor];
     _titleLabel.textAlignment = NSTextAlignmentCenter;
@@ -91,6 +99,31 @@
     
     [self addSubview:_backButton];
     [self addSubview:_rightButton];
+    
+    //如果没有连上蓝牙设备,开始执行动画
+    if (![BluetoothManager share].isConnected) {
+        if (_type == superBarTypeLeftItemBackAndRightItemBinding) {
+            [self startFlashing];
+        }
+        
+    }
+}
+
+- (void)stopFlashing
+{
+    [_rightButton.layer removeAllAnimations];
+}
+
+- (void)startFlashing
+{
+    CABasicAnimation *animation = [CABasicAnimation animationWithKeyPath:@"opacity"];
+    animation.repeatCount = NSIntegerMax;
+    animation.fromValue = @(1);
+    animation.toValue = @(0.3);
+    animation.autoreverses = YES;
+    animation.duration = 0.5;
+    
+    [_rightButton.layer addAnimation:animation forKey:nil];
 }
 
 - (void)backClick
