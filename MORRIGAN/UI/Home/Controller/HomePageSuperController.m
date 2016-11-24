@@ -39,7 +39,7 @@
 - (void)viewDidLoad {
     [super viewDidLoad];
 //    if (![BluetoothManager share].isConnected) {
-//        _connectBottomView = [[UIView alloc] initWithFrame:CGRectMake(0, kScreenHeight - 25, kScreenWidth, 25)];
+//        _connectBottomView = [[UIView alloc] initWithFrame:CGRectMake(0, kScreenH eight - 25, kScreenWidth, 25)];
 //        _connectBottomView.backgroundColor = [UIColor colorWithRed:0.5 green:0.5 blue:0.5 alpha:0.6];
 //        [self.view addSubview:_connectBottomView];
 //        
