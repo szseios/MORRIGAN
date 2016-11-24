@@ -283,6 +283,7 @@ static NSString *cellID = @"DataCellID";
     UILabel *secLabel = [[UILabel alloc] initWithFrame:secLabelFame];
     secLabel.text = [NSString stringWithFormat:@"%ld", todayMaxSec];
     secLabel.textColor = [UIColor whiteColor];
+    secLabel.textAlignment = NSTextAlignmentCenter;
     secLabel.font = [UIFont systemFontOfSize:10.0];
     [_dayView addSubview:secLabel];
 }
@@ -585,6 +586,9 @@ static NSString *cellID = @"DataCellID";
 {
     NSMutableDictionary *hourResultDict = [NSMutableDictionary dictionary];
     NSArray *todayRecordArray = [DBManager selectTodayDatas: [UserInfo share].userId];
+    NSLog(@"selectTodayDatas ：%@", todayRecordArray);
+    NSString *hourString = @"";
+    NSInteger allSecinhour = 0;
     if(todayRecordArray != nil && todayRecordArray.count > 0) {
         for (NSInteger i = 0; i < todayRecordArray.count; i++) {
             MassageRecordModel *model = todayRecordArray[i];
@@ -601,8 +605,13 @@ static NSString *cellID = @"DataCellID";
                 sec = 180;
             }
             NSLog(@"getTodaySecondsString ----------> 分中数:%ld", sec);
-            
-            [hourResultDict setValue:[NSNumber numberWithInteger:sec] forKey:temp[0]];
+            if(![hourString isEqualToString:temp[0]]) {
+                hourString = temp[0];
+                allSecinhour = sec;
+            } else {
+                allSecinhour = allSecinhour + sec;
+            }
+            [hourResultDict setValue:[NSNumber numberWithInteger:allSecinhour] forKey:temp[0]];
         }
     }
     for (NSString *key in hourResultDict.allKeys) {
