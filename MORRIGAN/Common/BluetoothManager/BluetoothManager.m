@@ -429,7 +429,7 @@ NSString * const ElectricQuantityChanged = @"ElectricQuantityChanged";
         [_timer invalidate];
         _timer = nil;
     }
-    _timer = [NSTimer scheduledTimerWithTimeInterval:10
+    _timer = [NSTimer scheduledTimerWithTimeInterval:30
                                               target:self
                                             selector:@selector(reconnectPeripheralTimeOut)
                                             userInfo:nil
