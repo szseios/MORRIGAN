@@ -223,6 +223,7 @@
     if (_isLeft) {
         _isLeft = NO;
          _handButton.enabled = YES;
+        [_mainView showRightTime];
         if (self.delegate && [self.delegate respondsToSelector:@selector(rightClick)]) {
             [self.delegate rightClick];
         }
@@ -234,17 +235,6 @@
     if (buttonIndex == 1) {
         [self clickBingdingDevice];
     }
-}
-
-- (void)setIsLeft:(BOOL)isLeft
-{
-    _isLeft = isLeft;
-    if (isLeft) {
-        self.view.size = CGSizeMake(kScreenWidth * (kScreenHeight - 64) * kScreenHeight,  kScreenHeight-250);
-    }else{
-        self.view.size = CGSizeMake(kScreenWidth,  kScreenHeight);
-    }
-    [self.view setNeedsDisplay];
 }
 
 //电量变化

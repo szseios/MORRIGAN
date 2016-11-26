@@ -71,12 +71,14 @@
 
 - (void)clickEnsure
 {
-    if (_textField.text.length > 0) {
+    if (_textField.text.length >= 4 && _textField.text.length <= 16) {
         [[NSNotificationCenter defaultCenter] postNotificationName:CHANGENICKNAME object:_textField.text];
         [UserInfo share].nickName = _textField.text;
         [self uploadPersonalData];
+    }else{
+        [MBProgressHUD showHUDByContent:@"昵称长度为4-16位" view:UI_Window afterDelay:2];
     }
-    [self.navigationController popViewControllerAnimated:YES];
+//    [self.navigationController popViewControllerAnimated:YES];
 }
 
 
@@ -94,10 +96,14 @@
                          objectTaskFinished:^(NSError *error, id obj)
          {
              if ([[obj objectForKey:HTTP_KEY_RESULTCODE] isEqualToString:HTTP_RESULTCODE_SUCCESS]) {
-                 [MBProgressHUD showHUDByContent:@"修改个人信息成功！" view:UI_Window afterDelay:2];
+                 [MBProgressHUD showHUDByContent:@"修改昵称成功！" view:UI_Window afterDelay:2];
                  NSLog(@"修改个人信息成功！");
+                 dispatch_after(dispatch_time(DISPATCH_TIME_NOW, (int64_t)(1 * NSEC_PER_SEC)), dispatch_get_main_queue(), ^{
+                     [self.navigationController popViewControllerAnimated:YES];
+                 });
+                 
              }else{
-                 [MBProgressHUD showHUDByContent:@"修改个人信息失败！" view:UI_Window afterDelay:2];
+                 [MBProgressHUD showHUDByContent:@"修改昵称失败！" view:UI_Window afterDelay:2];
              }
              
              

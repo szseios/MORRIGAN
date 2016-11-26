@@ -22,4 +22,6 @@
 
 - (void)refreshLatestDataForAMMorrigan:(NSArray *)AMMorriganArray PMMorrigan:(NSArray *)PMMorriganArray;
 
+- (void)showRightTime;
+
 @end

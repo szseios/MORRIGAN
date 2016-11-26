@@ -77,6 +77,9 @@
         if ([[obj objectForKey:HTTP_KEY_RESULTCODE] isEqualToString:HTTP_RESULTCODE_SUCCESS]) {
             [MBProgressHUD showHUDByContent:@"反馈成功！" view:UI_Window afterDelay:2];
             NSLog(@"修改目标成功！");
+            dispatch_after(dispatch_time(DISPATCH_TIME_NOW, (int64_t)(1 * NSEC_PER_SEC)), dispatch_get_main_queue(), ^{
+                [self.navigationController popViewControllerAnimated:YES];
+            });
         }else{
             [MBProgressHUD showHUDByContent:@"反馈失败！" view:UI_Window afterDelay:2];
         }

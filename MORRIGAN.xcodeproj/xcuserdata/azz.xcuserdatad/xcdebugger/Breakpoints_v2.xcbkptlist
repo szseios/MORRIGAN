@@ -4,22 +4,6 @@
    version = "2.0">
    <Breakpoints>
       <BreakpointProxy
-         BreakpointExtensionID = "Xcode.Breakpoint.FileBreakpoint">
-         <BreakpointContent
-            shouldBeEnabled = "No"
-            ignoreCount = "0"
-            continueAfterRunningActions = "No"
-            filePath = "MORRIGAN/UI/Home/Controller/Target/SetTargetController.m"
-            timestampString = "501411749.104623"
-            startingColumnNumber = "9223372036854775807"
-            endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "93"
-            endingLineNumber = "93"
-            landmarkName = "-setUpRulerView"
-            landmarkType = "7">
-         </BreakpointContent>
-      </BreakpointProxy>
-      <BreakpointProxy
          BreakpointExtensionID = "Xcode.Breakpoint.ExceptionBreakpoint">
          <BreakpointContent
             shouldBeEnabled = "Yes"
@@ -35,13 +19,13 @@
             shouldBeEnabled = "No"
             ignoreCount = "0"
             continueAfterRunningActions = "No"
-            filePath = "MORRIGAN/UI/Home/Controller/Target/SetTargetController.m"
-            timestampString = "501567141.001217"
+            filePath = "MORRIGAN/UI/Home/Views/ChooseDataView.m"
+            timestampString = "501838773.538435"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "114"
-            endingLineNumber = "114"
-            landmarkName = "-setUpRulerView"
+            startingLineNumber = "357"
+            endingLineNumber = "357"
+            landmarkName = "-pickerView:widthForComponent:"
             landmarkType = "7">
          </BreakpointContent>
       </BreakpointProxy>
@@ -51,45 +35,13 @@
             shouldBeEnabled = "Yes"
             ignoreCount = "0"
             continueAfterRunningActions = "No"
-            filePath = "MORRIGAN/UI/Home/Controller/RelatedDevice/EditDeviceNameController.m"
-            timestampString = "500894306.075687"
+            filePath = "MORRIGAN/UI/Home/Controller/HomePageController.m"
+            timestampString = "501839494.342675"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "85"
-            endingLineNumber = "85"
-            landmarkName = "-uploadDeviceNameData"
-            landmarkType = "7">
-         </BreakpointContent>
-      </BreakpointProxy>
-      <BreakpointProxy
-         BreakpointExtensionID = "Xcode.Breakpoint.FileBreakpoint">
-         <BreakpointContent
-            shouldBeEnabled = "No"
-            ignoreCount = "0"
-            continueAfterRunningActions = "No"
-            filePath = "MORRIGAN/Common/ZHRulerView/ZHRulerView.m"
-            timestampString = "501380394.375199"
-            startingColumnNumber = "9223372036854775807"
-            endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "133"
-            endingLineNumber = "133"
-            landmarkName = "-scrollViewWillEndDragging:withVelocity:targetContentOffset:"
-            landmarkType = "7">
-         </BreakpointContent>
-      </BreakpointProxy>
-      <BreakpointProxy
-         BreakpointExtensionID = "Xcode.Breakpoint.FileBreakpoint">
-         <BreakpointContent
-            shouldBeEnabled = "Yes"
-            ignoreCount = "0"
-            continueAfterRunningActions = "No"
-            filePath = "MORRIGAN/Common/PNChart/PNCircleChart.m"
-            timestampString = "501405986.026159"
-            startingColumnNumber = "9223372036854775807"
-            endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "142"
-            endingLineNumber = "142"
-            landmarkName = "-initWithFrame:startAngle:endAngle:total:current:isEmpty:"
+            startingLineNumber = "253"
+            endingLineNumber = "253"
+            landmarkName = "-firstGetElectricity:"
             landmarkType = "7">
          </BreakpointContent>
       </BreakpointProxy>
@@ -100,12 +52,12 @@
             ignoreCount = "0"
             continueAfterRunningActions = "No"
             filePath = "MORRIGAN/UI/Home/Views/ChooseDataView.m"
-            timestampString = "501576198.500928"
+            timestampString = "501838773.538435"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "360"
-            endingLineNumber = "360"
-            landmarkName = "-pickerView:widthForComponent:"
+            startingLineNumber = "187"
+            endingLineNumber = "187"
+            landmarkName = "-getCurrentDay"
             landmarkType = "7">
          </BreakpointContent>
       </BreakpointProxy>
@@ -116,12 +68,12 @@
             ignoreCount = "0"
             continueAfterRunningActions = "No"
             filePath = "MORRIGAN/UI/Home/Views/ChooseDataView.m"
-            timestampString = "501576198.500928"
+            timestampString = "501838773.538435"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "349"
-            endingLineNumber = "349"
-            landmarkName = "-pickerView:widthForComponent:"
+            startingLineNumber = "177"
+            endingLineNumber = "177"
+            landmarkName = "-getCurrentDay"
             landmarkType = "7">
          </BreakpointContent>
       </BreakpointProxy>
@@ -132,12 +84,12 @@
             ignoreCount = "0"
             continueAfterRunningActions = "No"
             filePath = "MORRIGAN/UI/Home/Views/ChooseDataView.m"
-            timestampString = "501575137.594042"
+            timestampString = "501838773.538435"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "97"
-            endingLineNumber = "97"
-            landmarkName = "-setPickerType:"
+            startingLineNumber = "458"
+            endingLineNumber = "458"
+            landmarkName = "-pickerView:didSelectRow:inComponent:"
             landmarkType = "7">
          </BreakpointContent>
       </BreakpointProxy>
@@ -147,13 +99,29 @@
             shouldBeEnabled = "No"
             ignoreCount = "0"
             continueAfterRunningActions = "No"
-            filePath = "MORRIGAN/UI/Home/Views/ChooseDataView.m"
-            timestampString = "501576130.107424"
+            filePath = "MORRIGAN/UI/Home/Controller/HomePageController.m"
+            timestampString = "501839342.067503"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "133"
-            endingLineNumber = "133"
-            landmarkName = "-initData"
+            startingLineNumber = "205"
+            endingLineNumber = "205"
+            landmarkName = "-clickMoveToLeft"
+            landmarkType = "7">
+         </BreakpointContent>
+      </BreakpointProxy>
+      <BreakpointProxy
+         BreakpointExtensionID = "Xcode.Breakpoint.FileBreakpoint">
+         <BreakpointContent
+            shouldBeEnabled = "No"
+            ignoreCount = "0"
+            continueAfterRunningActions = "No"
+            filePath = "MORRIGAN/UI/Home/Controller/HomePageController.m"
+            timestampString = "501839346.874129"
+            startingColumnNumber = "9223372036854775807"
+            endingColumnNumber = "9223372036854775807"
+            startingLineNumber = "223"
+            endingLineNumber = "223"
+            landmarkName = "-moveBack"
             landmarkType = "7">
          </BreakpointContent>
       </BreakpointProxy>

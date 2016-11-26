@@ -19,8 +19,6 @@
 
 @property (nonatomic , strong) UIPickerView *pickerView;
 
-@property (nonatomic , strong) UIDatePicker *datePicker;
-
 @property (nonatomic , strong) UIView *bar;
 
 @property (nonatomic , strong) UIButton *cancelButton;
@@ -51,11 +49,7 @@
 
 @property (nonatomic , strong) NSDateFormatter *formatter;
 
-@property (nonatomic , strong) KMDatePickerDateModel *datePickerDateMinLimited;
-
-@property (nonatomic , strong) KMDatePickerDateModel *datePickerDateMaxLimited;
-
-@property (nonatomic , strong) KMDatePickerDateModel *datePickerDateScrollTo;
+@property (nonatomic , strong) NSDateComponents *comps;
 
 @end
 
@@ -84,9 +78,10 @@
 {
     self = [super initWithFrame:frame];
     if (self) {
-//        _pickerType = type;
-//        [self initData];
-//        [self setUpPickerView];
+        _pickerType = type;
+        [self setUpPickerView];
+        [self initData];
+        
     }
     return self;
 }
@@ -94,16 +89,12 @@
 - (void)setPickerType:(pickerViewType)pickerType
 {
     _pickerType = pickerType;
-    [self initData];
     [self setUpPickerView];
+    [self initData];
+    
     [_pickerView reloadAllComponents];
     
     
-    
-}
-
-- (void)setCurrentAge:(NSString *)age
-{
     
 }
 
@@ -124,35 +115,18 @@
     switch (_pickerType) {
         case pickerViewTypeAge:
         {
-            // 初始化存储时间数据源的数组
-            // 年
-            _datePickerDateMinLimited = [[KMDatePickerDateModel alloc] initWithDate:[NSDate dateWithTimeIntervalSinceNow:365*80*24*60*60]];
-            _datePickerDateMaxLimited = [[KMDatePickerDateModel alloc] initWithDate:[NSDate dateWithTimeIntervalSinceNow:0]];
+            [self getDateComponents];
+            [_pickerView selectRow:39 inComponent:0 animated:NO];
+//            [_pickerView selectRow:2 inComponent:1 animated:YES];
+//            [_pickerView selectRow:20 inComponent:2 animated:YES];
+            [_pickerView reloadComponent:0];
             
-            _datePickerDateScrollTo = [[KMDatePickerDateModel alloc] initWithDate:[DateHelper localeDate]];
-            _yearArray = [NSMutableArray new];
-            for (NSInteger beginVal=[_datePickerDateMinLimited.year integerValue], endVal=[_datePickerDateMaxLimited.year integerValue]; beginVal<=endVal; beginVal++) {
-                [_yearArray addObject:[NSString stringWithFormat:@"%ld", (long)beginVal]];
-            }
-            _yearIndex = [_datePickerDateScrollTo.year integerValue] - [_datePickerDateMinLimited.year integerValue];
-            
-            // 月
-            _monthArray = [[NSMutableArray alloc] initWithCapacity:12];
-            for (NSInteger i=1; i<=12; i++) {
-                [_monthArray addObject:[NSString stringWithFormat:@"%02ld", (long)i]];
-            }
-            _monthIndex = [_datePickerDateScrollTo.month integerValue] - 1;
-            
-            // 日
-            [self reloadDayArray];
-            _dayIndex = [_datePickerDateScrollTo.day integerValue] - 1;
-            [self scrollToDateIndexPosition];
         }
             break;
         case pickerViewTypeHeight:
         {
             _heightArray = [NSMutableArray array];
-            for (NSInteger i = 50; i < 300; i++) {
+            for (NSInteger i = 100; i < 300; i++) {
                 NSString *count = [NSString stringWithFormat:@"%ld",i];
                 [_heightArray addObject:count];
             }
@@ -161,7 +135,7 @@
         case pickerViewTypeWeight:
         {
             _weightArray = [NSMutableArray array];
-            for (NSInteger i = 1; i < 200; i++) {
+            for (NSInteger i = 0; i < 200; i++) {
                 NSString *count = [NSString stringWithFormat:@"%ld",i];
                 [_weightArray addObject:count];
             }
@@ -178,18 +152,62 @@
     }
 }
 
-- (void)scrollToDateIndexPosition {
-    NSArray *arrIndex =  @[
-                           [NSNumber numberWithInteger:_yearIndex],
-                           [NSNumber numberWithInteger:_monthIndex],
-                           [NSNumber numberWithInteger:_dayIndex]
-                           ];
-    for (NSUInteger i=0, len=arrIndex.count; i<len; i++) {
-        [_pickerView selectRow:[arrIndex[i] integerValue] inComponent:i animated:YES];
+- (void)getDateComponents
+{
+    NSCalendar *gregorian = [[NSCalendar alloc] initWithCalendarIdentifier:NSCalendarIdentifierGregorian];
+    unsigned unitFlags = NSCalendarUnitYear | NSCalendarUnitMonth |  NSCalendarUnitDay;
+    NSDateComponents *comps = [gregorian components:unitFlags fromDate:[NSDate date]];
+    [comps setTimeZone:[NSTimeZone timeZoneWithAbbreviation:@"UTC"]];
+    // 初始化存储时间数据源的数组
+    // 年
+    _yearArray = [NSMutableArray new];
+    for (NSInteger i = 0; i <= comps.year - 1960; i++) {
+        NSString *tempStr = [NSString stringWithFormat:@"%ld",(1960+i)];
+        [_yearArray addObject:tempStr];
+    }
+    _yearIndex = comps.year - 1960;
+    _comps = comps;
+    [self getCurrentDay];
+}
+
+- (void)getCurrentDay
+{
+    // 月
+    _monthArray = [NSMutableArray array];
+    if (_yearIndex < _comps.year - 1960) {
+        for (NSInteger i=1; i<=12; i++) {
+            [_monthArray addObject:[NSString stringWithFormat:@"%02ld", (long)i]];
+        }
+        [self reloadDayArray];
+    }
+    else{
+        for (NSInteger i=1; i<=_comps.month; i++) {
+            [_monthArray addObject:[NSString stringWithFormat:@"%02ld", (long)i]];
+        }
+        if (_monthIndex == _comps.month-1) {
+            _dayArray = [NSMutableArray new];
+            for (NSInteger j = 1; j <= _comps.day; j++) {
+                [_dayArray addObject:[NSString stringWithFormat:@"%02ld", (long)j]];
+            }
+            
+        }else{
+            [self reloadDayArray];
+        }
+        
+    }
+    if (_dayIndex >= _dayArray.count) {
+        _dayIndex = _dayArray.count - 1;
     }
 
 }
 
+- (NSUInteger)daysOfMonth {
+    if (_yearIndex == _comps.year - 1960 && _monthIndex == _comps.month) {
+        return _comps.day;
+    }
+    NSString *dateStr = [NSString stringWithFormat:@"%@-%@-01 00:00", _yearArray[_yearIndex], _monthArray[_monthIndex]];
+    return [[DateHelper dateFromString:dateStr withFormat:@"yyyy-MM-dd HH:mm"] daysOfMonth];
+}
 
 - (void)reloadDayArray {
     _dayArray = [NSMutableArray new];
@@ -198,53 +216,43 @@
     }
 }
 
-- (NSUInteger)daysOfMonth {
-    NSString *dateStr = [NSString stringWithFormat:@"%@-%@-01 00:00", _yearArray[_yearIndex], _monthArray[_monthIndex]];
-    return [[DateHelper dateFromString:dateStr withFormat:@"yyyy-MM-dd HH:mm"] daysOfMonth];
-}
-
 - (void)setUpPickerView
 {
-    _bar = [[UIView alloc] initWithFrame:CGRectMake(0, 0, kScreenWidth, 50)];
+    _bar = [[UIView alloc] initWithFrame:CGRectMake(0, 0, kScreenWidth, 55)];
     [self addSubview:_bar];
     _bar.backgroundColor = [UIColor whiteColor];
-    UIButton *cancelBtn = [[UIButton alloc] initWithFrame:CGRectMake(10, 5, 50, 40)];
+    UIButton *cancelBtn = [[UIButton alloc] initWithFrame:CGRectMake(10, 0, 50, 55)];
     [cancelBtn setTitle:@"取消" forState:UIControlStateNormal];
+    cancelBtn.titleLabel.font = [UIFont systemFontOfSize:18];
     [cancelBtn setTitleColor:[UIColor blackColor] forState:UIControlStateNormal];
     [cancelBtn addTarget:self action:@selector(cancelSelect) forControlEvents:UIControlEventTouchUpInside];
     [_bar addSubview:cancelBtn];
     
-    UIButton *sureBtn = [[UIButton alloc] initWithFrame:CGRectMake(kScreenWidth - 60, 5, 50, 40)];
+    UIButton *sureBtn = [[UIButton alloc] initWithFrame:CGRectMake(kScreenWidth - 60, 0, 50, 55)];
     [sureBtn setTitle:@"确定" forState:UIControlStateNormal];
     [sureBtn addTarget:self action:@selector(sureSelect) forControlEvents:UIControlEventTouchUpInside];
-    [sureBtn setTitleColor:[UIColor purpleColor] forState:UIControlStateNormal];
+    sureBtn.titleLabel.font = [UIFont systemFontOfSize:18];
+    [sureBtn setTitleColor:[Utils stringTOColor:@"#8c39e5"] forState:UIControlStateNormal];
     [_bar addSubview:sureBtn];
     
     UIView *topLineView = [[UIView alloc] initWithFrame:CGRectMake(0, 0, kScreenWidth, 0.5)];
-    topLineView.backgroundColor = [UIColor colorWithRed:0.3 green:0.3 blue:0.3 alpha:1];
+    topLineView.backgroundColor = [UIColor colorWithRed:00 green:00 blue:00 alpha:0.26];
     [_bar addSubview:topLineView];
     
     UIView *bottomLineView = [[UIView alloc] initWithFrame:CGRectMake(0, _bar.height - 0.5, kScreenWidth, 0.5)];
-    bottomLineView.backgroundColor = [UIColor colorWithRed:0.3 green:0.3 blue:0.3 alpha:1];
+    bottomLineView.backgroundColor = [UIColor colorWithRed:0 green:0 blue:0 alpha:0.26];
     [_bar addSubview:bottomLineView];
     
     CGFloat pickerY = CGRectGetMaxY(_bar.frame);
-    CGFloat pickerH = self.height - 50;
-    if (!_pickerView) {
-        _pickerView = [[UIPickerView alloc] initWithFrame:CGRectMake(0, pickerY, kScreenWidth, pickerH)];
-        _pickerView.delegate = self;
-        _pickerView.dataSource = self;
-        _pickerView.backgroundColor = [UIColor whiteColor];
-        [self addSubview:_pickerView];
-    }
+    CGFloat pickerH = self.height - 55;
+    _pickerView = [[UIPickerView alloc] initWithFrame:CGRectMake(0, pickerY, kScreenWidth, pickerH)];
+    _pickerView.delegate = self;
+    _pickerView.dataSource = self;
+    _pickerView.backgroundColor = [UIColor whiteColor];
+    [self addSubview:_pickerView];
     
     
     
-}
-
-- (void)seletcedDate:(UIDatePicker *)datePicker
-{
-    _ageStr = [self.formatter stringFromDate:datePicker.date];
     
 }
 
@@ -312,10 +320,10 @@
                     numberOfRows = _yearArray.count;
                     break;
                 case 1:
-                    numberOfRows = 12;
+                    numberOfRows = _monthArray.count;
                     break;
                 case 2:
-                    numberOfRows = [self daysOfMonth];
+                    numberOfRows = _dayArray.count;
                     break;
             }
             return numberOfRows;
@@ -349,19 +357,16 @@
     if (_pickerType == pickerViewTypeAge) {
         CGFloat width = 50.0;
         CGFloat widthOfAverage;
-        widthOfAverage = (kScreenWidth - 20.0 - 25.0) / 3;
+        widthOfAverage = (kScreenWidth -30) / 3;
         switch (component) {
             case 0:
-                width = widthOfAverage + 20.0;
-                [self addUnitLabel:@"年" withPointX:width/2 + 40];
+                width = widthOfAverage;
                 break;
             case 1:
                 width = widthOfAverage;
-                [self addUnitLabel:@"月" withPointX:(widthOfAverage + 35.0) + width/2 + 16.0];
                 break;
             case 2:
                 width = widthOfAverage;
-                [self addUnitLabel:@"日" withPointX:(2*widthOfAverage + 35.0) + width/2 + 22.0];
                 break;
             default:
                 break;
@@ -405,7 +410,6 @@
         lblCustom.textAlignment = NSTextAlignmentCenter;
         lblCustom.font = [UIFont systemFontOfSize:18.0];
     }
-    
     NSString *text;
     switch (_pickerType) {
         case pickerViewTypeAge:
@@ -454,16 +458,20 @@
             switch (component) {
                 case 0:
                     _yearIndex = row;
+                    [self getCurrentDay];
                     break;
                 case 1:
                     _monthIndex = row;
+                    [self getCurrentDay];
                     break;
                 case 2:
                     _dayIndex = row;
                     break;
             }
             if (component == 0 || component == 1) {
-                [self reloadDayArray];
+                if (_monthArray.count-1 < _monthIndex) {
+                    _monthIndex = _monthArray.count-1;
+                }
                 if (_dayArray.count-1 < _dayIndex) {
                     _dayIndex = _dayArray.count-1;
                 }
