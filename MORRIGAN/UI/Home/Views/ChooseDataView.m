@@ -116,11 +116,6 @@
         case pickerViewTypeAge:
         {
             [self getDateComponents];
-            [_pickerView selectRow:39 inComponent:0 animated:NO];
-//            [_pickerView selectRow:2 inComponent:1 animated:YES];
-//            [_pickerView selectRow:20 inComponent:2 animated:YES];
-            [_pickerView reloadComponent:0];
-            
         }
             break;
         case pickerViewTypeHeight:
@@ -342,7 +337,7 @@
             break;
         case pickerViewTypeFeeling:
         {
-            return _feelingArray.count;
+            return 3;
         }
             break;
             
