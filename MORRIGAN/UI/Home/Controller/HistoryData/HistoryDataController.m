@@ -400,6 +400,7 @@ static NSString *cellID = @"DataCellID";
         {
             backCount = 6;
             aheadCount = 0;
+            _todayIndexInWeek = 6;
         }
             break;
             
@@ -407,6 +408,7 @@ static NSString *cellID = @"DataCellID";
         {
             backCount = 0;
             aheadCount = 5;
+            _todayIndexInWeek = 0;
         }
             break;
             
@@ -414,6 +416,7 @@ static NSString *cellID = @"DataCellID";
         {
             backCount = 1;
             aheadCount = 5;
+            _todayIndexInWeek = 1;
         }
             break;
             
@@ -421,6 +424,7 @@ static NSString *cellID = @"DataCellID";
         {
             backCount = 2;
             aheadCount = 4;
+            _todayIndexInWeek = 2;
         }
             break;
             
@@ -428,6 +432,7 @@ static NSString *cellID = @"DataCellID";
         {
             backCount = 3;
             aheadCount = 3;
+            _todayIndexInWeek = 3;
         }
             break;
             
@@ -435,19 +440,21 @@ static NSString *cellID = @"DataCellID";
         {
             backCount = 4;
             aheadCount = 2;
+            _todayIndexInWeek = 4;
         }
             break;
         case 7:
         {
             backCount = 5;
             aheadCount = 1;
+            _todayIndexInWeek = 5;
         }
             break;
             
         default:
             break;
     }
-    _todayIndexInWeek = aheadCount;
+
     NSDateFormatter *formatter = [[NSDateFormatter alloc] init];
     [formatter setDateFormat:@"MM月dd日"];
     NSDate *backDate = [NSDate dateWithTimeIntervalSinceNow:-24*60*60*backCount];
