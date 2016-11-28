@@ -124,7 +124,10 @@ static NSString *cellID = @"DataCellID";
                 
                 
             }else{
-                [MBProgressHUD showHUDByContent:[obj objectForKey:@"retMsg"] view:UI_Window afterDelay:2];
+                dispatch_async(dispatch_get_main_queue(), ^{
+                    [MBProgressHUD showHUDByContent:@"获取历史数据失败" view:UI_Window afterDelay:2];
+                    
+                });
             }
         }];
         
