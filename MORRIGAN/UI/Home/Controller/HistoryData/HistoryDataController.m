@@ -144,6 +144,9 @@ static NSString *cellID = @"DataCellID";
     _weekMinuteDataLabel.textAlignment = NSTextAlignmentRight;
     _weekMinuteDataLabel.font = [UIFont systemFontOfSize:35];
     _weekMinuteDataLabel.text = [NSString stringWithFormat:@"%ld", _weekTimeLong];
+    if(_weekTimeLong == 0) {
+        _weekMinuteDataLabel.text = @"--";
+    }
     [_weekMinuteDataLabel sizeToFit];
     [_weekView addSubview:_weekMinuteDataLabel];
 
@@ -172,15 +175,18 @@ static NSString *cellID = @"DataCellID";
     
     
     // 在最大分钟数顶部添加label
-    CGRect frame = ((UIView *)_weekBarViewArray[maxTimeLongIndex]).frame;
-    frame.origin.y = frame.origin.y - 15;
-    frame.size.height = 15;
-    UILabel *secLabel = [[UILabel alloc] initWithFrame:frame];
-    secLabel.text = [NSString stringWithFormat:@"%ld", maxTimeLong];
-    secLabel.textColor = [UIColor whiteColor];
-    secLabel.textAlignment = NSTextAlignmentCenter;
-    secLabel.font = [UIFont systemFontOfSize:10.0];
-    [_weekView addSubview:secLabel];
+    if(maxTimeLong > 0) {
+        CGRect frame = ((UIView *)_weekBarViewArray[maxTimeLongIndex]).frame;
+        frame.origin.y = frame.origin.y - 15;
+        frame.size.height = 15;
+        UILabel *secLabel = [[UILabel alloc] initWithFrame:frame];
+        secLabel.text = [NSString stringWithFormat:@"%ld", maxTimeLong];
+        secLabel.textColor = [UIColor whiteColor];
+        secLabel.textAlignment = NSTextAlignmentCenter;
+        secLabel.font = [UIFont systemFontOfSize:10.0];
+        [_weekView addSubview:secLabel];
+
+    }
 }
 
 - (void)setUpBarView
