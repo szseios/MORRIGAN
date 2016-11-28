@@ -116,9 +116,16 @@
         case pickerViewTypeAge:
         {
             [self getDateComponents];
-            [_pickerView selectRow:_yearArray.count - 18 inComponent:0 animated:NO];
+            [_pickerView selectRow:_yearArray.count - 19 inComponent:0 animated:NO];
             [_pickerView selectRow:11 inComponent:1 animated:NO];
             [_pickerView selectRow:21 inComponent:2 animated:NO];
+            
+            NSString *dateStr = [NSString stringWithFormat:@"%@-%@-%@",
+                                 _yearArray[_yearArray.count - 19],
+                                 _monthArray[11],
+                                 _dayArray[21]
+                                 ];
+            _ageStr = dateStr;
         }
             break;
         case pickerViewTypeHeight:
@@ -175,7 +182,7 @@
         NSString *tempStr = [NSString stringWithFormat:@"%ld",(1960+i)];
         [_yearArray addObject:tempStr];
     }
-    _yearIndex = comps.year - 1960 - 18;
+    _yearIndex = comps.year - 1960 - 19;
     _comps = comps;
     [self getCurrentDay];
 }
@@ -205,6 +212,8 @@
         }
         
     }
+    _monthIndex = 11;
+    _dayIndex = 21;
     if (_dayIndex >= _dayArray.count) {
         _dayIndex = _dayArray.count - 1;
     }
