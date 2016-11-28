@@ -116,19 +116,19 @@ NSString * const ElectricQuantityChanged = @"ElectricQuantityChanged";
     //设备连接成功的委托
     [_baby setBlockOnConnected:^(CBCentralManager *central, CBPeripheral *peripheral) {
         NSLog(@"设备：%@连接成功",peripheral.name);
-//        weakSelf.curConnectPeripheral = peripheral;
-//        weakSelf.isConnected = YES;
-//        weakSelf.reconnect = YES;
-//        weakSelf.manualDisconnect = NO;
-//        
-//        [weakSelf hideConnectView];
-//        //连接成功后保存为已绑定设备信息
-//        if (![DBManager insertPeripheral:peripheral macAddress:weakSelf.willConnectMacAddress]) {
-//            NSLog(@"保存已绑定设备信息失败.  peripheral.name : %@",peripheral.name);
-//        }
-//        
-//        [[NSNotificationCenter defaultCenter] postNotificationName:ConnectPeripheralSuccess
-//                                                            object:nil];
+        weakSelf.curConnectPeripheral = peripheral;
+        weakSelf.isConnected = YES;
+        weakSelf.reconnect = YES;
+        weakSelf.manualDisconnect = NO;
+        
+        [weakSelf hideConnectView];
+        //连接成功后保存为已绑定设备信息
+        if (![DBManager insertPeripheral:peripheral macAddress:weakSelf.willConnectMacAddress]) {
+            NSLog(@"保存已绑定设备信息失败.  peripheral.name : %@",peripheral.name);
+        }
+        
+        [[NSNotificationCenter defaultCenter] postNotificationName:ConnectPeripheralSuccess
+                                                            object:nil];
         
     }];
     
@@ -160,19 +160,19 @@ NSString * const ElectricQuantityChanged = @"ElectricQuantityChanged";
         
         if (weakSelf.sendCharacteristic && weakSelf.receiveCharacteristic) {
             //---------------------------------------------------蓝牙连接成功并获取到特征值,再做蓝牙连接成功处理-------------------------//
-            weakSelf.curConnectPeripheral = peripheral;
-            weakSelf.isConnected = YES;
-            weakSelf.reconnect = YES;
-            weakSelf.manualDisconnect = NO;
-            
-            [weakSelf hideConnectView];
-            //连接成功后保存为已绑定设备信息
-            if (![DBManager insertPeripheral:peripheral macAddress:weakSelf.willConnectMacAddress]) {
-                NSLog(@"保存已绑定设备信息失败.  peripheral.name : %@",peripheral.name);
-            }
-            
-            [[NSNotificationCenter defaultCenter] postNotificationName:ConnectPeripheralSuccess
-                                                                object:nil];
+//            weakSelf.curConnectPeripheral = peripheral;
+//            weakSelf.isConnected = YES;
+//            weakSelf.reconnect = YES;
+//            weakSelf.manualDisconnect = NO;
+//            
+//            [weakSelf hideConnectView];
+//            //连接成功后保存为已绑定设备信息
+//            if (![DBManager insertPeripheral:peripheral macAddress:weakSelf.willConnectMacAddress]) {
+//                NSLog(@"保存已绑定设备信息失败.  peripheral.name : %@",peripheral.name);
+//            }
+//            
+//            [[NSNotificationCenter defaultCenter] postNotificationName:ConnectPeripheralSuccess
+//                                                                object:nil];
             //---------------------------------------------------蓝牙连接成功并获取到特征值,再做蓝牙连接成功处理-------------------------//
             
             [weakBaby notify:weakSelf.curConnectPeripheral characteristic:weakSelf.receiveCharacteristic block:^(CBPeripheral *peripheral, CBCharacteristic *characteristics, NSError *error) {
