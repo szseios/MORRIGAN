@@ -119,6 +119,7 @@
     CGFloat waveX = _viewWidth * 23 / 312.0;
     CGFloat waveY = _viewHeight * 150.5 / 860;
     CGFloat waveW = _viewWidth * 238 / 312;
+    [_waveView removeFromSuperview];
     _waveView = [[UIView alloc] initWithFrame:CGRectMake(waveX, waveY, waveW, waveW)];
     _waveView.clipsToBounds = YES;
     _waveView.layer.cornerRadius = waveW / 2;
@@ -187,6 +188,7 @@
 
 - (void)setUpCenterView
 {
+    [_centerView removeFromSuperview];
     _centerView = [[UIView alloc] initWithFrame:_circleImageView.frame];
     _centerView.clipsToBounds = YES;
     _centerView.layer.cornerRadius = _centerView.frame.size.width / 2;
@@ -257,6 +259,7 @@
 
 - (void)setUpSrollView
 {
+    [_scrollView removeFromSuperview];
     _scrollView = [[UIScrollView alloc] initWithFrame:_centerView.frame];
     _scrollView.backgroundColor = [UIColor clearColor];
     _scrollView.contentSize = CGSizeMake(_centerView.width * 2, _centerView.height);
@@ -278,6 +281,7 @@
 
 - (void)setUpUpView
 {
+    [_upView removeFromSuperview];
     _upView = [[UIView alloc] init];
     CGFloat upViewX = _viewWidth * 478 / 623.0;
     CGFloat upViewY = _viewHeight * 31.5 / 860.0;
@@ -299,7 +303,7 @@
     CGFloat persentLabelY = _upView.height / 2 - 15;
     CGFloat persentLabelW = _upView.width;
     CGFloat persentLabelH = 20;
-    
+
     _electricityLabel = [[UILabel alloc] initWithFrame:CGRectMake(persentLabelX, persentLabelY, persentLabelW, persentLabelH)];
     _electricityLabel.textColor = [UIColor whiteColor];
     _electricityLabel.textAlignment = NSTextAlignmentCenter;
@@ -321,6 +325,7 @@
 
 - (void)setUpDownView
 {
+    [_downView removeFromSuperview];
     _downView = [[UIView alloc] init];
     CGFloat downViewX = _viewWidth * 360 / 624.0;
     CGFloat downViewY = _viewHeight * 686 / 860.0;
