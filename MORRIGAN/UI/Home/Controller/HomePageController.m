@@ -242,7 +242,11 @@
 //电量变化
 - (void)getElectricity:(NSNotification *)notice
 {
-    [_mainView setElectricityPersent:[notice.object floatValue]];
+    if (notice.object) {
+        NSInteger persentInt = [Utils hexToInt:notice.object];
+        CGFloat persent = persentInt * 0.01;
+        [_mainView setElectricityPersent:persent];
+    }
 }
 
 //第一次主动获取电量
