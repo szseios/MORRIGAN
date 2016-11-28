@@ -25,7 +25,7 @@
 
     UIBezierPath *rectPath = [UIBezierPath bezierPathWithRoundedRect:CGRectMake(0,
                                                                                 0,
-                                                                                self.frame.size.width - 60,
+                                                                                kScreenWidth - 60,
                                                                                 49)
                                                    byRoundingCorners:UIRectCornerTopRight | UIRectCornerBottomLeft | UIRectCornerBottomRight
                                                          cornerRadii:CGSizeMake(5, 5)];
