@@ -69,6 +69,8 @@
 
 @property (nonatomic , strong) NSString *starCount;
 
+@property (nonatomic , assign) BOOL needToDisplay;
+
 @end
 
 @implementation HomeMainView
@@ -79,9 +81,20 @@
     if (self) {
         _AMMorriganArray = AMArray;
         _PMMorriganArray = PMArray;
-        [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(refreshData:) name:TARGETCHANGENOTIFICATION object:nil];
+        [self initNotification];
+        _needToDisplay = NO;
     }
     return self;
+}
+
+- (void)initNotification
+{
+    [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(refreshData:) name:TARGETCHANGENOTIFICATION object:nil];
+    [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(refreshData:) name:ElectricQuantityChanged object:nil];
+    [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(refreshData:) name:ConnectPeripheralSuccess object:nil];
+    [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(refreshData:) name:DisconnectPeripheral object:nil];
+    [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(refreshData:) name:MORRIGANTIMECHANGENOTIFICATION object:nil];
+    
 }
 
 // Only override drawRect: if you perform custom drawing.
@@ -291,8 +304,13 @@
     _upBackgroundView = [[UIImageView alloc] initWithFrame:_upView.bounds];
     _upBackgroundView.image =  [self createImageWithColor:[Utils stringTOColor:@"#a743c7"]];
     NSInteger percent = _electricityPercent > 0 ?  _electricityPercent : 0;
-    _upBackgroundView.height = _upView.height * percent;
+    _upBackgroundView.height = _upView.height * (percent / 100.0);
     _upBackgroundView.y = _upView.height - _upBackgroundView.height;
+    CGFloat temp = _upBackgroundView.height;
+    CGFloat temp1 = _upBackgroundView.y;
+    
+    NSLog(@"upBackgroundView.height : %lf",temp);
+    NSLog(@"_upBackgroundView.y : %lf",temp1);
     [_upView addSubview:_upBackgroundView];
     
     CGFloat persentLabelX = 0;
@@ -462,7 +480,7 @@
     if (model) {
         NSCalendar *calendar = [[NSCalendar alloc] initWithCalendarIdentifier:NSGregorianCalendar];
         NSDateComponents *comps = [[NSDateComponents alloc] init];
-        NSInteger unitFlags =  NSHourCalendarUnit | NSMinuteCalendarUnit;
+        NSInteger unitFlags =  NSHourCalendarUnit | NSMinuteCalendarUnit | NSSecondCalendarUnit;
         comps = [calendar components:unitFlags fromDate:model.startTime];
         NSInteger hour = comps.hour;
         NSInteger minute = comps.minute;
@@ -471,8 +489,13 @@
         comps1 = [calendar components:unitFlags fromDate:model.endTime];
         NSInteger hour1 = comps1.hour;
         NSInteger minute1 = comps1.minute;
+        NSInteger second1 = comps1.second;
+        if (minute1 == 59 && second1 == 59) {
+            minute1 += 1;
+        }
         
         time = (hour1 - hour) * 60 + (minute1 - minute);
+        NSLog(@"startTime:%@ ---- endTime:%@",model.startTime, model.endTime);
     }
     return time;
 }
@@ -526,7 +549,7 @@
 //目标变化通知
 - (void)refreshData:(NSNotification *)notification
 {
-//    [self displayView];
+    _needToDisplay = YES;
 }
 
 - (BOOL)isAMOrPM
@@ -557,7 +580,13 @@
 //星级评定
 - (void)setStarLabelAndImage:(NSString *)star
 {
-    _starCount = star;
+    if (_starCount.integerValue == star.integerValue) {
+        
+    }else{
+        _starCount = star;
+        _needToDisplay = YES;
+        [self displayView];
+    }
 }
 
 //设置电量变化
@@ -649,7 +678,10 @@
 - (void)displayView
 {
     [self bringSubviewToFront:_scrollView];
-    [self setNeedsDisplay];
+    if (_needToDisplay) {
+        _needToDisplay = NO;
+        [self setNeedsDisplay];
+    }
 }
 
 

@@ -467,6 +467,12 @@ static NSString *dbPath = nil;
         
         
     }];
+    if (success) {
+        //保存成功发通知给界面刷新
+        dispatch_async(dispatch_get_main_queue(), ^{
+            [[NSNotificationCenter defaultCenter] postNotificationName:MORRIGANTIMECHANGENOTIFICATION object:nil];
+        });
+    }
     return success;
 }
 

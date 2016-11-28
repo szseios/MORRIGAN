@@ -47,6 +47,7 @@
     //
     [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(getElectricity:) name:ElectricQuantityChanged object:nil];
     [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(firstGetElectricity:) name:ConnectPeripheralSuccess object:nil];
+    [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(DisconnectPeripheral:) name:DisconnectPeripheral object:nil];
     UIImageView *upBackImage = [[UIImageView alloc] initWithFrame:CGRectMake(0, 0, self.view.width, self.view.height)];
     upBackImage.image =[UIImage imageWithColor:[Utils stringTOColor:@"#8c39e5"]];
     [self.view addSubview:upBackImage];
@@ -249,6 +250,11 @@
         CGFloat persent = persentInt * 0.01;
         [_mainView setElectricityPersent:persent];
     }
+}
+
+- (void)DisconnectPeripheral:(NSNotification *)notice
+{
+    [_mainView setElectricityPersent:0];
 }
 
 //第一次主动获取电量
