@@ -92,6 +92,7 @@
     animation.toValue = @(0.3);
     animation.autoreverses = YES;
     animation.duration = 0.5;
+    animation.removedOnCompletion = NO;
     
     [_searchButton.layer addAnimation:animation forKey:nil];
 }

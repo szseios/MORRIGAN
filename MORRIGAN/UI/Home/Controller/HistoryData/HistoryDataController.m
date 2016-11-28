@@ -615,7 +615,8 @@ static NSString *cellID = @"DataCellID";
             NSInteger startDateInt = [temp[0] integerValue] * 60 + [temp[1] integerValue];
             temp = [[dateFormatter stringFromDate:model.endTime] componentsSeparatedByString:@":"];
             NSLog(@"getTodaySecondsString ---> 停止 %@:%@", temp[0], temp[1]);
-            NSInteger endDateInt = [temp[0] integerValue] * 60 + [temp[1] integerValue];
+            // 59分钟时实际就是60分钟
+            NSInteger endDateInt = [temp[0] integerValue] * 60 + ([temp[1] integerValue] == 59 ? 60 : [temp[1] integerValue]);
             NSInteger sec = endDateInt - startDateInt;
             if(sec > 180) {
                 sec = 180;
