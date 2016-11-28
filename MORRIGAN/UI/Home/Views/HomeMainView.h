@@ -10,6 +10,8 @@
 
 @interface HomeMainView : UIView
 
+@property (nonatomic , strong) UILabel *electricityLabel;  //电量
+
 - (instancetype)initWithAMMorriganArray:(NSArray *)AMArray PMMorriganTime:(NSArray *)PMArray withFarme:(CGRect)frame;
 
 - (void)morriganStartTime:(NSDate *)startTime toEndTime:(NSDate *)endTime;

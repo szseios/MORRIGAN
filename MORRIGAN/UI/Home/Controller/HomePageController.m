@@ -249,6 +249,10 @@
         NSInteger persentInt = [Utils hexToInt:notice.object];
         CGFloat persent = persentInt * 0.01;
         [_mainView setElectricityPersent:persent];
+        
+        NSMutableAttributedString *attributeString = [[NSMutableAttributedString alloc] initWithString:[NSString stringWithFormat:@"%ld%%",persentInt]];
+        [attributeString setAttributes:@{NSFontAttributeName:[UIFont systemFontOfSize:20]} range:NSMakeRange(0, attributeString.length - 1)];
+        _mainView.electricityLabel.attributedText = attributeString;
     }
 }
 
@@ -260,16 +264,19 @@
 //第一次主动获取电量
 - (void)firstGetElectricity:(NSNotification *)notice
 {
-    BluetoothOperation *operation = [[BluetoothOperation alloc] init];
-    [operation setValue:@"03" index:2];
-    [[BluetoothManager share] writeValueByOperation:operation];
-    operation.response = ^(NSString *response,long tag,NSError *error,BOOL success) {
-        if (success) {
-            NSString *electriQuantity = [response substringWithRange:NSMakeRange(4, 2)];
-            [_mainView setElectricityPersent:[electriQuantity floatValue]];
-        }
-        
-    };
+    dispatch_after(dispatch_time(DISPATCH_TIME_NOW, (int64_t)(1 * NSEC_PER_SEC)), dispatch_get_main_queue(), ^{
+        BluetoothOperation *operation = [[BluetoothOperation alloc] init];
+        [operation setValue:@"03" index:2];
+        [[BluetoothManager share] writeValueByOperation:operation];
+        operation.response = ^(NSString *response,long tag,NSError *error,BOOL success) {
+            if (success) {
+                NSString *electriQuantity = [response substringWithRange:NSMakeRange(4, 2)];
+                [_mainView setElectricityPersent:[electriQuantity floatValue]];
+            }
+            
+        };
+    });
+    
 }
 - (void)didReceiveMemoryWarning {
     [super didReceiveMemoryWarning];
