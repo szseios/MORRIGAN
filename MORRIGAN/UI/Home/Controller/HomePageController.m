@@ -260,20 +260,16 @@
 //第一次主动获取电量
 - (void)firstGetElectricity:(NSNotification *)notice
 {
-    __weak HomePageController *weakSelf = self;
-    dispatch_after(dispatch_time(DISPATCH_TIME_NOW, (int64_t)(2 * NSEC_PER_SEC)), dispatch_get_main_queue(), ^{
-        BluetoothOperation *operation = [[BluetoothOperation alloc] init];
-        [operation setValue:@"03" index:2];
-        [[BluetoothManager share] writeValueByOperation:operation];
-        operation.response = ^(NSString *response,long tag,NSError *error,BOOL success) {
-            if (success) {
-                NSString *electriQuantity = [response substringWithRange:NSMakeRange(4, 2)];
-                [weakSelf.mainView setElectricityPersent:[electriQuantity floatValue]];
-            }
-            
-        };
-    });
-    
+    BluetoothOperation *operation = [[BluetoothOperation alloc] init];
+    [operation setValue:@"03" index:2];
+    [[BluetoothManager share] writeValueByOperation:operation];
+    operation.response = ^(NSString *response,long tag,NSError *error,BOOL success) {
+        if (success) {
+            NSString *electriQuantity = [response substringWithRange:NSMakeRange(4, 2)];
+            [_mainView setElectricityPersent:[electriQuantity floatValue]];
+        }
+        
+    };
 }
 - (void)didReceiveMemoryWarning {
     [super didReceiveMemoryWarning];

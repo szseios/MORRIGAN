@@ -132,7 +132,7 @@
     pointerView.alpha = 0.7;
     [self.view addSubview:pointerView];
     
-    UIImageView *arrowImageView = [[UIImageView alloc] initWithFrame:CGRectMake(self.pointerViewX - 3, rulerY + viewY + 43, 6, 4)];
+    UIImageView *arrowImageView = [[UIImageView alloc] initWithFrame:CGRectMake(self.pointerViewX - 3 + 0.8, rulerY + viewY + 43, 6, 4)];
     arrowImageView.image = [UIImage imageNamed:@"arrowUp"];
     [self.view addSubview:arrowImageView];
 }
