@@ -407,6 +407,12 @@ static NSString *dbPath = nil;
 
 
 + (BOOL)insertData:(NSString *)userID startTime:(NSDate *)start endTime:(NSDate *)end type:(MassageType)type {
+    
+    if (end.timeIntervalSince1970 - start.timeIntervalSince1970 < 60) {
+        NSLog(@"按摩时间不超过1分钟,不保存数据");
+        return NO;
+    }
+    
     __block BOOL success = NO;
     [[DBManager dbQueue] inTransaction:^(FMDatabase *db, BOOL *rollback) {
         
