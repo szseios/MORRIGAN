@@ -24,4 +24,6 @@
 
 - (void)showRightTime;
 
+- (void)displayView;
+
 @end

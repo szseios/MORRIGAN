@@ -116,6 +116,9 @@
         case pickerViewTypeAge:
         {
             [self getDateComponents];
+            [_pickerView selectRow:_yearArray.count - 18 inComponent:0 animated:NO];
+            [_pickerView selectRow:11 inComponent:1 animated:NO];
+            [_pickerView selectRow:21 inComponent:2 animated:NO];
         }
             break;
         case pickerViewTypeHeight:
@@ -124,6 +127,12 @@
             for (NSInteger i = 100; i < 300; i++) {
                 NSString *count = [NSString stringWithFormat:@"%ld",i];
                 [_heightArray addObject:count];
+            }
+            if ([UserInfo share].high.length > 0) {
+                NSInteger higtCount = [UserInfo share].high.integerValue;
+                if (higtCount < _heightArray.count) {
+                    [_pickerView selectRow:higtCount - 100 inComponent:0 animated:NO];
+                }
             }
         }
             break;
@@ -135,6 +144,12 @@
                 [_weightArray addObject:count];
             }
         }
+            if ([UserInfo share].weight.length > 0) {
+                NSInteger weightCount = [UserInfo share].weight.integerValue;
+                if (weightCount < _weightArray.count) {
+                    [_pickerView selectRow:weightCount inComponent:0 animated:NO];
+                }
+            }
             break;
         case pickerViewTypeFeeling:
         {
@@ -160,7 +175,7 @@
         NSString *tempStr = [NSString stringWithFormat:@"%ld",(1960+i)];
         [_yearArray addObject:tempStr];
     }
-    _yearIndex = comps.year - 1960;
+    _yearIndex = comps.year - 1960 - 18;
     _comps = comps;
     [self getCurrentDay];
 }
@@ -192,6 +207,9 @@
     }
     if (_dayIndex >= _dayArray.count) {
         _dayIndex = _dayArray.count - 1;
+    }
+    if (_monthIndex >= _monthArray.count) {
+        _monthIndex = _monthArray.count - 1;
     }
 
 }

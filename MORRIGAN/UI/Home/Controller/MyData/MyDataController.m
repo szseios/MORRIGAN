@@ -179,36 +179,30 @@ static NSString *cellIdentifier = @"cellIdentifier";
     }
     else if (indexPath.section == 1){
         _selectCell = [tableView cellForRowAtIndexPath:indexPath];
-        _pickerBackgroudView = [[UIView alloc] initWithFrame:CGRectMake(0, kScreenHeight, kScreenWidth, kScreenHeight)];
-        _pickerBackgroudView.backgroundColor = [UIColor clearColor]; 
-        [self.view addSubview:_pickerBackgroudView];
-        _chooseView = [[ChooseDataView alloc] initWithType:pickerViewTypeFeeling withFrame:CGRectMake(0, kScreenHeight - 250, kScreenWidth, 250)];
-        _chooseView.delegate = self;
-        [_pickerBackgroudView addSubview:_chooseView];
-        [UIView animateWithDuration:0.2 animations:^{
-            _pickerBackgroudView.y = 0;
-        }];
+        
         switch (indexPath.row) {
             case 0:
             {
-                self.chooseView.pickerType = pickerViewTypeAge;
+                [self setUpChooseViewWithType:pickerViewTypeAge];
                 
             }
                 break;
             case 1:
             {
-                self.chooseView.pickerType = pickerViewTypeFeeling;
+                 [self setUpChooseViewWithType:pickerViewTypeFeeling];
             }
                 break;
             case 2:
             {
-                self.chooseView.pickerType = pickerViewTypeHeight;
+                 [self setUpChooseViewWithType:pickerViewTypeHeight];
+                
             }
                 break;
                 
             case 3:
             {
-                self.chooseView.pickerType = pickerViewTypeWeight;
+                 [self setUpChooseViewWithType:pickerViewTypeWeight];
+                
             }
                 break;
 
@@ -238,6 +232,47 @@ static NSString *cellIdentifier = @"cellIdentifier";
 }
 
 #pragma mark - ChooseDataViewDelegate
+
+- (void)setUpChooseViewWithType:(pickerViewType)type
+{
+    _pickerBackgroudView = [[UIView alloc] initWithFrame:CGRectMake(0, kScreenHeight, kScreenWidth, kScreenHeight)];
+    _pickerBackgroudView.backgroundColor = [UIColor clearColor];
+    [self.view addSubview:_pickerBackgroudView];
+    switch (type) {
+        case pickerViewTypeAge:
+        {
+            _chooseView = [[ChooseDataView alloc] initWithType:pickerViewTypeAge withFrame:CGRectMake(0, kScreenHeight - 250, kScreenWidth, 250)];
+        }
+            break;
+        case pickerViewTypeHeight:
+        {
+            _chooseView = [[ChooseDataView alloc] initWithType:pickerViewTypeHeight withFrame:CGRectMake(0, kScreenHeight - 250, kScreenWidth, 250)];
+        }
+            break;
+        case pickerViewTypeWeight:
+        {
+            _chooseView = [[ChooseDataView alloc] initWithType:pickerViewTypeWeight withFrame:CGRectMake(0, kScreenHeight - 250, kScreenWidth, 250)];
+            
+        }
+            break;
+        case pickerViewTypeFeeling:
+        {
+            _chooseView = [[ChooseDataView alloc] initWithType:pickerViewTypeFeeling withFrame:CGRectMake(0, kScreenHeight - 250, kScreenWidth, 250)];
+         
+        }
+            break;
+            
+        default:
+            break;
+    }
+    
+    _chooseView.delegate = self;
+    [_pickerBackgroudView addSubview:_chooseView];
+    [UIView animateWithDuration:0.2 animations:^{
+        _pickerBackgroudView.y = 0;
+    }];
+
+}
 
 - (void)cancelSelectData
 {

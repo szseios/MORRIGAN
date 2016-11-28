@@ -77,12 +77,13 @@
     [super viewWillAppear:animated];
     NSString *starStr = [[RecordManager share] getStarRank];
     if (starStr && starStr.length > 0) {
-        [_mainView setStarLabelAndImage:starStr];
+        [_mainView setStarLabelAndImage:@"starStr"];
     }
     NSArray *ForenoonArray = [DBManager selectForenoonDatas:[UserInfo share].userId];
     NSArray *AfternoonArray = [DBManager selectaAfternoonDatas:[UserInfo share].userId];
     [_mainView showRightTime];
     [_mainView refreshLatestDataForAMMorrigan:ForenoonArray PMMorrigan:AfternoonArray];
+    [_mainView displayView];
     //如果没有连上蓝牙设备,开始执行动画
     if (![BluetoothManager share].isConnected) {
         [_barView startFlashing];
@@ -226,6 +227,7 @@
         _isLeft = NO;
         _handButton.enabled = YES;
         [_mainView showRightTime];
+        [_mainView displayView];
         if (self.delegate && [self.delegate respondsToSelector:@selector(rightClick)]) {
             [self.delegate rightClick];
         }

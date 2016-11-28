@@ -65,6 +65,10 @@
 
 @property (nonatomic , assign) NSInteger didMorriganTime;
 
+@property (nonatomic , assign) NSInteger electricityPercent;
+
+@property (nonatomic , strong) NSString *starCount;
+
 @end
 
 @implementation HomeMainView
@@ -75,6 +79,7 @@
     if (self) {
         _AMMorriganArray = AMArray;
         _PMMorriganArray = PMArray;
+        [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(refreshData:) name:TARGETCHANGENOTIFICATION object:nil];
     }
     return self;
 }
@@ -83,9 +88,6 @@
 // An empty implementation adversely affects performance during animation.
 - (void)drawRect:(CGRect)rect {
     // Drawing code
-    
-    [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(refreshData:) name:TARGETCHANGENOTIFICATION object:nil];
-    
     _viewWidth = rect.size.width;
     _viewHeight = rect.size.height;
     
@@ -200,7 +202,7 @@
         time = @"60";
     }else{
         if (_didMorriganTime && _didMorriganTime > 0) {
-            NSInteger tempTime = labs(time.integerValue - _didMorriganTime);
+            NSInteger tempTime = (time.integerValue - _didMorriganTime) > 0 ? (time.integerValue - _didMorriganTime) : 0;
             time = [NSString stringWithFormat:@"%ld",tempTime];
         }
     }
@@ -221,7 +223,7 @@
     _dateLabel.textColor = [UIColor whiteColor];
     _dateLabel.alpha = 0.5;
     
-    _dateLabel.font = [UIFont systemFontOfSize:(kScreenWidth > 320 ? 15 : 13)];
+    _dateLabel.font = [UIFont systemFontOfSize:(kScreenWidth > 320 ? 15 : 12)];
     [_dateLabel sizeToFit];
     _dateLabel.center = CGPointMake(_centerView.width / 2 -15, dateLabelY + 25/2);
     [_centerView addSubview:_dateLabel];
@@ -231,7 +233,7 @@
     _APMLabel.text = [self isAMOrPM] ? @"AM" : @"PM";
     _APMLabel.textColor = [UIColor whiteColor];
     _APMLabel.textAlignment = NSTextAlignmentLeft;
-    _APMLabel.font = [UIFont systemFontOfSize:(kScreenWidth > 320 ? 24 : 22)];
+    _APMLabel.font = [UIFont systemFontOfSize:(kScreenWidth > 320 ? 24 : 20)];
     [_centerView addSubview:_APMLabel];
     
     CGFloat horizY = CGRectGetMaxY(_dateLabel.frame);
@@ -267,6 +269,9 @@
     _scrollView.scrollEnabled = YES;
     _scrollView.bounces = NO;
     _scrollView.pagingEnabled = YES;
+    if (![self isAMOrPM]) {
+        _scrollView.contentOffset = CGPointMake(_centerView.width/2+30, 0);
+    }
     [self addSubview:_scrollView];
     [self bringSubviewToFront:_scrollView];
 }
@@ -285,7 +290,8 @@
     
     _upBackgroundView = [[UIImageView alloc] initWithFrame:_upView.bounds];
     _upBackgroundView.image =  [self createImageWithColor:[Utils stringTOColor:@"#a743c7"]];
-    _upBackgroundView.height = _upView.height * 0;
+    NSInteger percent = _electricityPercent > 0 ?  _electricityPercent : 0;
+    _upBackgroundView.height = _upView.height * percent;
     _upBackgroundView.y = _upView.height - _upBackgroundView.height;
     [_upView addSubview:_upBackgroundView];
     
@@ -297,9 +303,8 @@
     _electricityLabel = [[UILabel alloc] initWithFrame:CGRectMake(persentLabelX, persentLabelY, persentLabelW, persentLabelH)];
     _electricityLabel.textColor = [UIColor whiteColor];
     _electricityLabel.textAlignment = NSTextAlignmentCenter;
-    NSInteger persent = 0;
     _electricityLabel.font = [UIFont systemFontOfSize:10];
-    NSMutableAttributedString *attributeString = [[NSMutableAttributedString alloc] initWithString:[NSString stringWithFormat:@"%ld%%",persent]];
+    NSMutableAttributedString *attributeString = [[NSMutableAttributedString alloc] initWithString:[NSString stringWithFormat:@"%ld%%",percent]];
     [attributeString setAttributes:@{NSFontAttributeName:[UIFont systemFontOfSize:20]} range:NSMakeRange(0, attributeString.length - 1)];
     _electricityLabel.attributedText = attributeString;
     [_upView addSubview:_electricityLabel];
@@ -334,7 +339,7 @@
     _starLabel = [[UILabel alloc] initWithFrame:CGRectMake(starX, starY, starW, starH)];
     _starLabel.textColor = [UIColor whiteColor];
     _starLabel.textAlignment = NSTextAlignmentCenter;
-    NSString *starCount = @"0";
+    NSString *starCount = _starCount ? _starCount : @"0";
     _starLabel.font = [UIFont systemFontOfSize:10];
     [self starLabelAttributeStr:starCount];
     [_downView addSubview:_starLabel];
@@ -345,7 +350,65 @@
     CGFloat starImageH = kScreenHeight > 568 ? 14 : 10;
     _starImage = [[UIImageView alloc] initWithFrame:CGRectMake(starImageX, starImageY, starImageW, starImageH)];
     _starImage.backgroundColor = [UIColor clearColor];
-    _starImage.image = [UIImage imageNamed:@"icon_star_0"];
+    if (_starCount) {
+        NSString *imageName;
+        NSString *starStr;
+        switch (_starCount.integerValue) {
+            case -1:
+            {
+                imageName = @"icon_star_0";
+                starStr = @"0";
+            }
+                break;
+            case 0:
+            {
+                imageName = @"icon_star_5";
+                starStr = @"0.5";
+            }
+                break;
+            case 1:
+            {
+                imageName = @"icon_star_10";
+                starStr = @"1";
+            }
+                break;
+                
+            case 2:
+            {
+                imageName = @"icon_star_15";
+                starStr = @"1.5";
+            }
+                break;
+                
+            case 3:
+            {
+                imageName = @"icon_star_20";
+                starStr = @"2";
+            }
+                break;
+                
+            case 4:
+            {
+                imageName = @"icon_star_25";
+                starStr = @"2.5";
+            }
+                break;
+                
+            case 5:
+            {
+                imageName = @"icon_star_30";
+                starStr = @"3";
+            }
+                break;
+                
+                
+            default:
+                break;
+        }
+        [_starImage setImage:[UIImage imageNamed:imageName]];
+    }else{
+        _starImage.image = [UIImage imageNamed:@"icon_star_0"];
+    }
     [_downView addSubview:_starImage];
     
 }
@@ -436,11 +499,6 @@
 
 - (void)scrollViewDidEndDecelerating:(UIScrollView *)scrollView
 {
-    
-}
-
-- (void)scrollViewDidScroll:(UIScrollView *)scrollView
-{
     CGFloat offsetX =  _centerView.width;
     CGFloat offsetXX = scrollView.contentOffset.x;
     if ( offsetXX >= offsetX / 2) {
@@ -456,24 +514,19 @@
         [self showCircleWithAM:NO];
     }
     [self bringSubviewToFront:_scrollView];
+    
 }
+
+- (void)scrollViewDidScroll:(UIScrollView *)scrollView
+{
+}
+
+#pragma mark - other
 
 //目标变化通知
 - (void)refreshData:(NSNotification *)notification
 {
-    NSString *time = [UserInfo share].target;
-    if (!time) {
-        time = @"60";
-    }else{
-        if (_didMorriganTime && _didMorriganTime > 0) {
-            NSInteger tempTime = (time.integerValue - _didMorriganTime) > 0 ? :0;
-            time = [NSString stringWithFormat:@"%ld",tempTime];
-        }
-    }
-    NSMutableAttributedString *attributeString = [[NSMutableAttributedString alloc] initWithString:[NSString stringWithFormat:@"%@min",time]];
-    [attributeString setAttributes:@{NSFontAttributeName:[UIFont systemFontOfSize:60]} range:NSMakeRange(0, time.length)];
-    _timeLabel.attributedText = attributeString;
-    [self setNeedsDisplay];
+//    [self displayView];
 }
 
 - (BOOL)isAMOrPM
@@ -504,78 +557,13 @@
 //星级评定
 - (void)setStarLabelAndImage:(NSString *)star
 {
-    if (star) {
-       NSInteger rank = [star integerValue];
-        NSString *imageName;
-        NSString *starStr;
-        switch (rank) {
-            case -1:
-            {
-                imageName = @"icon_star_0";
-                starStr = @"0";
-            }
-                break;
-            case 0:
-            {
-                imageName = @"icon_star_5";
-                starStr = @"0.5";
-            }
-                break;
-            case 1:
-            {
-                imageName = @"icon_star_10";
-                starStr = @"1";
-            }
-                break;
-                
-            case 2:
-            {
-                imageName = @"icon_star_15";
-                starStr = @"1.5";
-            }
-                break;
-                
-            case 3:
-            {
-                imageName = @"icon_star_20";
-                starStr = @"2";
-            }
-                break;
-                
-            case 4:
-            {
-                imageName = @"icon_star_25";
-                starStr = @"2.5";
-            }
-                break;
-                
-            case 5:
-            {
-                imageName = @"icon_star_30";
-                starStr = @"3";
-            }
-                break;
-                
-                
-            default:
-                break;
-        }
-        [_starImage setImage:[UIImage imageNamed:imageName]];
-        [self starLabelAttributeStr:starStr];
-    }
-    [self setNeedsDisplay];
-    
+    _starCount = star;
 }
 
 //设置电量变化
 - (void)setElectricityPersent:(CGFloat)persent
 {
-    _upBackgroundView.height = _upView.height * persent;
-    _upBackgroundView.y = _upView.height - _upBackgroundView.height;
-    NSMutableAttributedString *attributeString = [[NSMutableAttributedString alloc] initWithString:[NSString stringWithFormat:@"%ld%%",(NSInteger)persent*100]];
-    [attributeString setAttributes:@{NSFontAttributeName:[UIFont systemFontOfSize:20]} range:NSMakeRange(0, attributeString.length - 1)];
-    _electricityLabel.attributedText = attributeString;
-    [self setNeedsDisplay];
+    _electricityPercent = (NSInteger)(persent*100);
 }
 
 - (void)starLabelAttributeStr:(NSString *)starStr
@@ -600,6 +588,8 @@
 
 - (void)refreshLatestDataForAMMorrigan:(NSArray *)AMMorriganArray PMMorrigan:(NSArray *)PMMorriganArray
 {
+    _AMMorriganArray = AMMorriganArray;
+    _PMMorriganArray = PMMorriganArray;
     if ([self isAMOrPM]) {
         [self showCircleWithAM:YES];
     }else{
@@ -654,6 +644,12 @@
             }
         }
     }
+}
+
+- (void)displayView
+{
+    [self bringSubviewToFront:_scrollView];
+    [self setNeedsDisplay];
 }
 
 
