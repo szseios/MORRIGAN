@@ -466,7 +466,7 @@
         time = @"60";
     }else{
         if (_didMorriganTime && _didMorriganTime > 0) {
-            NSInteger tempTime = labs(time.integerValue - _didMorriganTime);
+            NSInteger tempTime = (time.integerValue - _didMorriganTime) > 0 ? :0;
             time = [NSString stringWithFormat:@"%ld",tempTime];
         }
     }
@@ -486,6 +486,21 @@
     return hour < 12 ? YES : NO;
 }
 
+- (void)showRightTime
+{
+    if ([self isAMOrPM]) {
+        _APMLabel.text = @"AM";
+        _righthorizImageView.image = [UIImage imageNamed:@"empty_rect"];
+        _lefthorizImageView.image = [UIImage imageNamed:@"full_rect"];
+        [self showCircleWithAM:YES];
+    }else{
+        _APMLabel.text = @"PM";
+        _righthorizImageView.image = [UIImage imageNamed:@"full_rect"];
+        _lefthorizImageView.image = [UIImage imageNamed:@"empty_rect"];
+        [self showCircleWithAM:NO];
+    }
+}
+
 //星级评定
 - (void)setStarLabelAndImage:(NSString *)star
 {
@@ -494,6 +509,12 @@
         NSString *imageName;
         NSString *starStr;
         switch (rank) {
+            case -1:
+            {
+                imageName = @"icon_star_0";
+                starStr = @"0";
+            }
+                break;
             case 0:
             {
                 imageName = @"icon_star_5";

@@ -62,7 +62,7 @@ static NSString *cellID = @"DataCellID";
 
 - (void)viewDidLoad {
     [super viewDidLoad];
-    self.view.backgroundColor = [UIColor whiteColor];
+    self.view.backgroundColor = [UIColor colorWithRed:0.96 green:0.96 blue:0.96 alpha:1];
     UIImageView *backImageView = [[UIImageView alloc] initWithFrame:CGRectMake(0, 0, kScreenWidth, 115)];
     backImageView.image = [UIImage imageWithColor:[Utils stringTOColor:@"#8c39e5"]];
     [self.view addSubview:backImageView];
@@ -203,19 +203,20 @@ static NSString *cellID = @"DataCellID";
     
     UIView *chatView = [[UIView alloc] initWithFrame:CGRectMake(0, 115, kScreenWidth, 250)];
     
-    UIImageView *backImageView = [[UIImageView alloc] initWithFrame:chatView.bounds];
-    backImageView.image = [UIImage imageNamed:@"basicBackground"];
-    [chatView addSubview:backImageView];
+//    UIImageView *backImageView = [[UIImageView alloc] initWithFrame:chatView.bounds];
+//    backImageView.image = [UIImage imageNamed:@"basicBackground"];
+//    [chatView addSubview:backImageView];
+    chatView.backgroundColor = [UIColor colorWithRed:130/255.0 green:0.0 blue:230/255.0 alpha:1];
     [self.view addSubview:chatView];
     
     _dayView = [[UIView alloc] initWithFrame:chatView.frame];
     _dayView.backgroundColor = [UIColor clearColor];
     [self.view addSubview:_dayView];
     
-    CGFloat labelY = 20;
+    CGFloat labelY = 15;
     
     
-    _dateLabel = [[UILabel alloc] initWithFrame:CGRectMake(100, 25, kScreenWidth - 120, 30)];
+    _dateLabel = [[UILabel alloc] initWithFrame:CGRectMake(100, 22, kScreenWidth - 120, 30)];
     _dateLabel.textColor = [UIColor whiteColor];
     _dateLabel.textAlignment = NSTextAlignmentRight;
     NSDateFormatter *fomatter = [[NSDateFormatter alloc] init];
@@ -244,6 +245,7 @@ static NSString *cellID = @"DataCellID";
         CGFloat h = sec*2.1 + 5;
         UIView *bar = [[UIView alloc] initWithFrame:CGRectMake(barX * i+13, mostBarH - h, barW, h)];
         bar.backgroundColor = [UIColor whiteColor];
+        bar.alpha = 0.6;
         bar.tag = 1000 + i;
         [_dayView addSubview:bar];
         
@@ -305,7 +307,7 @@ static NSString *cellID = @"DataCellID";
     _weekView.backgroundColor = [UIColor clearColor];
     [self.view addSubview:_weekView];
     
-    CGFloat labelY = 20;
+    CGFloat labelY = 15;
     _weekMinuteDataLabel = [[UILabel alloc] initWithFrame:CGRectMake(15, labelY, 60, 60)];
     _weekMinuteDataLabel.textColor = [UIColor whiteColor];
     _weekMinuteDataLabel.textAlignment = NSTextAlignmentRight;
@@ -342,6 +344,7 @@ static NSString *cellID = @"DataCellID";
         CGFloat h = 5;
         UIView *bar = [[UIView alloc] initWithFrame:CGRectMake(barX, mostBarH - h, barW, h)];
         bar.backgroundColor = [UIColor whiteColor];
+        bar.alpha = 0.6;
         bar.tag = 1000 + i;
         [_weekView addSubview:bar];
         
@@ -369,11 +372,12 @@ static NSString *cellID = @"DataCellID";
 
 - (void)setUpBottomView
 {
-    CGFloat tableViewY = 250 + 110;
+    CGFloat tableViewY = 250 + 110 + 12;
     _bottomTableView = [[UITableView alloc] initWithFrame:CGRectMake(0,tableViewY ,kScreenWidth , 200) style:UITableViewStylePlain];
     _bottomTableView.delegate = self;
     _bottomTableView.dataSource = self;
     [_bottomTableView registerNib:[UINib nibWithNibName:@"HistoryDataCell" bundle:nil] forCellReuseIdentifier:cellID];
+    _bottomTableView.backgroundColor = [UIColor clearColor];
     _bottomTableView.tableFooterView = [UIView new];
     [_bottomTableView setBounces:NO];
     
@@ -497,6 +501,11 @@ static NSString *cellID = @"DataCellID";
 - (NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section
 {
     return _titleArray.count;
+}
+
+- (CGFloat)tableView:(UITableView *)tableView heightForRowAtIndexPath:(NSIndexPath *)indexPath
+{
+    return 46;
 }
 
 - (UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath

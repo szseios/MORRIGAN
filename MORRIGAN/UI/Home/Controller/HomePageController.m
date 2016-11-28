@@ -44,7 +44,7 @@
 
 - (void)viewDidLoad {
     [super viewDidLoad];
-//
+    //
     [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(getElectricity:) name:ElectricQuantityChanged object:nil];
     [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(firstGetElectricity:) name:ConnectPeripheralSuccess object:nil];
     UIImageView *upBackImage = [[UIImageView alloc] initWithFrame:CGRectMake(0, 0, self.view.width, self.view.height)];
@@ -65,7 +65,7 @@
     [self.view addGestureRecognizer:tap];
     
     if (![BluetoothManager share].isConnected) {
-       UIAlertView *alert = [[UIAlertView alloc] initWithTitle:@"还未连接设备" message:nil delegate:self cancelButtonTitle:@"取消" otherButtonTitles:@"连接", nil];
+        UIAlertView *alert = [[UIAlertView alloc] initWithTitle:@"还未连接设备" message:nil delegate:self cancelButtonTitle:@"取消" otherButtonTitles:@"连接", nil];
         [alert show];
     }
     [self setUpHomeMainView];
@@ -79,8 +79,9 @@
     if (starStr && starStr.length > 0) {
         [_mainView setStarLabelAndImage:starStr];
     }
-        NSArray *ForenoonArray = [DBManager selectForenoonDatas:[UserInfo share].userId];
-        NSArray *AfternoonArray = [DBManager selectaAfternoonDatas:[UserInfo share].userId];
+    NSArray *ForenoonArray = [DBManager selectForenoonDatas:[UserInfo share].userId];
+    NSArray *AfternoonArray = [DBManager selectaAfternoonDatas:[UserInfo share].userId];
+    [_mainView showRightTime];
     [_mainView refreshLatestDataForAMMorrigan:ForenoonArray PMMorrigan:AfternoonArray];
     //如果没有连上蓝牙设备,开始执行动画
     if (![BluetoothManager share].isConnected) {
@@ -92,6 +93,7 @@
 {
     [super viewWillDisappear:animated];
     [_barView stopFlashing];
+    
 }
 
 - (void)setUpBarView
@@ -222,7 +224,8 @@
 {
     if (_isLeft) {
         _isLeft = NO;
-         _handButton.enabled = YES;
+        _handButton.enabled = YES;
+        [_mainView showRightTime];
         if (self.delegate && [self.delegate respondsToSelector:@selector(rightClick)]) {
             [self.delegate rightClick];
         }
@@ -234,17 +237,6 @@
     if (buttonIndex == 1) {
         [self clickBingdingDevice];
     }
-}
-
-- (void)setIsLeft:(BOOL)isLeft
-{
-    _isLeft = isLeft;
-    if (isLeft) {
-        self.view.size = CGSizeMake(kScreenWidth * (kScreenHeight - 64) * kScreenHeight,  kScreenHeight-250);
-    }else{
-        self.view.size = CGSizeMake(kScreenWidth,  kScreenHeight);
-    }
-    [self.view setNeedsDisplay];
 }
 
 //电量变化
@@ -273,13 +265,13 @@
 }
 
 /*
-#pragma mark - Navigation
-
-// In a storyboard-based application, you will often want to do a little preparation before navigation
-- (void)prepareForSegue:(UIStoryboardSegue *)segue sender:(id)sender {
-    // Get the new view controller using [segue destinationViewController].
-    // Pass the selected object to the new view controller.
-}
-*/
+ #pragma mark - Navigation
+ 
+ // In a storyboard-based application, you will often want to do a little preparation before navigation
+ - (void)prepareForSegue:(UIStoryboardSegue *)segue sender:(id)sender {
+ // Get the new view controller using [segue destinationViewController].
+ // Pass the selected object to the new view controller.
+ }
+ */
 
 @end

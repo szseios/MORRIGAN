@@ -30,6 +30,5 @@ typedef enum : NSUInteger {
 
 - (instancetype)initWithType:(pickerViewType)type withFrame:(CGRect)frame;
 
-- (void)setCurrentAge:(NSString *)age;
 
 @end

@@ -180,9 +180,9 @@ static NSString *cellIdentifier = @"cellIdentifier";
     else if (indexPath.section == 1){
         _selectCell = [tableView cellForRowAtIndexPath:indexPath];
         _pickerBackgroudView = [[UIView alloc] initWithFrame:CGRectMake(0, kScreenHeight, kScreenWidth, kScreenHeight)];
-        _pickerBackgroudView.backgroundColor = [UIColor clearColor]; //[UIColor colorWithRed:0.6 green:0.6 blue:0.6 alpha:0.7];
+        _pickerBackgroudView.backgroundColor = [UIColor clearColor]; 
         [self.view addSubview:_pickerBackgroudView];
-        _chooseView = [[ChooseDataView alloc] initWithType:pickerViewTypeAge withFrame:CGRectMake(0, kScreenHeight - 250, kScreenWidth, 250)];
+        _chooseView = [[ChooseDataView alloc] initWithType:pickerViewTypeFeeling withFrame:CGRectMake(0, kScreenHeight - 250, kScreenWidth, 250)];
         _chooseView.delegate = self;
         [_pickerBackgroudView addSubview:_chooseView];
         [UIView animateWithDuration:0.2 animations:^{
@@ -261,11 +261,14 @@ static NSString *cellIdentifier = @"cellIdentifier";
         _pickerBackgroudView = nil;
         return;
     }
-    _selectCell.content = selectData;
+    NSString *showData;
+    
     switch (self.chooseView.pickerType) {
         case pickerViewTypeWeight:
         {
-            [UserInfo share].weight = selectData;
+           
+            showData = [NSString stringWithFormat:@"%@kg",selectData];
+             [UserInfo share].weight = showData;
         }
             break;
         case pickerViewTypeAge:
@@ -299,7 +302,7 @@ static NSString *cellIdentifier = @"cellIdentifier";
             }
             
             [UserInfo share].age = [NSString stringWithFormat:@"%ld", age];
-            _selectCell.content = [UserInfo share].age;
+            showData = [UserInfo share].age;
             
            
         }
@@ -307,13 +310,16 @@ static NSString *cellIdentifier = @"cellIdentifier";
             
         case pickerViewTypeHeight:
         {
-            [UserInfo share].high = selectData;
+            
+            showData = [NSString stringWithFormat:@"%@cm",selectData];
+            [UserInfo share].high = showData;
         }
             break;
             
         case pickerViewTypeFeeling:
         {
             [UserInfo share].emotion = selectData;
+            showData = selectData;
         }
             break;
             
@@ -321,6 +327,7 @@ static NSString *cellIdentifier = @"cellIdentifier";
         default:
             break;
     }
+    _selectCell.content = showData;
     [UIView animateWithDuration:0.2 animations:^{
         self.pickerBackgroudView.y = kScreenHeight;
     }];
