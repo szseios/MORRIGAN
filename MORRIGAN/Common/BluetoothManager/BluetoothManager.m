@@ -202,7 +202,7 @@ NSString * const ElectricQuantityChanged = @"ElectricQuantityChanged";
                         //蓝牙设备通知app电量变化
                         if ([order isEqualToString:@"02"] &&[code isEqualToString:@"01"]) {
                             success = YES;
-                            NSString *electriQuantity = [receiveDataHexString substringWithRange:NSMakeRange(4, 2)];
+                            NSString *electriQuantity = [receiveDataHexString substringWithRange:NSMakeRange(6, 2)];
                             [[NSNotificationCenter defaultCenter] postNotificationName:ElectricQuantityChanged
                                                                                 object:electriQuantity];
                             //收到电量变化后,发送应答包(否则蓝牙设备会连续发5次数据给app)
