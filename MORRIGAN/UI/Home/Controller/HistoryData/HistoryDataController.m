@@ -191,7 +191,7 @@ static NSString *cellID = @"DataCellID";
 
 - (void)setUpBarView
 {
-    _barView = [[BasicBarView alloc] initWithFrame:CGRectMake(0, 20, kScreenWidth, 44) withType:superBarTypeLeftItemBackAndRightItemBinding withTitle:@"今日一览" isShowRightButton:NO];
+    _barView = [[BasicBarView alloc] initWithFrame:CGRectMake(0, 20, kScreenWidth, 44) withType:superBarTypeLeftItemBackAndRightItemBinding withTitle:@"历史记录" isShowRightButton:NO];
     [self.view addSubview:_barView];
     _barView.delegate = self;
 }
@@ -484,13 +484,15 @@ static NSString *cellID = @"DataCellID";
         _weekView.hidden = YES;
         _titleArray = @[@"今日目标",@"今日护养",@"剩余目标值"];
         [_bottomTableView reloadData];
-        [_barView setTitleLabelText:@"今日一览"];
+//        [_barView setTitleLabelText:@"今日一览"];
+        [_barView setTitleLabelText:@"历史记录"];
     }else{
         _dayView.hidden = YES;
         _weekView.hidden = NO;
         _titleArray = @[@"本周目标",@"本周护养",@"剩余目标值",@"平均养护"];
         [_bottomTableView reloadData];
-        [_barView setTitleLabelText:@"本周一阅"];
+//        [_barView setTitleLabelText:@"本周一阅"];
+        [_barView setTitleLabelText:@"历史记录"];
     }
 }
 

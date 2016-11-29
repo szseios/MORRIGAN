@@ -35,6 +35,7 @@
 // 注册
 #define ID_REGISTER             1001
 #define URL_REGISTER            @"http://112.74.100.227:8083/rest/moli/regist"
+
 // 短信验证码
 #define ID_GET_PHONE_MSG_CODE   1002
 #define URL_GET_PHONE_MSG_CODE  @"http://112.74.100.227:8083//rest/moli/send-msg"
@@ -92,6 +93,11 @@
 // 星级评定
 #define ID_GET_RANK            1016
 #define URL_GET_RANK        APP_SERVER_URL@"rest/moli/get-rank"
+
+// 是否注册
+#define ID_IFREGISTER           1017
+#define URL_IFREGISTER        APP_SERVER_URL@"rest/moli/isregister"
+
 // ---------------------------------------------------------------------------------------------------------
 #define kColor_440067  @"#440067"  // 深紫色
 #define kColor_6911a5  @"#6911a5"  // 普通紫色

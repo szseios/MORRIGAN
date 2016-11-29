@@ -306,7 +306,7 @@
     
     // 校验
     if(phoneNumber && phoneNumber.length == 0) {
-        UIAlertView *alert = [[UIAlertView alloc] initWithTitle:@"请输入手机号" message:nil delegate:self cancelButtonTitle:nil otherButtonTitles:@"确定", nil];
+        UIAlertView *alert = [[UIAlertView alloc] initWithTitle:@"请输账号" message:nil delegate:self cancelButtonTitle:nil otherButtonTitles:@"确定", nil];
         [alert show];
         return;
     }
@@ -331,12 +331,46 @@
     }
 
     
-    // 登陆
-    [self beginLogin:phoneNumber password:password];
+    // 是否注册
+    [self ifRegister:phoneNumber password:password];
+    
 }
 
 
 #pragma mark - other
+// 是否注册
+- (void)ifRegister:(NSString *)phoneNumber password:(NSString *)password
+{
+    NSLog(@"是否注册，手机：%@, 密码：%@ ", phoneNumber, password);
+    
+    NSDictionary *dictionary = @{@"mobile": phoneNumber};
+    __weak LoginViewController *weakSelf = self;
+    __block NSString *phoneNumberBlock = phoneNumber;
+    __block NSString *passwordBlock = password;
+    NSString *bodyString = [NMOANetWorking handleHTTPBodyParams:dictionary];
+    [[NMOANetWorking share] taskWithTag:ID_IFREGISTER
+                              urlString:URL_IFREGISTER
+                               httpHead:nil
+                             bodyString:bodyString
+                     objectTaskFinished:^(NSError *error, id obj)
+     {
+
+         if ([[obj objectForKey:HTTP_KEY_RESULTCODE] isEqualToString:HTTP_RESULTCODE_SUCCESS]) {
+             NSLog(@"账号已经注册！");
+             // 登陆
+             [weakSelf beginLogin:phoneNumberBlock password:passwordBlock];
+             
+         } else if ([[obj objectForKey:HTTP_KEY_RESULTCODE] isEqualToString:HTTP_RESULTCODE_ERROR]) {
+             NSLog(@"账号未注册！");
+             UIAlertView *alert = [[UIAlertView alloc] initWithTitle: @"该账号不存在，请先注册" message:nil delegate:self cancelButtonTitle:@"取消" otherButtonTitles:@"注册", nil];
+             alert.tag = kAlertViewTagOfIntoRegister;
+             [alert show];
+
+         }
+         
+     }];
+}
+
 
 // 登陆
 - (void)beginLogin:(NSString *)phoneNumber password:(NSString *)password
@@ -360,7 +394,7 @@
      {
          
          dispatch_async(dispatch_get_main_queue(), ^{
-             [self hideRemoteAnimation];
+             [weakSelf hideRemoteAnimation];
          });
          
          
@@ -405,7 +439,7 @@
              // 进入主页
              RootViewController *homeViewController = [[RootViewController alloc] init];
              NSLog(@"%@",self.navigationController);
-             [self.navigationController pushViewController:homeViewController animated:YES];
+             [weakSelf.navigationController pushViewController:homeViewController animated:YES];
              
              // 上传护理记录数据
              [[RecordManager share] uploadDBDatas:NO];
@@ -414,19 +448,9 @@
              
              NSLog(@"登陆失败！");
              
-             // 如果用户没有注册，弹出注册对话框
-             BOOL userNotRegister = YES;
-             if(userNotRegister) {
-                 UIAlertView *alert = [[UIAlertView alloc] initWithTitle: @"该账号不存在，请先注册" message:nil delegate:self cancelButtonTitle:@"取消" otherButtonTitles:@"注册", nil];
-                 alert.tag = kAlertViewTagOfIntoRegister;
-                 [alert show];
-
-             } else {
-                 
-                 UIAlertView *alert = [[UIAlertView alloc] initWithTitle:[obj objectForKey:HTTP_KEY_RESULTMESSAGE] == nil ? @"登陆失败！": [obj objectForKey:HTTP_KEY_RESULTMESSAGE] message:nil delegate:self cancelButtonTitle:nil otherButtonTitles:@"确定", nil];
-                 [alert show];
-             }
-  
+             UIAlertView *alert = [[UIAlertView alloc] initWithTitle:[obj objectForKey:HTTP_KEY_RESULTMESSAGE] == nil ? @"登陆失败！": [obj objectForKey:HTTP_KEY_RESULTMESSAGE] message:nil delegate:self cancelButtonTitle:nil otherButtonTitles:@"确定", nil];
+             [alert show];
+             
          }
          
      }];

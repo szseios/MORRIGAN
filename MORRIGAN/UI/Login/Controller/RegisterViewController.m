@@ -493,7 +493,8 @@
             if(alertView.tag == kAlertViewTagOfConfirmPhoneNumber) {
                
                 // 获取手机验证码
-                [self getPhoneMsgCode];
+                //[self getPhoneMsgCode];
+                [self ifRegister:_phoneNumbrInputView.text];
                 
             }
         }
@@ -615,6 +616,38 @@
      }];
     
 
+}
+
+// 是否注册
+- (void)ifRegister:(NSString *)phoneNumber
+{
+    NSLog(@"是否注册，手机：%@", phoneNumber);
+    
+    NSDictionary *dictionary = @{@"mobile": phoneNumber};
+    __weak RegisterViewController *weakSelf = self;
+    NSString *bodyString = [NMOANetWorking handleHTTPBodyParams:dictionary];
+    [[NMOANetWorking share] taskWithTag:ID_IFREGISTER
+                              urlString:URL_IFREGISTER
+                               httpHead:nil
+                             bodyString:bodyString
+                     objectTaskFinished:^(NSError *error, id obj)
+     {
+         
+         if ([[obj objectForKey:HTTP_KEY_RESULTCODE] isEqualToString:HTTP_RESULTCODE_SUCCESS]) {
+             NSLog(@"账号已经注册！");
+             
+             UIAlertView *alert = [[UIAlertView alloc] initWithTitle: @"账号已经被注册过" message:nil delegate:self cancelButtonTitle:@"确定" otherButtonTitles:nil, nil];
+             [alert show];
+             
+             
+         } else if ([[obj objectForKey:HTTP_KEY_RESULTCODE] isEqualToString:HTTP_RESULTCODE_ERROR]) {
+             NSLog(@"账号未注册！");
+             // 获取手机验证码
+             [weakSelf getPhoneMsgCode];
+             
+         }
+         
+     }];
 }
 
 
