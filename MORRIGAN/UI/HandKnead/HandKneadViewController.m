@@ -627,8 +627,9 @@
         } else if(button.tag == kButtonSelectedTag) {
             if(_rightChestButton.tag == kButtonUnselectedTag) {
                 //[MBProgressHUD showHUDByContent:@"左胸和右胸必须选中一个" view:self.view];
-                UIAlertView *alert = [[UIAlertView alloc] initWithTitle:@"左胸和右胸必须选中一个!" message:nil delegate:self cancelButtonTitle:nil otherButtonTitles:@"确定", nil];
-                [alert show];
+//                UIAlertView *alert = [[UIAlertView alloc] initWithTitle:@"同步操作开关至少一个被选中" message:nil delegate:self cancelButtonTitle:nil otherButtonTitles:@"确定", nil];
+//                [alert show];
+                [MBProgressHUD showHUDByContent:@"同步操作开关至少一个被选中" view: self.view];
                 return;
             }
             button.tag = kButtonUnselectedTag;
@@ -645,8 +646,9 @@
         } else if(button.tag == kButtonSelectedTag) {
             if(_leftChestButton.tag == kButtonUnselectedTag) {
                 //[MBProgressHUD showHUDByContent:@"左胸和右胸必须选中一个" view:self.view];
-                UIAlertView *alert = [[UIAlertView alloc] initWithTitle:@"左胸和右胸必须选中一个!" message:nil delegate:self cancelButtonTitle:nil otherButtonTitles:@"确定", nil];
-                [alert show];
+//                UIAlertView *alert = [[UIAlertView alloc] initWithTitle:@"左胸和右胸必须选中一个!" message:nil delegate:self cancelButtonTitle:nil otherButtonTitles:@"确定", nil];
+//                [alert show];
+                [MBProgressHUD showHUDByContent:@"同步操作开关至少一个被选中" view: self.view];
                 return;
             }
             button.tag = kButtonUnselectedTag;
