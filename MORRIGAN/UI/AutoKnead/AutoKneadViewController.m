@@ -32,6 +32,7 @@
     UIButton *_buttonStartStop;
     FuntionButton *_dragButton;
     FuntionButton *_tempButton;
+    UILabel *_prepareLabel;
     
     NSDate *_startDate;
 
@@ -211,6 +212,15 @@
     [startBtn setImage:[UIImage imageNamed:@"START"] forState:UIControlStateNormal];
     [self.view addSubview:startBtn];
     _buttonStartStop = startBtn;
+    
+    // 准备按摩吧!
+    UILabel *prepareLabel = [[UILabel alloc] initWithFrame:CGRectMake(0, startBtn.frame.origin.y - 50, kScreenWidth, 20)];
+    prepareLabel.text = @"准备按摩吧!";
+    prepareLabel.textAlignment = NSTextAlignmentCenter;
+    prepareLabel.font = [UIFont systemFontOfSize:16.0];
+    prepareLabel.textColor = [UIColor whiteColor];
+    [self.view addSubview:prepareLabel];
+    _prepareLabel = prepareLabel;
     
     // 向上拖动 任意模式按钮
     CGFloat label1H = 18;
@@ -525,6 +535,8 @@
         [_buttonStartStop setImage:[UIImage imageNamed:@"STOP"] forState:UIControlStateNormal];
         [operation setValue:@"01" index:3];
         _startDate = [NSDate date];
+        
+        _prepareLabel.hidden = YES;
     } else {
         _buttonStartStop.tag = kButtonStopTag;
         [_buttonStartStop setImage:[UIImage imageNamed:@"START"] forState:UIControlStateNormal];
