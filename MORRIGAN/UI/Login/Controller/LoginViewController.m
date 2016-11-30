@@ -294,10 +294,6 @@
         button.backgroundColor = [UIColor clearColor];
     }
    
-    AppDelegate *appDelegate = [UIApplication sharedApplication].delegate;
-    if ([appDelegate checkReachable] == NO) {
-        return;
-    }
     
     NSString *phoneNumber = _phoneNumbrInputView.text;
     NSString *password = _passwordInputView.text;
@@ -327,6 +323,12 @@
     if(!isPasswordRight) {
         UIAlertView *alert = [[UIAlertView alloc] initWithTitle:@"您输入的密码格式有误" message:nil delegate:self cancelButtonTitle:nil otherButtonTitles:@"确定", nil];
         [alert show];
+        return;
+    }
+
+    
+    AppDelegate *appDelegate = [UIApplication sharedApplication].delegate;
+    if ([appDelegate checkReachable] == NO) {
         return;
     }
 

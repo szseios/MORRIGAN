@@ -248,11 +248,7 @@
 {
     NSLog(@"getAuthCodeButtonClickInForgetPwd");
    
-    AppDelegate *appDelegate = [UIApplication sharedApplication].delegate;
-    if ([appDelegate checkReachable] == NO) {
-        return;
-    }
-    
+ 
     if(_getAuthCodeButton.tag == kgetAuthCodeButtonOfGetting){
         return;
     }
@@ -309,11 +305,6 @@
     
     UIButton *button = (UIButton *)sender;
     button.backgroundColor = [UIColor clearColor];
-    
-    AppDelegate *appDelegate = [UIApplication sharedApplication].delegate;
-    if ([appDelegate checkReachable] == NO) {
-        return;
-    }
 
     
     NSString *phoneNumber = _phoneNumbrInputView.text;
@@ -361,6 +352,11 @@
         return;
     }
     
+    AppDelegate *appDelegate = [UIApplication sharedApplication].delegate;
+    if ([appDelegate checkReachable] == NO) {
+        return;
+    }
+    
     // 更改密码
     [self beginResetPwd:phoneNumber authCode:authCode password:password];
 }
@@ -387,6 +383,11 @@
         {
             if(alertView.tag == kAlertViewTagOfConfirmPhoneNumber) {
                
+                AppDelegate *appDelegate = [UIApplication sharedApplication].delegate;
+                if ([appDelegate checkReachable] == NO) {
+                    return;
+                }
+                
                 // 获取手机验证码
                 [self getPhoneMsgCode];
                 
