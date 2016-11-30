@@ -597,6 +597,8 @@
         [_buttonStartStop setImage:[UIImage imageNamed:@"START"] forState:UIControlStateNormal];
         [operation setValue:@"00" index:3];
         
+        _prepareLabel.hidden = NO;
+        
         // 插入数据库
         MassageRecordModel *model = [[MassageRecordModel alloc] init];
         model.userID = [UserInfo share].userId;
