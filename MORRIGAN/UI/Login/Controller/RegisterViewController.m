@@ -344,10 +344,7 @@
 - (void)getAuthCodeButtonClickInRegister:(id)sender
 {
     NSLog(@"getAuthCodeButtonClickInRegister");
-    AppDelegate *appDelegate = [UIApplication sharedApplication].delegate;
-    if ([appDelegate checkReachable] == NO) {
-        return;
-    }
+    
     
     if(_getAuthCodeButton.tag == kgetAuthCodeButtonOfGetting){
         return;
@@ -401,11 +398,6 @@
     UIButton *button = (UIButton *)sender;
     button.backgroundColor = [UIColor clearColor];
     
-    AppDelegate *appDelegate = [UIApplication sharedApplication].delegate;
-    if ([appDelegate checkReachable] == NO) {
-        return;
-    }
-
     
     NSString *phoneNumber = _phoneNumbrInputView.text;
     NSString *authCode = _authCodeInputView.text;
@@ -452,6 +444,12 @@
         return;
     }
     
+    AppDelegate *appDelegate = [UIApplication sharedApplication].delegate;
+    if ([appDelegate checkReachable] == NO) {
+        return;
+    }
+    
+    
     // 注册
     [self beginRegister:phoneNumber authCode:authCode password:password sex:_sexString];
     
@@ -492,6 +490,11 @@
         {
             if(alertView.tag == kAlertViewTagOfConfirmPhoneNumber) {
                
+                AppDelegate *appDelegate = [UIApplication sharedApplication].delegate;
+                if ([appDelegate checkReachable] == NO) {
+                    return;
+                }
+                
                 // 获取手机验证码
                 //[self getPhoneMsgCode];
                 [self ifRegister:_phoneNumbrInputView.text];
@@ -577,6 +580,7 @@
 // 注册
 - (void)beginRegister:(NSString *)phoneNumber authCode:(NSString *)authCode password:(NSString *)password sex:(NSString *)sex
 {
+   
     [self stopTimer];
     [self showRemoteAnimation:@"正在注册, 请稍候..."];
     

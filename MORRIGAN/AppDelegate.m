@@ -149,8 +149,8 @@
 //        [MBProgressHUD showHUDByContent:@"当前网络不可用，请检查您的网络设置。"
 //                                   view:UI_Window
 //                             afterDelay:3];
-        UIAlertView *alert = [[UIAlertView alloc] initWithTitle:@"当前网络不可用，请检查你的网络设置。" message:nil delegate:self cancelButtonTitle:nil otherButtonTitles:@"确定", nil];
-        [alert show];
+//        UIAlertView *alert = [[UIAlertView alloc] initWithTitle:@"当前网络不可用，请检查你的网络设置。" message:nil delegate:self cancelButtonTitle:nil otherButtonTitles:@"确定", nil];
+//        [alert show];
     }
     NSLog(@"当前网络状态 : %@",[_reach currentReachabilityString]);
 }
