@@ -186,6 +186,8 @@
              
              [MBProgressHUD showHUDByContent:@"注销成功！" view:UI_Window afterDelay:2];
              NSLog(@"注销成功！");
+             [UserInfo share].mobile = @"";
+             [UserInfo share].password = @"";
              // 注销登陆成功时调用这个
              NSUserDefaults *defaults = [NSUserDefaults standardUserDefaults];
              [defaults removeObjectForKey:kUserDefaultIdKey];
