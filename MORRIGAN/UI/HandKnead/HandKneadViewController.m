@@ -727,6 +727,7 @@
     
     
     NSString *timeStr = [NSString stringWithFormat:@"%@:%@", minStr, secStr];
+    NSLog(@"timeStr----- %@", timeStr);
     _timeLabel.text = timeStr;
 }
 
