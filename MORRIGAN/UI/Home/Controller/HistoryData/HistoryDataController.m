@@ -46,6 +46,10 @@
 
 @property (nonatomic , strong) NSMutableArray *weekBarViewArray;
 
+@property (nonatomic , strong) NSMutableArray *dayLabelArray;
+
+@property (nonatomic , strong) NSMutableArray *weekLabelArray;
+
 @property (nonatomic , strong) NSMutableArray *weekDataArray;
 
 @property (nonatomic , assign) NSInteger weekTimeLong;
@@ -53,6 +57,11 @@
 @property (nonatomic , assign) NSInteger todayAllSec;
 
 @property (nonatomic , assign) NSInteger todayIndexInWeek;
+
+@property (nonatomic , assign) NSInteger selectHourIndexInDay;
+
+@property (nonatomic , assign) NSInteger selectDayIndexInWeek;
+
 
 @end
 
@@ -159,32 +168,37 @@ static NSString *cellID = @"DataCellID";
     [_weekView addSubview:_weekUnitLabel];
     
     NSInteger maxTimeLong = 0;
-    NSInteger maxTimeLongIndex = 0;
     for (NSInteger i = 0; i < _weekDataArray.count; i++) {
         NSInteger timeLong = [_weekDataArray[i] integerValue];
         if(maxTimeLong < timeLong) {
             maxTimeLong = timeLong;
-            maxTimeLongIndex = i;
+            _selectDayIndexInWeek = i;
         }
         
         CGRect frame = ((UIView *)_weekBarViewArray[i]).frame;
         frame.size.height = frame.size.height + timeLong*0.65;
         frame.origin.y =  frame.origin.y - timeLong*0.65;
         ((UIView *)_weekBarViewArray[i]).frame = frame;
+        
+        CGRect labelFrame = ((UIView *)_weekBarViewArray[i]).frame;
+        labelFrame.origin.y = labelFrame.origin.y - 15;
+        labelFrame.size.height = 15;
+        UILabel *secLabel = [[UILabel alloc] initWithFrame:labelFrame];
+        secLabel.text = [NSString stringWithFormat:@"%ld", timeLong];
+        secLabel.textColor = [UIColor whiteColor];
+        secLabel.textAlignment = NSTextAlignmentCenter;
+        secLabel.font = [UIFont systemFontOfSize:10.0];
+        secLabel.tag = 2600 + i;
+        secLabel.hidden = YES;
+        [_weekView addSubview:secLabel];
+        [_weekLabelArray addObject:secLabel];
     }
     
     
     // 在最大分钟数顶部添加label
     if(maxTimeLong > 0) {
-        CGRect frame = ((UIView *)_weekBarViewArray[maxTimeLongIndex]).frame;
-        frame.origin.y = frame.origin.y - 15;
-        frame.size.height = 15;
-        UILabel *secLabel = [[UILabel alloc] initWithFrame:frame];
-        secLabel.text = [NSString stringWithFormat:@"%ld", maxTimeLong];
-        secLabel.textColor = [UIColor whiteColor];
-        secLabel.textAlignment = NSTextAlignmentCenter;
-        secLabel.font = [UIFont systemFontOfSize:10.0];
-        [_weekView addSubview:secLabel];
+        UILabel *didShowLabel = ((UILabel *)_weekLabelArray[_selectDayIndexInWeek]);
+        didShowLabel.hidden = NO;
 
     }
 }
@@ -209,12 +223,9 @@ static NSString *cellID = @"DataCellID";
 
 - (void)setUpDayBarChatView
 {
+    _dayLabelArray = [NSMutableArray array];
     
     UIView *chatView = [[UIView alloc] initWithFrame:CGRectMake(0, 115, kScreenWidth, 250)];
-    
-//    UIImageView *backImageView = [[UIImageView alloc] initWithFrame:chatView.bounds];
-//    backImageView.image = [UIImage imageNamed:@"basicBackground"];
-//    [chatView addSubview:backImageView];
     chatView.backgroundColor = [UIColor colorWithRed:130/255.0 green:0.0 blue:230/255.0 alpha:1];
     [self.view addSubview:chatView];
     
@@ -246,10 +257,10 @@ static NSString *cellID = @"DataCellID";
     CGFloat barW = barX/2;
     CGFloat mostBarH = dayBarViewY;
     NSDictionary *todatSecDict = [self getTodatSecDict];
-    CGRect secLabelFame = CGRectMake(0, 0, 0, 0);
+//    CGRect secLabelFame = CGRectMake(0, 0, 0, 0);
     NSInteger todayMaxSec = 0;
     for (NSInteger i = 0; i < 24; i++) {
-        NSString *hourKey = i+1 < 10 ? [NSString stringWithFormat:@"0%ld",i+1] : [NSString stringWithFormat:@"%ld",i+1];
+        NSString *hourKey = [NSString stringWithFormat:@"%02ld",i+1];
         NSInteger sec = [[todatSecDict objectForKey:hourKey] integerValue];
         CGFloat h = sec*2.1 + 5;
         UIView *bar = [[UIView alloc] initWithFrame:CGRectMake(barX * i+13, mostBarH - h, barW, h)];
@@ -258,12 +269,28 @@ static NSString *cellID = @"DataCellID";
         bar.tag = 1000 + i;
         [_dayView addSubview:bar];
         
+        UITapGestureRecognizer *tap = [[UITapGestureRecognizer alloc] initWithTarget:self action:@selector(showMorriganTime:)];
+        bar.userInteractionEnabled = YES;
+        [bar addGestureRecognizer:tap];
+        
+        
+        UILabel *hourTimeLabel = [[UILabel alloc] initWithFrame:CGRectMake(barX * i+13 - 3, mostBarH - h - 15 , barW + 7, 15.0)];
+        hourTimeLabel.text = [NSString stringWithFormat:@"%ld", sec];
+        hourTimeLabel.textColor = [UIColor whiteColor];
+        hourTimeLabel.textAlignment = NSTextAlignmentCenter;
+        hourTimeLabel.font = [UIFont systemFontOfSize:10.0];
+        hourTimeLabel.tag = 1500 + i;
+        hourTimeLabel.hidden = YES;
+        [_dayView addSubview:hourTimeLabel];
+        [_dayLabelArray addObject:hourTimeLabel];
+        
+        
         _todayAllSec = _todayAllSec + sec;
         
         // 保存最大分钟数时顶部label的frame
         if(sec > todayMaxSec) {
             todayMaxSec = sec;
-            secLabelFame = CGRectMake(barX * i+13 - 3, mostBarH - h - 15 , barW + 7, 15.0);
+            _selectHourIndexInDay = i;
         }
         
         if (i == 0 || i == 4 || i == 9 || i == 14 || i == 19 || i == 23 ) {
@@ -288,15 +315,40 @@ static NSString *cellID = @"DataCellID";
     unitLabel.text = @"分钟";
     [_dayView addSubview:unitLabel];
    
+    UILabel *didShowLabel = (UILabel *)_dayLabelArray[_selectHourIndexInDay];
+    didShowLabel.hidden = NO;
+//    
+//    // 在最大分钟数顶部添加label
+//    UILabel *secLabel = [[UILabel alloc] initWithFrame:secLabelFame];
+//    secLabel.text = [NSString stringWithFormat:@"%ld", todayMaxSec];
+//    secLabel.textColor = [UIColor whiteColor];
+//    secLabel.textAlignment = NSTextAlignmentCenter;
+//    secLabel.font = [UIFont systemFontOfSize:10.0];
+//    [_dayView addSubview:secLabel];
+}
+
+- (void)showMorriganTime:(UITapGestureRecognizer *)tap
+{
+    NSInteger index = _pageSegmente.selectedSegmentIndex;
+    if (index == 0) {
+        UILabel *haveShowLabel = (UILabel *)_dayLabelArray[_selectHourIndexInDay];
+        haveShowLabel.hidden = YES;
+        UIView *view = [tap view];
+        NSInteger labelTag = view.tag - 1000 + 1500;
+        UILabel *willShowLabel = (UILabel*)[self.view viewWithTag:labelTag];
+        willShowLabel.hidden = NO;
+        _selectHourIndexInDay = view.tag - 1000;
+    }
+    else if (index == 1) {
+        UILabel *haveShowLabel = (UILabel *)_weekLabelArray[_selectDayIndexInWeek];
+        haveShowLabel.hidden = YES;
+        UIView *view = [tap view];
+        NSInteger labelTag = view.tag - 2000 + 2600;
+        UILabel *willShowLabel = (UILabel*)[self.view viewWithTag:labelTag];
+        willShowLabel.hidden = NO;
+        _selectDayIndexInWeek = view.tag - 2000;
+    }
     
-    
-    // 在最大分钟数顶部添加label
-    UILabel *secLabel = [[UILabel alloc] initWithFrame:secLabelFame];
-    secLabel.text = [NSString stringWithFormat:@"%ld", todayMaxSec];
-    secLabel.textColor = [UIColor whiteColor];
-    secLabel.textAlignment = NSTextAlignmentCenter;
-    secLabel.font = [UIFont systemFontOfSize:10.0];
-    [_dayView addSubview:secLabel];
 }
 
 - (UILabel *)setUpLabelWithInteger:(NSInteger)i
@@ -312,6 +364,7 @@ static NSString *cellID = @"DataCellID";
 }
 - (void)setUpWeekBarChatView
 {
+    _weekLabelArray = [NSMutableArray array];
     _weekView = [[UIView alloc] initWithFrame:_dayView.frame];
     _weekView.backgroundColor = [UIColor clearColor];
     [self.view addSubview:_weekView];
@@ -354,8 +407,12 @@ static NSString *cellID = @"DataCellID";
         UIView *bar = [[UIView alloc] initWithFrame:CGRectMake(barX, mostBarH - h, barW, h)];
         bar.backgroundColor = [UIColor whiteColor];
         bar.alpha = 0.6;
-        bar.tag = 1000 + i;
+        bar.tag = 2000 + i;
         [_weekView addSubview:bar];
+        
+        UITapGestureRecognizer *tap = [[UITapGestureRecognizer alloc] initWithTarget:self action:@selector(showMorriganTime:)];
+        bar.userInteractionEnabled = YES;
+        [bar addGestureRecognizer:tap];
         
         // 保存每天的条状视图
         if(_weekBarViewArray == nil) {
@@ -484,15 +541,11 @@ static NSString *cellID = @"DataCellID";
         _weekView.hidden = YES;
         _titleArray = @[@"今日目标",@"今日护养",@"剩余目标值"];
         [_bottomTableView reloadData];
-//        [_barView setTitleLabelText:@"今日一览"];
-        [_barView setTitleLabelText:@"历史记录"];
     }else{
         _dayView.hidden = YES;
         _weekView.hidden = NO;
         _titleArray = @[@"本周目标",@"本周护养",@"剩余目标值",@"平均养护"];
         [_bottomTableView reloadData];
-//        [_barView setTitleLabelText:@"本周一阅"];
-        [_barView setTitleLabelText:@"历史记录"];
     }
 }
 

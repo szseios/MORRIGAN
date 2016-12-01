@@ -212,8 +212,14 @@
         }
         
     }
-    _monthIndex = 11;
-    _dayIndex = 21;
+    if (_monthIndex == 0 || !_monthIndex || _monthIndex > 11 ) {
+        _monthIndex = 11;
+    }
+    if (_dayIndex == 0 || !_dayIndex || _dayIndex > 30) {
+        _dayIndex = 21;
+    }
+    
+    
     if (_dayIndex >= _dayArray.count) {
         _dayIndex = _dayArray.count - 1;
     }

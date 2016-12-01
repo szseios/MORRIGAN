@@ -353,7 +353,7 @@ static NSString *cellIdentifier = @"cellIdentifier";
             
         case pickerViewTypeFeeling:
         {
-            [UserInfo share].emotion = selectData;
+            [UserInfo share].emotionStr = selectData;
             showData = selectData;
         }
             break;

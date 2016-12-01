@@ -110,8 +110,8 @@
     CGFloat mainViewW = kScreenWidth * 0.75 + (kScreenWidth > 320 ? 30 : 10); //kScreenWidth > 320 ? 300 : 220;
     CGFloat mainViewH = mainViewW / 623 * 860.0;
     CGFloat mainViewX = (kScreenWidth - mainViewW) /2 + (kScreenWidth > 320 ? 20 : 15); //kScreenWidth > 320 ? 50 : 20;
-    NSArray *ForenoonArray = [DBManager selectForenoonDatas:[UserInfo share].userId];
-    NSArray *AfternoonArray = [DBManager selectaAfternoonDatas:[UserInfo share].userId];
+    NSArray *ForenoonArray = [DBManager selectForenoonDatas:@"0bb15e9c-561c-4573-9726-11a1e4d82390"];
+    NSArray *AfternoonArray = [DBManager selectaAfternoonDatas:@"0bb15e9c-561c-4573-9726-11a1e4d82390"];
     _mainView = [[HomeMainView alloc] initWithAMMorriganArray:ForenoonArray PMMorriganTime:AfternoonArray  withFarme:CGRectMake(mainViewX, 74, mainViewW, mainViewH)];
     _mainView.backgroundColor = [UIColor clearColor];
     
