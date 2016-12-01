@@ -303,7 +303,7 @@ static NSString *cellIdentifier = @"cellIdentifier";
         {
            
             showData = [NSString stringWithFormat:@"%@kg",selectData];
-             [UserInfo share].weight = showData;
+             [UserInfo share].weight = selectData;
         }
             break;
         case pickerViewTypeAge:
@@ -347,13 +347,13 @@ static NSString *cellIdentifier = @"cellIdentifier";
         {
             
             showData = [NSString stringWithFormat:@"%@cm",selectData];
-            [UserInfo share].high = showData;
+            [UserInfo share].high = selectData;
         }
             break;
             
         case pickerViewTypeFeeling:
         {
-            [UserInfo share].emotion = selectData;
+            [UserInfo share].emotionStr = selectData;
             showData = selectData;
         }
             break;

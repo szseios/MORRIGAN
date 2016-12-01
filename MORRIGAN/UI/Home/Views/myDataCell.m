@@ -55,8 +55,8 @@
             {
                 _titleLabel.text = @"年龄";
                 NSString *temp = [UserInfo share].age;
-                if (temp.length > 0) {
-                    _contentLabel.text = temp;
+                if (temp.length > 0 && temp.integerValue != 0) {
+                    _contentLabel.text = [NSString stringWithFormat:@"%@岁",temp];
                 }else{
                   _contentLabel.text = @"请输入";
                 }
@@ -80,7 +80,7 @@
                 _titleLabel.text = @"身高";
                 NSString *temp = [UserInfo share].high;
                 if (temp.length > 0) {
-                    _contentLabel.text = temp;
+                    _contentLabel.text = [NSString stringWithFormat:@"%@cm",temp];
                 }else{
                     _contentLabel.text = @"请输入";
                 }
@@ -93,7 +93,7 @@
                 _titleLabel.text = @"体重";
                 NSString *temp = [UserInfo share].weight;
                 if (temp.length > 0) {
-                    _contentLabel.text = temp;
+                    _contentLabel.text = [NSString stringWithFormat:@"%@kg",temp];
                 }else{
                     _contentLabel.text = @"请输入";
                 }

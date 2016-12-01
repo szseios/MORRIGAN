@@ -178,11 +178,11 @@
     // 初始化存储时间数据源的数组
     // 年
     _yearArray = [NSMutableArray new];
-    for (NSInteger i = 0; i <= comps.year - 1960; i++) {
-        NSString *tempStr = [NSString stringWithFormat:@"%ld",(1960+i)];
+    for (NSInteger i = 0; i <= comps.year - 1916; i++) {
+        NSString *tempStr = [NSString stringWithFormat:@"%ld",(1916+i)];
         [_yearArray addObject:tempStr];
     }
-    _yearIndex = comps.year - 1960 - 19;
+    _yearIndex = comps.year - 1916 - 19;
     _comps = comps;
     [self getCurrentDay];
 }
@@ -191,7 +191,7 @@
 {
     // 月
     _monthArray = [NSMutableArray array];
-    if (_yearIndex < _comps.year - 1960) {
+    if (_yearIndex < _comps.year - 1916) {
         for (NSInteger i=1; i<=12; i++) {
             [_monthArray addObject:[NSString stringWithFormat:@"%02ld", (long)i]];
         }
@@ -212,8 +212,14 @@
         }
         
     }
-    _monthIndex = 11;
-    _dayIndex = 21;
+    if (_monthIndex == 0 || !_monthIndex || _monthIndex > 11 ) {
+        _monthIndex = 11;
+    }
+    if (_dayIndex == 0 || !_dayIndex || _dayIndex > 30) {
+        _dayIndex = 21;
+    }
+    
+    
     if (_dayIndex >= _dayArray.count) {
         _dayIndex = _dayArray.count - 1;
     }
@@ -224,7 +230,7 @@
 }
 
 - (NSUInteger)daysOfMonth {
-    if (_yearIndex == _comps.year - 1960 && _monthIndex == _comps.month) {
+    if (_yearIndex == _comps.year - 1916 && _monthIndex == _comps.month) {
         return _comps.day;
     }
     NSString *dateStr = [NSString stringWithFormat:@"%@-%@-01 00:00", _yearArray[_yearIndex], _monthArray[_monthIndex]];

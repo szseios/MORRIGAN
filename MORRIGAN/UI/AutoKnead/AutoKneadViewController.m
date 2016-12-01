@@ -32,9 +32,13 @@
     UIButton *_buttonStartStop;
     FuntionButton *_dragButton;
     FuntionButton *_tempButton;
+    UIButton *_curKneeding;
+    UILabel *_prepareLabel;
     
     NSDate *_startDate;
 
+    BOOL _preKneeding;   // 正在体验按摩
+    NSTimer *_timer;     // 6s切换按摩方式定时器
 }
 
 @end
@@ -48,6 +52,12 @@
     [super viewDidLoad];
     
     [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(bluetoothDisConnectHandlerInAutoKnead) name:DisconnectPeripheral object:nil];
+}
+
+-(void)viewDidDisappear:(BOOL)animated
+{
+    [super viewDidDisappear:animated];
+    [self stopKneed];
 }
 
 
@@ -212,6 +222,21 @@
     [self.view addSubview:startBtn];
     _buttonStartStop = startBtn;
     
+    // 准备按摩吧!
+    UILabel *prepareLabel = [[UILabel alloc] initWithFrame:CGRectMake(0, startBtn.frame.origin.y - 50, kScreenWidth, 20)];
+    prepareLabel.text = @"准备按摩吧!";
+    prepareLabel.textAlignment = NSTextAlignmentCenter;
+    prepareLabel.font = [UIFont systemFontOfSize:16.0];
+    prepareLabel.textColor = [UIColor whiteColor];
+    [self.view addSubview:prepareLabel];
+    _prepareLabel = prepareLabel;
+    
+    // 正在按摩的模式
+    _curKneeding = [[UIButton alloc] initWithFrame:CGRectMake(startBtn.frame.origin.x + (startBtn.frame.size.width - buttonW)/2, startBtn.frame.origin.y - 100, buttonW, buttonH)];
+    [_curKneeding setImage:[UIImage imageNamed:@"icon-lightPress"] forState:UIControlStateNormal];
+    [self.view addSubview:_curKneeding];
+    _curKneeding.hidden = YES;
+    
     // 向上拖动 任意模式按钮
     CGFloat label1H = 18;
     CGFloat label1Y = startBtn.frame.origin.y + startBtn.frame.size.height + 20;
@@ -243,9 +268,11 @@
     FuntionButton *funButton1 = [[FuntionButton alloc] initWithFrame:CGRectMake(buttonX, buttonY, buttonW, buttonH)];
     funButton1.buttonImage = [UIImage imageNamed:@"soft"];
     funButton1.buttonBeenDrapImage = [UIImage imageNamed:@"select_soft"];
+    funButton1.buttonKneedingImage = [UIImage imageNamed:@"icon-soft"];
     [funButton1 setImage:funButton1.buttonImage forState:UIControlStateNormal];
     UIPanGestureRecognizer *panGestureRecognizer1 = [[UIPanGestureRecognizer alloc] initWithTarget:self action:@selector(dragReplyButton:)];
     [funButton1 addGestureRecognizer:panGestureRecognizer1];
+    [funButton1 addTarget:self action:@selector(preKneedHandler:) forControlEvents:UIControlEventTouchUpInside];
     funButton1.tag = kTagOfSoft;
     funButton1.funCodeString = @"01";
     [self.view addSubview:funButton1];
@@ -260,9 +287,11 @@
     FuntionButton *funButton2 = [[FuntionButton alloc] initWithFrame:CGRectMake(buttonX, buttonY, buttonW, buttonH)];
     funButton2.buttonImage = [UIImage imageNamed:@"warter"];
     funButton2.buttonBeenDrapImage = [UIImage imageNamed:@"select_warter"];
+    funButton2.buttonKneedingImage = [UIImage imageNamed:@"icon-warter"];
     [funButton2 setImage:funButton2.buttonImage forState:UIControlStateNormal];
     UIPanGestureRecognizer *panGestureRecognizer2 = [[UIPanGestureRecognizer alloc] initWithTarget:self action:@selector(dragReplyButton:)];
     [funButton2 addGestureRecognizer:panGestureRecognizer2];
+    [funButton2 addTarget:self action:@selector(preKneedHandler:) forControlEvents:UIControlEventTouchUpInside];
     funButton2.tag = kTagOfWater;
     funButton2.funCodeString = @"02";
     [self.view addSubview:funButton2];
@@ -277,9 +306,11 @@
     FuntionButton *funButton3 = [[FuntionButton alloc] initWithFrame:CGRectMake(buttonX, buttonY, buttonW, buttonH)];
     funButton3.buttonImage = [UIImage imageNamed:@"lightPress"];
     funButton3.buttonBeenDrapImage = [UIImage imageNamed:@"select_lightPress"];
+    funButton3.buttonKneedingImage = [UIImage imageNamed:@"icon-lightPress"];
     [funButton3 setImage:funButton3.buttonImage forState:UIControlStateNormal];
     UIPanGestureRecognizer *panGestureRecognizer3 = [[UIPanGestureRecognizer alloc] initWithTarget:self action:@selector(dragReplyButton:)];
     [funButton3 addGestureRecognizer:panGestureRecognizer3];
+    [funButton3 addTarget:self action:@selector(preKneedHandler:) forControlEvents:UIControlEventTouchUpInside];
     funButton3.tag = kTagOfMicroPress;
     funButton3.funCodeString = @"03";
     [self.view addSubview:funButton3];
@@ -299,9 +330,11 @@
     FuntionButton *funButton4 = [[FuntionButton alloc] initWithFrame:CGRectMake(buttonX, buttonY, buttonW, buttonH)];
     funButton4.buttonImage = [UIImage imageNamed:@"strongShake"];
     funButton4.buttonBeenDrapImage = [UIImage imageNamed:@"select_strongShake"];
+    funButton4.buttonKneedingImage = [UIImage imageNamed:@"icon-strongShake"];
     [funButton4 setImage:funButton4.buttonImage forState:UIControlStateNormal];
     UIPanGestureRecognizer *panGestureRecognizer4 = [[UIPanGestureRecognizer alloc] initWithTarget:self action:@selector(dragReplyButton:)];
     [funButton4 addGestureRecognizer:panGestureRecognizer4];
+    [funButton4 addTarget:self action:@selector(preKneedHandler:) forControlEvents:UIControlEventTouchUpInside];
     funButton4.tag = kTagOfStrongVibr;
     funButton4.funCodeString = @"04";
     [self.view addSubview:funButton4];
@@ -316,9 +349,11 @@
     FuntionButton *funButton5 = [[FuntionButton alloc] initWithFrame:CGRectMake(buttonX, buttonY, buttonW, buttonH)];
     funButton5.buttonImage = [UIImage imageNamed:@"movingFeel"];
     funButton5.buttonBeenDrapImage = [UIImage imageNamed:@"select_movingFeel"];
+    funButton5.buttonKneedingImage = [UIImage imageNamed:@"icon-movingFeel"];
     [funButton5 setImage:funButton5.buttonImage forState:UIControlStateNormal];
     UIPanGestureRecognizer *panGestureRecognizer5 = [[UIPanGestureRecognizer alloc] initWithTarget:self action:@selector(dragReplyButton:)];
     [funButton5 addGestureRecognizer:panGestureRecognizer5];
+    [funButton5 addTarget:self action:@selector(preKneedHandler:) forControlEvents:UIControlEventTouchUpInside];
     funButton5.tag = kTagOfFeel;
     funButton5.funCodeString = @"05";
     [self.view addSubview:funButton5];
@@ -335,16 +370,92 @@
     
 }
 
+// 按摩体验
+- (void)preKneedHandler:(id)sender
+{
+    if(_preKneeding == YES ||  _buttonStartStop.tag == kButtonStartTag || ![BluetoothManager share].isConnected) {
+        return;
+    }
+    
+    FuntionButton *button = (FuntionButton *)sender;
+    NSLog(@"tag: %ld, %@", button.tag, button.funCodeString);
+    
+    BluetoothOperation *operation = [[BluetoothOperation alloc] init];
+    [operation setValue:@"01" index:2];
+    [operation setValue:@"02" index:4];
+    [operation setValue:@"01" index:3];
+    [operation setValue:button.funCodeString index:7];
+    operation.response = ^(NSString *response,long tag,NSError *error,BOOL success) {
+        
+    };
+    [[BluetoothManager share] writeValueByOperation:operation];
+    _preKneeding = YES;
+    dispatch_after(dispatch_time(DISPATCH_TIME_NOW, (int64_t)(3.0 * NSEC_PER_SEC)), dispatch_get_main_queue(), ^{
+
+        if(_buttonStartStop.tag == kButtonStopTag) {
+            [self stopKneed];
+        }
+        
+    });
+}
+
+
+// 更新按摩模式
+- (void)updateMode
+{
+    [self stopKneed];
+    
+    BluetoothOperation *operation = [[BluetoothOperation alloc] init];
+    [operation setValue:@"01" index:2];
+    [operation setValue:@"02" index:4];
+    [operation setValue:@"01" index:3];
+    
+    BOOL beenEnd = YES;
+    for (NSInteger i = 0; i < _topFiveButtonArray.count; i++) {
+        FuntionButton *button = _topFiveButtonArray[i];
+        if(button.funCodeString == nil || [button.funCodeString isEqualToString:@"00"]) {
+            button.funCodeString = @"00";
+        }
+        if(![button.funCodeString isEqualToString:@"00"]){
+            if(i > _curKneeding.tag) {
+                beenEnd = NO;
+                _curKneeding.tag = i;
+                NSLog(@"准备发送－－－－－－---------------- %ld, %@", _curKneeding.tag, button.funCodeString);
+                [_curKneeding setImage:button.buttonKneedingImage forState:UIControlStateNormal];
+                [operation setValue:button.funCodeString index:7];
+                operation.response = ^(NSString *response,long tag,NSError *error,BOOL success) {
+                    
+                };
+                [[BluetoothManager share] writeValueByOperation:operation];
+                break;
+            }
+        }
+    }
+
+    if(beenEnd) {
+        _curKneeding.tag = -1;
+        [self updateMode];
+    }
+    
+}
 
 - (void)dragReplyButton:(UIPanGestureRecognizer *)recognizer {
     
     
-    if(_buttonStartStop.tag == kButtonStartTag) {
-        // [MBProgressHUD showHUDByContent:@"正在按摩，不能拖动！" view: self.view];
-        UIAlertView *alert = [[UIAlertView alloc] initWithTitle:@"正在按摩，不能拖动！" message:nil delegate:self cancelButtonTitle:nil otherButtonTitles:@"确定", nil];
-        [alert show];
-        return;
-    }
+//    if(_preKneeding == YES) {
+//        UIAlertView *alert = [[UIAlertView alloc] initWithTitle:@"正在按摩，不能拖动" message:nil delegate:self cancelButtonTitle:nil otherButtonTitles:@"确定", nil];
+//        [alert show];
+//        
+//        return;
+//    }
+//
+//    
+//    if(_buttonStartStop.tag == kButtonStartTag) {
+//        // [MBProgressHUD showHUDByContent:@"正在按摩，不能拖动！" view: self.view];
+//        UIAlertView *alert = [[UIAlertView alloc] initWithTitle:@"正在按摩，不能拖动" message:nil delegate:self cancelButtonTitle:nil otherButtonTitles:@"确定", nil];
+//        [alert show];
+//        return;
+//    }
     
     FuntionButton *targetButton = (FuntionButton *)recognizer.view;
     if(targetButton != _dragButton) {
@@ -353,6 +464,7 @@
         [_dragButton addGestureRecognizer:recognizer];
         _dragButton.buttonImage = targetButton.buttonImage;
         _dragButton.buttonBeenDrapImage = targetButton.buttonBeenDrapImage;
+        _dragButton.buttonKneedingImage = targetButton.buttonKneedingImage;
         _dragButton.funCodeString = targetButton.funCodeString;
         [_dragButton setImage:_dragButton.buttonImage forState:UIControlStateNormal];
         _dragButton.tag = targetButton.tag;
@@ -371,8 +483,17 @@
     
     if (recognizer.state == UIGestureRecognizerStateBegan) {
         
+        if(_buttonStartStop.tag == kButtonStartTag || _preKneeding == YES) {
+            UIAlertView *alert = [[UIAlertView alloc] initWithTitle:@"正在按摩，不能拖动" message:nil delegate:self cancelButtonTitle:nil otherButtonTitles:@"确定", nil];
+            [alert show];
+        }
+        
     } else if (recognizer.state == UIGestureRecognizerStateChanged) {
        
+        if(_buttonStartStop.tag == kButtonStartTag || _preKneeding == YES) {
+            return;
+        }
+        
         CGPoint location = [recognizer locationInView:self.view];
         if (location.y < 0 || location.y > self.view.bounds.size.height) {
             return;
@@ -382,6 +503,10 @@
         [recognizer setTranslation:CGPointZero inView:self.view];
         
     } else if (recognizer.state == UIGestureRecognizerStateEnded || recognizer.state == UIGestureRecognizerStateCancelled) {
+        
+        if(_buttonStartStop.tag == kButtonStartTag || _preKneeding == YES) {
+            return;
+        }
         
         CGFloat dragButtonX = _dragButton.frame.origin.x;
         CGFloat dragButtonY = _dragButton.frame.origin.y;
@@ -432,6 +557,7 @@
                 newButton.tag = _dragButton.tag;
                 newButton.buttonImage = _dragButton.buttonImage;
                 newButton.buttonBeenDrapImage = _dragButton.buttonBeenDrapImage;
+                newButton.buttonKneedingImage = _dragButton.buttonKneedingImage;
                 [newButton setImage:newButton.buttonBeenDrapImage forState:UIControlStateNormal];
                 UIPanGestureRecognizer *panGestureRecognizer = [[UIPanGestureRecognizer alloc] initWithTarget:self action:@selector(topFiveButtonGesture:)];
                 [newButton addGestureRecognizer:panGestureRecognizer];
@@ -440,6 +566,7 @@
                 // 将顶部被添加的按钮设置tag，代表了一种按摩模式
                 button.tag = _dragButton.tag;
                 button.funCodeString = _dragButton.funCodeString;
+                button.buttonKneedingImage = _dragButton.buttonKneedingImage;
             }
             
         }
@@ -484,10 +611,6 @@
 - (void)startBtnHandler:(id)sender
 {
     
-    BluetoothOperation *operation = [[BluetoothOperation alloc] init];
-    [operation setValue:@"01" index:2];
-    [operation setValue:@"02" index:4];
-    NSInteger index = 7;
     BOOL hasSelected = NO;
     for (FuntionButton *button in _topFiveButtonArray) {
         NSLog(@"-----当前按摩顺序----：：%ld  %ld  %@", button.arrayIndex, button.tag, button.funCodeString);
@@ -499,16 +622,12 @@
         if(![button.funCodeString isEqualToString:@"00"]){
             hasSelected = YES;
         }
-        [operation setValue:button.funCodeString index:index];
-        index ++;
     }
 
 
     // 必须选择一个
     if(hasSelected == NO) {
         [MBProgressHUD showHUDByContent:@"请先选择组合模式" view: self.view];
-//        UIAlertView *alert = [[UIAlertView alloc] initWithTitle:@"请选择组合模式" message:nil delegate:self cancelButtonTitle:nil otherButtonTitles:@"确定", nil];
-//        [alert show];
         return;
     }
     
@@ -517,18 +636,27 @@
         [alert show];
         return;
     }
-
-    
     
     if(_buttonStartStop.tag == kButtonStopTag) {
         _buttonStartStop.tag = kButtonStartTag;
         [_buttonStartStop setImage:[UIImage imageNamed:@"STOP"] forState:UIControlStateNormal];
-        [operation setValue:@"01" index:3];
         _startDate = [NSDate date];
+        
+        _prepareLabel.hidden = YES;
+        _curKneeding.hidden = NO;
+        _curKneeding.tag = -1;
+        
+        [self startTimer];
+        
     } else {
         _buttonStartStop.tag = kButtonStopTag;
         [_buttonStartStop setImage:[UIImage imageNamed:@"START"] forState:UIControlStateNormal];
-        [operation setValue:@"00" index:3];
+        
+        _prepareLabel.hidden = NO;
+        _curKneeding.hidden = YES;
+        
+        [self stopTimer];
+        [self stopKneed];
         
         // 插入数据库
         MassageRecordModel *model = [[MassageRecordModel alloc] init];
@@ -538,13 +666,6 @@
         model.type = MassageTypeAuto;
         [[RecordManager share] addToDB:model];
     }
-
-    
-    operation.response = ^(NSString *response,long tag,NSError *error,BOOL success) {
-        
-    };
-    [[BluetoothManager share] writeValueByOperation:operation];
-    
 }
 
 - (void)bindingDeviceInAutoKnead
@@ -555,7 +676,16 @@
 
 - (void)backButtonHandleInAutokneed
 {
-    // 退出时停止
+    [self stopTimer];
+    [self stopKneed];
+    [self.navigationController popViewControllerAnimated:YES];
+}
+
+// 停止按摩
+- (void)stopKneed {
+    
+    _preKneeding = NO;
+    
     BluetoothOperation *operation = [[BluetoothOperation alloc] init];
     [operation setValue:@"01" index:2];
     [operation setValue:@"00" index:3];
@@ -563,15 +693,17 @@
         
     };
     [[BluetoothManager share] writeValueByOperation:operation];
-    
-    
-    [self.navigationController popViewControllerAnimated:YES];
 }
 
 - (void)bluetoothDisConnectHandlerInAutoKnead
 {
     if(_buttonStartStop.tag == kButtonStartTag) {
   
+        _prepareLabel.hidden = NO;
+        _curKneeding.hidden = YES;
+        
+        [self stopTimer];
+        [self stopKneed];
         _buttonStartStop.tag = kButtonStopTag;
         [_buttonStartStop setImage:[UIImage imageNamed:@"START"] forState:UIControlStateNormal];
        
@@ -584,6 +716,23 @@
         [[RecordManager share] addToDB:model];
     }
 
+}
+
+
+- (void)startTimer
+{
+    [self stopTimer];
+    
+    _timer = [NSTimer scheduledTimerWithTimeInterval:6.0 target:self selector:@selector(updateMode) userInfo:nil repeats:YES];
+    [_timer fire];
+}
+
+- (void)stopTimer
+{
+    if(_timer != nil) {
+        [_timer invalidate];
+        _timer = nil;
+    }
 }
 
 
