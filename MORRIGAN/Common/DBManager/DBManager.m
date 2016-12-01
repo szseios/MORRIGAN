@@ -93,7 +93,7 @@ static NSString *dbPath = nil;
 }
 
 + (BOOL)insertPeripheral:(CBPeripheral *)peripheral macAddress:(NSString *)macAddress {
-
+    
     __block BOOL success = NO;
     [[DBManager dbQueue] inDatabase:^(FMDatabase *db) {
         NSString *sql = [NSString stringWithFormat:@"INSERT OR REPLACE INTO 'peripherals' ('mac','name' ,'user_id') VALUES ('%@', '%@', '%@')",
@@ -233,10 +233,10 @@ static NSString *dbPath = nil;
         NSDateComponents *todayComponents = [cal components:NSYearCalendarUnit|NSMonthCalendarUnit|NSDayCalendarUnit
                                                    fromDate:[NSDate date]];
         
-        NSString *endDate = [NSString stringWithFormat:@"%@-%@-%@ 00:00:00 +0800",
-                             @(todayComponents.year).stringValue,
-                             @(todayComponents.month).stringValue,
-                             @(todayComponents.day).stringValue];
+        NSString *endDate = [NSString stringWithFormat:@"%ld-%02ld-%02ld 00:00:00 +0800",
+                             todayComponents.year,
+                             todayComponents.month,
+                             todayComponents.day];
         
         NSString *sql = [NSString stringWithFormat:@"select * from datas where end_time < '%@' and user_id = '%@' order by end_time asc",endDate,userID];
         
@@ -297,14 +297,14 @@ static NSString *dbPath = nil;
         NSDateComponents *todayComponents = [cal components:NSYearCalendarUnit|NSMonthCalendarUnit|NSDayCalendarUnit
                                                    fromDate:[NSDate date]];
         
-        NSString *startDate = [NSString stringWithFormat:@"%@-%@-%@ 00:00:00 +0800",
-                               @(todayComponents.year).stringValue,
-                               @(todayComponents.month).stringValue,
-                               @(todayComponents.day).stringValue];
-        NSString *endDate = [NSString stringWithFormat:@"%@-%@-%@ 23:59:59 +0800",
-                             @(todayComponents.year).stringValue,
-                             @(todayComponents.month).stringValue,
-                             @(todayComponents.day).stringValue];
+        NSString *startDate = [NSString stringWithFormat:@"%ld-%02ld-%02ld 00:00:00 +0800",
+                               todayComponents.year,
+                               todayComponents.month,
+                               todayComponents.day];
+        NSString *endDate = [NSString stringWithFormat:@"%ld-%02ld-%02ld 23:59:59 +0800",
+                             todayComponents.year,
+                             todayComponents.month,
+                             todayComponents.day];
         
         NSString *sql = [NSString stringWithFormat:@"select * from datas where (end_time >= '%@' or  end_time <= '%@') and user_id = '%@'",startDate,endDate,userID];
         
@@ -337,14 +337,14 @@ static NSString *dbPath = nil;
         NSDateComponents *todayComponents = [cal components:NSYearCalendarUnit|NSMonthCalendarUnit|NSDayCalendarUnit
                                                    fromDate:[NSDate date]];
         
-        NSString *startDate = [NSString stringWithFormat:@"%@-%@-%@ 00:00:00 +0800",
-                               @(todayComponents.year).stringValue,
-                               @(todayComponents.month).stringValue,
-                               @(todayComponents.day).stringValue];
-        NSString *endDate = [NSString stringWithFormat:@"%@-%@-%@ 11:59:59 +0800",
-                             @(todayComponents.year).stringValue,
-                             @(todayComponents.month).stringValue,
-                             @(todayComponents.day).stringValue];
+        NSString *startDate = [NSString stringWithFormat:@"%ld-%02ld-%02ld 00:00:00 +0800",
+                               todayComponents.year,
+                               todayComponents.month,
+                               todayComponents.day];
+        NSString *endDate = [NSString stringWithFormat:@"%ld-%02ld-%02ld 11:59:59 +0800",
+                             todayComponents.year,
+                             todayComponents.month,
+                             todayComponents.day];
         
         NSString *sql = [NSString stringWithFormat:@"select * from datas where start_time >= '%@' and  end_time <= '%@' and user_id = '%@' order by end_time asc",startDate,endDate,userID];
         
@@ -377,14 +377,14 @@ static NSString *dbPath = nil;
         NSDateComponents *todayComponents = [cal components:NSYearCalendarUnit|NSMonthCalendarUnit|NSDayCalendarUnit
                                                    fromDate:[NSDate date]];
         
-        NSString *startDate = [NSString stringWithFormat:@"%@-%@-%@ 12:00:00 +0800",
-                               @(todayComponents.year).stringValue,
-                               @(todayComponents.month).stringValue,
-                               @(todayComponents.day).stringValue];
-        NSString *endDate = [NSString stringWithFormat:@"%@-%@-%@ 23:59:59 +0800",
-                             @(todayComponents.year).stringValue,
-                             @(todayComponents.month).stringValue,
-                             @(todayComponents.day).stringValue];
+        NSString *startDate = [NSString stringWithFormat:@"%ld-%02ld-%02ld 12:00:00 +0800",
+                               todayComponents.year,
+                               todayComponents.month,
+                               todayComponents.day];
+        NSString *endDate = [NSString stringWithFormat:@"%ld-%02ld-%02ld 23:59:59 +0800",
+                             todayComponents.year,
+                             todayComponents.month,
+                             todayComponents.day];
         
         NSString *sql = [NSString stringWithFormat:@"select * from datas where start_time >= '%@' and  end_time <= '%@' and user_id = '%@' order by end_time asc",startDate,endDate,userID];
         
@@ -453,17 +453,17 @@ static NSString *dbPath = nil;
             }
         }
         
-//        if (success) {
-            NSString *sql = [NSString stringWithFormat:@"INSERT OR REPLACE INTO 'datas' ('user_id', 'start_time' , 'end_time' , 'type') VALUES ('%@', '%@', '%@', '%@')",
-                             userID,
-                             [formatter stringFromDate:tempstartDate],
-                             [formatter stringFromDate:end],
-                             @(type).stringValue];
-            success = [db executeUpdate:sql];
-            if (!success) {
-                NSLog(@"按摩记录保存失败, error : %@",db.lastErrorMessage);
-            }
-//        }
+        //        if (success) {
+        NSString *sql = [NSString stringWithFormat:@"INSERT OR REPLACE INTO 'datas' ('user_id', 'start_time' , 'end_time' , 'type') VALUES ('%@', '%@', '%@', '%@')",
+                         userID,
+                         [formatter stringFromDate:tempstartDate],
+                         [formatter stringFromDate:end],
+                         @(type).stringValue];
+        success = [db executeUpdate:sql];
+        if (!success) {
+            NSLog(@"按摩记录保存失败, error : %@",db.lastErrorMessage);
+        }
+        //        }
         
         
     }];
@@ -493,10 +493,10 @@ static NSString *dbPath = nil;
         NSDateComponents *todayComponents = [cal components:NSYearCalendarUnit|NSMonthCalendarUnit|NSDayCalendarUnit
                                                    fromDate:[NSDate date]];
         
-        NSString *date = [NSString stringWithFormat:@"%@-%@-%@ 00:00:00 +0800",
-                          @(todayComponents.year).stringValue,
-                          @(todayComponents.month).stringValue,
-                          @(todayComponents.day).stringValue];
+        NSString *date = [NSString stringWithFormat:@"%ld-%02ld-%02ld 00:00:00 +0800",
+                          todayComponents.year,
+                          todayComponents.month,
+                          todayComponents.day];
         
         NSString *sql = [NSString stringWithFormat:@"DELETE FROM 'datas' where end_time < '%@'",date];
         success = [db executeUpdate:sql];
