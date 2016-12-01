@@ -418,7 +418,7 @@
              [UserInfo share].userId = [userInfoDict objectForKey:@"userId"];
              [UserInfo share].weight = [userInfoDict objectForKey:@"weight"];
              [UserInfo share].age = [userInfoDict objectForKey:@"age"];
-             
+             NSString *temp =[UserInfo share].emotion;
              if ([[UserInfo share].emotion isEqualToString:@"B"]) {
                  [UserInfo share].emotionStr = @"恋爱";
              }
