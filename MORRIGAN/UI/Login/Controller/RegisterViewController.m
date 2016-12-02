@@ -14,6 +14,7 @@
 #import "LoginManager.h"
 #import "Utils.h"
 #import "AppDelegate.h"
+#import "LoginBaseController.h"
 
 
 
@@ -477,11 +478,11 @@
     switch (buttonIndex) {
         case 0:
         {
-            if(alertView.tag == kAlertViewTagOfIntoLogin) {
-                
-                // 进入登陆界面
-                [self intoLoginPage];
-            }
+//            if(alertView.tag == kAlertViewTagOfIntoLogin) {
+//                
+//                // 进入登陆界面
+//                [self intoLoginPage];
+//            }
 
         }
             break;
@@ -591,6 +592,9 @@
                                  @"password": password,
                                  @"sex": sex,
                                  };
+    __block RegisterViewController *selfBlock = self;
+    __block NSString *phoneNumberBlock = phoneNumber;
+    __block NSString *passwordBlock = password;
     NSString *bodyString = [NMOANetWorking handleHTTPBodyParams:dictionary];
     [[NMOANetWorking share] taskWithTag:ID_REGISTER
                               urlString:URL_REGISTER
@@ -606,9 +610,20 @@
          
          if ([[obj objectForKey:HTTP_KEY_RESULTCODE] isEqualToString:HTTP_RESULTCODE_SUCCESS]) {
              NSLog(@"注册成功！");
-             UIAlertView *alert = [[UIAlertView alloc] initWithTitle:@"注册成功!" message:@"点击确认进入登陆界面" delegate:self cancelButtonTitle:nil otherButtonTitles:@"确定", nil];
-             alert.tag = kAlertViewTagOfIntoLogin;
-             [alert show];
+//             UIAlertView *alert = [[UIAlertView alloc] initWithTitle:@"注册成功!" message:@"点击确认进入登陆界面" delegate:self cancelButtonTitle:nil otherButtonTitles:@"确定", nil];
+//             alert.tag = kAlertViewTagOfIntoLogin;
+//             [alert show];
+             [MBProgressHUD showHUDByContent:@"注册成功" view:self.view];
+             dispatch_after(dispatch_time(DISPATCH_TIME_NOW, (int64_t)(1.0 * NSEC_PER_SEC)), dispatch_get_main_queue(), ^{
+                 // 保存用户名和密码，自动登陆
+                 NSUserDefaults *defaults = [NSUserDefaults standardUserDefaults];
+                 [defaults setObject:phoneNumberBlock forKey:kUserDefaultIdKey];
+                 [defaults setObject:passwordBlock forKey:kUserDefaultPasswordKey];
+                 [defaults synchronize];
+                 // 进入登陆界面
+                 [selfBlock intoLoginPage];
+             });
+             
              
          } else {
              
