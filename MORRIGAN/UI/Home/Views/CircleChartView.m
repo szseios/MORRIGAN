@@ -40,9 +40,15 @@
         _isEmpty = isEmpty;
         CGFloat start = startAngle / 2;
         CGFloat end = endAngle / 2;
-        
+        CGFloat surplus = 0;
+        if (kScreenWidth == 320) {
+            surplus = 1.1;
+        }
+        else if (kScreenWidth == 414) {
+            surplus = -0.2;
+        }
         UIBezierPath *circlePath = [UIBezierPath bezierPathWithArcCenter:CGPointMake(self.frame.size.width/2.0f, self.frame.size.height/2.0f)
-                                                                  radius:(self.frame.size.height * 0.5) - (10/2.0f)
+                                                                  radius:((self.frame.size.height * 0.5) - (10/2.0f)-(0.7 - surplus))
                                                               startAngle:DEGREES_TO_RADIANS(start - 90.0)
                                                                 endAngle:DEGREES_TO_RADIANS(end - 90.0)
                                                                clockwise:YES];
@@ -51,7 +57,7 @@
         _circle.path          = circlePath.CGPath;
         //        _circle.lineCap       = kCALineCapRound;
         _circle.fillColor     = [UIColor clearColor].CGColor;
-        _circle.lineWidth     = 10;
+        _circle.lineWidth     = kScreenWidth == 320 ? 8 : 10;
         _circle.zPosition     = 1;
         
         _circleBackground             = [CAShapeLayer layer];
@@ -74,7 +80,7 @@
     // Add circle params
     
     _circle.lineWidth   = _lineWidth ? _lineWidth : 10;
-    _circleBackground.lineWidth = 10;
+    _circleBackground.lineWidth = kScreenWidth == 320 ? 9.5 : 11;;
     _circleBackground.strokeEnd = 1.0;
     _circleBackground.strokeColor = [UIColor whiteColor].CGColor;
     _circle.strokeColor = (_strokeColor ? _strokeColor : [UIColor redColor]).CGColor;

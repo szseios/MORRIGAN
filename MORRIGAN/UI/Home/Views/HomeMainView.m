@@ -29,8 +29,6 @@
 
 @property (nonatomic , assign) CGFloat viewHeight;
 
-@property (nonatomic , strong) UIImageView *upBackgroundView;
-
 @property (nonatomic , strong) PNCircleChart *circleChart;  //时间划线
 
 @property (nonatomic , strong) NSArray *AMMorriganArray;   //上午按摩时间数组
@@ -39,9 +37,6 @@
 
 @property (nonatomic , strong) NSArray *haveEmptyArray;   //空闲时间数组，里面是字典，key:startTime,endTime Value:
 
-@property (nonatomic , strong) UILabel *electricityLabel;  //电量
-
-@property (nonatomic , strong) UILabel *starLabel;  //星星
 
 @property (nonatomic , strong) UILabel *dateLabel;   //日期
 
@@ -61,13 +56,9 @@
 
 @property (nonatomic , strong) CADisplayLink *waveDisplayLink;
 
-@property (nonatomic , strong) UIImageView *starImage;
-
 @property (nonatomic , assign) NSInteger didMorriganTime;
 
 @property (nonatomic , assign) NSInteger electricityPercent;
-
-@property (nonatomic , strong) NSString *starCount;
 
 @property (nonatomic , assign) BOOL needToDisplay;
 
@@ -373,65 +364,65 @@
     CGFloat starImageH = kScreenHeight > 568 ? 14 : 10;
     _starImage = [[UIImageView alloc] initWithFrame:CGRectMake(starImageX, starImageY, starImageW, starImageH)];
     _starImage.backgroundColor = [UIColor clearColor];
-    if (_starCount) {
-        NSString *imageName;
-        NSString *starStr;
-        switch (_starCount.integerValue) {
-            case -1:
-            {
-                imageName = @"icon_star_0";
-                starStr = @"0";
-            }
-                break;
-            case 0:
-            {
-                imageName = @"icon_star_5";
-                starStr = @"0.5";
-            }
-                break;
-            case 1:
-            {
-                imageName = @"icon_star_10";
-                starStr = @"1";
-            }
-                break;
-                
-            case 2:
-            {
-                imageName = @"icon_star_15";
-                starStr = @"1.5";
-            }
-                break;
-                
-            case 3:
-            {
-                imageName = @"icon_star_20";
-                starStr = @"2";
-            }
-                break;
-                
-            case 4:
-            {
-                imageName = @"icon_star_25";
-                starStr = @"2.5";
-            }
-                break;
-                
-            case 5:
-            {
-                imageName = @"icon_star_30";
-                starStr = @"3";
-            }
-                break;
-                
-                
-            default:
-                break;
-        }
-        [_starImage setImage:[UIImage imageNamed:imageName]];
-    }else{
+//    if (_starCount) {
+//        NSString *imageName;
+//        NSString *starStr;
+//        switch (_starCount.integerValue) {
+//            case -1:
+//            {
+//                imageName = @"icon_star_0";
+//                starStr = @"0";
+//            }
+//                break;
+//            case 0:
+//            {
+//                imageName = @"icon_star_5";
+//                starStr = @"0.5";
+//            }
+//                break;
+//            case 1:
+//            {
+//                imageName = @"icon_star_10";
+//                starStr = @"1";
+//            }
+//                break;
+//                
+//            case 2:
+//            {
+//                imageName = @"icon_star_15";
+//                starStr = @"1.5";
+//            }
+//                break;
+//                
+//            case 3:
+//            {
+//                imageName = @"icon_star_20";
+//                starStr = @"2";
+//            }
+//                break;
+//                
+//            case 4:
+//            {
+//                imageName = @"icon_star_25";
+//                starStr = @"2.5";
+//            }
+//                break;
+//                
+//            case 5:
+//            {
+//                imageName = @"icon_star_30";
+//                starStr = @"3";
+//            }
+//                break;
+//                
+//                
+//            default:
+//                break;
+//        }
+//        [_starImage setImage:[UIImage imageNamed:imageName]];
+//    }else{
         _starImage.image = [UIImage imageNamed:@"icon_star_0"];
-    }
+//    }
     [_downView addSubview:_starImage];
     
 }
@@ -447,7 +438,7 @@
     CircleChartView *circleChart = [[CircleChartView alloc] initWithFrame:CGRectMake(_circleImageView.x,_circleImageView.y, _circleImageView.width, _circleImageView.height) startAngle:startAngle endAngle:endAngle isEmpty:NO];
     
     circleChart.backgroundColor = [UIColor clearColor];
-    circleChart.lineWidth = 10;
+    circleChart.lineWidth = kScreenWidth == 320 ? 8 : 10;
     [circleChart setStrokeColor:[Utils stringTOColor:@"#E1418A"]];
     [circleChart strokeChart];
     
@@ -585,13 +576,13 @@
 //星级评定
 - (void)setStarLabelAndImage:(NSString *)star
 {
-    if (_starCount.integerValue == star.integerValue) {
-        
-    }else{
+//    if (_starCount.integerValue == star.integerValue) {
+//        
+//    }else{
         _starCount = star;
         _needToDisplay = YES;
         [self displayView];
-    }
+//    }
 }
 
 //设置电量变化
