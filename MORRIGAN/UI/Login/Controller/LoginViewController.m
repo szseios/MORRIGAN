@@ -56,6 +56,8 @@
         _passwordInputView.text = password;
         // 自动登陆
         [self loginButtonClickInLogin: nil];
+    } else if([UserInfo share].mobile && [UserInfo share].mobile.length > 0) {
+         _phoneNumbrInputView.text = [UserInfo share].mobile;
     }
     
     

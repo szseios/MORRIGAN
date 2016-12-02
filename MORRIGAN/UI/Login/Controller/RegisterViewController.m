@@ -613,7 +613,7 @@
 //             UIAlertView *alert = [[UIAlertView alloc] initWithTitle:@"注册成功!" message:@"点击确认进入登陆界面" delegate:self cancelButtonTitle:nil otherButtonTitles:@"确定", nil];
 //             alert.tag = kAlertViewTagOfIntoLogin;
 //             [alert show];
-             [MBProgressHUD showHUDByContent:@"注册成功" view:self.view];
+             [MBProgressHUD showHUDByContent:@"注册成功！" view:self.view];
              dispatch_after(dispatch_time(DISPATCH_TIME_NOW, (int64_t)(1.0 * NSEC_PER_SEC)), dispatch_get_main_queue(), ^{
                  // 保存用户名和密码，自动登陆
                  NSUserDefaults *defaults = [NSUserDefaults standardUserDefaults];
