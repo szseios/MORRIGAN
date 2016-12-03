@@ -25,6 +25,8 @@
 
 - (void)playMusicByURL:(NSURL *)url;
 
+- (void)prepareMusicByURL:(NSURL *)url;
+
 - (NSArray *)musics;
 
 - (BOOL)isPlaying;

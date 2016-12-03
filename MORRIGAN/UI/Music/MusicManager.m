@@ -81,6 +81,20 @@ static MusicManager *manager = nil;
     [self startGetPeakPower];
 }
 
+- (void)prepareMusicByURL:(NSURL *)url {
+    dispatch_async(dispatch_get_global_queue(0, 0), ^{
+        if (_player) {
+            [_player stop];
+            _player = nil;
+        }
+        _player = [[AVAudioPlayer alloc] initWithContentsOfURL:url error:nil];
+        _player.delegate = self;
+        _player.meteringEnabled = YES;
+        [[AVAudioSession sharedInstance] setActive:YES error:nil];
+        [[AVAudioSession sharedInstance] setCategory:AVAudioSessionCategoryPlayback error:nil];
+    });
+}
+
 - (NSArray *)musics {
     return _musics;
 }
@@ -149,6 +163,11 @@ static MusicManager *manager = nil;
 }
 
 - (void)getPeakPower {
+    
+    if (![BluetoothManager share].isConnected) {
+        return;
+    }
+    
     [_player updateMeters];                                                                      
     int16_t peakPower = [_player peakPowerForChannel:0] + 160;
     int16_t peakPower2 = [_player peakPowerForChannel:1] + 160;
