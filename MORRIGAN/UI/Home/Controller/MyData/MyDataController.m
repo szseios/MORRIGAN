@@ -36,6 +36,8 @@
 
 @property (nonatomic , strong) UIView *pickerBackgroudView;
 
+@property (nonatomic , strong) UIImage *selectedImage;
+
 @end
 
 @implementation MyDataController
@@ -111,6 +113,7 @@ static NSString *cellIdentifier = @"cellIdentifier";
 
 - (void)clickBack
 {
+    [[NMOANetWorking share] removeTaskByTag:ID_UPLOAD_HEADER];
     [self.navigationController popViewControllerAnimated:YES];
 }
 
@@ -462,9 +465,9 @@ static NSString *cellIdentifier = @"cellIdentifier";
         //如果是图片
         _headerViewCell.headerImageView.image = info[UIImagePickerControllerEditedImage];
         //压缩图片
-        NSData *fileData = UIImageJPEGRepresentation(_headerViewCell.headerImageView.image, 1.0);
+        NSData *fileData = UIImageJPEGRepresentation(_headerViewCell.headerImageView.image, 0.5);
 //        _headerViewCell.headerImageView.image = [avatar imageWithImageSimple:avatar scaledToSize:EZSIZE(320, 320)];
-        
+        _selectedImage = [UIImage imageWithData:fileData];
         _imageStr = [fileData base64EncodedStringWithOptions:NSDataBase64Encoding64CharacterLineLength];
         [self uploadheaderImage];
     }
@@ -473,6 +476,8 @@ static NSString *cellIdentifier = @"cellIdentifier";
     
 - (void)uploadheaderImage
     {
+        [MBProgressHUD showHUDAddedTo:self.view animated:YES];
+        __weak MyDataController *weakSelf = self;
         NSDictionary *dictionary = @{
                                      @"userId":[UserInfo share].userId ? [UserInfo share].userId : @"",
                                      @"img":_imageStr
@@ -484,9 +489,15 @@ static NSString *cellIdentifier = @"cellIdentifier";
                                  bodyString:bodyString
                          objectTaskFinished:^(NSError *error, id obj)
          {
+             [MBProgressHUD hideHUDForView:weakSelf.view animated:YES];
              if ([[obj objectForKey:HTTP_KEY_RESULTCODE] isEqualToString:HTTP_RESULTCODE_SUCCESS]) {
                  [MBProgressHUD showHUDByContent:@"上传头像成功！" view:UI_Window afterDelay:2];
                  NSLog(@"修改个人信息成功！");
+                 [[SDImageCache sharedImageCache] clearMemory];
+                 [[SDImageCache sharedImageCache] cleanDisk];
+                 [[SDImageCache sharedImageCache] storeImage:weakSelf.selectedImage
+                                                      forKey:[UserInfo share].imgUrl
+                                                      toDisk:YES];
              }else{
                  [MBProgressHUD showHUDByContent:@"上传头像失败！" view:UI_Window afterDelay:2];
              }
