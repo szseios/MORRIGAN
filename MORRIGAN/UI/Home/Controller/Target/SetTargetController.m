@@ -65,6 +65,7 @@
 
 - (void)targetAchieve
 {
+    [self.navigationController popViewControllerAnimated:YES];
     NSDictionary *dictionary = @{@"userId": [UserInfo share].userId ? [UserInfo share].userId : @"",
                                  @"target": [UserInfo share].target ? [UserInfo share].target : @"",
                                  };
