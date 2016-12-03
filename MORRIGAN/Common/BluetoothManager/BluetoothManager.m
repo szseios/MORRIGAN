@@ -70,6 +70,10 @@ NSString * const ElectricQuantityChanged = @"ElectricQuantityChanged";
     return self;
 }
 
+- (CBCentralManager *)getCentralManager {
+    return _baby.centralManager;
+}
+
 - (void)babyDelegate {
     
     __weak typeof(self) weakSelf = self;

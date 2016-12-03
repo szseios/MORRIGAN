@@ -34,6 +34,8 @@ extern NSString * const ElectricQuantityChanged;        //设备电池电量变�
 
 + (BluetoothManager *)share;
 
+- (CBCentralManager *)getCentralManager;
+
 - (void)start;
 
 - (void)stop;
