@@ -7,8 +7,10 @@
 //
 
 #import "HomePageSuperController.h"
+#import <CoreBluetooth/CoreBluetooth.h>
 
-@interface HomePageSuperController () {
+
+@interface HomePageSuperController () <UIAlertViewDelegate> {
     UIButton *_searchButton;
 }
 
@@ -98,8 +100,19 @@
 }
 
 - (void)clickSearchButton {
-    SearchPeripheralViewController *ctl = [[SearchPeripheralViewController alloc] init];
-    [self.navigationController pushViewController:ctl animated:YES];
+    //如果用户打开了蓝牙
+    if ([[BluetoothManager share] getCentralManager].state == CBCentralManagerStatePoweredOn) {
+        SearchPeripheralViewController *ctl = [[SearchPeripheralViewController alloc] init];
+        [self.navigationController pushViewController:ctl animated:YES];
+    }
+    else {
+        UIAlertView *alert = [[UIAlertView alloc] initWithTitle:nil
+                                                        message:@"打开蓝牙来允许＂MORRIGAN＂连接到配件"
+                                                       delegate:self
+                                              cancelButtonTitle:@"好"
+                                              otherButtonTitles:@"设置", nil];
+        [alert show];
+    }
 }
 
 - (void)didReceiveMemoryWarning {
@@ -107,14 +120,18 @@
     // Dispose of any resources that can be recreated.
 }
 
-/*
-#pragma mark - Navigation
-
-// In a storyboard-based application, you will often want to do a little preparation before navigation
-- (void)prepareForSegue:(UIStoryboardSegue *)segue sender:(id)sender {
-    // Get the new view controller using [segue destinationViewController].
-    // Pass the selected object to the new view controller.
+- (void)alertView:(UIAlertView *)alertView clickedButtonAtIndex:(NSInteger)buttonIndex {
+    if (buttonIndex == 1) {
+        if ([[[UIDevice currentDevice] systemVersion] floatValue] >= 8.0) {
+            [[UIApplication sharedApplication]openURL:[NSURL URLWithString:UIApplicationOpenSettingsURLString]];
+        }
+        else {
+            NSURL *url = [NSURL URLWithString:@"prefs:root=Bluetooth"];
+            if ([[UIApplication sharedApplication] canOpenURL:url]) {
+                [[UIApplication sharedApplication] openURL:url];
+            }
+        }
+    }
 }
-*/
 
 @end

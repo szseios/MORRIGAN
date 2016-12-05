@@ -18,6 +18,7 @@ NSString * const ConnectPeripheralSuccess = @"ConnectPeripheralSuccess";
 NSString * const ConnectPeripheralError = @"ConnectPeripheralError";
 NSString * const ConnectPeripheralTimeOut = @"ConnectPeripheralTimeOut";
 NSString * const DisconnectPeripheral = @"DisconnectPeripheral";
+NSString * const PeripheralReadedCharacteristic = @"PeripheralReadedCharacteristic";
 
 NSString * const ElectricQuantityChanged = @"ElectricQuantityChanged";
 
@@ -67,6 +68,10 @@ NSString * const ElectricQuantityChanged = @"ElectricQuantityChanged";
         
     }
     return self;
+}
+
+- (CBCentralManager *)getCentralManager {
+    return _baby.centralManager;
 }
 
 - (void)babyDelegate {
@@ -159,21 +164,9 @@ NSString * const ElectricQuantityChanged = @"ElectricQuantityChanged";
         
         
         if (weakSelf.sendCharacteristic && weakSelf.receiveCharacteristic) {
-            //---------------------------------------------------蓝牙连接成功并获取到特征值,再做蓝牙连接成功处理-------------------------//
-//            weakSelf.curConnectPeripheral = peripheral;
-//            weakSelf.isConnected = YES;
-//            weakSelf.reconnect = YES;
-//            weakSelf.manualDisconnect = NO;
-//            
-//            [weakSelf hideConnectView];
-//            //连接成功后保存为已绑定设备信息
-//            if (![DBManager insertPeripheral:peripheral macAddress:weakSelf.willConnectMacAddress]) {
-//                NSLog(@"保存已绑定设备信息失败.  peripheral.name : %@",peripheral.name);
-//            }
-//            
-//            [[NSNotificationCenter defaultCenter] postNotificationName:ConnectPeripheralSuccess
-//                                                                object:nil];
-            //---------------------------------------------------蓝牙连接成功并获取到特征值,再做蓝牙连接成功处理-------------------------//
+            //获取到读/写特征值通知
+            [[NSNotificationCenter defaultCenter] postNotificationName:PeripheralReadedCharacteristic
+                                                                object:nil];
             
             [weakBaby notify:weakSelf.curConnectPeripheral characteristic:weakSelf.receiveCharacteristic block:^(CBPeripheral *peripheral, CBCharacteristic *characteristics, NSError *error) {
                 NSLog(@"receive characteristics : %@",characteristics);

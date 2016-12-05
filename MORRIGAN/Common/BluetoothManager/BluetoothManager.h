@@ -18,6 +18,7 @@ extern NSString * const ConnectPeripheralSuccess;
 extern NSString * const ConnectPeripheralError;
 extern NSString * const ConnectPeripheralTimeOut;
 extern NSString * const DisconnectPeripheral;
+extern NSString * const PeripheralReadedCharacteristic;     //获取到了读/写的特征值
 
 extern NSString * const ElectricQuantityChanged;        //设备电池电量变化通知
 
@@ -32,6 +33,8 @@ extern NSString * const ElectricQuantityChanged;        //设备电池电量变�
 @property (nonatomic,strong)NSString *willConnectMacAddress;                        // 将要连接的设备的MAC地址
 
 + (BluetoothManager *)share;
+
+- (CBCentralManager *)getCentralManager;
 
 - (void)start;
 

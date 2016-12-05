@@ -53,9 +53,23 @@
     return self;
 }
 
+- (void)viewWillAppear:(BOOL)animated {
+    [super viewWillAppear:animated];
+    [[NSNotificationCenter defaultCenter] addObserver:self
+                                             selector:@selector(peripheralReadedCharacteristicNotification)
+                                                 name:PeripheralReadedCharacteristic
+                                               object:nil];
+    [[NSNotificationCenter defaultCenter] addObserver:self
+                                             selector:@selector(disconnectPeripheralNotification)
+                                                 name:DisconnectPeripheral
+                                               object:nil];
+}
+
 - (void)viewWillDisappear:(BOOL)animated {
     [super viewWillDisappear:animated];
+    [[NSNotificationCenter defaultCenter] removeObserver:self];
     [[MusicManager share] pause];
+    [self recordEndDate];
 }
 
 - (void)viewDidLoad {
@@ -278,6 +292,7 @@
                                 forState:UIControlStateNormal];
         [_startButton setBackgroundImage:[UIImage imageNamed:@"music_stop"]
                                 forState:UIControlStateHighlighted];
+        [self recordStartDate];
     }
 }
 
@@ -321,11 +336,20 @@
         _selectedIndexPath = [NSIndexPath indexPathForRow:_musics.count - 1
                                                 inSection:0];
     }
-    [self playMusicByIndexPath:_selectedIndexPath];
-    [_startButton setBackgroundImage:[UIImage imageNamed:@"music_stop"]
-                            forState:UIControlStateNormal];
-    [_startButton setBackgroundImage:[UIImage imageNamed:@"music_stop"]
-                            forState:UIControlStateHighlighted];
+    if ([MusicManager share].isPlaying) {
+        [self playMusicByIndexPath:_selectedIndexPath];
+        [_startButton setBackgroundImage:[UIImage imageNamed:@"music_stop"]
+                                forState:UIControlStateNormal];
+        [_startButton setBackgroundImage:[UIImage imageNamed:@"music_stop"]
+                                forState:UIControlStateHighlighted];
+    }
+    else {
+        MusicModel *model = [_musics objectAtIndex:_selectedIndexPath.row];
+        _musicNameLabel.text = model.title;
+        _singerLabel.text = model.artist;
+        _totalTimeLable.text = [model playBackDurationString];
+        [[MusicManager share] prepareMusicByURL:model.url];
+    }
     [MusicManager share].currentSelectedIndex = _selectedIndexPath.row;
 }
 
@@ -339,11 +363,21 @@
         _selectedIndexPath = [NSIndexPath indexPathForRow:0
                                                 inSection:0];
     }
-    [self playMusicByIndexPath:_selectedIndexPath];
-    [_startButton setBackgroundImage:[UIImage imageNamed:@"music_stop"]
-                            forState:UIControlStateNormal];
-    [_startButton setBackgroundImage:[UIImage imageNamed:@"music_stop"]
-                            forState:UIControlStateHighlighted];
+    //如果正在播放
+    if ([MusicManager share].isPlaying) {
+        [self playMusicByIndexPath:_selectedIndexPath];
+        [_startButton setBackgroundImage:[UIImage imageNamed:@"music_stop"]
+                                forState:UIControlStateNormal];
+        [_startButton setBackgroundImage:[UIImage imageNamed:@"music_stop"]
+                                forState:UIControlStateHighlighted];
+    }
+    else {
+        MusicModel *model = [_musics objectAtIndex:_selectedIndexPath.row];
+        _musicNameLabel.text = model.title;
+        _singerLabel.text = model.artist;
+        _totalTimeLable.text = [model playBackDurationString];
+        [[MusicManager share] prepareMusicByURL:model.url];
+    }
     [MusicManager share].currentSelectedIndex = _selectedIndexPath.row;
 }
 
@@ -475,7 +509,7 @@
 }
 
 - (void)recordStartDate {
-    if (!_startDate) {
+    if (!_startDate && [BluetoothManager share].isConnected) {
         _startDate = [NSDate date];
     }
 }
@@ -496,6 +530,21 @@
     SearchPeripheralViewController *ctl = [[SearchPeripheralViewController alloc] init];
     [self.navigationController pushViewController:ctl animated:YES];
 }
+
+#pragma mark - Notification
+
+- (void)peripheralReadedCharacteristicNotification {
+    //连接上设备并且正在播放音乐,开始记录按摩时间
+    if ([MusicManager share].isPlaying) {
+        [self recordStartDate];
+    }
+}
+
+- (void)disconnectPeripheralNotification {
+    [self recordEndDate];
+}
+
+
 
 - (void)dealloc
 {

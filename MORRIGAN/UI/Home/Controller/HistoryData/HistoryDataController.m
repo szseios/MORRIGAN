@@ -243,7 +243,7 @@ static NSString *cellID = @"DataCellID";
     _dateLabel.textColor = [UIColor whiteColor];
     _dateLabel.textAlignment = NSTextAlignmentRight;
     NSDateFormatter *fomatter = [[NSDateFormatter alloc] init];
-    [fomatter setDateFormat:@"yyyy年MM月dd号"];
+    [fomatter setDateFormat:@"yyyy年MM月dd日"];
     NSString *dateStr = [fomatter stringFromDate:[NSDate date]];
     _dateLabel.text = dateStr;
     [_dayView addSubview:_dateLabel];

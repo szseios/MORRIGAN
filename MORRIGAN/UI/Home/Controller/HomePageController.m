@@ -223,9 +223,22 @@
 
 - (void)clickBingdingDevice
 {
-    SearchPeripheralViewController *search = [[SearchPeripheralViewController alloc] init];
-    [self.navigationController pushViewController:search animated:YES];
+    //如果用户打开了蓝牙
+    if ([[BluetoothManager share] getCentralManager].state == CBCentralManagerStatePoweredOn) {
+        SearchPeripheralViewController *ctl = [[SearchPeripheralViewController alloc] init];
+        [self.navigationController pushViewController:ctl animated:YES];
+    }
+    else {
+        UIAlertView *alert = [[UIAlertView alloc] initWithTitle:nil
+                                                        message:@"打开蓝牙来允许＂MORRIGAN＂连接到配件"
+                                                       delegate:self
+                                              cancelButtonTitle:@"好"
+                                              otherButtonTitles:@"设置", nil];
+        alert.tag = 111;
+        [alert show];
+    }
 }
+
 
 - (void)clickMoveToLeft
 {
@@ -260,9 +273,25 @@
 
 - (void)alertView:(UIAlertView *)alertView clickedButtonAtIndex:(NSInteger)buttonIndex
 {
-    if (buttonIndex == 1) {
-        [self clickBingdingDevice];
+    if (alertView.tag == 111) {
+        if (buttonIndex == 1) {
+            if ([[[UIDevice currentDevice] systemVersion] floatValue] >= 8.0) {
+                [[UIApplication sharedApplication]openURL:[NSURL URLWithString:UIApplicationOpenSettingsURLString]];
+            }
+            else {
+                NSURL *url = [NSURL URLWithString:@"prefs:root=Bluetooth"];
+                if ([[UIApplication sharedApplication] canOpenURL:url]) {
+                    [[UIApplication sharedApplication] openURL:url];
+                }
+            }
+        }
     }
+    else {
+        if (buttonIndex == 1) {
+            [self clickBingdingDevice];
+        }
+    }
+    
 }
 
 //电量变化
