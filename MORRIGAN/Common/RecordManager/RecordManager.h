@@ -10,12 +10,13 @@
 
 #define kRecordManagerUploadEndNotification  @"kRecordManagerUploadEndNotification"
 
+#define GETSTARRANKNOTIFICATION  @"GETSTARRANKNOTIFICATION"
 
 @interface RecordManager : NSObject
 
 + (RecordManager *)share;
 
-- (NSString *)getStarRank;
+- (void)getStarRank;
 
 
 

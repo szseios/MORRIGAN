@@ -28,4 +28,12 @@
 
 - (void)displayView;
 
+@property (nonatomic , strong) UIImageView *starImage;
+
+@property (nonatomic , strong) NSString *starCount;
+
+@property (nonatomic , strong) UILabel *starLabel;  //星星
+
+@property (nonatomic , strong) UIImageView *upBackgroundView;
+
 @end

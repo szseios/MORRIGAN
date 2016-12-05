@@ -65,11 +65,11 @@
   
 //    NSDateFormatter *dateFormatter = [[NSDateFormatter alloc] init];
 //    [dateFormatter setDateFormat:@"yyyy-MM-dd HH:mm:ss"];
-//    NSDate *date1 = [dateFormatter dateFromString:@"2016-12-01 20:15:01"];
-//    NSDate *date2 = [dateFormatter dateFromString:@"2016-12-01 20:16:01"];
-//
+//    NSDate *date1 = [dateFormatter dateFromString:@"2016-12-02 20:15:01"];
+//    NSDate *date2 = [dateFormatter dateFromString:@"2016-12-02 20:30:01"];
+//    
 //    MassageRecordModel *model = [[MassageRecordModel alloc] init];
-//    model.userID = @"1";
+//    model.userID = @"0bb15e9c-561c-4573-9726-11a1e4d82390";
 //    model.type = 1;
 //    model.startTime = date1;
 //    model.endTime = date2;

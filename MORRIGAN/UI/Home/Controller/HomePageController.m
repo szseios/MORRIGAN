@@ -48,6 +48,8 @@
     [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(getElectricity:) name:ElectricQuantityChanged object:nil];
     [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(firstGetElectricity:) name:ConnectPeripheralSuccess object:nil];
     [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(DisconnectPeripheral:) name:DisconnectPeripheral object:nil];
+    
+    [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(setStarRank:) name:GETSTARRANKNOTIFICATION object:nil];
     UIImageView *upBackImage = [[UIImageView alloc] initWithFrame:CGRectMake(0, 0, self.view.width, self.view.height)];
     upBackImage.image =[UIImage imageWithColor:[Utils stringTOColor:@"#8c39e5"]];
     [self.view addSubview:upBackImage];
@@ -76,10 +78,31 @@
 - (void)viewWillAppear:(BOOL)animated
 {
     [super viewWillAppear:animated];
-    NSString *starStr = [[RecordManager share] getStarRank];
-    if (starStr && starStr.length > 0) {
-        [_mainView setStarLabelAndImage:@"starStr"];
-    }
+    [[RecordManager share] getStarRank];
+//    if (starStr && starStr.length > 0) {
+//        [_mainView setStarLabelAndImage:starStr];
+//    }
+//    NSDateFormatter *dateFormatter = [[NSDateFormatter alloc] init];
+//    [dateFormatter setDateFormat:@"yyyy-MM-dd HH:mm:ss"];
+//    NSDate *date1 = [dateFormatter dateFromString:@"2016-12-02 17:15:01"];
+//    NSDate *date2 = [dateFormatter dateFromString:@"2016-12-02 20:30:01"];
+//    
+//    MassageRecordModel *model = [[MassageRecordModel alloc] init];
+//    model.userID = @"0bb15e9c-561c-4573-9726-11a1e4d82390";
+//    model.type = 1;
+//    model.startTime = date1;
+//    model.endTime = date2;
+//    
+//    
+//    NSDate *date3 = [dateFormatter dateFromString:@"2016-12-02 21:15:01"];
+//    NSDate *date4 = [dateFormatter dateFromString:@"2016-12-02 23:30:01"];
+//    
+//    MassageRecordModel *model1 = [[MassageRecordModel alloc] init];
+//    model1.userID = @"0bb15e9c-561c-4573-9726-11a1e4d82390";
+//    model1.type = 1;
+//    model1.startTime = date3;
+//    model1.endTime = date4;  @[model,model1];
+    
     NSArray *ForenoonArray = [DBManager selectForenoonDatas:[UserInfo share].userId];
     NSArray *AfternoonArray = [DBManager selectaAfternoonDatas:[UserInfo share].userId];
     [_mainView showRightTime];
@@ -110,8 +133,8 @@
     CGFloat mainViewW = kScreenWidth * 0.75 + (kScreenWidth > 320 ? 30 : 10); //kScreenWidth > 320 ? 300 : 220;
     CGFloat mainViewH = mainViewW / 623 * 860.0;
     CGFloat mainViewX = (kScreenWidth - mainViewW) /2 + (kScreenWidth > 320 ? 20 : 15); //kScreenWidth > 320 ? 50 : 20;
-    NSArray *ForenoonArray = [DBManager selectForenoonDatas:@"0bb15e9c-561c-4573-9726-11a1e4d82390"];
-    NSArray *AfternoonArray = [DBManager selectaAfternoonDatas:@"0bb15e9c-561c-4573-9726-11a1e4d82390"];
+    NSArray *ForenoonArray = [DBManager selectForenoonDatas:[UserInfo share].userId];
+    NSArray *AfternoonArray = [DBManager selectaAfternoonDatas:[UserInfo share].userId];
     _mainView = [[HomeMainView alloc] initWithAMMorriganArray:ForenoonArray PMMorriganTime:AfternoonArray  withFarme:CGRectMake(mainViewX, 74, mainViewW, mainViewH)];
     _mainView.backgroundColor = [UIColor clearColor];
     
@@ -307,6 +330,73 @@
     });
     
 }
+
+- (void)setStarRank:(NSNotification *)notice
+{
+    NSString *starStr = notice.object;
+    if (starStr && starStr.length > 0) {
+//        [_mainView setStarLabelAndImage:starStr];
+        NSString *imageName;
+        NSString *starLabelStr;
+        switch (starStr.integerValue) {
+            case -1:
+            {
+                imageName = @"icon_star_0";
+                starLabelStr = @"0";
+            }
+                break;
+            case 0:
+            {
+                imageName = @"icon_star_5";
+                starLabelStr = @"0.5";
+            }
+                break;
+            case 1:
+            {
+                imageName = @"icon_star_10";
+                starLabelStr = @"1";
+            }
+                break;
+                
+            case 2:
+            {
+                imageName = @"icon_star_15";
+                starLabelStr = @"1.5";
+            }
+                break;
+                
+            case 3:
+            {
+                imageName = @"icon_star_20";
+                starLabelStr = @"2";
+            }
+                break;
+                
+            case 4:
+            {
+                imageName = @"icon_star_25";
+                starLabelStr = @"2.5";
+            }
+                break;
+                
+            case 5:
+            {
+                imageName = @"icon_star_30";
+                starLabelStr = @"3";
+            }
+                break;
+                
+                
+            default:
+                break;
+        }
+        NSMutableAttributedString *attributeString = [[NSMutableAttributedString alloc] initWithString:[NSString stringWithFormat:@"%@star",starLabelStr]];
+        [attributeString setAttributes:@{NSFontAttributeName:[UIFont systemFontOfSize:18]} range:NSMakeRange(0, starStr.length)];
+        _mainView.starLabel.attributedText = attributeString;
+        [_mainView.starImage setImage:[UIImage imageNamed:imageName]];
+    }
+}
+
 - (void)didReceiveMemoryWarning {
     [super didReceiveMemoryWarning];
     // Dispose of any resources that can be recreated.

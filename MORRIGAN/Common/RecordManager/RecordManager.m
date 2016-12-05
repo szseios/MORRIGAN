@@ -176,7 +176,7 @@ static RecordManager *manager;
      }];
 }
 
-- (NSString *)getStarRank
+- (void)getStarRank
 {
     __block NSString *starStr;
     NSDictionary *dictionary = @{@"userId":[UserInfo share].userId?[UserInfo share].userId:@""};
@@ -195,14 +195,14 @@ static RecordManager *manager;
              if (tempStr) {
                  starStr = tempStr;
              }
+             dispatch_async(dispatch_get_main_queue(), ^{
+                 [[NSNotificationCenter defaultCenter] postNotificationName:GETSTARRANKNOTIFICATION object:starStr];
+             });
          } else {
              NSLog(@"获取星级评定失败！");
              starStr = @"";
          }
-         
-         
      }];
-    return starStr;
 }
 
 
