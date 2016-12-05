@@ -16,6 +16,7 @@
 #import <AVFoundation/AVFoundation.h>
 #import "RootViewController.h"
 #import "DBManager.h"
+#import "GuideViewController.h"
 
 @interface AppDelegate ()
 

@@ -71,6 +71,7 @@
         UIAlertView *alert = [[UIAlertView alloc] initWithTitle:@"还未连接设备" message:nil delegate:self cancelButtonTitle:@"取消" otherButtonTitles:@"连接", nil];
         [alert show];
     }
+   
     [self setUpHomeMainView];
     
 }
@@ -112,6 +113,11 @@
     if (![BluetoothManager share].isConnected) {
         [_barView startFlashing];
     }
+}
+
+- (void)viewDidAppear:(BOOL)animated
+{
+    [super viewDidAppear:animated];
 }
 
 - (void)viewWillDisappear:(BOOL)animated

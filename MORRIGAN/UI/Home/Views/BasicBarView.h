@@ -52,4 +52,6 @@ typedef enum : NSUInteger {
 
 - (void)stopFlashing;
 
+- (void)showCenterView;
+
 @end
