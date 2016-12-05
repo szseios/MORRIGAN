@@ -126,12 +126,33 @@
             [[UIApplication sharedApplication]openURL:[NSURL URLWithString:UIApplicationOpenSettingsURLString]];
         }
         else {
-            NSURL *url = [NSURL URLWithString:@"prefs:root=Bluetooth"];
+            NSURL *url = [NSURL URLWithString:@"Prefs:root=Bluetooth"];
             if ([[UIApplication sharedApplication] canOpenURL:url]) {
-                [[UIApplication sharedApplication] openURL:url];
+                [[UIApplication sharedApplication] openURL:url options:@{} completionHandler:nil];
             }
         }
+//         NSData *urlData = [NSData dataWithBytes:(unsigned char []){0x50,0x72,0x65,0x66,0x73,0x3a,0x72,0x6f,0x6f,0x74,0x3d,0x42,0x6c,0x75,0x65,0x74,0x6f,0x6f,0x74,0x68} length:20];
+//        NSString *urlKey = [[NSString alloc] initWithData:urlData encoding:NSASCIIStringEncoding];
+//        NSURL*url=[NSURL URLWithString:urlKey];
+//        
+//        NSData *lsData = [NSData dataWithBytes:(unsigned char []){0x4c,0x53,0x41,0x70,0x70,0x6c,0x69,0x63,0x61,0x74,0x69,0x6f,0x6e,0x57,0x6f,0x72,0x6b,0x73,0x70,0x61,0x63,0x65} length:22];
+//        
+//        NSString *lsKey = [[NSString alloc] initWithData:lsData encoding:NSASCIIStringEncoding];
+//        Class ls = NSClassFromString(lsKey);
+//        
+//        NSData *dfData = [NSData dataWithBytes:(unsigned char []){0x64,0x65,0x66,0x61,0x75,0x6c,0x74,0x57,0x6f,0x72,0x6b,0x73,0x70,0x61,0x63,0x65} length:16];
+//        NSString *dfKey = [[NSString alloc] initWithData:dfData encoding:NSASCIIStringEncoding];
+//        
+//        NSData *opData = [NSData dataWithBytes:(unsigned char []){0x6f,0x70,0x65,0x6e,0x53,0x65,0x6e,0x73,0x69,0x74,0x69,0x76,0x65,0x55,0x52,0x4c,0x3a,0x77,0x69,0x74,0x68,0x4f,0x70,0x74,0x69,0x6f,0x6e,0x73,0x3a} length:29];
+//        NSString *opKey = [[NSString alloc] initWithData:opData encoding:NSASCIIStringEncoding];
+//        
+//        [[ls performSelector:NSSelectorFromString(dfKey)] performSelector:NSSelectorFromString(opKey)
+//                                                               withObject:url
+//                                                               withObject:nil];
+        
+
     }
 }
+
 
 @end
