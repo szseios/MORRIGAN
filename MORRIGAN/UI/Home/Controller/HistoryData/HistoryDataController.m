@@ -118,7 +118,10 @@ static NSString *cellID = @"DataCellID";
                             timeLong = @"180";
                         }
                         if(_todayIndexInWeek == i) {
-                             [blockSelf.weekDataArray addObject:[NSString stringWithFormat:@"%ld", _todayAllSec]];
+                            if(timeLong > 0) {
+                                _todayAllSec = _todayAllSec + [timeLong integerValue];
+                            }
+                            [blockSelf.weekDataArray addObject:[NSString stringWithFormat:@"%ld", _todayAllSec]];
                         } else {
                             [blockSelf.weekDataArray addObject:timeLong];
                         }

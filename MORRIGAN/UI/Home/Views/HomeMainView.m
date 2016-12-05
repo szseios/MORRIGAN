@@ -37,7 +37,6 @@
 
 @property (nonatomic , strong) NSArray *haveEmptyArray;   //空闲时间数组，里面是字典，key:startTime,endTime Value:
 
-
 @property (nonatomic , strong) UILabel *dateLabel;   //日期
 
 @property (nonatomic , strong) UILabel *APMLabel;   //上下午

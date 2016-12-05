@@ -373,7 +373,7 @@
 // 按摩体验
 - (void)preKneedHandler:(id)sender
 {
-    if(_preKneeding == YES ||  _buttonStartStop.tag == kButtonStartTag) {
+    if(_preKneeding == YES ||  _buttonStartStop.tag == kButtonStartTag || ![BluetoothManager share].isConnected) {
         return;
     }
     

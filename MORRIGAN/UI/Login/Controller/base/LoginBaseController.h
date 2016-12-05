@@ -8,6 +8,9 @@
 
 #import <UIKit/UIKit.h>
 
+#define kUserDefaultIdKey             @"kUserDefaultIdKey"        // 保存用户名key
+#define kUserDefaultPasswordKey       @"kUserDefaultPasswordKey"  // 保存密码key
+
 @interface LoginBaseController : UIViewController
 
 @property(nonatomic, strong) UIScrollView   *rootScroolView;

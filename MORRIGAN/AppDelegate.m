@@ -74,7 +74,7 @@
 //    model.startTime = date1;
 //    model.endTime = date2;
 //    [DBManager insertData:model.userID startTime:model.startTime endTime:model.endTime type:model.type];
-//
+//    NSArray *array = [DBManager selectUploadDatas:@"1"];
 
     return YES;
 }
@@ -89,6 +89,26 @@
 - (void)applicationDidEnterBackground:(UIApplication *)application {
     // Use this method to release shared resources, save user data, invalidate timers, and store enough application state information to restore your application to its current state in case it is terminated later.
     // If your application supports background execution, this method is called instead of applicationWillTerminate: when the user quits.
+    
+    UIApplication*   app = [UIApplication sharedApplication];
+    __block  UIBackgroundTaskIdentifier bgTask;
+    bgTask = [app beginBackgroundTaskWithExpirationHandler:^{
+        dispatch_async(dispatch_get_main_queue(), ^{
+            if (bgTask != UIBackgroundTaskInvalid)
+            {
+                bgTask = UIBackgroundTaskInvalid;
+            }
+        });
+    }];
+    
+    dispatch_async(dispatch_get_global_queue(DISPATCH_QUEUE_PRIORITY_DEFAULT, 0), ^{
+        dispatch_async(dispatch_get_main_queue(), ^{
+            if (bgTask != UIBackgroundTaskInvalid)
+            {
+                bgTask = UIBackgroundTaskInvalid;
+            }
+        });
+    });
 }
 
 

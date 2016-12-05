@@ -46,34 +46,49 @@
 {
     [super viewDidAppear:animated];
     
-    if([UserInfo share].mobile && [UserInfo share].mobile.length > 0 && [UserInfo share].password && [UserInfo share].password.length > 0)
-    {
-        // 注册成功返回
-        _phoneNumbrInputView.text = [UserInfo share].mobile;
-        //_passwordInputView.text = [UserInfo share].password;
-        
-    } else {
-        
-        // 注销登陆成功时调用这个
-        //    NSUserDefaults *defaults = [NSUserDefaults standardUserDefaults];
-        //    [defaults removeObjectForKey:kUserDefaultIdKey];
-        //    [defaults removeObjectForKey:kUserDefaultPasswordKey];
-        
-        
-        
+    NSUserDefaults *defaults = [NSUserDefaults standardUserDefaults];
+    NSString *phoneNumber = [defaults objectForKey:kUserDefaultIdKey];
+    NSString *password = [defaults objectForKey:kUserDefaultPasswordKey];
+    if(phoneNumber && phoneNumber.length > 0 && password && password.length > 0) {
+        NSLog(@"%@",phoneNumber);
+        NSLog(@"%@",password);
+        _phoneNumbrInputView.text = phoneNumber;
+        _passwordInputView.text = password;
         // 自动登陆
-        NSUserDefaults *defaults = [NSUserDefaults standardUserDefaults];
-        NSString *phoneNumber = [defaults objectForKey:kUserDefaultIdKey];
-        NSString *password = [defaults objectForKey:kUserDefaultPasswordKey];
-        if(phoneNumber && phoneNumber.length > 0 && password && password.length > 0) {
-            NSLog(@"%@",phoneNumber);
-            NSLog(@"%@",password);
-            _phoneNumbrInputView.text = phoneNumber;
-            _passwordInputView.text = password;
-            [self loginButtonClickInLogin: nil];
-        }
-        
+        [self loginButtonClickInLogin: nil];
+    } else if([UserInfo share].mobile && [UserInfo share].mobile.length > 0) {
+         _phoneNumbrInputView.text = [UserInfo share].mobile;
     }
+    
+    
+//    if([UserInfo share].mobile && [UserInfo share].mobile.length > 0 && [UserInfo share].password && [UserInfo share].password.length > 0)
+//    {
+//        // 注册成功返回
+//        _phoneNumbrInputView.text = [UserInfo share].mobile;
+//        //_passwordInputView.text = [UserInfo share].password;
+//        
+//    } else {
+//        
+//        // 注销登陆成功时调用这个
+//        //    NSUserDefaults *defaults = [NSUserDefaults standardUserDefaults];
+//        //    [defaults removeObjectForKey:kUserDefaultIdKey];
+//        //    [defaults removeObjectForKey:kUserDefaultPasswordKey];
+//        
+//        
+//        
+//        // 自动登陆
+//        NSUserDefaults *defaults = [NSUserDefaults standardUserDefaults];
+//        NSString *phoneNumber = [defaults objectForKey:kUserDefaultIdKey];
+//        NSString *password = [defaults objectForKey:kUserDefaultPasswordKey];
+//        if(phoneNumber && phoneNumber.length > 0 && password && password.length > 0) {
+//            NSLog(@"%@",phoneNumber);
+//            NSLog(@"%@",password);
+//            _phoneNumbrInputView.text = phoneNumber;
+//            _passwordInputView.text = password;
+//            [self loginButtonClickInLogin: nil];
+//        }
+//        
+//    }
 }
 
 

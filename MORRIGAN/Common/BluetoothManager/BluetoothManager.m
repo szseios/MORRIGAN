@@ -179,7 +179,7 @@ NSString * const ElectricQuantityChanged = @"ElectricQuantityChanged";
                 NSLog(@"receive characteristics : %@",characteristics);
                 // 本次接收的数据
                 NSData *receiveData = [characteristics value];
-                NSLog(@"完整接收：%@ [长度：%ld]", receiveData, (unsigned long)receiveData.length);
+//                NSLog(@"完整接收：%@ [长度：%ld]", receiveData, (unsigned long)receiveData.length);
                 NSString *receiveDataHexString = [Utils hexStringForData:receiveData];
                
                 // 判断接收的数据是否有效
@@ -189,7 +189,7 @@ NSString * const ElectricQuantityChanged = @"ElectricQuantityChanged";
                 NSError *responseError;
                 
                 if(isValid) {
-                    NSLog(@"数据有效");
+//                    NSLog(@"数据有效");
                     // 应答处理(不给模块应答，模块会重复发5次数据)
                     NSString *answerCode = [receiveDataHexString substringWithRange:NSMakeRange(4, 2)];
 

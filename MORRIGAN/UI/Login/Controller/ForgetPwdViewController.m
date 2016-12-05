@@ -370,11 +370,11 @@
     switch (buttonIndex) {
         case 0:
         {
-            if(alertView.tag == kAlertViewTagOfIntoLogin) {
-                // 进入登陆界面
-                [self intoLoginPage];
-                
-            }
+//            if(alertView.tag == kAlertViewTagOfIntoLogin) {
+//                // 进入登陆界面
+//                [self intoLoginPage];
+//                
+//            }
 
         }
             break;
@@ -405,11 +405,13 @@
 // 进入登陆界面
 - (void)intoLoginPage
 {
-
+    // 注销／退出／修改密码
     NSUserDefaults *defaults = [NSUserDefaults standardUserDefaults];
     [defaults removeObjectForKey:kUserDefaultIdKey];
     [defaults removeObjectForKey:kUserDefaultPasswordKey];
     [LoginManager share].autoLogin = NO;
+    [UserInfo share].mobile = _phoneNumbrInputView.text;
+    
     [self.navigationController popViewControllerAnimated:YES];
     
 }
@@ -486,7 +488,7 @@
     [self stopTimer];
     
     
-    [self showRemoteAnimation:@"正在重置密码, 请稍候..."];
+    //[self showRemoteAnimation:@"正在重置密码, 请稍候..."];
     
     NSLog(@"重置密码，手机：%@, 验证码：%@, 密码：%@", phoneNumber, authCode, password);
     
@@ -494,6 +496,7 @@
                                  @"msgCode": authCode,
                                  @"newPsw": password
                                  };
+    __block NSString *phoneNumberBlock = phoneNumber;
     NSString *bodyString = [NMOANetWorking handleHTTPBodyParams:dictionary];
     [[NMOANetWorking share] taskWithTag:ID_RESET_PWD
                               urlString:URL_RESET_PWD
@@ -502,16 +505,26 @@
                      objectTaskFinished:^(NSError *error, id obj)
      {
          
-         dispatch_async(dispatch_get_main_queue(), ^{
-             [self hideRemoteAnimation];
-         });
+//         dispatch_async(dispatch_get_main_queue(), ^{
+//             [self hideRemoteAnimation];
+//         });
          
          
          if ([[obj objectForKey:HTTP_KEY_RESULTCODE] isEqualToString:HTTP_RESULTCODE_SUCCESS]) {
              NSLog(@"修改密码成功!");
-             UIAlertView *alert = [[UIAlertView alloc] initWithTitle: @"修改密码成功！点击返回登陆界面" message:nil delegate:self cancelButtonTitle:nil otherButtonTitles:@"确定", nil];
-             alert.tag = kAlertViewTagOfIntoLogin;
-             [alert show];
+//             UIAlertView *alert = [[UIAlertView alloc] initWithTitle: @"修改密码成功！点击返回登陆界面" message:nil delegate:self cancelButtonTitle:nil otherButtonTitles:@"确定", nil];
+//             alert.tag = kAlertViewTagOfIntoLogin;
+//             [alert show];
+             
+             
+             [MBProgressHUD showHUDByContent:@"修改密码成功！" view:self.view];
+             dispatch_after(dispatch_time(DISPATCH_TIME_NOW, (int64_t)(1.0 * NSEC_PER_SEC)), dispatch_get_main_queue(), ^{
+                
+                 // 进入登陆界面
+                 [self intoLoginPage];
+             });
+
+             
              
          } else {
              NSLog(@"修改密码失败！");

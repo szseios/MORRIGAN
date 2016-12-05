@@ -96,10 +96,11 @@ static NSString *cellIdentifier = @"cellIdentifier";
 {
     if (buttonIndex == 1) {
         LoginViewController *loginViewController = [[LoginViewController alloc] init];
-        // 注销登陆成功时调用这个
+        // 注销／退出／修改密码
         NSUserDefaults *defaults = [NSUserDefaults standardUserDefaults];
         [defaults removeObjectForKey:kUserDefaultIdKey];
         [defaults removeObjectForKey:kUserDefaultPasswordKey];
+        [UserInfo share].mobile = @"";
         // 上传护理记录数据
         [[RecordManager share] uploadDBDatas:NO];
         [self.navigationController pushViewController:loginViewController animated:NO];

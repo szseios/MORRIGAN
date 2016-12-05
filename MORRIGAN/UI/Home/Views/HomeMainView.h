@@ -10,6 +10,8 @@
 
 @interface HomeMainView : UIView
 
+@property (nonatomic , strong) UILabel *electricityLabel;  //电量
+
 - (instancetype)initWithAMMorriganArray:(NSArray *)AMArray PMMorriganTime:(NSArray *)PMArray withFarme:(CGRect)frame;
 
 - (void)morriganStartTime:(NSDate *)startTime toEndTime:(NSDate *)endTime;
@@ -31,8 +33,6 @@
 @property (nonatomic , strong) NSString *starCount;
 
 @property (nonatomic , strong) UILabel *starLabel;  //星星
-
-@property (nonatomic , strong) UILabel *electricityLabel;  //电量
 
 @property (nonatomic , strong) UIImageView *upBackgroundView;
 
