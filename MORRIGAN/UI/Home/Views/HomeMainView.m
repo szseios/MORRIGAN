@@ -296,8 +296,8 @@
     [self addSubview:_upView];
     
     _upBackgroundView = [[UIImageView alloc] initWithFrame:_upView.bounds];
-    _upBackgroundView.image =  [self createImageWithColor:[Utils stringTOColor:@"#a743c7"]];
-    NSInteger percent = _electricityPercent > 0 ?  _electricityPercent : 50;
+    _upBackgroundView.image =  [self createImageWithColor:[Utils stringTOColor:@"#c34fdc"]];
+    NSInteger percent = _electricityPercent > 0 ?  _electricityPercent : 0;
     _upBackgroundView.height = _upView.height * (percent / 100.0);
     _upBackgroundView.y = _upView.height - _upBackgroundView.height;
     CGFloat temp = _upBackgroundView.height;
