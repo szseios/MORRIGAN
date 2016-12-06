@@ -28,7 +28,7 @@
             case 0:
             {
                 _headerImageView.hidden = NO;
-                _headerImageView.layer.cornerRadius = 20;
+                _headerImageView.layer.cornerRadius = 23;
 //                _headerImageView.image = [UIImage imageNamed:@"defaultHeaderView"];
                 [SDWebImageManager sharedManager];
                 [_headerImageView sd_setImageWithURL:[NSURL URLWithString:[UserInfo share].imgUrl] placeholderImage:[UIImage imageNamed:@"defaultHeaderView"] options:SDWebImageHandleCookies | SDWebImageRetryFailed | SDWebImageRefreshCached completed:^(UIImage *image, NSError *error, SDImageCacheType cacheType, NSURL *imageURL) {

@@ -20,8 +20,7 @@
                         <constraints>
                             <constraint firstAttribute="width" constant="120" id="B4W-hm-K7I"/>
                         </constraints>
-                        <fontDescription key="fontDescription" type="system" pointSize="17"/>
-                        <color key="textColor" white="0.33333333333333331" alpha="1" colorSpace="calibratedWhite"/>
+                        <fontDescription key="fontDescription" type="system" pointSize="19"/>
                         <nil key="highlightedColor"/>
                     </label>
                     <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Label" textAlignment="right" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="Xgm-id-gUd">
@@ -36,20 +35,20 @@
                     <imageView clipsSubviews="YES" userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" translatesAutoresizingMaskIntoConstraints="NO" id="aDA-ra-wJa">
                         <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                         <constraints>
-                            <constraint firstAttribute="height" constant="40" id="Fzw-ZZ-Gkc"/>
-                            <constraint firstAttribute="width" constant="40" id="poo-xO-uoI"/>
+                            <constraint firstAttribute="height" constant="46" id="6tO-eI-lvX"/>
+                            <constraint firstAttribute="width" constant="46" id="z4N-r0-cL7"/>
                         </constraints>
                     </imageView>
                 </subviews>
                 <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                 <constraints>
                     <constraint firstAttribute="bottom" secondItem="A8Q-Jp-CPe" secondAttribute="bottom" constant="5" id="17h-sK-A9e"/>
+                    <constraint firstAttribute="trailing" secondItem="aDA-ra-wJa" secondAttribute="trailing" constant="5" id="6e8-or-SAt"/>
                     <constraint firstItem="A8Q-Jp-CPe" firstAttribute="leading" secondItem="H2p-sc-9uM" secondAttribute="leading" constant="10" id="CKv-qC-kr8"/>
                     <constraint firstAttribute="bottom" secondItem="Xgm-id-gUd" secondAttribute="bottom" constant="5" id="HfJ-Pr-ph7"/>
                     <constraint firstAttribute="trailing" secondItem="Xgm-id-gUd" secondAttribute="trailing" id="KZW-yL-fmH"/>
-                    <constraint firstItem="aDA-ra-wJa" firstAttribute="top" secondItem="H2p-sc-9uM" secondAttribute="top" constant="1" id="OnQ-2x-2Mz"/>
-                    <constraint firstAttribute="trailing" secondItem="aDA-ra-wJa" secondAttribute="trailing" constant="5" id="OxW-IP-a0V"/>
                     <constraint firstItem="Xgm-id-gUd" firstAttribute="top" secondItem="H2p-sc-9uM" secondAttribute="top" constant="5" id="YfD-gd-kRU"/>
+                    <constraint firstItem="aDA-ra-wJa" firstAttribute="centerY" secondItem="H2p-sc-9uM" secondAttribute="centerY" id="di8-5f-joI"/>
                     <constraint firstItem="A8Q-Jp-CPe" firstAttribute="top" secondItem="H2p-sc-9uM" secondAttribute="top" constant="5" id="mBo-9q-fbg"/>
                 </constraints>
             </tableViewCellContentView>

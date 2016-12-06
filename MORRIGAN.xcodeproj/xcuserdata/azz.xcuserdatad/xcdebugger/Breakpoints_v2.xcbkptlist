@@ -20,27 +20,11 @@
             ignoreCount = "0"
             continueAfterRunningActions = "No"
             filePath = "MORRIGAN/UI/Home/Controller/HomePageController.m"
-            timestampString = "502620958.233534"
+            timestampString = "502679196.554242"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "237"
-            endingLineNumber = "237"
-            landmarkName = "-clickBingdingDevice"
-            landmarkType = "7">
-         </BreakpointContent>
-      </BreakpointProxy>
-      <BreakpointProxy
-         BreakpointExtensionID = "Xcode.Breakpoint.FileBreakpoint">
-         <BreakpointContent
-            shouldBeEnabled = "No"
-            ignoreCount = "0"
-            continueAfterRunningActions = "No"
-            filePath = "MORRIGAN/UI/Home/Controller/HomePageController.m"
-            timestampString = "502620958.233534"
-            startingColumnNumber = "9223372036854775807"
-            endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "255"
-            endingLineNumber = "255"
+            startingLineNumber = "266"
+            endingLineNumber = "266"
             landmarkName = "-clickMoveToLeft"
             landmarkType = "7">
          </BreakpointContent>
