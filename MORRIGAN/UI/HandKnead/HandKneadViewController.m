@@ -743,6 +743,8 @@
     _currentStartStop = 0;
     [self sendData];
     
+    [self bluetoothDisConnectHandlerInHandkneed];
+    
     [self.navigationController popViewControllerAnimated:YES];
 }
 

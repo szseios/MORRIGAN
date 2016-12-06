@@ -64,16 +64,26 @@
 // 视图初始化
 - (void)viewInit
 {
-    // 下面部分背景
-    UIImageView *downBgView = [[UIImageView alloc] initWithFrame:CGRectMake(0, kScreenHeight/3, kScreenWidth, kScreenHeight/3*2)];
-    downBgView.image = [UIImage imageNamed:@"auto_downBackgrround"];
-    [self.view addSubview:downBgView];
+    
     
     // 上面部分背景
     UIImageView *upBgView = [[UIImageView alloc] initWithFrame:CGRectMake(0, 0, kScreenWidth, kScreenHeight/2)];
     upBgView.image = [UIImage imageNamed:@"auto_upBackground_before"];
     [self.view addSubview:upBgView];
     
+    
+    // 下面部分背景
+    CGFloat downBgViewY = kScreenHeight/2 - 75;
+    if(kScreenHeight > 700) {
+        //6p
+        downBgViewY = kScreenHeight/2 - 80;
+    } else if(kScreenHeight < 570) {
+        // 5s
+        downBgViewY = kScreenHeight/2 - 63;
+    }
+    UIImageView *downBgView = [[UIImageView alloc] initWithFrame:CGRectMake(0, downBgViewY, kScreenWidth, kScreenHeight/3*2)];
+    downBgView.image = [UIImage imageNamed:@"auto_downBackgrround"];
+    [self.view addSubview:downBgView];
     
     // 返回按钮
     CGFloat backButtonW = 32.0;
@@ -206,14 +216,14 @@
     
     
     // 开始／停止按钮
-    CGFloat startBtnW = 70.0;
-    CGFloat startBtnY = button5.frame.origin.y + 30.0;
+    CGFloat startBtnW = 120.0;
+    CGFloat startBtnY = button5.frame.origin.y;
     if(kScreenHeight > 700) {
         //6p
-        startBtnY = button5.frame.origin.y + 50.0;
+        startBtnY = button5.frame.origin.y + 20.0;
     } else if(kScreenHeight < 570) {
         // 5s
-        startBtnY = button5.frame.origin.y + 20.0;
+        startBtnY = button5.frame.origin.y - 20;
     }
     UIButton *startBtn = [[UIButton alloc] initWithFrame:CGRectMake((kScreenWidth - startBtnW)/2, startBtnY, startBtnW, startBtnW)];
     [startBtn addTarget:self action:@selector(startBtnHandler:) forControlEvents:UIControlEventTouchUpInside];
@@ -223,7 +233,7 @@
     _buttonStartStop = startBtn;
     
     // 准备按摩吧!
-    UILabel *prepareLabel = [[UILabel alloc] initWithFrame:CGRectMake(0, startBtn.frame.origin.y - 50, kScreenWidth, 20)];
+    UILabel *prepareLabel = [[UILabel alloc] initWithFrame:CGRectMake(0, startBtn.frame.origin.y - 40, kScreenWidth, 20)];
     prepareLabel.text = @"准备按摩吧!";
     prepareLabel.textAlignment = NSTextAlignmentCenter;
     prepareLabel.font = [UIFont systemFontOfSize:16.0];
@@ -232,7 +242,15 @@
     _prepareLabel = prepareLabel;
     
     // 正在按摩的模式
-    _curKneeding = [[UIButton alloc] initWithFrame:CGRectMake(startBtn.frame.origin.x + (startBtn.frame.size.width - buttonW)/2, startBtn.frame.origin.y - 100, buttonW, buttonH)];
+    CGFloat curKneedingY = startBtn.frame.origin.y - 70;
+    if(kScreenHeight > 700) {
+        //6p
+        curKneedingY = startBtn.frame.origin.y - 80;
+    } else if(kScreenHeight < 570) {
+        // 5s
+        curKneedingY = startBtn.frame.origin.y - 50;
+    }
+    _curKneeding = [[UIButton alloc] initWithFrame:CGRectMake(startBtn.frame.origin.x + (startBtn.frame.size.width - buttonW)/2, curKneedingY, buttonW, buttonH)];
     [_curKneeding setImage:[UIImage imageNamed:@"icon-lightPress"] forState:UIControlStateNormal];
     [self.view addSubview:_curKneeding];
     _curKneeding.hidden = YES;
@@ -678,6 +696,9 @@
 {
     [self stopTimer];
     [self stopKneed];
+    
+    [self bluetoothDisConnectHandlerInAutoKnead];
+    
     [self.navigationController popViewControllerAnimated:YES];
 }
 

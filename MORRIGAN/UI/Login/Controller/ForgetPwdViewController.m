@@ -27,13 +27,14 @@
 #define kgetAuthCodeButtonOfNormal      3002
 
 
-@interface ForgetPwdViewController () <UIAlertViewDelegate>
+@interface ForgetPwdViewController () <UIAlertViewDelegate, UITextFieldDelegate>
 {
     UITextField *_phoneNumbrInputView;
     UITextField *_authCodeInputView;
     UIButton *_getAuthCodeButton;
     UITextField *_passwordInputView;
     UIButton *_showPwdButton;
+    UIButton *_cleanUpButton;
     
     NSTimer *_getAuthCodeTimer;
     NSInteger _currentSec;
@@ -117,11 +118,22 @@
     //phoneIconView.backgroundColor = [UIColor orangeColor];
     phoneIconView.image = [UIImage imageNamed:@"ic_mobile"];
     [phoneNumRootView addSubview:phoneIconView];
+    // 清除手机号按钮
+    CGFloat cleanUpViewW = 30.0;
+    UIButton *cleanUpView = [[UIButton alloc] initWithFrame:CGRectMake(editViewW - cleanUpViewW , (editViewH - cleanUpViewW)/2, cleanUpViewW, cleanUpViewW)];
+    cleanUpView.alpha = 0.5;
+    //cleanUpView.backgroundColor = [UIColor blueColor];
+    [cleanUpView addTarget:self action:@selector(cleanUpButtonClickForgetPwd) forControlEvents:UIControlEventTouchUpInside];
+    _cleanUpButton = cleanUpView;
+    _cleanUpButton.hidden = YES;
+    [_cleanUpButton setImage:[UIImage imageNamed:@"icon_remove"] forState:UIControlStateNormal];
+    [phoneNumRootView addSubview:cleanUpView];
     // 手机输入框
     CGFloat phoneinputViewPaddingLeft = 5.0;
-    UITextField *phoneInputView = [[UITextField alloc] initWithFrame:CGRectMake(iconW + phoneinputViewPaddingLeft, 0, phoneNumRootView.frame.size.width - iconW - phoneinputViewPaddingLeft, editViewH)];
+    UITextField *phoneInputView = [[UITextField alloc] initWithFrame:CGRectMake(iconW + phoneinputViewPaddingLeft, 0, phoneNumRootView.frame.size.width - iconW - cleanUpViewW - phoneinputViewPaddingLeft, editViewH)];
     //phoneInputView.backgroundColor = [UIColor greenColor];
     phoneInputView.placeholder = @"请填写手机号码";
+    phoneInputView.delegate = self;
     [phoneInputView setInputAccessoryView:self.keyboardTopView];
     // 注意：先设置phoneInputView.placeholder才有效
     [phoneInputView setValue:inputViewTextColor forKeyPath:@"_placeholderLabel.textColor"];
@@ -192,7 +204,7 @@
     CGFloat showPWDViewW = 30.0;
     UIButton *showPWDView = [[UIButton alloc] initWithFrame:CGRectMake(editViewW - showPWDViewW , (editViewH - showPWDViewW)/2, showPWDViewW, showPWDViewW)];
     //showPWDView.backgroundColor = [UIColor blueColor];
-    [showPWDView addTarget:self action:@selector(showPWDButtonClickInRegister) forControlEvents:UIControlEventTouchUpInside];
+    [showPWDView addTarget:self action:@selector(showPWDButtonClickInForgetPwd) forControlEvents:UIControlEventTouchUpInside];
     _showPwdButton = showPWDView;
     [_showPwdButton setImage:[UIImage imageNamed:@"ic_show_pwd_off"] forState:UIControlStateNormal];
     [PWDRootView addSubview:showPWDView];
@@ -273,10 +285,32 @@
     [alert show];
 }
 
-// 显示密码按钮点击
-- (void)showPWDButtonClickInRegister
+// 手机输入框点击
+-(void)textFieldDidBeginEditing:(UITextField *)textField
 {
-    NSLog(@"showPWDButtonClickInRegister");
+    if(textField == _phoneNumbrInputView) {
+        _cleanUpButton.hidden = NO;
+    }
+}
+-(void)textFieldDidEndEditing:(UITextField *)textField
+{
+    if(textField == _phoneNumbrInputView) {
+        _cleanUpButton.hidden = YES;
+    }
+}
+
+// 显示密码按钮点击
+- (void)cleanUpButtonClickForgetPwd
+{
+    NSLog(@"cleanUpButtonClickInLogin");
+    _phoneNumbrInputView.text = @"";
+    _passwordInputView.text = @"";
+}
+
+// 显示密码按钮点击
+- (void)showPWDButtonClickInForgetPwd
+{
+    NSLog(@"showPWDButtonClickInForgetPwd");
     _passwordInputView.secureTextEntry = !_passwordInputView.secureTextEntry;
     //_showPwdButton.backgroundColor = _passwordInputView.secureTextEntry ? [UIColor blueColor] : [UIColor redColor];
     [_showPwdButton setImage:[UIImage imageNamed:_passwordInputView.secureTextEntry ?@"ic_show_pwd_off" : @"ic_show_pwd_on"] forState:UIControlStateNormal];
@@ -524,7 +558,7 @@
              
              
              [MBProgressHUD showHUDByContent:@"修改密码成功！" view:self.view];
-             dispatch_after(dispatch_time(DISPATCH_TIME_NOW, (int64_t)(1.0 * NSEC_PER_SEC)), dispatch_get_main_queue(), ^{
+             dispatch_after(dispatch_time(DISPATCH_TIME_NOW, (int64_t)(0.5 * NSEC_PER_SEC)), dispatch_get_main_queue(), ^{
                 
                  // 进入登陆界面
                  [self intoLoginPage];
