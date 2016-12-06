@@ -216,14 +216,15 @@
     
     
     // 开始／停止按钮
-    CGFloat startBtnW = 120.0;
-    CGFloat startBtnY = button5.frame.origin.y;
+    CGFloat startBtnW = 80;
+    CGFloat startBtnY = button5.frame.origin.y + 20;
     if(kScreenHeight > 700) {
         //6p
-        startBtnY = button5.frame.origin.y + 20.0;
+        startBtnY = button5.frame.origin.y + 20.0 + 20;
     } else if(kScreenHeight < 570) {
         // 5s
-        startBtnY = button5.frame.origin.y - 20;
+        startBtnW = 70;
+        startBtnY = button5.frame.origin.y - 20 + 30;
     }
     UIButton *startBtn = [[UIButton alloc] initWithFrame:CGRectMake((kScreenWidth - startBtnW)/2, startBtnY, startBtnW, startBtnW)];
     [startBtn addTarget:self action:@selector(startBtnHandler:) forControlEvents:UIControlEventTouchUpInside];
