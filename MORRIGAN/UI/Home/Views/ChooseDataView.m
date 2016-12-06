@@ -102,16 +102,6 @@
 {
     _heightStr = [UserInfo share].high;
     _weightStr = [UserInfo share].weight;
-        if ([[UserInfo share].emotion isEqualToString:@"B"]) {
-        _feelingStr = _feelingArray[0];
-    }else if ([[UserInfo share].emotion isEqualToString:@"M"])
-    {
-        _feelingStr = _feelingArray[1];
-    }else if ([[UserInfo share].emotion isEqualToString:@"S"])
-    {
-        _feelingStr = _feelingArray[2];
-    }
-    
     switch (_pickerType) {
         case pickerViewTypeAge:
         {
@@ -146,7 +136,7 @@
         case pickerViewTypeWeight:
         {
             _weightArray = [NSMutableArray array];
-            for (NSInteger i = 0; i < 200; i++) {
+            for (NSInteger i = 20; i < 200; i++) {
                 NSString *count = [NSString stringWithFormat:@"%ld",i];
                 [_weightArray addObject:count];
             }
@@ -154,13 +144,25 @@
             if ([UserInfo share].weight.length > 0) {
                 NSInteger weightCount = [UserInfo share].weight.integerValue;
                 if (weightCount < _weightArray.count) {
-                    [_pickerView selectRow:weightCount inComponent:0 animated:NO];
+                    [_pickerView selectRow:weightCount inComponent:weightCount-20 animated:NO];
                 }
             }
             break;
         case pickerViewTypeFeeling:
         {
             _feelingArray = @[@"恋爱",@"已婚",@"未婚"];
+            NSString *tem = [UserInfo share].emotion;
+            if ([[UserInfo share].emotion isEqualToString:@"B"]) {
+                _feelingStr = _feelingArray[0];
+            }else if ([[UserInfo share].emotion isEqualToString:@"M"])
+            {
+                _feelingStr = _feelingArray[1];
+                [_pickerView selectRow:1 inComponent:0 animated:NO];
+            }else if ([[UserInfo share].emotion isEqualToString:@"S"])
+            {
+                _feelingStr = _feelingArray[2];
+                [_pickerView selectRow:2 inComponent:0 animated:NO];
+            }
         }
             break;
             

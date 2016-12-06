@@ -114,8 +114,18 @@
 
 - (void)clickBingdingDevice
 {
-    SearchPeripheralViewController *search = [[SearchPeripheralViewController alloc] init];
-    [self.navigationController pushViewController:search animated:YES];
+    if ([BluetoothManager share].isConnected) {
+        UIAlertView *alert = [[UIAlertView alloc] initWithTitle:nil
+                                                        message:@"需要切换设备？"
+                                                       delegate:self
+                                              cancelButtonTitle:@"取消"
+                                              otherButtonTitles:@"确定", nil];
+        alert.tag = 9999;
+        [alert show];
+    }else{
+        SearchPeripheralViewController *search = [[SearchPeripheralViewController alloc] init];
+        [self.navigationController pushViewController:search animated:YES];
+    }
 }
 
 
@@ -160,14 +170,24 @@
     _model = model;
     UIAlertView *alert = [[UIAlertView alloc] initWithTitle:@"是否删除绑定设备" message:nil delegate:self cancelButtonTitle:@"取消" otherButtonTitles:@"注销", nil];
     [alert show];
+    alert.tag = 8888;
     NSLog(@"删除第%ld个设备",index.row);
 }
 
 - (void)alertView:(UIAlertView *)alertView clickedButtonAtIndex:(NSInteger)buttonIndex
 {
-    if (buttonIndex == 1) {
-        [self removeBindDevice];
+    if (alertView.tag == 8888) {
+        if (buttonIndex == 1) {
+            [self removeBindDevice];
+        }
     }
+    else if (alertView.tag == 9999) {
+        if (buttonIndex == 1) {
+            SearchPeripheralViewController *search = [[SearchPeripheralViewController alloc] init];
+            [self.navigationController pushViewController:search animated:YES];
+        }
+    }
+    
 }
 
 - (void)removeBindDevice

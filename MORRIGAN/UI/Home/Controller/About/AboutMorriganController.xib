@@ -17,7 +17,7 @@
             <rect key="frame" x="0.0" y="0.0" width="375" height="667"/>
             <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
             <subviews>
-                <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="about_top" translatesAutoresizingMaskIntoConstraints="NO" id="neN-Kv-RP1">
+                <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="aboutMoLiImage" translatesAutoresizingMaskIntoConstraints="NO" id="neN-Kv-RP1">
                     <constraints>
                         <constraint firstAttribute="height" constant="257" id="FUj-mL-ACh"/>
                     </constraints>
@@ -33,7 +33,7 @@
                     <constraints>
                         <constraint firstAttribute="height" constant="30" id="OT1-7U-WjT"/>
                     </constraints>
-                    <fontDescription key="fontDescription" type="system" pointSize="14"/>
+                    <fontDescription key="fontDescription" type="system" pointSize="13"/>
                     <color key="textColor" cocoaTouchSystemColor="scrollViewTexturedBackgroundColor"/>
                     <nil key="highlightedColor"/>
                 </label>
@@ -41,7 +41,7 @@
             <color key="backgroundColor" red="1" green="1" blue="1" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
             <constraints>
                 <constraint firstItem="YBo-N7-jJM" firstAttribute="top" secondItem="neN-Kv-RP1" secondAttribute="bottom" id="DTY-Wq-WeD"/>
-                <constraint firstAttribute="bottom" secondItem="zLV-SL-NEH" secondAttribute="bottom" constant="15" id="dlW-dW-Tcv"/>
+                <constraint firstAttribute="bottom" secondItem="zLV-SL-NEH" secondAttribute="bottom" constant="10" id="dlW-dW-Tcv"/>
                 <constraint firstAttribute="trailing" secondItem="YBo-N7-jJM" secondAttribute="trailing" id="iJb-Hh-3d7"/>
                 <constraint firstAttribute="bottom" secondItem="YBo-N7-jJM" secondAttribute="bottom" id="jNO-1f-w8x"/>
                 <constraint firstItem="neN-Kv-RP1" firstAttribute="leading" secondItem="i5M-Pr-FkT" secondAttribute="leading" id="l8e-Dv-3IT"/>
@@ -54,6 +54,6 @@
         </view>
     </objects>
     <resources>
-        <image name="about_top" width="300" height="257"/>
+        <image name="aboutMoLiImage" width="375" height="262"/>
     </resources>
 </document>

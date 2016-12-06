@@ -156,7 +156,7 @@
     CGFloat y = 0.f;
     //第一个波纹的公式
     for (float x = 0.f; x <= waveW ; x++) {
-        y = 16*sin((250 / waveW) * (x * M_PI / 140) - self.waveOffsetX * M_PI / 140) + waveW * 0.7;
+        y = 10*sin((250 / waveW) * (x * M_PI / 140) - self.waveOffsetX * M_PI / 140 + M_PI*1.25) + waveW * 0.7;
         CGPathAddLineToPoint(path, nil, x, y);
         x++;
     }
@@ -297,7 +297,7 @@
     
     _upBackgroundView = [[UIImageView alloc] initWithFrame:_upView.bounds];
     _upBackgroundView.image =  [self createImageWithColor:[Utils stringTOColor:@"#a743c7"]];
-    NSInteger percent = _electricityPercent > 0 ?  _electricityPercent : 0;
+    NSInteger percent = _electricityPercent > 0 ?  _electricityPercent : 50;
     _upBackgroundView.height = _upView.height * (percent / 100.0);
     _upBackgroundView.y = _upView.height - _upBackgroundView.height;
     CGFloat temp = _upBackgroundView.height;
@@ -360,7 +360,7 @@
     CGFloat starImageY = CGRectGetMaxY(_starLabel.frame);
     CGFloat starImageX = 12;
     CGFloat starImageW = _downView.width - 24;
-    CGFloat starImageH = kScreenHeight > 568 ? 14 : 10;
+    CGFloat starImageH = kScreenHeight > 568 ? 12 : 10;
     _starImage = [[UIImageView alloc] initWithFrame:CGRectMake(starImageX, starImageY, starImageW, starImageH)];
     _starImage.backgroundColor = [UIColor clearColor];
 //    if (_starCount) {

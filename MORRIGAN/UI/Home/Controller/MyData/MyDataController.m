@@ -235,6 +235,11 @@ static NSString *cellIdentifier = @"cellIdentifier";
     return 0.001;
 }
 
+- (CGFloat)tableView:(UITableView *)tableView heightForRowAtIndexPath:(NSIndexPath *)indexPath
+{
+    return 55;
+}
+
 #pragma mark - ChooseDataViewDelegate
 
 - (void)setUpChooseViewWithType:(pickerViewType)type
@@ -341,7 +346,7 @@ static NSString *cellIdentifier = @"cellIdentifier";
             }
             
             [UserInfo share].age = [NSString stringWithFormat:@"%ld", age];
-            showData = [UserInfo share].age;
+            showData = [NSString stringWithFormat:@"%@岁",[UserInfo share].age];
             
            
         }

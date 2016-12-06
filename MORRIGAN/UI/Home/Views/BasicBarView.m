@@ -14,6 +14,8 @@
 
 @property (nonatomic , strong) UILabel *titleLabel;
 
+
+
 @end
 
 @implementation BasicBarView
@@ -173,6 +175,11 @@
 
 - (void)showCenterView
 {
+    _titleLabel.hidden = YES;
+    UIImageView *logoImageView = [[UIImageView alloc] initWithFrame:CGRectMake(60, (self.height - 30)*0.5, kScreenWidth - 120, 30)];
+    logoImageView.contentMode = UIViewContentModeCenter;
+    logoImageView.image = [UIImage imageNamed:@"logo"];
+    [self addSubview:logoImageView];
     
 }
 

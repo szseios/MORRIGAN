@@ -50,13 +50,13 @@
     [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(DisconnectPeripheral:) name:DisconnectPeripheral object:nil];
     
     [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(setStarRank:) name:GETSTARRANKNOTIFICATION object:nil];
-    UIImageView *upBackImage = [[UIImageView alloc] initWithFrame:CGRectMake(0, 0, self.view.width, self.view.height)];
-    upBackImage.image =[UIImage imageWithColor:[Utils stringTOColor:@"#8c39e5"]];
-    [self.view addSubview:upBackImage];
     
-    UIImageView *downBackImage = [[UIImageView alloc] initWithFrame:CGRectMake(0, self.view.height - (kScreenHeight > 568 ? 180 : 170), self.view.width, (kScreenHeight > 568 ? 180 : 170))];
+    UIImageView *downBackImage = [[UIImageView alloc] initWithFrame:CGRectMake(0, self.view.height - (kScreenHeight > 568 ? 280 : 270), self.view.width, (kScreenHeight > 568 ? 280 : 270))];
     downBackImage.image = [UIImage imageNamed:@"downBackgroud"];
     [self.view addSubview:downBackImage];
+    UIImageView *upBackImage = [[UIImageView alloc] initWithFrame:CGRectMake(0, 0, self.view.width, self.view.height - 80)];
+    upBackImage.image =[UIImage imageNamed:@"upBackgroud"];
+    [self.view addSubview:upBackImage];
     
     [self setUpBarView];
     
@@ -130,6 +130,7 @@
 - (void)setUpBarView
 {
     _barView = [[BasicBarView alloc] initWithFrame:CGRectMake(0, 20, kScreenWidth, 44) withType:superBarTypeleftItemMove withTitle:@"M O R R I G A N"  isShowRightButton:YES];
+    [_barView showCenterView];
     [self.view addSubview:_barView];
     _barView.delegate = self;
 }
@@ -155,14 +156,14 @@
 
 - (void)setUpBottomView
 {
-    CGFloat bottomViewY = self.view.height - (kScreenHeight > 568 ? 150 : 140);
+    CGFloat bottomViewY = self.view.height - (kScreenHeight > 568 ? 140 : 130);
     CGFloat bottomViewW = self.view.width - 60;
     _bottomView = [[UIView alloc] initWithFrame:CGRectMake(30, bottomViewY, bottomViewW, 150)];
     
     
     CGFloat buttonW = kScreenHeight > 568 ? 100 : 80;
     CGFloat buttonY = 10;
-    CGFloat labelY = kScreenHeight > 568 ? 100 : 80;;
+    CGFloat labelY = kScreenHeight > 568 ? 100 : 90;
     CGFloat bottonX = (bottomViewW - buttonW * 3) / 2;
     CGFloat labelH = 20;
     
@@ -229,6 +230,15 @@
 
 - (void)clickBingdingDevice
 {
+    if ([BluetoothManager share].isConnected) {
+        UIAlertView *alert = [[UIAlertView alloc] initWithTitle:nil
+                                                        message:@"需要切换设备？"
+                                                       delegate:self
+                                              cancelButtonTitle:@"取消"
+                                              otherButtonTitles:@"确定", nil];
+        alert.tag = 9999;
+        [alert show];
+    }else{
     //如果用户打开了蓝牙
     if ([[BluetoothManager share] getCentralManager].state == CBCentralManagerStatePoweredOn) {
         SearchPeripheralViewController *ctl = [[SearchPeripheralViewController alloc] init];
@@ -242,6 +252,7 @@
                                               otherButtonTitles:@"设置", nil];
         alert.tag = 111;
         [alert show];
+    }
     }
 }
 
@@ -290,6 +301,13 @@
                     [[UIApplication sharedApplication] openURL:url];
                 }
             }
+        }
+    }
+    else if (alertView.tag == 9999) {
+        if (buttonIndex == 1) {
+            SearchPeripheralViewController *ctl = [[SearchPeripheralViewController alloc] init];
+            [self.navigationController pushViewController:ctl animated:YES];
+            
         }
     }
     else {
