@@ -104,7 +104,10 @@
 #define kColor_ffffff  @"#ffffff"  // 白色
 
 #define TARGETCHANGENOTIFICATION  @"TARGETCHANGENOTIFICATION"  // 训练目标改变通知
+#define TARGETCHANGEUSERDEFULT  @"TARGETCHANGEUSERDEFULT"  // 训练目标存本地
 #define MORRIGANTIMECHANGENOTIFICATION  @"MORRIGANTIMECHANGENOTIFICATION"   //按摩时间变化通知
+
+#define SHOWGUIDEVIEW  @"SHOWGUIDEVIEW"   //是否显示引导页
 
 
 #endif /* GlobalDefinition_h */

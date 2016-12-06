@@ -46,7 +46,7 @@
     [super viewDidLoad];
     //
     [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(getElectricity:) name:ElectricQuantityChanged object:nil];
-    [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(firstGetElectricity:) name:ConnectPeripheralSuccess object:nil];
+    [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(firstGetElectricity:) name:PeripheralReadedCharacteristic object:nil];
     [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(DisconnectPeripheral:) name:DisconnectPeripheral object:nil];
     
     [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(setStarRank:) name:GETSTARRANKNOTIFICATION object:nil];
@@ -71,6 +71,7 @@
         UIAlertView *alert = [[UIAlertView alloc] initWithTitle:@"还未连接设备" message:nil delegate:self cancelButtonTitle:@"取消" otherButtonTitles:@"连接", nil];
         [alert show];
     }
+   
     [self setUpHomeMainView];
     
 }
@@ -112,6 +113,11 @@
     if (![BluetoothManager share].isConnected) {
         [_barView startFlashing];
     }
+}
+
+- (void)viewDidAppear:(BOOL)animated
+{
+    [super viewDidAppear:animated];
 }
 
 - (void)viewWillDisappear:(BOOL)animated
@@ -320,15 +326,8 @@
         BluetoothOperation *operation = [[BluetoothOperation alloc] init];
         [operation setValue:@"03" index:2];
         [[BluetoothManager share] writeValueByOperation:operation];
-        operation.response = ^(NSString *response,long tag,NSError *error,BOOL success) {
-            if (success) {
-                NSString *electriQuantity = [response substringWithRange:NSMakeRange(4, 2)];
-                [_mainView setElectricityPersent:[electriQuantity floatValue]];
-            }
-            
-        };
     });
-    
+
 }
 
 - (void)setStarRank:(NSNotification *)notice

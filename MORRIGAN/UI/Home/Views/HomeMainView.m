@@ -322,10 +322,10 @@
     [_upView addSubview:_electricityLabel];
     
     //
-    UILabel *label = [[UILabel alloc] initWithFrame:CGRectMake(0, CGRectGetMaxY(_electricityLabel.frame), persentLabelW, 20)];
+    UILabel *label = [[UILabel alloc] initWithFrame:CGRectMake(0, CGRectGetMaxY(_electricityLabel.frame)-2, persentLabelW, 20)];
     label.textAlignment = NSTextAlignmentCenter;
     label.textColor = [UIColor whiteColor];
-    label.font  = [UIFont systemFontOfSize:12];
+    label.font  = [UIFont systemFontOfSize:kScreenWidth > 320 ? 12 : 10];
     label.text = @"电量";
     [_upView addSubview:label];
     

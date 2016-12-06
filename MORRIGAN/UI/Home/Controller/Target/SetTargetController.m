@@ -65,7 +65,7 @@
 
 - (void)targetAchieve
 {
-    [self.navigationController popViewControllerAnimated:YES];
+    
     NSDictionary *dictionary = @{@"userId": [UserInfo share].userId ? [UserInfo share].userId : @"",
                                  @"target": [UserInfo share].target ? [UserInfo share].target : @"",
                                  };
@@ -81,6 +81,7 @@
             
         }
     }];
+    [self.navigationController popViewControllerAnimated:YES];
 }
 
 - (void)setUpRulerView
@@ -149,7 +150,7 @@
 {
     [[NSNotificationCenter defaultCenter] postNotificationName:TARGETCHANGENOTIFICATION object:nil];
     [UserInfo share].target = _countLabel.text;
-    
+    [[NSUserDefaults standardUserDefaults] setObject:[UserInfo share].target forKey:TARGETCHANGEUSERDEFULT];
     [self targetAchieve];
 }
 

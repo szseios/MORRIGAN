@@ -101,11 +101,11 @@
     [self addSubview:_rightButton];
     
     //如果没有连上蓝牙设备,开始执行动画
-    if (![BluetoothManager share].isConnected) {
+    if (![BluetoothManager isExsitBluetoothManager] ||
+        ![BluetoothManager share].isConnected) {
         if (_type == superBarTypeLeftItemBackAndRightItemBinding) {
             [self startFlashing];
         }
-        
     }
 }
 
@@ -168,6 +168,12 @@
 {
     _titleLabel.text = title;
     [self setNeedsDisplay];
+}
+
+
+- (void)showCenterView
+{
+    
 }
 
 /*

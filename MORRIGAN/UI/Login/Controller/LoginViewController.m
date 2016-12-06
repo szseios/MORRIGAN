@@ -18,6 +18,7 @@
 #import "ForgetPwdViewController.h"
 #import "RecordManager.h"
 #import "AppDelegate.h"
+#import "GuideViewController.h"
 
 #define kAlertViewTagOfIntoRegister  1000
 
@@ -400,6 +401,7 @@
                                  @"password": password
                                  };
     __weak LoginViewController *weakSelf = self;
+    NSInteger startTimeInterval = [[NSDate date] timeIntervalSince1970];
     __block NSString *phoneNumberBlock = phoneNumber;
     __block NSString *passwordBlock = password;
     NSString *bodyString = [NMOANetWorking handleHTTPBodyParams:dictionary];
@@ -410,10 +412,14 @@
                      objectTaskFinished:^(NSError *error, id obj)
      {
          
+         NSInteger endTimeInterval = [[NSDate date] timeIntervalSince1970];
+         if(endTimeInterval - startTimeInterval < 1) {
+             sleep(1.0 - (endTimeInterval - startTimeInterval));
+         }
+         
          dispatch_async(dispatch_get_main_queue(), ^{
              [weakSelf hideRemoteAnimation];
          });
-         
          
          if ([[obj objectForKey:HTTP_KEY_RESULTCODE] isEqualToString:HTTP_RESULTCODE_SUCCESS]) {
              NSLog(@"登陆成功！");
@@ -452,14 +458,21 @@
              
              // 登录成功后获取已绑定设备
              [weakSelf fetchBindedDevices];
+             BOOL showGuide = [[NSUserDefaults standardUserDefaults] boolForKey:SHOWGUIDEVIEW];
+             if (!showGuide) {
+                 GuideViewController *guideController = [[GuideViewController alloc] init];
+                 [weakSelf.navigationController pushViewController:guideController animated:YES];
+                 
+             }else{
+                 // 进入主页
+                 RootViewController *homeViewController = [[RootViewController alloc] init];
+                 NSLog(@"%@",weakSelf.navigationController);
+                 [weakSelf.navigationController pushViewController:homeViewController animated:YES];
+                 
+                 // 上传护理记录数据
+                 [[RecordManager share] uploadDBDatas:NO];
+             }
              
-             // 进入主页
-             RootViewController *homeViewController = [[RootViewController alloc] init];
-             NSLog(@"%@",self.navigationController);
-             [weakSelf.navigationController pushViewController:homeViewController animated:YES];
-             
-             // 上传护理记录数据
-             [[RecordManager share] uploadDBDatas:NO];
 
          } else {
              
@@ -471,6 +484,11 @@
          }
          
      }];
+}
+
+- (void)loginResult
+{
+    
 }
 
 - (void)fetchBindedDevices {

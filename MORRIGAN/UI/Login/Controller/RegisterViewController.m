@@ -593,6 +593,7 @@
                                  @"sex": sex,
                                  };
     __block RegisterViewController *selfBlock = self;
+    NSInteger startTimeInterval = [[NSDate date] timeIntervalSince1970];
     __block NSString *phoneNumberBlock = phoneNumber;
     __block NSString *passwordBlock = password;
     NSString *bodyString = [NMOANetWorking handleHTTPBodyParams:dictionary];
@@ -602,6 +603,11 @@
                              bodyString:bodyString
                      objectTaskFinished:^(NSError *error, id obj)
      {
+         
+         NSInteger endTimeInterval = [[NSDate date] timeIntervalSince1970];
+         if(endTimeInterval - startTimeInterval < 1) {
+             sleep(1.0 - (endTimeInterval - startTimeInterval));
+         }
          
          dispatch_async(dispatch_get_main_queue(), ^{
              [self hideRemoteAnimation];

@@ -45,6 +45,10 @@ NSString * const ElectricQuantityChanged = @"ElectricQuantityChanged";
 
 @implementation BluetoothManager
 
++ (BOOL)isExsitBluetoothManager {
+    return manager? YES : NO;
+}
+
 + (BluetoothManager *)share {
     static dispatch_once_t onceToken;
     dispatch_once(&onceToken, ^{

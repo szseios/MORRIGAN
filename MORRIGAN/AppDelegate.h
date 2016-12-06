@@ -12,7 +12,7 @@
 // 欢迎界面等待时间
 #define kWelcomePageDelayTime   1.0
 
-
+ 
 
 @interface AppDelegate : UIResponder <UIApplicationDelegate>
 

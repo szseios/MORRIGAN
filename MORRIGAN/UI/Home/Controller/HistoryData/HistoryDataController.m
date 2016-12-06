@@ -476,7 +476,7 @@ static NSString *cellID = @"DataCellID";
         case 2:
         {
             backCount = 0;
-            aheadCount = 5;
+            aheadCount = 6;
             _todayIndexInWeek = 0;
         }
             break;
