@@ -401,6 +401,7 @@
                                  @"password": password
                                  };
     __weak LoginViewController *weakSelf = self;
+    NSInteger startTimeInterval = [[NSDate date] timeIntervalSince1970];
     __block NSString *phoneNumberBlock = phoneNumber;
     __block NSString *passwordBlock = password;
     NSString *bodyString = [NMOANetWorking handleHTTPBodyParams:dictionary];
@@ -411,10 +412,14 @@
                      objectTaskFinished:^(NSError *error, id obj)
      {
          
+         NSInteger endTimeInterval = [[NSDate date] timeIntervalSince1970];
+         if(endTimeInterval - startTimeInterval < 1) {
+             sleep(1.0 - (endTimeInterval - startTimeInterval));
+         }
+         
          dispatch_async(dispatch_get_main_queue(), ^{
              [weakSelf hideRemoteAnimation];
          });
-         
          
          if ([[obj objectForKey:HTTP_KEY_RESULTCODE] isEqualToString:HTTP_RESULTCODE_SUCCESS]) {
              NSLog(@"登陆成功！");
@@ -479,6 +484,11 @@
          }
          
      }];
+}
+
+- (void)loginResult
+{
+    
 }
 
 - (void)fetchBindedDevices {

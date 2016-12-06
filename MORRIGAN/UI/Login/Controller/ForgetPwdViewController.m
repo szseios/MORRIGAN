@@ -488,7 +488,7 @@
     [self stopTimer];
     
     
-    //[self showRemoteAnimation:@"正在重置密码, 请稍候..."];
+    [self showRemoteAnimation:@"正在重置密码, 请稍候..."];
     
     NSLog(@"重置密码，手机：%@, 验证码：%@, 密码：%@", phoneNumber, authCode, password);
     
@@ -496,6 +496,7 @@
                                  @"msgCode": authCode,
                                  @"newPsw": password
                                  };
+    NSInteger startTimeInterval = [[NSDate date] timeIntervalSince1970];
     __block NSString *phoneNumberBlock = phoneNumber;
     NSString *bodyString = [NMOANetWorking handleHTTPBodyParams:dictionary];
     [[NMOANetWorking share] taskWithTag:ID_RESET_PWD
@@ -505,9 +506,14 @@
                      objectTaskFinished:^(NSError *error, id obj)
      {
          
-//         dispatch_async(dispatch_get_main_queue(), ^{
-//             [self hideRemoteAnimation];
-//         });
+         NSInteger endTimeInterval = [[NSDate date] timeIntervalSince1970];
+         if(endTimeInterval - startTimeInterval < 1) {
+             sleep(1.0 - (endTimeInterval - startTimeInterval));
+         }
+         
+         dispatch_async(dispatch_get_main_queue(), ^{
+             [self hideRemoteAnimation];
+         });
          
          
          if ([[obj objectForKey:HTTP_KEY_RESULTCODE] isEqualToString:HTTP_RESULTCODE_SUCCESS]) {

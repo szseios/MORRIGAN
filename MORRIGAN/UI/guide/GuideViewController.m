@@ -87,7 +87,7 @@
 
 - (void)transToMORRIGAN
 {
-//    [[NSUserDefaults standardUserDefaults] setBool:YES forKey:SHOWGUIDEVIEW];;
+    [[NSUserDefaults standardUserDefaults] setBool:YES forKey:SHOWGUIDEVIEW];;
     // 进入主页
     RootViewController *homeViewController = [[RootViewController alloc] init];
     
