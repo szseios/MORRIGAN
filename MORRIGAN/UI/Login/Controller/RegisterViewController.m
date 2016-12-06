@@ -29,7 +29,7 @@
 #define kgetAuthCodeButtonOfNormal      3002
 
 
-@interface RegisterViewController () <UIAlertViewDelegate>
+@interface RegisterViewController () <UIAlertViewDelegate, UITextFieldDelegate>
 {
 
     NSString *_sexString;
@@ -40,6 +40,7 @@
     UIButton *_getAuthCodeButton;
     UITextField *_passwordInputView;
     UIButton *_showPwdButton;
+    UIButton *_cleanUpButton;
     
     NSTimer *_getAuthCodeTimer;
     NSInteger _currentSec;
@@ -155,11 +156,22 @@
     //phoneIconView.backgroundColor = [UIColor orangeColor];
     phoneIconView.image = [UIImage imageNamed:@"ic_mobile"];
     [phoneNumRootView addSubview:phoneIconView];
+    // 清除手机号按钮
+    CGFloat cleanUpViewW = 30.0;
+    UIButton *cleanUpView = [[UIButton alloc] initWithFrame:CGRectMake(editViewW - cleanUpViewW , (editViewH - cleanUpViewW)/2, cleanUpViewW, cleanUpViewW)];
+    cleanUpView.alpha = 0.5;
+    //cleanUpView.backgroundColor = [UIColor blueColor];
+    [cleanUpView addTarget:self action:@selector(cleanUpButtonClickRegister) forControlEvents:UIControlEventTouchUpInside];
+    _cleanUpButton = cleanUpView;
+    _cleanUpButton.hidden = YES;
+    [_cleanUpButton setImage:[UIImage imageNamed:@"icon_remove"] forState:UIControlStateNormal];
+    [phoneNumRootView addSubview:cleanUpView];
     // 手机输入框
     CGFloat phoneinputViewPaddingLeft = 5.0;
-    UITextField *phoneInputView = [[UITextField alloc] initWithFrame:CGRectMake(iconW + phoneinputViewPaddingLeft, 0, phoneNumRootView.frame.size.width - iconW - phoneinputViewPaddingLeft, editViewH)];
+    UITextField *phoneInputView = [[UITextField alloc] initWithFrame:CGRectMake(iconW + phoneinputViewPaddingLeft, 0, phoneNumRootView.frame.size.width - iconW - cleanUpViewW - phoneinputViewPaddingLeft, editViewH)];
     //phoneInputView.backgroundColor = [UIColor greenColor];
     phoneInputView.placeholder = @"请填写手机号码";
+    phoneInputView.delegate = self;
     [phoneInputView setInputAccessoryView:self.keyboardTopView];
     // 注意：先设置phoneInputView.placeholder才有效
     [phoneInputView setValue:inputViewTextColor forKeyPath:@"_placeholderLabel.textColor"];
@@ -370,6 +382,29 @@
     UIAlertView *alert = [[UIAlertView alloc] initWithTitle:@"确认手机号码" message:phoneNumber delegate:self cancelButtonTitle:@"取消" otherButtonTitles:@"确定", nil];
     alert.tag = kAlertViewTagOfConfirmPhoneNumber;
     [alert show];
+}
+
+
+// 手机输入框点击
+-(void)textFieldDidBeginEditing:(UITextField *)textField
+{
+    if(textField == _phoneNumbrInputView) {
+        _cleanUpButton.hidden = NO;
+    }
+}
+-(void)textFieldDidEndEditing:(UITextField *)textField
+{
+    if(textField == _phoneNumbrInputView) {
+        _cleanUpButton.hidden = YES;
+    }
+}
+
+// 显示密码按钮点击
+- (void)cleanUpButtonClickRegister
+{
+    NSLog(@"cleanUpButtonClickInLogin");
+    _phoneNumbrInputView.text = @"";
+    _passwordInputView.text = @"";
 }
 
 // 显示密码按钮点击
@@ -593,6 +628,7 @@
                                  @"sex": sex,
                                  };
     __block RegisterViewController *selfBlock = self;
+    NSInteger startTimeInterval = [[NSDate date] timeIntervalSince1970];
     __block NSString *phoneNumberBlock = phoneNumber;
     __block NSString *passwordBlock = password;
     NSString *bodyString = [NMOANetWorking handleHTTPBodyParams:dictionary];
@@ -602,6 +638,11 @@
                              bodyString:bodyString
                      objectTaskFinished:^(NSError *error, id obj)
      {
+         
+         NSInteger endTimeInterval = [[NSDate date] timeIntervalSince1970];
+         if(endTimeInterval - startTimeInterval < 1) {
+             sleep(1.0 - (endTimeInterval - startTimeInterval));
+         }
          
          dispatch_async(dispatch_get_main_queue(), ^{
              [self hideRemoteAnimation];
@@ -614,7 +655,7 @@
 //             alert.tag = kAlertViewTagOfIntoLogin;
 //             [alert show];
              [MBProgressHUD showHUDByContent:@"注册成功！" view:self.view];
-             dispatch_after(dispatch_time(DISPATCH_TIME_NOW, (int64_t)(1.0 * NSEC_PER_SEC)), dispatch_get_main_queue(), ^{
+             dispatch_after(dispatch_time(DISPATCH_TIME_NOW, (int64_t)(0.5 * NSEC_PER_SEC)), dispatch_get_main_queue(), ^{
                  // 保存用户名和密码，自动登陆
                  NSUserDefaults *defaults = [NSUserDefaults standardUserDefaults];
                  [defaults setObject:phoneNumberBlock forKey:kUserDefaultIdKey];
