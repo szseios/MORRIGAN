@@ -104,6 +104,8 @@
 		4728EDD21DC4865E0005F9C3 /* ZHRulerScrollView.m in Sources */ = {isa = PBXBuildFile; fileRef = 4728EDB51DC4865E0005F9C3 /* ZHRulerScrollView.m */; };
 		4728EDD31DC4865E0005F9C3 /* ZHRulerView.m in Sources */ = {isa = PBXBuildFile; fileRef = 4728EDB71DC4865E0005F9C3 /* ZHRulerView.m */; };
 		4728EDD61DC486A40005F9C3 /* UIView+Extension.m in Sources */ = {isa = PBXBuildFile; fileRef = 4728EDD51DC486A40005F9C3 /* UIView+Extension.m */; };
+		473138531DF503E8001A3377 /* GuideViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 473138521DF503E8001A3377 /* GuideViewController.m */; };
+		473138591DF54BC8001A3377 /* GuidePageControl.m in Sources */ = {isa = PBXBuildFile; fileRef = 473138581DF54BC8001A3377 /* GuidePageControl.m */; };
 		47EA2ABE1DE55AC10020A17A /* NSDate+CalculateDay.m in Sources */ = {isa = PBXBuildFile; fileRef = 47EA2ABD1DE55AC10020A17A /* NSDate+CalculateDay.m */; };
 		47EA2AC31DE55C480020A17A /* DateHelper.m in Sources */ = {isa = PBXBuildFile; fileRef = 47EA2AC01DE55C480020A17A /* DateHelper.m */; };
 		47EA2AC41DE55C480020A17A /* KMDatePickerDateModel.m in Sources */ = {isa = PBXBuildFile; fileRef = 47EA2AC21DE55C480020A17A /* KMDatePickerDateModel.m */; };
@@ -349,6 +351,10 @@
 		4728EDB71DC4865E0005F9C3 /* ZHRulerView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ZHRulerView.m; sourceTree = "<group>"; };
 		4728EDD41DC486A40005F9C3 /* UIView+Extension.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "UIView+Extension.h"; sourceTree = "<group>"; };
 		4728EDD51DC486A40005F9C3 /* UIView+Extension.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "UIView+Extension.m"; sourceTree = "<group>"; };
+		473138511DF503E8001A3377 /* GuideViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = GuideViewController.h; sourceTree = "<group>"; };
+		473138521DF503E8001A3377 /* GuideViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = GuideViewController.m; sourceTree = "<group>"; };
+		473138571DF54BC8001A3377 /* GuidePageControl.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = GuidePageControl.h; sourceTree = "<group>"; };
+		473138581DF54BC8001A3377 /* GuidePageControl.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = GuidePageControl.m; sourceTree = "<group>"; };
 		47EA2ABC1DE55AC10020A17A /* NSDate+CalculateDay.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "NSDate+CalculateDay.h"; sourceTree = "<group>"; };
 		47EA2ABD1DE55AC10020A17A /* NSDate+CalculateDay.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "NSDate+CalculateDay.m"; sourceTree = "<group>"; };
 		47EA2ABF1DE55C480020A17A /* DateHelper.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = DateHelper.h; sourceTree = "<group>"; };
@@ -823,6 +829,17 @@
 			path = ZHRulerView;
 			sourceTree = "<group>";
 		};
+		473138501DF503C7001A3377 /* guide */ = {
+			isa = PBXGroup;
+			children = (
+				473138511DF503E8001A3377 /* GuideViewController.h */,
+				473138521DF503E8001A3377 /* GuideViewController.m */,
+				473138571DF54BC8001A3377 /* GuidePageControl.h */,
+				473138581DF54BC8001A3377 /* GuidePageControl.m */,
+			);
+			path = guide;
+			sourceTree = "<group>";
+		};
 		47FF16401DC9F48B00DBD493 /* SDWebImage */ = {
 			isa = PBXGroup;
 			children = (
@@ -1005,6 +1022,7 @@
 		EBF0115E1DA73137009E8394 /* UI */ = {
 			isa = PBXGroup;
 			children = (
+				473138501DF503C7001A3377 /* guide */,
 				EB34F3A51DCA0F0D002B15B1 /* AutoKnead */,
 				EB34F3A81DCA0F0D002B15B1 /* HandKnead */,
 				EB6DBC7C1DC8216E005823B2 /* Binding */,
@@ -1387,6 +1405,7 @@
 				3EEF45E81DBB3B2900752AD4 /* UIView+Extension.m in Sources */,
 				EBF011711DA754E6009E8394 /* LoginViewController.m in Sources */,
 				4728ED6B1DC485BA0005F9C3 /* RelateDeviceController.m in Sources */,
+				473138531DF503E8001A3377 /* GuideViewController.m in Sources */,
 				4728ED621DC485BA0005F9C3 /* HistoryDataController.m in Sources */,
 				EBF011821DA7883B009E8394 /* NMOANetWorking.m in Sources */,
 				4728EDC01DC4865E0005F9C3 /* PNLineChartDataItem.m in Sources */,
@@ -1405,6 +1424,7 @@
 				EB34F3B41DCA1732002B15B1 /* LoginBaseController.m in Sources */,
 				3EF7958F1DAA0A5E00E5EBC6 /* UIImage+Color.m in Sources */,
 				4728ED691DC485BA0005F9C3 /* RelateDeviceCell.m in Sources */,
+				473138591DF54BC8001A3377 /* GuidePageControl.m in Sources */,
 				47FF16621DC9F48B00DBD493 /* MKAnnotationView+WebCache.m in Sources */,
 				EB534AD41DA9D924007AA325 /* MusicViewController.m in Sources */,
 				3E632A4E1DC5A47B00CC2332 /* BabyCallback.m in Sources */,
@@ -1562,7 +1582,7 @@
 				);
 				PRODUCT_BUNDLE_IDENTIFIER = com.szse.nmoastg;
 				PRODUCT_NAME = "$(TARGET_NAME)";
-				PROVISIONING_PROFILE = "1f8ef4fa-0521-4087-852c-d261791b4f80";
+				PROVISIONING_PROFILE = "754a2535-eb84-4437-84e6-4133cd1ffd9a";
 				PROVISIONING_PROFILE_SPECIFIER = NMOA_Development;
 			};
 			name = Debug;
@@ -1585,7 +1605,7 @@
 				);
 				PRODUCT_BUNDLE_IDENTIFIER = com.szse.nmoastg;
 				PRODUCT_NAME = "$(TARGET_NAME)";
-				PROVISIONING_PROFILE = "1f8ef4fa-0521-4087-852c-d261791b4f80";
+				PROVISIONING_PROFILE = "754a2535-eb84-4437-84e6-4133cd1ffd9a";
 				PROVISIONING_PROFILE_SPECIFIER = NMOA_Development;
 			};
 			name = Release;

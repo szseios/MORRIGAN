@@ -22,11 +22,12 @@
 
 #define kAlertViewTagOfIntoRegister  1000
 
-@interface LoginViewController () <UIAlertViewDelegate>
+@interface LoginViewController () <UIAlertViewDelegate, UITextFieldDelegate>
 {
     UITextField *_phoneNumbrInputView;
     UITextField *_passwordInputView;
     UIButton *_showPwdButton;
+    UIButton *_cleanUpButton;
 
 }
 
@@ -144,11 +145,22 @@
     //phoneIconView.backgroundColor = [UIColor orangeColor];
     phoneIconView.image = [UIImage imageNamed:@"ic_mobile"];
     [phoneNumRootView addSubview:phoneIconView];
+    // 清除手机号按钮
+    CGFloat cleanUpViewW = 30.0;
+    UIButton *cleanUpView = [[UIButton alloc] initWithFrame:CGRectMake(editViewW - cleanUpViewW , (editViewH - cleanUpViewW)/2, cleanUpViewW, cleanUpViewW)];
+    cleanUpView.alpha = 0.5;
+    //cleanUpView.backgroundColor = [UIColor blueColor];
+    [cleanUpView addTarget:self action:@selector(cleanUpButtonClickInLogin) forControlEvents:UIControlEventTouchUpInside];
+    _cleanUpButton = cleanUpView;
+    _cleanUpButton.hidden = YES;
+    [_cleanUpButton setImage:[UIImage imageNamed:@"icon_remove"] forState:UIControlStateNormal];
+    [phoneNumRootView addSubview:cleanUpView];
     // 手机输入框
     CGFloat phoneinputViewPaddingLeft = 5.0;
-    UITextField *phoneInputView = [[UITextField alloc] initWithFrame:CGRectMake(iconW + phoneinputViewPaddingLeft, 0, phoneNumRootView.frame.size.width - iconW - phoneinputViewPaddingLeft, editViewH)];
+    UITextField *phoneInputView = [[UITextField alloc] initWithFrame:CGRectMake(iconW + phoneinputViewPaddingLeft, 0, phoneNumRootView.frame.size.width - iconW - cleanUpViewW - phoneinputViewPaddingLeft, editViewH)];
     //phoneInputView.backgroundColor = [UIColor greenColor];
     phoneInputView.placeholder = @"请填写手机号码";
+    phoneInputView.delegate = self;
     [phoneInputView setInputAccessoryView:self.keyboardTopView];
     // 注意：先设置phoneInputView.placeholder才有效
     [phoneInputView setValue:inputViewTextColor forKeyPath:@"_placeholderLabel.textColor"];
@@ -253,6 +265,27 @@
 
 
 #pragma mark - 按钮点击处理
+// 手机输入框点击
+-(void)textFieldDidBeginEditing:(UITextField *)textField
+{
+    if(textField == _phoneNumbrInputView) {
+        _cleanUpButton.hidden = NO;
+    }
+}
+-(void)textFieldDidEndEditing:(UITextField *)textField
+{
+    if(textField == _phoneNumbrInputView) {
+        _cleanUpButton.hidden = YES;
+    }
+}
+
+// 显示密码按钮点击
+- (void)cleanUpButtonClickInLogin
+{
+    NSLog(@"cleanUpButtonClickInLogin");
+    _phoneNumbrInputView.text = @"";
+    _passwordInputView.text = @"";
+}
 
 // 显示密码按钮点击
 - (void)showPWDButtonClickInLogin
@@ -423,56 +456,58 @@
          
          if ([[obj objectForKey:HTTP_KEY_RESULTCODE] isEqualToString:HTTP_RESULTCODE_SUCCESS]) {
              NSLog(@"登陆成功！");
-             
-             // 保存用户信息
-             NSDictionary *userInfoDict = [obj objectForKey:@"userInfo"];
-             NSLog(@"%@", userInfoDict);
-             [UserInfo share].authCode = [userInfoDict objectForKey:@"authCode"];
-             [UserInfo share].emotion = [userInfoDict objectForKey:@"emotion"];
-             [UserInfo share].high = [userInfoDict objectForKey:@"high"];
-             [UserInfo share].imgUrl = [userInfoDict objectForKey:@"imgUrl"];
-             [UserInfo share].mobile = [userInfoDict objectForKey:@"mobile"];
-             [UserInfo share].nickName = [userInfoDict objectForKey:@"nickName"];
-             [UserInfo share].password = [userInfoDict objectForKey:@"password"];
-             [UserInfo share].sex = [userInfoDict objectForKey:@"sex"];
-             [UserInfo share].target = [userInfoDict objectForKey:@"target"];
-             [UserInfo share].userId = [userInfoDict objectForKey:@"userId"];
-             [UserInfo share].weight = [userInfoDict objectForKey:@"weight"];
-             [UserInfo share].age = [userInfoDict objectForKey:@"age"];
-             NSString *temp =[UserInfo share].emotion;
-             if ([[UserInfo share].emotion isEqualToString:@"B"]) {
-                 [UserInfo share].emotionStr = @"恋爱";
-             }
-             else if ([[UserInfo share].emotion isEqualToString:@"M"]) {
-                 [UserInfo share].emotionStr = @"已婚";
-             }
-             else if ([[UserInfo share].emotion isEqualToString:@"S"]) {
-                 [UserInfo share].emotionStr = @"单身";
-             }
-             
-             // 保存用户名和密码，下次自动登陆
-             NSUserDefaults *defaults = [NSUserDefaults standardUserDefaults];
-             [defaults setObject:phoneNumberBlock forKey:kUserDefaultIdKey];
-             [defaults setObject:passwordBlock forKey:kUserDefaultPasswordKey];
-             [defaults synchronize];
-             
-             // 登录成功后获取已绑定设备
-             [weakSelf fetchBindedDevices];
-             BOOL showGuide = [[NSUserDefaults standardUserDefaults] boolForKey:SHOWGUIDEVIEW];
-             if (!showGuide) {
-                 GuideViewController *guideController = [[GuideViewController alloc] init];
-                 [weakSelf.navigationController pushViewController:guideController animated:YES];
+             [MBProgressHUD showHUDByContent:@"登录成功！" view:self.view];
+
+             dispatch_after(dispatch_time(DISPATCH_TIME_NOW, (int64_t)(0.5 * NSEC_PER_SEC)), dispatch_get_main_queue(), ^{
+                 // 保存用户信息
+                 NSDictionary *userInfoDict = [obj objectForKey:@"userInfo"];
+                 NSLog(@"%@", userInfoDict);
+                 [UserInfo share].authCode = [userInfoDict objectForKey:@"authCode"];
+                 [UserInfo share].emotion = [userInfoDict objectForKey:@"emotion"];
+                 [UserInfo share].high = [userInfoDict objectForKey:@"high"];
+                 [UserInfo share].imgUrl = [userInfoDict objectForKey:@"imgUrl"];
+                 [UserInfo share].mobile = [userInfoDict objectForKey:@"mobile"];
+                 [UserInfo share].nickName = [userInfoDict objectForKey:@"nickName"];
+                 [UserInfo share].password = [userInfoDict objectForKey:@"password"];
+                 [UserInfo share].sex = [userInfoDict objectForKey:@"sex"];
+                 [UserInfo share].target = [userInfoDict objectForKey:@"target"];
+                 [UserInfo share].userId = [userInfoDict objectForKey:@"userId"];
+                 [UserInfo share].weight = [userInfoDict objectForKey:@"weight"];
+                 [UserInfo share].age = [userInfoDict objectForKey:@"age"];
+                 NSString *temp =[UserInfo share].emotion;
+                 if ([[UserInfo share].emotion isEqualToString:@"B"]) {
+                     [UserInfo share].emotionStr = @"恋爱";
+                 }
+                 else if ([[UserInfo share].emotion isEqualToString:@"M"]) {
+                     [UserInfo share].emotionStr = @"已婚";
+                 }
+                 else if ([[UserInfo share].emotion isEqualToString:@"S"]) {
+                     [UserInfo share].emotionStr = @"单身";
+                 }
                  
-             }else{
-                 // 进入主页
-                 RootViewController *homeViewController = [[RootViewController alloc] init];
-                 NSLog(@"%@",weakSelf.navigationController);
-                 [weakSelf.navigationController pushViewController:homeViewController animated:YES];
+                 // 保存用户名和密码，下次自动登陆
+                 NSUserDefaults *defaults = [NSUserDefaults standardUserDefaults];
+                 [defaults setObject:phoneNumberBlock forKey:kUserDefaultIdKey];
+                 [defaults setObject:passwordBlock forKey:kUserDefaultPasswordKey];
+                 [defaults synchronize];
                  
-                 // 上传护理记录数据
-                 [[RecordManager share] uploadDBDatas:NO];
-             }
-             
+                 // 登录成功后获取已绑定设备
+                 [weakSelf fetchBindedDevices];
+                 BOOL showGuide = [[NSUserDefaults standardUserDefaults] boolForKey:SHOWGUIDEVIEW];
+                 if (!showGuide) {
+                     GuideViewController *guideController = [[GuideViewController alloc] init];
+                     [weakSelf.navigationController pushViewController:guideController animated:YES];
+                     
+                 }else{
+                     // 进入主页
+                     RootViewController *homeViewController = [[RootViewController alloc] init];
+                     NSLog(@"%@",weakSelf.navigationController);
+                     [weakSelf.navigationController pushViewController:homeViewController animated:YES];
+                     
+                     // 上传护理记录数据
+                     [[RecordManager share] uploadDBDatas:NO];
+                 }
+             });
 
          } else {
              
