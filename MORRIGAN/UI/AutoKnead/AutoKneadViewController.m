@@ -228,7 +228,7 @@
     UIButton *startBtn = [[UIButton alloc] initWithFrame:CGRectMake((kScreenWidth - startBtnW)/2, startBtnY, startBtnW, startBtnW)];
     [startBtn addTarget:self action:@selector(startBtnHandler:) forControlEvents:UIControlEventTouchUpInside];
     startBtn.tag = kButtonStopTag;
-    [startBtn setImage:[UIImage imageNamed:@"START"] forState:UIControlStateNormal];
+    [startBtn setImage:[UIImage imageNamed:@"start"] forState:UIControlStateNormal];
     [self.view addSubview:startBtn];
     _buttonStartStop = startBtn;
     

@@ -272,10 +272,10 @@
     [subtractButton  addTarget:self action:@selector(subtractButtonClick) forControlEvents: UIControlEventTouchUpInside];
     [addStartSubtractRootView addSubview:subtractButton];
     // START
-    CGFloat startButtonW = addStartSubtractRootViewH;
+    CGFloat startButtonW = 120;
     if(kScreenHeight < 570) {
         // 5s
-        startButtonW = addStartSubtractRootViewH - 20;
+        startButtonW = 120 - 20;
     }
     CGFloat startButtonH = startButtonW;
     CGFloat startButtonX = addStartSubtractRootViewW/2 - startButtonW/2;
