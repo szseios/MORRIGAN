@@ -167,8 +167,11 @@
         }
     }
     else if (alertView.tag == 9999) {
-        SearchPeripheralViewController *search = [[SearchPeripheralViewController alloc] init];
-        [self.navigationController pushViewController:search animated:YES];
+        if (buttonIndex == 1) {
+            SearchPeripheralViewController *search = [[SearchPeripheralViewController alloc] init];
+            [self.navigationController pushViewController:search animated:YES];
+            
+        }
     }
     
 }

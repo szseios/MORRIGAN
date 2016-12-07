@@ -334,6 +334,7 @@
 
 - (void)DisconnectPeripheral:(NSNotification *)notice
 {
+    [_mainView setElectricityPersent:0];
     NSMutableAttributedString *attributeString = [[NSMutableAttributedString alloc] initWithString:@"0%"];
     [attributeString setAttributes:@{NSFontAttributeName:[UIFont systemFontOfSize:20]} range:NSMakeRange(0, attributeString.length - 1)];
     _mainView.electricityLabel.attributedText = attributeString;
