@@ -57,9 +57,9 @@
     dispatch_after(dispatch_time(DISPATCH_TIME_NOW, (int64_t)(kWelcomePageDelayTime * NSEC_PER_SEC)), dispatch_get_main_queue(), ^{
         [wellcomeViewBlock removeFromSuperview];
         
-        UINavigationController *nav = [[UINavigationController alloc] initWithRootViewController:loginViewController];
-        nav.navigationBarHidden = YES;
-        self.window.rootViewController = nav;
+        _nav = [[UINavigationController alloc] initWithRootViewController:loginViewController];
+        _nav.navigationBarHidden = YES;
+        self.window.rootViewController = _nav;
 //        [self.window makeKeyAndVisible];
 
     });

@@ -8,6 +8,8 @@
 
 #import "BluetoothManager.h"
 #import "ReconnectView.h"
+#import "AppDelegate.h"
+#import "SearchPeripheralViewController.h"
 
 static BluetoothManager *manager;
 static NSString * const ServiceUUID = @"56FF";
@@ -23,7 +25,7 @@ NSString * const PeripheralReadedCharacteristic = @"PeripheralReadedCharacterist
 NSString * const ElectricQuantityChanged = @"ElectricQuantityChanged";
 
 
-@interface BluetoothManager () {
+@interface BluetoothManager () <UIAlertViewDelegate> {
     NSTimer *_timer;
 }
 
@@ -37,6 +39,7 @@ NSString * const ElectricQuantityChanged = @"ElectricQuantityChanged";
 @property (nonatomic,assign)BOOL reconnect;                          //是否要重新连接  YES:需要重新连接
 
 @property (nonatomic,strong)ReconnectView *reconnectView;
+@property (nonatomic,strong)UIAlertView *alertView;                  //重连提示框
 
 @property (nonatomic,copy)NSString *lastConnectedAddress;                //已连接上设备的MAC地址
 
@@ -67,7 +70,6 @@ NSString * const ElectricQuantityChanged = @"ElectricQuantityChanged";
         _macAddresses = [[NSMutableArray alloc] init];
         
         _manualDisconnect = NO;
-        _reconnect = YES;
         [self babyDelegate];
         
     }
@@ -81,9 +83,13 @@ NSString * const ElectricQuantityChanged = @"ElectricQuantityChanged";
 - (void)babyDelegate {
     
     __weak typeof(self) weakSelf = self;
+    __weak BabyBluetooth *weakBaby = _baby;
     [_baby setBlockOnCentralManagerDidUpdateState:^(CBCentralManager *central) {
         if (central.state == CBCentralManagerStatePoweredOn) {
             NSLog(@"设备打开成功，开始扫描设备");
+            if (weakSelf.reconnect) {
+                [weakSelf start];
+            }
         }
     }];
     
@@ -115,8 +121,13 @@ NSString * const ElectricQuantityChanged = @"ElectricQuantityChanged";
             
             //如果不是手动断开连接,并且需要重连
             if (weakSelf.reconnect && [weakSelf.lastConnectedAddress isEqualToString:macAddress]) {
+                [weakSelf stop];
+                
+                NSLog(@"需要重连设备设备:%@   MAC : %@",peripheral.name,weakSelf.lastConnectedAddress);
+                
                 weakSelf.reconnect = NO;
                 [weakSelf connectingBlueTooth:peripheral];
+                
             }
             
         }
@@ -130,7 +141,7 @@ NSString * const ElectricQuantityChanged = @"ElectricQuantityChanged";
         [UserInfo share].isConnected = YES;
         weakSelf.reconnect = YES;
         weakSelf.manualDisconnect = NO;
-        
+        [weakSelf endTimer];
         [weakSelf hideConnectView];
         //连接成功后保存为已绑定设备信息
         if (![DBManager insertPeripheral:peripheral macAddress:weakSelf.willConnectMacAddress]) {
@@ -150,7 +161,6 @@ NSString * const ElectricQuantityChanged = @"ElectricQuantityChanged";
         }
     }];
     
-    __block BabyBluetooth *weakBaby = _baby;
     //发现设service的Characteristics的委托
     [_baby setBlockOnDiscoverCharacteristics:^(CBPeripheral *peripheral, CBService *service, NSError *error) {
         NSLog(@"发现设service的Characteristics service name:%@",service.UUID);
@@ -260,6 +270,7 @@ NSString * const ElectricQuantityChanged = @"ElectricQuantityChanged";
         if ([peripheralName hasPrefix:@"Morrigan"] ) {
             return YES;
         }
+        NSLog(@"过滤设备 %@",peripheralName);
         return NO;
     }];
     
@@ -304,7 +315,7 @@ NSString * const ElectricQuantityChanged = @"ElectricQuantityChanged";
         }
         else {
             //如果不是手动断开连接,并且需要重连
-            if (weakSelf.reconnect) {
+            if (weakSelf.reconnect && !weakSelf.alertView) {
                 [weakSelf showConnectView];
                 weakSelf.lastConnectedAddress = weakSelf.willConnectMacAddress;
                 [weakSelf startReconnectPeripheralTimer];
@@ -355,7 +366,6 @@ NSString * const ElectricQuantityChanged = @"ElectricQuantityChanged";
 
 -(void)unConnectingBlueTooth {
     _manualDisconnect = YES;
-    _lastConnectedAddress = nil;
     [_baby cancelAllPeripheralsConnection];
 }
 
@@ -482,7 +492,9 @@ NSString * const ElectricQuantityChanged = @"ElectricQuantityChanged";
 }
 
 - (void)reconnectPeripheralTimeOut {
-    [self hideConnectView];
+    self.reconnect = NO;
+    [self stop];
+//    [self hideConnectView];
 }
 
 - (void)writeDataTimeOut {
@@ -496,15 +508,40 @@ NSString * const ElectricQuantityChanged = @"ElectricQuantityChanged";
 
 - (void)showConnectView {
     [self hideConnectView];
-    _reconnectView = [[ReconnectView alloc] initWithFrame:UI_Window.bounds];
-    [UI_Window addSubview:_reconnectView];
+    _alertView = [[UIAlertView alloc] initWithTitle:nil
+                                            message:@"设备已断开连接，是否重连"
+                                           delegate:self
+                                  cancelButtonTitle:@"取消"
+                                  otherButtonTitles:@"重新连接", nil];
+    [_alertView show];
+    [self startReconnectPeripheralTimer];
 }
 
 - (void)hideConnectView {
-    if (_reconnectView) {
-        [_reconnectView removeFromSuperview];
-        _reconnectView = nil;
+    if (_alertView) {
+        [_alertView dismissWithClickedButtonIndex:_alertView.cancelButtonIndex
+                                         animated:NO];
+        _alertView.delegate = nil;
+        _alertView = nil;
     }
 }
+
+- (void)alertView:(UIAlertView *)alertView clickedButtonAtIndex:(NSInteger)buttonIndex {
+    //用户点击取消
+    if (buttonIndex == 0) {
+        self.reconnect = NO;
+        [self stop];
+        [self unConnectingBlueTooth];
+    }
+    //用户点击重新连接
+    else if (buttonIndex == 1) {
+        self.reconnect = NO;
+        AppDelegate *delegate = (AppDelegate *)[UIApplication sharedApplication].delegate;
+        SearchPeripheralViewController *search = [[SearchPeripheralViewController alloc] init];
+        [delegate.nav pushViewController:search animated:YES];
+    }
+}
+
+
 
 @end

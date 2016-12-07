@@ -18,6 +18,7 @@
 
 @property (strong, nonatomic) Reachability *reach;
 @property (strong, nonatomic) UIWindow *window;
+@property (strong, nonatomic) UINavigationController *nav;
 
 - (BOOL)checkReachable;
 

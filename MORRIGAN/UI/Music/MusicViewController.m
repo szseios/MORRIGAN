@@ -413,18 +413,19 @@
 
 //音乐播放完成,自动播放下一首音乐
 - (void)audioPlayerDidFinish {
-    if (_selectedIndexPath.row + 1 < _musics.count) {
-        _selectedIndexPath = [NSIndexPath indexPathForRow:_selectedIndexPath.row + 1
-                                                inSection:0];
-        
-        [self playMusicByIndexPath:_selectedIndexPath];
-    }
-    else {
-        _selectedIndexPath = [NSIndexPath indexPathForRow:0
-                                                inSection:0];
-        [self playMusicByIndexPath:_selectedIndexPath];
-    }
-    [MusicManager share].currentSelectedIndex = _selectedIndexPath.row;
+//    if (_selectedIndexPath.row + 1 < _musics.count) {
+//        _selectedIndexPath = [NSIndexPath indexPathForRow:_selectedIndexPath.row + 1
+//                                                inSection:0];
+//        
+//        [self playMusicByIndexPath:_selectedIndexPath];
+//    }
+//    else {
+//        _selectedIndexPath = [NSIndexPath indexPathForRow:0
+//                                                inSection:0];
+//        [self playMusicByIndexPath:_selectedIndexPath];
+//    }
+//    [MusicManager share].currentSelectedIndex = _selectedIndexPath.row;
+    [self playMusicByIndexPath:_selectedIndexPath];
 }
 
 
@@ -540,8 +541,15 @@
     }
 }
 
+//设备断开后音乐停止
 - (void)disconnectPeripheralNotification {
     [self recordEndDate];
+    [[MusicManager share] pause];
+    [_pcseView stop];
+    [_startButton setBackgroundImage:[UIImage imageNamed:@"music_play"]
+                            forState:UIControlStateNormal];
+    [_startButton setBackgroundImage:[UIImage imageNamed:@"music_play_selected"]
+                            forState:UIControlStateHighlighted];
 }
 
 

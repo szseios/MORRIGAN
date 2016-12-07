@@ -192,8 +192,8 @@
     // 设备未绑定,连接设备成功后开始绑定设备
     else {
         NSDictionary *dictionary = @{@"userId": [UserInfo share].userId ? [UserInfo share].userId : @"",
-                                     @"deviceName":_selectedPeripheral.name,
-                                     @"mac": _selectedMacAddress};
+                                     @"deviceName":_selectedPeripheral.name?_selectedPeripheral.name:@"",
+                                     @"mac": _selectedMacAddress?_selectedMacAddress:@""};
         NSString *bodyString = [NMOANetWorking handleHTTPBodyParams:dictionary];
         __weak PeripheralListViewController *weakSelf = self;
         [[NMOANetWorking share] taskWithTag:ID_BINGDING_DEVICE

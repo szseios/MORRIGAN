@@ -16,16 +16,16 @@
       <BreakpointProxy
          BreakpointExtensionID = "Xcode.Breakpoint.FileBreakpoint">
          <BreakpointContent
-            shouldBeEnabled = "Yes"
+            shouldBeEnabled = "No"
             ignoreCount = "0"
             continueAfterRunningActions = "No"
             filePath = "MORRIGAN/Common/BluetoothManager/BluetoothManager.m"
-            timestampString = "502705570.56995"
+            timestampString = "502772944.603483"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "64"
-            endingLineNumber = "64"
-            landmarkName = "-init"
+            startingLineNumber = "126"
+            endingLineNumber = "126"
+            landmarkName = "-babyDelegate"
             landmarkType = "7">
          </BreakpointContent>
       </BreakpointProxy>

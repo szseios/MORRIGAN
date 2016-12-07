@@ -239,20 +239,20 @@
         alert.tag = 9999;
         [alert show];
     }else{
-    //如果用户打开了蓝牙
-    if ([[BluetoothManager share] getCentralManager].state == CBCentralManagerStatePoweredOn) {
-        SearchPeripheralViewController *ctl = [[SearchPeripheralViewController alloc] init];
-        [self.navigationController pushViewController:ctl animated:YES];
-    }
-    else {
-        UIAlertView *alert = [[UIAlertView alloc] initWithTitle:nil
-                                                        message:@"打开蓝牙来允许＂MORRIGAN＂连接到配件"
-                                                       delegate:self
-                                              cancelButtonTitle:@"好"
-                                              otherButtonTitles:@"设置", nil];
-        alert.tag = 111;
-        [alert show];
-    }
+        //如果用户打开了蓝牙
+//        if ([[BluetoothManager share] getCentralManager].state == CBCentralManagerStatePoweredOn) {
+            SearchPeripheralViewController *ctl = [[SearchPeripheralViewController alloc] init];
+            [self.navigationController pushViewController:ctl animated:YES];
+//        }
+//        else {
+//            UIAlertView *alert = [[UIAlertView alloc] initWithTitle:nil
+//                                                            message:@"打开蓝牙来允许＂MORRIGAN＂连接到配件"
+//                                                           delegate:self
+//                                                  cancelButtonTitle:@"好"
+//                                                  otherButtonTitles:@"设置", nil];
+//            alert.tag = 111;
+//            [alert show];
+//        }
     }
 }
 
