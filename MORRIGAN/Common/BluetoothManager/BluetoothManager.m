@@ -93,7 +93,7 @@ NSString * const ElectricQuantityChanged = @"ElectricQuantityChanged";
         }
         else if (central.state == CBCentralManagerStatePoweredOff) {
             if ([[[UIDevice currentDevice] systemVersion] floatValue] < 10.0) {
-//                [weakSelf unConnectingBlueTooth];
+
                 [weakBaby cancelAllPeripheralsConnection];
                 weakSelf.currentOperation = nil;
                 weakSelf.isConnected = NO;
@@ -396,6 +396,7 @@ NSString * const ElectricQuantityChanged = @"ElectricQuantityChanged";
 
 -(void)unConnectingBlueTooth {
     _manualDisconnect = YES;
+    _reconnect = NO;
     [_baby cancelAllPeripheralsConnection];
 }
 
