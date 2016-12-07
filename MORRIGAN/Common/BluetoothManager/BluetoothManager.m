@@ -45,6 +45,10 @@ NSString * const ElectricQuantityChanged = @"ElectricQuantityChanged";
 
 @implementation BluetoothManager
 
++ (BOOL)isExsitBluetoothManager {
+    return manager? YES : NO;
+}
+
 + (BluetoothManager *)share {
     static dispatch_once_t onceToken;
     dispatch_once(&onceToken, ^{
@@ -123,6 +127,7 @@ NSString * const ElectricQuantityChanged = @"ElectricQuantityChanged";
         NSLog(@"设备：%@连接成功",peripheral.name);
         weakSelf.curConnectPeripheral = peripheral;
         weakSelf.isConnected = YES;
+        [UserInfo share].isConnected = YES;
         weakSelf.reconnect = YES;
         weakSelf.manualDisconnect = NO;
         
@@ -261,7 +266,8 @@ NSString * const ElectricQuantityChanged = @"ElectricQuantityChanged";
     //设备连接失败的委托
     [_baby setBlockOnFailToConnect:^(CBCentralManager *central, CBPeripheral *peripheral, NSError *error) {
         NSLog(@"设备：%@连接失败",peripheral.name);
-        _isConnected = NO;
+        weakSelf.isConnected = NO;
+        [UserInfo share].isConnected = NO;
         //通知连接蓝牙设备失败
         [[NSNotificationCenter defaultCenter] postNotificationName:ConnectPeripheralError
                                                             object:nil];
@@ -275,6 +281,7 @@ NSString * const ElectricQuantityChanged = @"ElectricQuantityChanged";
         weakSelf.currentOperation = nil;
         weakSelf.curConnectPeripheral = nil;
         weakSelf.isConnected = NO;
+        [UserInfo share].isConnected = NO;
     }];
     
     //设备断开连接的委托
@@ -283,6 +290,7 @@ NSString * const ElectricQuantityChanged = @"ElectricQuantityChanged";
         
         weakSelf.currentOperation = nil;
         weakSelf.isConnected = NO;
+        [UserInfo share].isConnected = NO;
         weakSelf.curConnectPeripheral = nil;
         //通知断开蓝牙设备
         [[NSNotificationCenter defaultCenter] postNotificationName:DisconnectPeripheral

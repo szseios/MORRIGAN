@@ -32,7 +32,7 @@
     [self initReachability];
     [DBManager initApplicationsDB];
     [MusicManager share];
-    [BluetoothManager share];
+//    [BluetoothManager share];
     
     self.window = [[UIWindow alloc] initWithFrame:[[UIScreen mainScreen] bounds]];//设置窗口
     //BTTestViewController *loginViewController = [[BTTestViewController alloc] init];

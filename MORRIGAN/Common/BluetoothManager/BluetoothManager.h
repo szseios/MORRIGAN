@@ -32,6 +32,8 @@ extern NSString * const ElectricQuantityChanged;        //设备电池电量变�
 @property (nonatomic,strong)NSMutableArray *macAddresses;                    // 设备的MAC地址
 @property (nonatomic,strong)NSString *willConnectMacAddress;                        // 将要连接的设备的MAC地址
 
++ (BOOL)isExsitBluetoothManager;
+
 + (BluetoothManager *)share;
 
 - (CBCentralManager *)getCentralManager;
