@@ -509,7 +509,7 @@
 }
 
 - (void)recordStartDate {
-    if (!_startDate && [BluetoothManager share].isConnected) {
+    if (!_startDate && [UserInfo share].isConnected) {
         _startDate = [NSDate date];
     }
 }

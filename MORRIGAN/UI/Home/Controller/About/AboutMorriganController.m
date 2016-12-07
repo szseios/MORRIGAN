@@ -40,7 +40,7 @@ static NSString *cellID = @"cellID";
 {
     [super viewWillAppear:animated];
     //如果没有连上蓝牙设备,开始执行动画
-    if (![BluetoothManager share].isConnected) {
+    if (![UserInfo share].isConnected) {
         [_barView startFlashing];
     }
 }

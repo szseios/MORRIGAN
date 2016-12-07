@@ -67,7 +67,7 @@
     self.view.userInteractionEnabled = YES;
     [self.view addGestureRecognizer:tap];
     
-    if (![BluetoothManager share].isConnected) {
+    if (![UserInfo share].isConnected) {
         UIAlertView *alert = [[UIAlertView alloc] initWithTitle:@"还未连接设备" message:nil delegate:self cancelButtonTitle:@"取消" otherButtonTitles:@"连接", nil];
         [alert show];
     }
@@ -110,7 +110,7 @@
     [_mainView refreshLatestDataForAMMorrigan:ForenoonArray PMMorrigan:AfternoonArray];
     [_mainView displayView];
     //如果没有连上蓝牙设备,开始执行动画
-    if (![BluetoothManager share].isConnected) {
+    if (![UserInfo share].isConnected) {
         [_barView startFlashing];
     }
 }
@@ -230,7 +230,7 @@
 
 - (void)clickBingdingDevice
 {
-    if ([BluetoothManager share].isConnected) {
+    if ([UserInfo share].isConnected) {
         UIAlertView *alert = [[UIAlertView alloc] initWithTitle:nil
                                                         message:@"需要切换设备？"
                                                        delegate:self

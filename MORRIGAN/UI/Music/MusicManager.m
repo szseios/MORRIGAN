@@ -175,7 +175,7 @@ static MusicManager *manager = nil;
 
 - (void)getPeakPower {
     
-    if (![BluetoothManager share].isConnected) {
+    if (![UserInfo share].isConnected) {
         return;
     }
     
