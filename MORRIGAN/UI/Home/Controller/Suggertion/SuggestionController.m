@@ -36,7 +36,7 @@
 - (void)viewDidAppear:(BOOL)animated
 {
     [super viewDidAppear:animated];
-    [_suggestTextView becomeFirstResponder];
+//    [_suggestTextView becomeFirstResponder];
 }
 
 
