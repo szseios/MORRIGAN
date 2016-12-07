@@ -91,6 +91,36 @@ NSString * const ElectricQuantityChanged = @"ElectricQuantityChanged";
                 [weakSelf start];
             }
         }
+        else if (central.state == CBCentralManagerStatePoweredOff) {
+            if ([[[UIDevice currentDevice] systemVersion] floatValue] < 10.0) {
+//                [weakSelf unConnectingBlueTooth];
+                [weakBaby cancelAllPeripheralsConnection];
+                weakSelf.currentOperation = nil;
+                weakSelf.isConnected = NO;
+                [UserInfo share].isConnected = NO;
+                weakSelf.curConnectPeripheral = nil;
+                //通知断开蓝牙设备
+                [[NSNotificationCenter defaultCenter] postNotificationName:DisconnectPeripheral
+                                                                    object:@(weakSelf.manualDisconnect)];
+                [weakSelf endTimer];
+                
+                //如果是手动断开连接
+                if (weakSelf.manualDisconnect) {
+                    
+                    weakSelf.manualDisconnect = NO;
+                }
+                else {
+                    //如果不是手动断开连接,并且需要重连
+                    if (weakSelf.reconnect && !weakSelf.alertView) {
+                        [weakSelf showConnectView];
+                        weakSelf.lastConnectedAddress = weakSelf.willConnectMacAddress;
+                        [weakSelf startReconnectPeripheralTimer];
+                        [weakSelf start];
+                    }
+                }
+                
+            }
+        }
     }];
     
     //扫描到设备的委托
