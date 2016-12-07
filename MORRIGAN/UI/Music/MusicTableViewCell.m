@@ -15,9 +15,9 @@
     [super awakeFromNib];
     // Initialization code
     _animationImageView = [[UIView alloc] init];
-    self.backgroundColor = [UIColor colorWithRed:232 / 255.0
-                                           green:223 / 255.0
-                                            blue:250 / 255.0
+    self.backgroundColor = [UIColor colorWithRed:239 / 255.0
+                                           green:239 / 255.0
+                                            blue:254 / 255.0
                                            alpha:1];
     [_animationImageView setFrame:CGRectMake(kScreenWidth - 100,
                                              14,
