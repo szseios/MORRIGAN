@@ -98,7 +98,7 @@
       forControlEvents:UIControlEventValueChanged];
     
     _slider.tintColor = [Utils stringTOColor:@"#ff70dc"];
-    
+    _slider.maximumTrackTintColor = [Utils stringTOColor:@"#603684"];
     int count;
     if (kScreenHeight == 568) {
         count = 50;
@@ -117,7 +117,7 @@
     
     UIView *topLine = [[UIView alloc] initWithFrame:CGRectMake(0,
                                                                _panGestureView.height - 4.5,
-                                                               _panGestureView.width,
+                                                               kScreenWidth,
                                                                0.5)];
     topLine.backgroundColor = [UIColor colorWithRed:186 / 255.0
                                               green:140 / 255.0
@@ -146,9 +146,9 @@
                                                  blue:0 / 255.0
                                                 alpha:0.7]
                        forState:UIControlStateNormal];
-    _closeButton.backgroundColor = [UIColor colorWithRed:232 / 255.0
-                                                   green:223 / 255.0
-                                                    blue:250 / 255.0
+    _closeButton.backgroundColor = [UIColor colorWithRed:239 / 255.0
+                                                   green:239 / 255.0
+                                                    blue:254 / 255.0
                                                    alpha:1];
     [_closeButton addTarget:self action:@selector(hiddeMusicView)
            forControlEvents:UIControlEventTouchUpInside];
@@ -175,9 +175,9 @@
                                                                          0,
                                                                          _tableView.width,
                                                                          _tableView.height)];
-    _tableView.backgroundView.backgroundColor = [UIColor colorWithRed:232 / 255.0
-                                                                green:223 / 255.0
-                                                                 blue:250 / 255.0
+    _tableView.backgroundView.backgroundColor = [UIColor colorWithRed:239 / 255.0
+                                                                green:239 / 255.0
+                                                                 blue:254 / 255.0
                                                                 alpha:1];
     _tableView.tableFooterView = [[UIView alloc] initWithFrame:CGRectZero];
     [_musicView addSubview:_tableView];

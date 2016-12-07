@@ -168,7 +168,7 @@
 - (void)deleteDevice:(PeripheralModel *)model withIndePath:(NSIndexPath *)index
 {
     _model = model;
-    UIAlertView *alert = [[UIAlertView alloc] initWithTitle:@"是否删除绑定设备" message:nil delegate:self cancelButtonTitle:@"取消" otherButtonTitles:@"注销", nil];
+    UIAlertView *alert = [[UIAlertView alloc] initWithTitle:@"是否需要解绑" message:nil delegate:self cancelButtonTitle:@"否" otherButtonTitles:@"是", nil];
     [alert show];
     alert.tag = 8888;
     NSLog(@"删除第%ld个设备",index.row);
