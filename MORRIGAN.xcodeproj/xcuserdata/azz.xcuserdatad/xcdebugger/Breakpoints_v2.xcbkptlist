@@ -96,16 +96,32 @@
       <BreakpointProxy
          BreakpointExtensionID = "Xcode.Breakpoint.FileBreakpoint">
          <BreakpointContent
-            shouldBeEnabled = "Yes"
+            shouldBeEnabled = "No"
             ignoreCount = "0"
             continueAfterRunningActions = "No"
-            filePath = "MORRIGAN/Common/BabyBluetooth/BabyPeripheralManager.m"
-            timestampString = "502788702.001326"
+            filePath = "MORRIGAN/UI/Home/Controller/HomePageController.m"
+            timestampString = "502793652.127138"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "148"
-            endingLineNumber = "148"
-            landmarkName = "-peripheralManagerDidUpdateState:"
+            startingLineNumber = "325"
+            endingLineNumber = "325"
+            landmarkName = "-getElectricity:"
+            landmarkType = "7">
+         </BreakpointContent>
+      </BreakpointProxy>
+      <BreakpointProxy
+         BreakpointExtensionID = "Xcode.Breakpoint.FileBreakpoint">
+         <BreakpointContent
+            shouldBeEnabled = "No"
+            ignoreCount = "0"
+            continueAfterRunningActions = "No"
+            filePath = "MORRIGAN/UI/Home/Views/HomeMainView.m"
+            timestampString = "502793751.306651"
+            startingColumnNumber = "9223372036854775807"
+            endingColumnNumber = "9223372036854775807"
+            startingLineNumber = "308"
+            endingLineNumber = "308"
+            landmarkName = "-setUpUpView"
             landmarkType = "7">
          </BreakpointContent>
       </BreakpointProxy>
