@@ -83,29 +83,29 @@
 //    if (starStr && starStr.length > 0) {
 //        [_mainView setStarLabelAndImage:starStr];
 //    }
-//    NSDateFormatter *dateFormatter = [[NSDateFormatter alloc] init];
-//    [dateFormatter setDateFormat:@"yyyy-MM-dd HH:mm:ss"];
-//    NSDate *date1 = [dateFormatter dateFromString:@"2016-12-02 17:15:01"];
-//    NSDate *date2 = [dateFormatter dateFromString:@"2016-12-02 20:30:01"];
-//    
-//    MassageRecordModel *model = [[MassageRecordModel alloc] init];
-//    model.userID = @"0bb15e9c-561c-4573-9726-11a1e4d82390";
-//    model.type = 1;
-//    model.startTime = date1;
-//    model.endTime = date2;
-//    
-//    
-//    NSDate *date3 = [dateFormatter dateFromString:@"2016-12-02 21:15:01"];
-//    NSDate *date4 = [dateFormatter dateFromString:@"2016-12-02 23:30:01"];
-//    
-//    MassageRecordModel *model1 = [[MassageRecordModel alloc] init];
-//    model1.userID = @"0bb15e9c-561c-4573-9726-11a1e4d82390";
-//    model1.type = 1;
-//    model1.startTime = date3;
-//    model1.endTime = date4;  @[model,model1];
+    NSDateFormatter *dateFormatter = [[NSDateFormatter alloc] init];
+    [dateFormatter setDateFormat:@"yyyy-MM-dd HH:mm:ss"];
+    NSDate *date1 = [dateFormatter dateFromString:@"2016-12-02 17:15:01"];
+    NSDate *date2 = [dateFormatter dateFromString:@"2016-12-02 20:30:01"];
+    
+    MassageRecordModel *model = [[MassageRecordModel alloc] init];
+    model.userID = @"0bb15e9c-561c-4573-9726-11a1e4d82390";
+    model.type = 1;
+    model.startTime = date1;
+    model.endTime = date2;
+    
+    
+    NSDate *date3 = [dateFormatter dateFromString:@"2016-12-02 21:15:01"];
+    NSDate *date4 = [dateFormatter dateFromString:@"2016-12-02 23:30:01"];
+    
+    MassageRecordModel *model1 = [[MassageRecordModel alloc] init];
+    model1.userID = @"0bb15e9c-561c-4573-9726-11a1e4d82390";
+    model1.type = 1;
+    model1.startTime = date3;
+    model1.endTime = date4;
     
     NSArray *ForenoonArray = [DBManager selectForenoonDatas:[UserInfo share].userId];
-    NSArray *AfternoonArray = [DBManager selectaAfternoonDatas:[UserInfo share].userId];
+    NSArray *AfternoonArray = @[model,model1];//[DBManager selectaAfternoonDatas:[UserInfo share].userId];
     [_mainView showRightTime];
     [_mainView refreshLatestDataForAMMorrigan:ForenoonArray PMMorrigan:AfternoonArray];
     [_mainView displayView];

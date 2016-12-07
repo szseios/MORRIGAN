@@ -770,7 +770,7 @@
         model.type = MassageTypeAuto;
         [[RecordManager share] addToDB:model];
     }
-    
+    _timeLabel.text = @"00:00";
 }
 
 - (void)didReceiveMemoryWarning {
