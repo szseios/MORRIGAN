@@ -1586,10 +1586,10 @@
 					"$(inherited)",
 					"$(PROJECT_DIR)/MORRIGAN/Common/netWorking",
 				);
-				PRODUCT_BUNDLE_IDENTIFIER = com.szse.scoastg;
+				PRODUCT_BUNDLE_IDENTIFIER = com.szse.nmoastg;
 				PRODUCT_NAME = "$(TARGET_NAME)";
-				PROVISIONING_PROFILE = "3717a23f-f09a-4f47-8c09-e82da33b3bcc";
-				PROVISIONING_PROFILE_SPECIFIER = SCOA_Development;
+				PROVISIONING_PROFILE = "1f8ef4fa-0521-4087-852c-d261791b4f80";
+				PROVISIONING_PROFILE_SPECIFIER = NMOA_Development;
 			};
 			name = Debug;
 		};
@@ -1609,10 +1609,10 @@
 					"$(inherited)",
 					"$(PROJECT_DIR)/MORRIGAN/Common/netWorking",
 				);
-				PRODUCT_BUNDLE_IDENTIFIER = com.szse.scoastg;
+				PRODUCT_BUNDLE_IDENTIFIER = com.szse.nmoastg;
 				PRODUCT_NAME = "$(TARGET_NAME)";
-				PROVISIONING_PROFILE = "3717a23f-f09a-4f47-8c09-e82da33b3bcc";
-				PROVISIONING_PROFILE_SPECIFIER = SCOA_Development;
+				PROVISIONING_PROFILE = "1f8ef4fa-0521-4087-852c-d261791b4f80";
+				PROVISIONING_PROFILE_SPECIFIER = NMOA_Development;
 			};
 			name = Release;
 		};
