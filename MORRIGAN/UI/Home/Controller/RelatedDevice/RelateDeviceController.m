@@ -62,7 +62,7 @@
 {
     [super viewWillAppear:animated];
     //如果没有连上蓝牙设备,开始执行动画
-    if (![BluetoothManager share].isConnected) {
+    if (![UserInfo share].isConnected) {
         [_barView startFlashing];
     }
 }
@@ -114,7 +114,7 @@
 
 - (void)clickBingdingDevice
 {
-    if ([BluetoothManager share].isConnected) {
+    if ([UserInfo share].isConnected) {
         UIAlertView *alert = [[UIAlertView alloc] initWithTitle:nil
                                                         message:@"需要切换设备？"
                                                        delegate:self

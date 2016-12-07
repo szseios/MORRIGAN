@@ -1588,7 +1588,7 @@
 				);
 				PRODUCT_BUNDLE_IDENTIFIER = com.szse.nmoastg;
 				PRODUCT_NAME = "$(TARGET_NAME)";
-				PROVISIONING_PROFILE = "754a2535-eb84-4437-84e6-4133cd1ffd9a";
+				PROVISIONING_PROFILE = "c18e5ba6-a4fa-409d-935f-65aac56a7533";
 				PROVISIONING_PROFILE_SPECIFIER = NMOA_Development;
 			};
 			name = Debug;
@@ -1611,7 +1611,7 @@
 				);
 				PRODUCT_BUNDLE_IDENTIFIER = com.szse.nmoastg;
 				PRODUCT_NAME = "$(TARGET_NAME)";
-				PROVISIONING_PROFILE = "754a2535-eb84-4437-84e6-4133cd1ffd9a";
+				PROVISIONING_PROFILE = "c18e5ba6-a4fa-409d-935f-65aac56a7533";
 				PROVISIONING_PROFILE_SPECIFIER = NMOA_Development;
 			};
 			name = Release;

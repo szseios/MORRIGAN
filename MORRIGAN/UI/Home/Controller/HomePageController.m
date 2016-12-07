@@ -46,7 +46,7 @@
     [super viewDidLoad];
     //
     [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(getElectricity:) name:ElectricQuantityChanged object:nil];
-    [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(firstGetElectricity:) name:ConnectPeripheralSuccess object:nil];
+    [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(firstGetElectricity:) name:PeripheralReadedCharacteristic object:nil];
     [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(DisconnectPeripheral:) name:DisconnectPeripheral object:nil];
     
     [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(setStarRank:) name:GETSTARRANKNOTIFICATION object:nil];
@@ -67,7 +67,7 @@
     self.view.userInteractionEnabled = YES;
     [self.view addGestureRecognizer:tap];
     
-    if (![BluetoothManager share].isConnected) {
+    if (![UserInfo share].isConnected) {
         UIAlertView *alert = [[UIAlertView alloc] initWithTitle:@"还未连接设备" message:nil delegate:self cancelButtonTitle:@"取消" otherButtonTitles:@"连接", nil];
         [alert show];
     }
@@ -110,7 +110,7 @@
     [_mainView refreshLatestDataForAMMorrigan:ForenoonArray PMMorrigan:AfternoonArray];
     [_mainView displayView];
     //如果没有连上蓝牙设备,开始执行动画
-    if (![BluetoothManager share].isConnected) {
+    if (![UserInfo share].isConnected) {
         [_barView startFlashing];
     }
 }
@@ -230,7 +230,7 @@
 
 - (void)clickBingdingDevice
 {
-    if ([BluetoothManager share].isConnected) {
+    if ([UserInfo share].isConnected) {
         UIAlertView *alert = [[UIAlertView alloc] initWithTitle:nil
                                                         message:@"需要切换设备？"
                                                        delegate:self
@@ -239,20 +239,20 @@
         alert.tag = 9999;
         [alert show];
     }else{
-    //如果用户打开了蓝牙
-    if ([[BluetoothManager share] getCentralManager].state == CBCentralManagerStatePoweredOn) {
-        SearchPeripheralViewController *ctl = [[SearchPeripheralViewController alloc] init];
-        [self.navigationController pushViewController:ctl animated:YES];
-    }
-    else {
-        UIAlertView *alert = [[UIAlertView alloc] initWithTitle:nil
-                                                        message:@"打开蓝牙来允许＂MORRIGAN＂连接到配件"
-                                                       delegate:self
-                                              cancelButtonTitle:@"好"
-                                              otherButtonTitles:@"设置", nil];
-        alert.tag = 111;
-        [alert show];
-    }
+        //如果用户打开了蓝牙
+//        if ([[BluetoothManager share] getCentralManager].state == CBCentralManagerStatePoweredOn) {
+            SearchPeripheralViewController *ctl = [[SearchPeripheralViewController alloc] init];
+            [self.navigationController pushViewController:ctl animated:YES];
+//        }
+//        else {
+//            UIAlertView *alert = [[UIAlertView alloc] initWithTitle:nil
+//                                                            message:@"打开蓝牙来允许＂MORRIGAN＂连接到配件"
+//                                                           delegate:self
+//                                                  cancelButtonTitle:@"好"
+//                                                  otherButtonTitles:@"设置", nil];
+//            alert.tag = 111;
+//            [alert show];
+//        }
     }
 }
 
@@ -346,15 +346,8 @@
         BluetoothOperation *operation = [[BluetoothOperation alloc] init];
         [operation setValue:@"03" index:2];
         [[BluetoothManager share] writeValueByOperation:operation];
-        operation.response = ^(NSString *response,long tag,NSError *error,BOOL success) {
-            if (success) {
-                NSString *electriQuantity = [response substringWithRange:NSMakeRange(4, 2)];
-                [_mainView setElectricityPersent:[electriQuantity floatValue]];
-            }
-            
-        };
     });
-    
+
 }
 
 - (void)setStarRank:(NSNotification *)notice

@@ -24,6 +24,8 @@
 @property (nonatomic,strong)NSString *weight;
 @property (nonatomic , strong) NSString *emotionStr;
 
+@property (nonatomic,assign)BOOL isConnected;           //是连接上了蓝牙设备(避免初始化BluetoothManager系统弹出提示)
+
 + (UserInfo *)share;
 
 

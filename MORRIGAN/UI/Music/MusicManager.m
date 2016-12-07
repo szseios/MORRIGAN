@@ -78,7 +78,7 @@ static MusicManager *manager = nil;
         [[AVAudioSession sharedInstance] setCategory:AVAudioSessionCategoryPlayback error:nil];
         [_player play];
     });
-    [self startGetPeakPower];
+    [self start];
 }
 
 - (void)prepareMusicByURL:(NSURL *)url {
@@ -114,31 +114,42 @@ static MusicManager *manager = nil;
 
 - (void)play {
     [_player play];
-    [self startGetPeakPower];
+//    [self startGetPeakPower];
+    [self start];
+}
+
+- (void)start {
+    BluetoothOperation *operation = [[BluetoothOperation alloc] init];
+    operation.tag = MUSIC_PEAKPOWER_TAG;
+    [operation setValue:@"01" index:2];
+    [operation setValue:@"01" index:3];
+    [operation setValue:@"04" index:4];
+    
+    [[BluetoothManager share] writeValueByOperation:operation];
 }
 
 - (void)stop {
     [_player stop];
     _player = nil;
-    [self pauseGetPeakPower];
+//    [self pauseGetPeakPower];
     
     BluetoothOperation *operation = [[BluetoothOperation alloc] init];
     operation.tag = MUSIC_STOP_TAG;
     [operation setValue:@"01" index:2];
     [operation setValue:@"00" index:3];
-    [operation setValue:@"03" index:4];
+    [operation setValue:@"04" index:4];
     [[BluetoothManager share] writeValueByOperation:operation];
 }
 
 - (void)pause {
     [_player pause];
-    [self pauseGetPeakPower];
+//    [self pauseGetPeakPower];
     
     BluetoothOperation *operation = [[BluetoothOperation alloc] init];
     operation.tag = MUSIC_STOP_TAG;
     [operation setValue:@"01" index:2];
     [operation setValue:@"00" index:3];
-    [operation setValue:@"03" index:4];
+    [operation setValue:@"04" index:4];
     [[BluetoothManager share] writeValueByOperation:operation];
 }
 
@@ -164,7 +175,7 @@ static MusicManager *manager = nil;
 
 - (void)getPeakPower {
     
-    if (![BluetoothManager share].isConnected) {
+    if (![UserInfo share].isConnected) {
         return;
     }
     
@@ -177,7 +188,7 @@ static MusicManager *manager = nil;
     operation.tag = MUSIC_PEAKPOWER_TAG;
     [operation setValue:@"01" index:2];
     [operation setValue:@"01" index:3];
-    [operation setValue:@"03" index:4];
+    [operation setValue:@"04" index:4];
     if (peakPower > 127) {
         [operation setNumber:127 index:12];
         [operation setNumber:peakPower % 127 index:13];

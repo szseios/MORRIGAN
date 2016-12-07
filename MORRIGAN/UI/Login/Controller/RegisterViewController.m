@@ -59,7 +59,7 @@
     
     
     // 默认性别：男
-    _sexString = @"M";
+    _sexString = @"F";
     [self updateSelectSexState];
 
 }

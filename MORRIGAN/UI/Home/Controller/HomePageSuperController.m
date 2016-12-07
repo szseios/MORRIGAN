@@ -24,7 +24,7 @@
     [super viewWillAppear:animated];
     
     //如果没有连上蓝牙设备,开始执行动画
-    if (![BluetoothManager share].isConnected) {
+    if (![UserInfo share].isConnected) {
         [self startFlashing];
     }
     
@@ -76,7 +76,7 @@
     [self.view addSubview:_searchButton];
     
     //如果没有连上蓝牙设备,开始执行动画
-    if (![BluetoothManager share].isConnected) {
+    if (![UserInfo share].isConnected) {
         [self startFlashing];
     }
 }
@@ -100,7 +100,7 @@
 }
 
 - (void)clickSearchButton {
-    if ([BluetoothManager share].isConnected) {
+    if ([UserInfo share].isConnected) {
         UIAlertView *alert = [[UIAlertView alloc] initWithTitle:nil
                                                         message:@"需要切换设备？"
                                                        delegate:self
@@ -109,20 +109,20 @@
         alert.tag = 9999;
         [alert show];
     }else{
-    //如果用户打开了蓝牙
-    if ([[BluetoothManager share] getCentralManager].state == CBCentralManagerStatePoweredOn) {
+        //如果用户打开了蓝牙
+//        if ([[BluetoothManager share] getCentralManager].state == CBCentralManagerStatePoweredOn) {
         SearchPeripheralViewController *ctl = [[SearchPeripheralViewController alloc] init];
         [self.navigationController pushViewController:ctl animated:YES];
-    }
-    else {
-        UIAlertView *alert = [[UIAlertView alloc] initWithTitle:nil
-                                                        message:@"打开蓝牙来允许＂MORRIGAN＂连接到配件"
-                                                       delegate:self
-                                              cancelButtonTitle:@"好"
-                                              otherButtonTitles:@"设置", nil];
-        alert.tag = 8888;
-        [alert show];
-    }
+//        }
+//        else {
+//            UIAlertView *alert = [[UIAlertView alloc] initWithTitle:nil
+//                                                            message:@"打开蓝牙来允许＂MORRIGAN＂连接到配件"
+//                                                           delegate:self
+//                                                  cancelButtonTitle:@"好"
+//                                                  otherButtonTitles:@"设置", nil];
+//            alert.tag = 8888;
+//            [alert show];
+//        }
     }
 }
 

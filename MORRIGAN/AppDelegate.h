@@ -12,12 +12,13 @@
 // 欢迎界面等待时间
 #define kWelcomePageDelayTime   1.0
 
-
+ 
 
 @interface AppDelegate : UIResponder <UIApplicationDelegate>
 
 @property (strong, nonatomic) Reachability *reach;
 @property (strong, nonatomic) UIWindow *window;
+@property (strong, nonatomic) UINavigationController *nav;
 
 - (BOOL)checkReachable;
 
