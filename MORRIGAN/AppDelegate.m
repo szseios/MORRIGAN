@@ -140,6 +140,33 @@
         
         dispatch_after(dispatch_time(DISPATCH_TIME_NOW, (int64_t)(1 * NSEC_PER_SEC)), dispatch_get_main_queue(), ^{
             //            [appDelegate reachabilityChanged];
+            
+            TargetModel *model = [DBManager selectTargetWithUserID:[UserInfo share].userId ? [UserInfo share].userId : @""];
+            if (model) {
+                if (model.isUpload == 0) {
+                    NSDictionary *dictionary = @{@"userId": [UserInfo share].userId ? [UserInfo share].userId : @"",
+                                                 @"target": [UserInfo share].target ? [UserInfo share].target : @"",
+                                                 };
+                    NSString *bodyString = [NMOANetWorking handleHTTPBodyParams:dictionary];
+                    [[NMOANetWorking share] taskWithTag:ID_EDIT_USERINFO urlString:URL_EDIT_USERINFO httpHead:nil bodyString:bodyString objectTaskFinished:^(NSError *error, id obj) {
+                        
+                        if ([[obj objectForKey:HTTP_KEY_RESULTCODE] isEqualToString:HTTP_RESULTCODE_SUCCESS]) {
+                            TargetModel *model = [[TargetModel alloc] init];
+                            model.target = [UserInfo share].target;
+                            model.isUpload = 1;
+                            BOOL success = [DBManager updateTarget:model];
+                            if (!success) {
+                                NSLog(@"目标存入数据库失败");
+                            }
+                            NSLog(@"修改目标成功！");
+                            
+                        }else{
+                            
+                        }
+                    }];
+                }
+                
+            }
         });
     };
     
@@ -160,6 +187,7 @@
         UIAlertView *alert = [[UIAlertView alloc] initWithTitle:@"当前网络不可用，请检查你的网络设置。" message:nil delegate:self cancelButtonTitle:nil otherButtonTitles:@"确定", nil];
         [alert show];
         return NO;
+    }else{
     }
     return YES;
 }

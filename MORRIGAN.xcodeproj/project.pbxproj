@@ -47,6 +47,7 @@
 		3EF7958F1DAA0A5E00E5EBC6 /* UIImage+Color.m in Sources */ = {isa = PBXBuildFile; fileRef = 3EF7958C1DAA0A5E00E5EBC6 /* UIImage+Color.m */; };
 		471ECC371DDD8F9400719B32 /* AboutMorriganCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 471ECC351DDD8F9400719B32 /* AboutMorriganCell.m */; };
 		471ECC381DDD8F9400719B32 /* AboutMorriganCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = 471ECC361DDD8F9400719B32 /* AboutMorriganCell.xib */; };
+		472421581DF7962C00D13669 /* TargetModel.m in Sources */ = {isa = PBXBuildFile; fileRef = 472421571DF7962C00D13669 /* TargetModel.m */; };
 		4724C2041DC8BF5700B18902 /* MBProgressHUD.m in Sources */ = {isa = PBXBuildFile; fileRef = 4724C2031DC8BF5700B18902 /* MBProgressHUD.m */; };
 		4728ED371DC485AB0005F9C3 /* HomePageController.m in Sources */ = {isa = PBXBuildFile; fileRef = 4728ED301DC485AB0005F9C3 /* HomePageController.m */; };
 		4728ED381DC485AB0005F9C3 /* HomePageSuperController.m in Sources */ = {isa = PBXBuildFile; fileRef = 4728ED321DC485AB0005F9C3 /* HomePageSuperController.m */; };
@@ -251,6 +252,8 @@
 		471ECC341DDD8F9400719B32 /* AboutMorriganCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = AboutMorriganCell.h; sourceTree = "<group>"; };
 		471ECC351DDD8F9400719B32 /* AboutMorriganCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = AboutMorriganCell.m; sourceTree = "<group>"; };
 		471ECC361DDD8F9400719B32 /* AboutMorriganCell.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = AboutMorriganCell.xib; sourceTree = "<group>"; };
+		472421561DF7962C00D13669 /* TargetModel.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = TargetModel.h; sourceTree = "<group>"; };
+		472421571DF7962C00D13669 /* TargetModel.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = TargetModel.m; sourceTree = "<group>"; };
 		4724C2021DC8BF5700B18902 /* MBProgressHUD.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MBProgressHUD.h; sourceTree = "<group>"; };
 		4724C2031DC8BF5700B18902 /* MBProgressHUD.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = MBProgressHUD.m; sourceTree = "<group>"; };
 		4728ED2F1DC485AB0005F9C3 /* HomePageController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = HomePageController.h; sourceTree = "<group>"; };
@@ -747,6 +750,8 @@
 		4728ED821DC485FF0005F9C3 /* Model */ = {
 			isa = PBXGroup;
 			children = (
+				472421561DF7962C00D13669 /* TargetModel.h */,
+				472421571DF7962C00D13669 /* TargetModel.m */,
 			);
 			path = Model;
 			sourceTree = "<group>";
@@ -1402,6 +1407,7 @@
 				3E2539791DAA3DA800CB1EF8 /* ForgetPwdViewController.m in Sources */,
 				3E9ED0D91DD16BAA00A6F665 /* PeripheralModel.m in Sources */,
 				47FF16651DC9F48B00DBD493 /* SDWebImageCompat.m in Sources */,
+				472421581DF7962C00D13669 /* TargetModel.m in Sources */,
 				3EEF45E81DBB3B2900752AD4 /* UIView+Extension.m in Sources */,
 				EBF011711DA754E6009E8394 /* LoginViewController.m in Sources */,
 				4728ED6B1DC485BA0005F9C3 /* RelateDeviceController.m in Sources */,

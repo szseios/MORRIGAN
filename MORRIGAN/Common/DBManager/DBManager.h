@@ -10,6 +10,7 @@
 #import "PeripheralModel.h"
 #import "MassageRecordModel.h"
 #import "FMDB.h"
+#import "TargetModel.h"
 
 @interface DBManager : NSObject
 
@@ -49,6 +50,14 @@
 
 //删除今天之前的历史数据
 + (BOOL)deleteHistoryDatas;
+
+#pragma mark - 保存目标相关
+
++ (BOOL)insertTarget:(TargetModel *)model;
+
++ (BOOL)updateTarget:(TargetModel *)model;
+
++ (TargetModel *)selectTargetWithUserID:(NSString *)userID;
 
 
 @end

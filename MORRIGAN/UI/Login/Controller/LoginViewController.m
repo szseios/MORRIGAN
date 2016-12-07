@@ -19,6 +19,7 @@
 #import "RecordManager.h"
 #import "AppDelegate.h"
 #import "GuideViewController.h"
+#import "TargetModel.h"
 
 #define kAlertViewTagOfIntoRegister  1000
 
@@ -380,8 +381,6 @@
     if ([appDelegate checkReachable] == NO) {
         return;
     }
-
-    
     // 是否注册
     [self ifRegister:phoneNumber password:password];
     

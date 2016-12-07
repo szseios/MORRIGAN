@@ -7,17 +7,15 @@
 //
 
 #import "SetTargetController.h"
-#import "ZHRulerView.h"
+#import "TargetModel.h"
 
-@interface SetTargetController ()<BasicBarViewDelegate,ZHRulerViewDelegate,UIScrollViewDelegate>
+@interface SetTargetController ()<BasicBarViewDelegate,UIScrollViewDelegate>
 
 @property (weak, nonatomic) IBOutlet UILabel *countLabel;
 
 @property (weak, nonatomic) IBOutlet UIButton *achieveButton;
 
 @property (nonatomic , strong) BasicBarView *barView;
-
-@property (nonatomic , strong) ZHRulerView *rulerView;
 
 @property (nonatomic , strong) UIScrollView *rulerScrollView;
 
@@ -73,8 +71,13 @@
     [[NMOANetWorking share] taskWithTag:ID_EDIT_USERINFO urlString:URL_EDIT_USERINFO httpHead:nil bodyString:bodyString objectTaskFinished:^(NSError *error, id obj) {
         
         if ([[obj objectForKey:HTTP_KEY_RESULTCODE] isEqualToString:HTTP_RESULTCODE_SUCCESS]) {
-//            [MBProgressHUD showHUDByContent:@"修改目标成功！" view:UI_Window afterDelay:2];
-            [UserInfo share].target = _countLabel.text;
+            TargetModel *model = [[TargetModel alloc] init];
+            model.target = [UserInfo share].target;
+            model.isUpload = 1;
+            BOOL success = [DBManager updateTarget:model];
+            if (!success) {
+                NSLog(@"目标存入数据库失败");
+            }
             NSLog(@"修改目标成功！");
             
         }else{
@@ -92,7 +95,7 @@
     CGFloat rulerWidth = kScreenWidth;
     CGFloat rulerHeight = 235;
 //
-    CGRect rulerFrame = CGRectMake(rulerX, rulerY, rulerWidth, rulerHeight);
+//    CGRect rulerFrame = CGRectMake(rulerX, rulerY, rulerWidth, rulerHeight);
     _rulerScrollView = [[UIScrollView alloc] initWithFrame:CGRectMake(rulerX, rulerY, rulerWidth, rulerHeight)];
     _rulerScrollView.delegate = self;
     _rulerScrollView.backgroundColor = [UIColor clearColor];
@@ -150,7 +153,13 @@
 {
     [[NSNotificationCenter defaultCenter] postNotificationName:TARGETCHANGENOTIFICATION object:nil];
     [UserInfo share].target = _countLabel.text;
-    [[NSUserDefaults standardUserDefaults] setObject:[UserInfo share].target forKey:TARGETCHANGEUSERDEFULT];
+    TargetModel *model = [[TargetModel alloc] init];
+    model.target = [UserInfo share].target;
+    model.isUpload = 0;
+    BOOL success = [DBManager insertTarget:model];
+    if (!success) {
+        NSLog(@"目标存入数据库失败");
+    }
     [self targetAchieve];
 }
 

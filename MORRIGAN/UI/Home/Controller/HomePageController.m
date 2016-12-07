@@ -85,8 +85,8 @@
 //    }
 //    NSDateFormatter *dateFormatter = [[NSDateFormatter alloc] init];
 //    [dateFormatter setDateFormat:@"yyyy-MM-dd HH:mm:ss"];
-//    NSDate *date1 = [dateFormatter dateFromString:@"2016-12-02 17:15:01"];
-//    NSDate *date2 = [dateFormatter dateFromString:@"2016-12-02 20:30:01"];
+//    NSDate *date1 = [dateFormatter dateFromString:@"2016-12-07 17:15:01"];
+//    NSDate *date2 = [dateFormatter dateFromString:@"2016-12-07 17:20:01"];
 //    
 //    MassageRecordModel *model = [[MassageRecordModel alloc] init];
 //    model.userID = @"0bb15e9c-561c-4573-9726-11a1e4d82390";
@@ -95,14 +95,14 @@
 //    model.endTime = date2;
 //    
 //    
-//    NSDate *date3 = [dateFormatter dateFromString:@"2016-12-02 21:15:01"];
-//    NSDate *date4 = [dateFormatter dateFromString:@"2016-12-02 23:30:01"];
+//    NSDate *date3 = [dateFormatter dateFromString:@"2016-12-07 21:15:01"];
+//    NSDate *date4 = [dateFormatter dateFromString:@"2016-12-07 23:20:01"];
 //    
 //    MassageRecordModel *model1 = [[MassageRecordModel alloc] init];
 //    model1.userID = @"0bb15e9c-561c-4573-9726-11a1e4d82390";
 //    model1.type = 1;
 //    model1.startTime = date3;
-//    model1.endTime = date4;  @[model,model1];
+//    model1.endTime = date4;
     
     NSArray *ForenoonArray = [DBManager selectForenoonDatas:[UserInfo share].userId];
     NSArray *AfternoonArray = [DBManager selectaAfternoonDatas:[UserInfo share].userId];
@@ -334,7 +334,9 @@
 
 - (void)DisconnectPeripheral:(NSNotification *)notice
 {
-    [_mainView setElectricityPersent:0];
+    NSMutableAttributedString *attributeString = [[NSMutableAttributedString alloc] initWithString:@"0%"];
+    [attributeString setAttributes:@{NSFontAttributeName:[UIFont systemFontOfSize:20]} range:NSMakeRange(0, attributeString.length - 1)];
+    _mainView.electricityLabel.attributedText = attributeString;
 }
 
 //第一次主动获取电量

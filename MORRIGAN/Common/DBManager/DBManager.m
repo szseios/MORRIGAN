@@ -48,6 +48,10 @@ static NSString *dbPath = nil;
             return;
         }
         
+        if (![DBManager createTargetsTable:db]) {
+            NSLog(@"createTargetsTable error");
+            return;
+        }
         success = YES;
     }];
     return success;
@@ -70,6 +74,12 @@ static NSString *dbPath = nil;
     return success;
 }
 
++ (BOOL)createTargetsTable:(FMDatabase *)db {
+    BOOL success = NO;
+    NSString *sql = @"CREATE TABLE IF NOT EXISTS 'targets' ('user_id' TEXT PRIMARY KEY , 'target' TEXT ,'isUpload' INTEGER)";
+    success = [db executeUpdate:sql];
+    return success;
+}
 
 #pragma mark - 设备
 
@@ -499,6 +509,53 @@ static NSString *dbPath = nil;
                           todayComponents.day];
         
         NSString *sql = [NSString stringWithFormat:@"DELETE FROM 'datas' where end_time < '%@'",date];
+        success = [db executeUpdate:sql];
+    }];
+    return success;
+}
+
+#pragma mark - 保存目标相关
+
++ (BOOL)insertTarget:(TargetModel *)model
+{
+    __block BOOL success = NO;
+    [[DBManager dbQueue] inDatabase:^(FMDatabase *db) {
+        NSString *sql = [NSString stringWithFormat:@"INSERT OR REPLACE INTO 'targets' ('user_id','target' ,'isUpload') VALUES ('%@', '%@', '%@')",
+                         [UserInfo share].userId?[UserInfo share].userId:@"",
+                         model.target,
+                         @(model.isUpload).stringValue
+                         ];
+        success = [db executeUpdate:sql];
+        
+    }];
+    return success;
+}
+
++ (TargetModel *)selectTargetWithUserID:(NSString *)userID
+{
+    __block TargetModel *model;
+    [[DBManager dbQueue] inDatabase:^(FMDatabase *db) {
+    NSString *sql = [NSString stringWithFormat:@"SELECT * FROM 'targets' WHERE user_id = '%@'",[UserInfo share].userId];
+    FMResultSet *result = [db executeQuery:sql];
+    while (result.next) {
+        model = [[TargetModel alloc] init];
+        model.target = [result stringForColumn:@"target"];
+        model.isUpload = [result intForColumn:@"name"];
+    }
+}];
+    return model;
+    
+}
+
++ (BOOL)updateTarget:(TargetModel *)model
+{
+    
+    __block BOOL success = NO;
+    [[DBManager dbQueue] inDatabase:^(FMDatabase *db) {
+        NSString *sql = [NSString stringWithFormat:@"UPDATE 'targets' SET target = '%@' , isUpload = '%@' WHERE user_id = '%@'",
+                         model.target,
+                         @(model.isUpload).stringValue,
+                         [UserInfo share].userId?[UserInfo share].userId:@""];
         success = [db executeUpdate:sql];
     }];
     return success;
