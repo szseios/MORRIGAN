@@ -335,6 +335,7 @@
 - (void)DisconnectPeripheral:(NSNotification *)notice
 {
     [_mainView setElectricityPersent:0];
+    _mainView.upBackgroundView.height = 0;
     NSMutableAttributedString *attributeString = [[NSMutableAttributedString alloc] initWithString:@"0%"];
     [attributeString setAttributes:@{NSFontAttributeName:[UIFont systemFontOfSize:20]} range:NSMakeRange(0, attributeString.length - 1)];
     _mainView.electricityLabel.attributedText = attributeString;
@@ -411,7 +412,7 @@
                 break;
         }
         NSMutableAttributedString *attributeString = [[NSMutableAttributedString alloc] initWithString:[NSString stringWithFormat:@"%@star",starLabelStr]];
-        [attributeString setAttributes:@{NSFontAttributeName:[UIFont systemFontOfSize:18]} range:NSMakeRange(0, starStr.length)];
+        [attributeString setAttributes:@{NSFontAttributeName:[UIFont systemFontOfSize:18]} range:NSMakeRange(0, starLabelStr.length)];
         _mainView.starLabel.attributedText = attributeString;
         [_mainView.starImage setImage:[UIImage imageNamed:imageName]];
     }
