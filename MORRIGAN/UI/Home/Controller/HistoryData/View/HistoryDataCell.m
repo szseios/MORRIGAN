@@ -13,7 +13,11 @@
 - (void)awakeFromNib {
     [super awakeFromNib];
     // Initialization code
-    _unitLabel.font = [UIFont systemFontOfSize:14];
+    _unitLabel.font = [UIFont systemFontOfSize:12];
+    _titleLabel.textColor = [UIColor colorWithRed:0 green:0 blue:0 alpha:0.6];
+    _unitLabel.textColor = [UIColor colorWithRed:0 green:0 blue:0 alpha:0.4];
+    _minuteLabel.textColor = [UIColor colorWithRed:0 green:0 blue:0 alpha:0.4];
+    
 }
 
 - (void)setTitle:(NSString *)title minuteCount:(NSString *)minute withIndexPath:(NSIndexPath *)index

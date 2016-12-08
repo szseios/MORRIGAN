@@ -53,7 +53,7 @@ static NSString *cellID = @"cellID";
 
 - (void)setUpBarView
 {
-    _barView = [[BasicBarView alloc] initWithFrame:CGRectMake(0, 20, kScreenWidth, 44) withType:superBarTypeLeftItemBackAndRightItemBinding withTitle:@"关于MORRIGAN" isShowRightButton:YES];
+    _barView = [[BasicBarView alloc] initWithFrame:CGRectMake(0, 20, kScreenWidth, 44) withType:superBarTypeLeftItemBackAndRightItemBinding withTitle:@"关于MORRIGAN" isShowRightButton:NO];
     [self.view addSubview:_barView];
     _barView.delegate = self;
 }

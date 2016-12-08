@@ -53,7 +53,7 @@
 
 - (void)setUpBarView
 {
-    _barView = [[BasicBarView alloc] initWithFrame:CGRectMake(0, 20, kScreenWidth, 44) withType:superBarTypeLeftItemCancel withTitle:@"修改设备名称"  isShowRightButton:YES];
+    _barView = [[BasicBarView alloc] initWithFrame:CGRectMake(0, 20, kScreenWidth, 44) withType:superBarTypeLeftItemCancel withTitle:@"修改设备名称"  isShowRightButton:NO];
     [self.view addSubview:_barView];
     _barView.delegate = self;
 }

@@ -360,6 +360,10 @@ static NSString *cellID = @"DataCellID";
     CGFloat addX = (i >= 9 ? 8 : 10);
     UILabel *label = [[UILabel alloc] initWithFrame:CGRectMake(barLabelX * i + addX+ + ((kScreenWidth - 20) / 96), 215, 30, 20)];
     label.text = (i == 23 ? [NSString stringWithFormat:@"%ld时",i+1] : [NSString stringWithFormat:@"%ld",i+1]);
+    if (i == 23) {
+        CGFloat distance = kScreenWidth > 320 ? 2 : 3.5;
+        label.x -= distance;
+    }
     label.font = [UIFont systemFontOfSize:10];
     label.textColor = [UIColor colorWithRed:0.9 green:0.9 blue:0.9 alpha:0.9];
 //    label.textAlignment = NSTextAlignmentCenter;
