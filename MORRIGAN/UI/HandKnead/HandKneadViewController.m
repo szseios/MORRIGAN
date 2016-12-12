@@ -41,9 +41,13 @@
     
     NSTimer *_timer;                    // 计时器
     NSInteger _currentTime;             // 当前计时时间
-    BOOL _animationStarting;            // 动画已启动
     
     NSDate *_startDate;
+    
+    NSTimer *animation1Timer;
+    NSTimer *animation2Timer;
+    NSTimer *animation3Timer;
+    NSTimer *animation4Timer;
 }
 
 @end
@@ -340,118 +344,102 @@
 
 - (void)startAnimation
 {
-    _animationStarting = YES;
-    
-    
-    CGFloat tempTime = (kDelayTime - kDelayTimeEnd) / 4;
-    dispatch_after(dispatch_time(DISPATCH_TIME_NOW, (int64_t)(0.1 * NSEC_PER_SEC)), dispatch_get_main_queue(), ^{
+    CGFloat tempTime = kDelayTime / 4;
+    animation1Timer = [NSTimer scheduledTimerWithTimeInterval:0.1 repeats:NO block:^(NSTimer * _Nonnull timer) {
         [self startAnimation1];
-    });
-    dispatch_after(dispatch_time(DISPATCH_TIME_NOW, (int64_t)(tempTime * NSEC_PER_SEC)), dispatch_get_main_queue(), ^{
+    }];
+    
+    animation2Timer = [NSTimer scheduledTimerWithTimeInterval:tempTime * 1 repeats:NO block:^(NSTimer * _Nonnull timer) {
         [self startAnimation2];
-    });
-    dispatch_after(dispatch_time(DISPATCH_TIME_NOW, (int64_t)(tempTime * 2 * NSEC_PER_SEC)), dispatch_get_main_queue(), ^{
+    }];
+    
+    animation3Timer = [NSTimer scheduledTimerWithTimeInterval:tempTime * 2 repeats:NO block:^(NSTimer * _Nonnull timer) {
         [self startAnimation3];
-    });
-    dispatch_after(dispatch_time(DISPATCH_TIME_NOW, (int64_t)(tempTime * 3 * NSEC_PER_SEC)), dispatch_get_main_queue(), ^{
+    }];
+    
+    animation4Timer = [NSTimer scheduledTimerWithTimeInterval:tempTime * 3 repeats:NO block:^(NSTimer * _Nonnull timer) {
         [self startAnimation4];
-    });
+    }];
+
 
 }
 
 - (void)stopAnimation {
-    _animationStarting = NO;
+
+    [_circle1.layer removeAllAnimations];
+    [_circle2.layer removeAllAnimations];
+    [_circle3.layer removeAllAnimations];
+    [_circle4.layer removeAllAnimations];
+    
+    if(animation1Timer) {
+        [animation1Timer invalidate];
+        animation1Timer = nil;
+    }
+    
+    if(animation2Timer) {
+        [animation2Timer invalidate];
+        animation2Timer = nil;
+    }
+    
+    if(animation3Timer) {
+        [animation3Timer invalidate];
+        animation3Timer = nil;
+    }
+    
+    if(animation4Timer) {
+        [animation4Timer invalidate];
+        animation4Timer = nil;
+    }
 }
 
 
 - (void)startAnimation1 {
     
-    __weak HandKneadViewController *weakSelf = self;
-    CGRect frame1 = _circle1.frame;
-    _circle1.alpha = 0;
-    _circle1.frame = _bigCircleRootView.frame;
-    
-   
-    [UIView animateWithDuration:kDelayTime animations:^{
-        _circle1.alpha = 1.0;
-        _circle1.frame = frame1;
-    } completion:^(BOOL finished) {
-        [UIView animateWithDuration:kDelayTimeEnd animations:^{
-            _circle1.alpha = 0;
-        } completion:^(BOOL finished) {
-            if(_animationStarting) [weakSelf startAnimation1];
-        }];
-        
-    }];
-
+    [self createAnimation:_circle1 time:kDelayTime];
 }
 
 - (void)startAnimation2 {
     
-    __weak HandKneadViewController *weakSelf = self;
-    CGRect frame1 = _circle1.frame;
-    _circle2.alpha = 0;
-    _circle2.frame = _bigCircleRootView.frame;
-
-
-    [UIView animateWithDuration:kDelayTime animations:^{
-        _circle2.alpha = 1.0;
-        _circle2.frame = frame1;
-    } completion:^(BOOL finished) {
-        [UIView animateWithDuration:kDelayTimeEnd animations:^{
-            _circle2.alpha = 0;
-        } completion:^(BOOL finished) {
-            if(_animationStarting) [weakSelf startAnimation2];
-        }];
-        
-    }];
-
+     [self createAnimation:_circle2 time:kDelayTime];
 }
 
 - (void)startAnimation3 {
     
-    __weak HandKneadViewController *weakSelf = self;
-    CGRect frame1 = _circle1.frame;
-    _circle3.alpha = 0;
-    _circle3.frame = _bigCircleRootView.frame;
-    
-    [UIView animateWithDuration:kDelayTime animations:^{
-        _circle3.alpha = 1.0;
-        _circle3.frame = frame1;
-    } completion:^(BOOL finished) {
-        [UIView animateWithDuration:kDelayTimeEnd animations:^{
-            _circle3.alpha = 0;
-        } completion:^(BOOL finished) {
-            if(_animationStarting) [weakSelf startAnimation3];
-        }];
-        
-    }];
-    
-    
+     [self createAnimation:_circle3 time:kDelayTime];
 }
 
 
 - (void)startAnimation4 {
     
-    __weak HandKneadViewController *weakSelf = self;
-    CGRect frame1 = _circle1.frame;
-    _circle4.alpha = 0;
-    _circle4.frame = _bigCircleRootView.frame;
-        
-    [UIView animateWithDuration:kDelayTime animations:^{
-        _circle4.alpha = 1.0;
-        _circle4.frame = frame1;
-    } completion:^(BOOL finished) {
-        [UIView animateWithDuration:kDelayTimeEnd animations:^{
-            _circle4.alpha = 0;
-        } completion:^(BOOL finished) {
-            if(_animationStarting) [weakSelf startAnimation4];
-        }];
-        
-    }];
-    
+    [self createAnimation:_circle4 time:kDelayTime];
 }
 
+
+- (void)createAnimation:(UIImageView *)view time:(CGFloat)time
+{
+    view.alpha = 1.0;
+    view.frame = _bigCircleRootView.frame;
+    
+    // 缩放动画
+    CAKeyframeAnimation *scaleAnimation = [CAKeyframeAnimation animationWithKeyPath:@"transform.scale"];
+    scaleAnimation.values = @[@(1.0), @(1.2), @(1.4), @(1.6)];
+    scaleAnimation.keyTimes = @[@(0), @(0.33), @(0.66), @(1)];
+    scaleAnimation.timingFunctions = @[[CAMediaTimingFunction functionWithName:kCAMediaTimingFunctionLinear], [CAMediaTimingFunction functionWithName:kCAMediaTimingFunctionLinear], [CAMediaTimingFunction functionWithName:kCAMediaTimingFunctionEaseIn]];
+    scaleAnimation.fillMode = kCAFillModeForwards;
+    scaleAnimation.removedOnCompletion = YES;
+    // 渐变动画
+    CABasicAnimation *opacityAnimation = [CABasicAnimation animationWithKeyPath:@"opacity"];
+    opacityAnimation.fromValue = [NSNumber numberWithFloat:1.0];
+    opacityAnimation.toValue = [NSNumber numberWithFloat:0.1];
+    // 动画组
+    CAAnimationGroup *animationGroup = [CAAnimationGroup animation];
+    animationGroup.duration = time;
+    animationGroup.autoreverses = NO;        //是否重播，原动画的倒播
+    animationGroup.repeatCount = NSNotFound; //HUGE_VALF
+    [animationGroup setAnimations:[NSArray arrayWithObjects:scaleAnimation, opacityAnimation, nil]];
+    //将上述两个动画编组，同时执行
+    [view.layer addAnimation:animationGroup forKey:@"animationGroup"];
+}
 
 
 #pragma mark - 按钮点击事件
@@ -742,6 +730,7 @@
 
 - (void)backButtonHandleInHandkneed
 {
+    
     // 退出时停止
     _currentStartStop = 0;
     [self sendData];
