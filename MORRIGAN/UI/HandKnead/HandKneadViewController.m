@@ -611,6 +611,9 @@
         model.endTime = [NSDate date];
         model.type = MassageTypeManual;
         [[RecordManager share] addToDB:model];
+        
+        _timeLabel.text = @"00:00";
+        _currentTime = 0;
     }
 
 }
@@ -771,6 +774,7 @@
         [[RecordManager share] addToDB:model];
     }
     _timeLabel.text = @"00:00";
+    _currentTime = 0;
 }
 
 - (void)didReceiveMemoryWarning {
