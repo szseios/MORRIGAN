@@ -130,6 +130,10 @@
                 if (higtCount < _heightArray.count) {
                     [_pickerView selectRow:higtCount - 100 inComponent:0 animated:NO];
                 }
+            }else{
+                _heightStr = @"168";
+                [_pickerView selectRow:68 inComponent:0 animated:NO];
+                
             }
         }
             break;
@@ -146,6 +150,9 @@
                 if (weightCount < _weightArray.count) {
                     [_pickerView selectRow:weightCount-20 inComponent:0 animated:NO];
                 }
+            }else{
+                _weightStr = @"48";
+                [_pickerView selectRow:28 inComponent:0 animated:NO];
             }
             break;
         case pickerViewTypeFeeling:
@@ -162,6 +169,10 @@
             {
                 _feelingStr = _feelingArray[2];
                 [_pickerView selectRow:2 inComponent:0 animated:NO];
+            }else{
+                _feelingStr = _feelingArray[2];
+                [_pickerView selectRow:2 inComponent:0 animated:NO];
+                
             }
         }
             break;

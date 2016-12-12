@@ -481,7 +481,7 @@
                      [UserInfo share].emotionStr = @"已婚";
                  }
                  else if ([[UserInfo share].emotion isEqualToString:@"S"]) {
-                     [UserInfo share].emotionStr = @"单身";
+                     [UserInfo share].emotionStr = @"未婚";
                  }
                  
                  // 保存用户名和密码，下次自动登陆
@@ -492,12 +492,6 @@
                  
                  // 登录成功后获取已绑定设备
                  [weakSelf fetchBindedDevices];
-                 BOOL showGuide = [[NSUserDefaults standardUserDefaults] boolForKey:SHOWGUIDEVIEW];
-                 if (!showGuide) {
-                     GuideViewController *guideController = [[GuideViewController alloc] init];
-                     [weakSelf.navigationController pushViewController:guideController animated:YES];
-                     
-                 }else{
                      // 进入主页
                      RootViewController *homeViewController = [[RootViewController alloc] init];
                      NSLog(@"%@",weakSelf.navigationController);
@@ -505,7 +499,7 @@
                      
                      // 上传护理记录数据
                      [[RecordManager share] uploadDBDatas:NO];
-                 }
+                 
              });
 
          } else {

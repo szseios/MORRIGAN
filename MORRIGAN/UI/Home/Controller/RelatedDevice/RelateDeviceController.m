@@ -204,13 +204,13 @@
                      objectTaskFinished:^(NSError *error, id obj)
      {
          if ([[obj objectForKey:HTTP_KEY_RESULTCODE] isEqualToString:HTTP_RESULTCODE_SUCCESS]) {
-             [MBProgressHUD showHUDByContent:@"解除绑定成功！" view:UI_Window afterDelay:2];
+             [MBProgressHUD showHUDByContent:@"解除绑定成功" view:UI_Window afterDelay:2];
              [_deviceArray removeObject:_model];
              [self.collectionView reloadData];
              [DBManager deletePeripheral:_model.macAddress];
              NSLog(@"解除绑定成功！");
          }else{
-             [MBProgressHUD showHUDByContent:@"解除绑定失败！" view:UI_Window afterDelay:2];
+             [MBProgressHUD showHUDByContent:@"解除绑定失败" view:UI_Window afterDelay:2];
          }
          
          

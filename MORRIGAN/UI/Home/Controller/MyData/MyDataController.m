@@ -388,7 +388,7 @@ static NSString *cellIdentifier = @"cellIdentifier";
     else if ([[UserInfo share].emotionStr isEqualToString:@"已婚"]) {
         [UserInfo share].emotion = @"M";
     }
-    else if ([[UserInfo share].emotionStr isEqualToString:@"单身"]) {
+    else if ([[UserInfo share].emotionStr isEqualToString:@"未婚"]) {
         [UserInfo share].emotion = @"S";
     }
     NSDictionary *dictionary = @{@"userId": [UserInfo share].userId ? [UserInfo share].userId : @"",
@@ -519,19 +519,19 @@ static NSString *cellIdentifier = @"cellIdentifier";
     myDataCell *cell = [_dataTableView cellForRowAtIndexPath:[NSIndexPath indexPathForRow:1 inSection:0]];
     cell.content = notice.object;
     [UserInfo share].nickName = notice.object;
-    NSDictionary *dictionary = @{@"userId": [UserInfo share].userId ? [UserInfo share].userId : @"",
-                                 @"nickName": [UserInfo share].nickName ? [UserInfo share].nickName : @"",
-                                 };
-    NSString *bodyString = [NMOANetWorking handleHTTPBodyParams:dictionary];
-    [[NMOANetWorking share] taskWithTag:ID_EDIT_USERINFO urlString:URL_EDIT_USERINFO httpHead:nil bodyString:bodyString objectTaskFinished:^(NSError *error, id obj) {
-        
-        if ([[obj objectForKey:HTTP_KEY_RESULTCODE] isEqualToString:HTTP_RESULTCODE_SUCCESS]) {
-            [MBProgressHUD showHUDByContent:@"修改昵称成功！" view:UI_Window afterDelay:2];
-            NSLog(@"修改昵称成功！");
-        }else{
-            [MBProgressHUD showHUDByContent:@"修改昵称失败！" view:UI_Window afterDelay:2];
-        }
-    }];
+//    NSDictionary *dictionary = @{@"userId": [UserInfo share].userId ? [UserInfo share].userId : @"",
+//                                 @"nickName": [UserInfo share].nickName ? [UserInfo share].nickName : @"",
+//                                 };
+//    NSString *bodyString = [NMOANetWorking handleHTTPBodyParams:dictionary];
+//    [[NMOANetWorking share] taskWithTag:ID_EDIT_USERINFO urlString:URL_EDIT_USERINFO httpHead:nil bodyString:bodyString objectTaskFinished:^(NSError *error, id obj) {
+//        
+//        if ([[obj objectForKey:HTTP_KEY_RESULTCODE] isEqualToString:HTTP_RESULTCODE_SUCCESS]) {
+//            [MBProgressHUD showHUDByContent:@"修改昵称成功！" view:UI_Window afterDelay:2];
+//            NSLog(@"修改昵称成功！");
+//        }else{
+//            [MBProgressHUD showHUDByContent:@"修改昵称失败！" view:UI_Window afterDelay:2];
+//        }
+//    }];
 }
 
 - (void)touchesBegan:(NSSet<UITouch *> *)touches withEvent:(UIEvent *)event

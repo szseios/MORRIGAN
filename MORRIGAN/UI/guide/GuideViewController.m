@@ -8,7 +8,7 @@
 
 #import "GuideViewController.h"
 #import "GuidePageControl.h"
-#import "RootViewController.h"
+#import "LoginViewController.h"
 
 @interface GuideViewController ()<UIScrollViewDelegate>
 
@@ -89,9 +89,9 @@
 {
     [[NSUserDefaults standardUserDefaults] setBool:YES forKey:SHOWGUIDEVIEW];;
     // 进入主页
-    RootViewController *homeViewController = [[RootViewController alloc] init];
+    LoginViewController *LoginController = [[LoginViewController alloc] init];
     
-    [self.navigationController pushViewController:homeViewController animated:YES];
+    [self.navigationController pushViewController:LoginController animated:YES];
     
     [_scrollView removeFromSuperview];
     _scrollView = nil;

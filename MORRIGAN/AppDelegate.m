@@ -38,7 +38,15 @@
     //BTTestViewController *loginViewController = [[BTTestViewController alloc] init];
     //AutoKneadViewController *loginViewController = [[AutoKneadViewController alloc] init];
     //HandKneadViewController *loginViewController = [[HandKneadViewController alloc] init];
-    LoginViewController *loginViewController = [[LoginViewController alloc] init];
+    BOOL showGuide = [[NSUserDefaults standardUserDefaults] boolForKey:SHOWGUIDEVIEW];
+    UIViewController *loginViewController;
+    if (!showGuide) {
+        loginViewController = [[GuideViewController alloc] init];
+        
+    }else{
+        loginViewController = [[LoginViewController alloc] init];
+    }
+    
     //MusicViewController *loginViewController = [[MusicViewController alloc] init];
     //loginViewController.musics = [MusicManager share].musics;
     //UINavigationController *nav = [[UINavigationController alloc] initWithRootViewController:loginViewController];
@@ -133,7 +141,7 @@
 - (void)initReachability {
     __block AppDelegate *appDelegate = self;
     
-    _reach = [Reachability reachabilityWithHostname:@"e.szse.cn"];
+    _reach = [Reachability reachabilityWithHostname:@"www.baidu.com"];
     _reach.reachableBlock = ^(Reachability * reachability) {
         NSString * temp = [NSString stringWithFormat:@"网络状态改变  :  %@", reachability.currentReachabilityString];
         NSLog(@"%@", temp);

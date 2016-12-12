@@ -46,7 +46,7 @@
     }else{
         _backgroundImageView.image = [UIImage imageNamed:@"addDeviceBackgroud"];
         _deviceIDLabel.hidden = NO;
-        _deviceIDLabel.text = model.name;
+        _deviceIDLabel.text = [NSString stringWithFormat:@"%@%@",model.name,model.macAddress];
         _countLabel.hidden = NO;
         _countLabel.text = [NSString stringWithFormat:@"%ld",index.row];
         _editImageView.hidden = NO;
