@@ -477,22 +477,28 @@
 //    }
     
     FuntionButton *targetButton = (FuntionButton *)recognizer.view;
-    if(targetButton != _dragButton) {
-        _dragButton.hidden = NO;
-        _dragButton.frame = targetButton.frame;
-        [_dragButton addGestureRecognizer:recognizer];
-        _dragButton.buttonImage = targetButton.buttonImage;
-        _dragButton.buttonBeenDrapImage = targetButton.buttonBeenDrapImage;
-        _dragButton.buttonKneedingImage = targetButton.buttonKneedingImage;
-        _dragButton.funCodeString = targetButton.funCodeString;
-        [_dragButton setImage:_dragButton.buttonImage forState:UIControlStateNormal];
-        _dragButton.tag = targetButton.tag;
-        [targetButton removeGestureRecognizer:recognizer];
-        _tempButton = targetButton;
+    if(_preKneeding == NO) {
+        if(targetButton != _dragButton) {
+            _dragButton.hidden = NO;
+            _dragButton.frame = targetButton.frame;
+            [_dragButton addGestureRecognizer:recognizer];
+            _dragButton.buttonImage = targetButton.buttonImage;
+            _dragButton.buttonBeenDrapImage = targetButton.buttonBeenDrapImage;
+            _dragButton.buttonKneedingImage = targetButton.buttonKneedingImage;
+            _dragButton.funCodeString = targetButton.funCodeString;
+            [_dragButton setImage:_dragButton.buttonImage forState:UIControlStateNormal];
+            _dragButton.tag = targetButton.tag;
+            [targetButton removeGestureRecognizer:recognizer];
+            _tempButton = targetButton;
+        }
+        NSLog(@"-----%@", _dragButton.funCodeString);
     }
-    NSLog(@"-----%@", _dragButton.funCodeString);
+    
     
     if (recognizer.state == UIGestureRecognizerStateEnded) {
+        if(_buttonStartStop.tag == kButtonStartTag || _preKneeding == YES) {
+            return;
+        }
         [_tempButton addGestureRecognizer:recognizer];
         [_dragButton removeGestureRecognizer:recognizer];
         _dragButton.hidden = YES;
