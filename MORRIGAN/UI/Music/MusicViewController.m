@@ -526,10 +526,42 @@
 }
 
 
+- (void)clickSearchButton {
+    if ([UserInfo share].isConnected) {
+        UIAlertView *alert = [[UIAlertView alloc] initWithTitle:nil
+                                                        message:@"需要切换设备？"
+                                                       delegate:self
+                                              cancelButtonTitle:@"取消"
+                                              otherButtonTitles:@"确定", nil];
+        alert.tag = 9999;
+        [alert show];
+    }else{
+        
+        [MusicManager share].delegate = nil;
+        [[MusicManager share] stop];
+        [self recordEndDate];
+        
+        //如果用户打开了蓝牙
+        SearchPeripheralViewController *ctl = [[SearchPeripheralViewController alloc] init];
+        [self.navigationController pushViewController:ctl animated:YES];
 
-- (IBAction)connectPeripheral:(id)sender {
-    SearchPeripheralViewController *ctl = [[SearchPeripheralViewController alloc] init];
-    [self.navigationController pushViewController:ctl animated:YES];
+    }
+}
+
+- (void)alertView:(UIAlertView *)alertView clickedButtonAtIndex:(NSInteger)buttonIndex {
+    
+    if (alertView.tag == 9999) {
+        if (buttonIndex == 1) {
+            
+            [MusicManager share].delegate = nil;
+            [[MusicManager share] stop];
+            [self recordEndDate];
+            
+            SearchPeripheralViewController *search = [[SearchPeripheralViewController alloc] init];
+            [self.navigationController pushViewController:search animated:YES];
+            
+        }
+    }
 }
 
 #pragma mark - Notification
