@@ -104,6 +104,11 @@ static NSString *dbPath = nil;
 
 + (BOOL)insertPeripheral:(CBPeripheral *)peripheral macAddress:(NSString *)macAddress {
     
+    if (!macAddress.length) {
+        NSLog(@"macAddress 为空,不保存数据库");
+        return NO;
+    }
+    
     __block BOOL success = NO;
     [[DBManager dbQueue] inDatabase:^(FMDatabase *db) {
         NSString *sql = [NSString stringWithFormat:@"INSERT OR REPLACE INTO 'peripherals' ('mac','name' ,'user_id') VALUES ('%@', '%@', '%@')",

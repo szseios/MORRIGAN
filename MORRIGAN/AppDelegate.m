@@ -32,12 +32,8 @@
     [self initReachability];
     [DBManager initApplicationsDB];
     [MusicManager share];
-//    [BluetoothManager share];
     
     self.window = [[UIWindow alloc] initWithFrame:[[UIScreen mainScreen] bounds]];//设置窗口
-    //BTTestViewController *loginViewController = [[BTTestViewController alloc] init];
-    //AutoKneadViewController *loginViewController = [[AutoKneadViewController alloc] init];
-    //HandKneadViewController *loginViewController = [[HandKneadViewController alloc] init];
     BOOL showGuide = [[NSUserDefaults standardUserDefaults] boolForKey:SHOWGUIDEVIEW];
     UIViewController *loginViewController;
     if (!showGuide) {
@@ -47,10 +43,6 @@
         loginViewController = [[LoginViewController alloc] init];
     }
     
-    //MusicViewController *loginViewController = [[MusicViewController alloc] init];
-    //loginViewController.musics = [MusicManager share].musics;
-    //UINavigationController *nav = [[UINavigationController alloc] initWithRootViewController:loginViewController];
-    //nav.navigationBarHidden = YES;
     self.window.rootViewController = [[UIViewController alloc] init];
     [self.window makeKeyAndVisible];
     
@@ -68,7 +60,6 @@
         _nav = [[UINavigationController alloc] initWithRootViewController:loginViewController];
         _nav.navigationBarHidden = YES;
         self.window.rootViewController = _nav;
-//        [self.window makeKeyAndVisible];
 
     });
   

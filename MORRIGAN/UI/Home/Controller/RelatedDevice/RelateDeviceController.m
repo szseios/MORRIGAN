@@ -162,16 +162,23 @@
     _editIndex = index;
     EditDeviceNameController *ctl = [[EditDeviceNameController alloc] initWithDeviceModel:model];
     [self.navigationController pushViewController:ctl animated:YES];
-    NSLog(@"编辑第%ld个设备",index.row);
+    NSLog(@"编辑第%ld个设备",(long)index.row);
 }
 
 - (void)deleteDevice:(PeripheralModel *)model withIndePath:(NSIndexPath *)index
 {
+    //如果用户删除已经连接上的设备
+    if ([BluetoothManager share].isConnected &&
+        [[BluetoothManager share].willConnectMacAddress isEqualToString:model.macAddress]) {
+        [MBProgressHUD showHUDByContent:@"该设备处于连接状态，暂不能解绑"
+                                   view:self.view];
+        return;
+    }
     _model = model;
     UIAlertView *alert = [[UIAlertView alloc] initWithTitle:@"是否需要解绑" message:nil delegate:self cancelButtonTitle:@"否" otherButtonTitles:@"是", nil];
     [alert show];
     alert.tag = 8888;
-    NSLog(@"删除第%ld个设备",index.row);
+    NSLog(@"删除第%ld个设备",(long)index.row);
 }
 
 - (void)alertView:(UIAlertView *)alertView clickedButtonAtIndex:(NSInteger)buttonIndex

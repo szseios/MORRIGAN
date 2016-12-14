@@ -29,6 +29,7 @@ NSString * const ElectricQuantityChanged = @"ElectricQuantityChanged";
     NSTimer *_timer;
 }
 
+@property (nonatomic,strong)CBPeripheral *willConnectPeripheral;     // 将要连接的设备
 @property (nonatomic,strong)CBPeripheral *curConnectPeripheral;      // 当前连接的设备
 @property (nonatomic,strong)CBCharacteristic *sendCharacteristic;    // 写特征
 @property (nonatomic,strong)CBCharacteristic *receiveCharacteristic; // 读特征
@@ -125,6 +126,7 @@ NSString * const ElectricQuantityChanged = @"ElectricQuantityChanged";
     
     //扫描到设备的委托
     [_baby setBlockOnDiscoverToPeripherals:^(CBCentralManager *central, CBPeripheral *peripheral, NSDictionary *advertisementData, NSNumber *RSSI) {
+        
         if (![weakSelf.scannedPeripherals containsObject:peripheral]) {
             [weakSelf.scannedPeripherals addObject:peripheral];
             NSArray *array = [advertisementData objectForKey:@"kCBAdvDataServiceUUIDs"];
@@ -300,7 +302,7 @@ NSString * const ElectricQuantityChanged = @"ElectricQuantityChanged";
         if ([peripheralName hasPrefix:@"Morrigan"] ) {
             return YES;
         }
-        NSLog(@"过滤设备 %@",peripheralName);
+//        NSLog(@"过滤设备 %@",peripheralName);
         return NO;
     }];
     
@@ -308,6 +310,7 @@ NSString * const ElectricQuantityChanged = @"ElectricQuantityChanged";
     [_baby setBlockOnFailToConnect:^(CBCentralManager *central, CBPeripheral *peripheral, NSError *error) {
         NSLog(@"设备：%@连接失败",peripheral.name);
         weakSelf.isConnected = NO;
+        weakSelf.willConnectPeripheral = nil;
         [UserInfo share].isConnected = NO;
         //通知连接蓝牙设备失败
         [[NSNotificationCenter defaultCenter] postNotificationName:ConnectPeripheralError
@@ -321,6 +324,7 @@ NSString * const ElectricQuantityChanged = @"ElectricQuantityChanged";
         NSLog(@"成功取消所有外设连接");
         weakSelf.currentOperation = nil;
         weakSelf.curConnectPeripheral = nil;
+        weakSelf.willConnectPeripheral = nil;
         weakSelf.isConnected = NO;
         [UserInfo share].isConnected = NO;
     }];
@@ -333,6 +337,7 @@ NSString * const ElectricQuantityChanged = @"ElectricQuantityChanged";
         weakSelf.isConnected = NO;
         [UserInfo share].isConnected = NO;
         weakSelf.curConnectPeripheral = nil;
+        weakSelf.willConnectPeripheral = nil;
         //通知断开蓝牙设备
         [[NSNotificationCenter defaultCenter] postNotificationName:DisconnectPeripheral
                                                             object:@(weakSelf.manualDisconnect)];
@@ -384,6 +389,7 @@ NSString * const ElectricQuantityChanged = @"ElectricQuantityChanged";
 - (void)start {
     _baby.scanForPeripherals().begin();
     [_scannedPeripherals removeAllObjects];
+    [_macAddresses removeAllObjects];
 }
 
 - (void)stop {
@@ -391,6 +397,7 @@ NSString * const ElectricQuantityChanged = @"ElectricQuantityChanged";
 }
 
 -(void)connectingBlueTooth:(CBPeripheral *)peripheral {
+    _willConnectPeripheral = peripheral;
     _baby.having(peripheral).and.then.connectToPeripherals().discoverServices().discoverCharacteristics().begin();
 }
 
@@ -563,10 +570,16 @@ NSString * const ElectricQuantityChanged = @"ElectricQuantityChanged";
         self.reconnect = NO;
         [self stop];
         [self unConnectingBlueTooth];
+        if (_willConnectPeripheral) {
+            [_baby cancelPeripheralConnection:_willConnectPeripheral];
+        }
     }
     //用户点击重新连接
     else if (buttonIndex == 1) {
         self.reconnect = NO;
+        if (_willConnectPeripheral) {
+            [_baby cancelPeripheralConnection:_willConnectPeripheral];
+        }
         AppDelegate *delegate = (AppDelegate *)[UIApplication sharedApplication].delegate;
         SearchPeripheralViewController *search = [[SearchPeripheralViewController alloc] init];
         [delegate.nav pushViewController:search animated:YES];
