@@ -24,6 +24,7 @@
 @property (weak, nonatomic) IBOutlet UILabel *deviceIDLabel;
 @property (weak, nonatomic) IBOutlet UIImageView *editImageView;
 @property (weak, nonatomic) IBOutlet UIImageView *deleteImageView;
+@property (weak, nonatomic) IBOutlet UILabel *macAddressLabel;
 
 @property (nonatomic , assign) id<RelateDeviceCellDelegate> delegate;
 

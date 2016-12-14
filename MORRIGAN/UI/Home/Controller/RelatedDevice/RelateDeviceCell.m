@@ -22,6 +22,8 @@
     [super awakeFromNib];
     // Initialization code
     _countLabel.textColor = [UIColor colorWithRed:1 green:1 blue:1 alpha:0.85];
+    _macAddressLabel.textColor = [UIColor colorWithRed:1 green:1 blue:1 alpha:0.85];
+    _deviceIDLabel.textColor = [UIColor colorWithRed:1 green:1 blue:1 alpha:0.85];
     _countLabel.font = [UIFont systemFontOfSize:18];
     UITapGestureRecognizer *editTap = [[UITapGestureRecognizer alloc] initWithTarget:self action:@selector(modelEdit)];
     _editImageView.userInteractionEnabled = YES;
@@ -43,10 +45,23 @@
         _countLabel.hidden = YES;
         _editImageView.hidden = YES;
         _deleteImageView.hidden = YES;
+        _macAddressLabel.hidden = YES;
     }else{
         _backgroundImageView.image = [UIImage imageNamed:@"addDeviceBackgroud"];
         _deviceIDLabel.hidden = NO;
-        _deviceIDLabel.text = [NSString stringWithFormat:@"%@%@",model.name,model.macAddress];
+        _deviceIDLabel.text = model.name;
+        _macAddressLabel.hidden = NO;
+        CGFloat textWidth = [model.macAddress sizeWithAttributes:@{NSFontAttributeName: [UIFont systemFontOfSize:16]}].width;
+        if (textWidth > self.width) {
+            NSString *macAddress = model.macAddress;
+            if (model.macAddress.length > 17) {
+                macAddress = [model.macAddress substringWithRange:NSMakeRange(0,17)];
+            }
+            _macAddressLabel.text = macAddress;
+        }else{
+            _macAddressLabel.text = model.macAddress;
+        }
+        
         _countLabel.hidden = NO;
         _countLabel.text = [NSString stringWithFormat:@"%ld",index.row];
         _editImageView.hidden = NO;

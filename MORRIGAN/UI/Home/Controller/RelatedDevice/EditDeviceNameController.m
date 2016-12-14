@@ -44,7 +44,11 @@
     _textField.backgroundColor = [UIColor colorWithRed:0.9 green:0.9 blue:0.9 alpha:0.9];
     [self.view addSubview:_textField];
     if (_model) {
-        _textField.text = _model.name;
+        NSString *text = _model.name;
+        if (_model.name.length > 30) {
+            text = [_model.name substringToIndex:30];
+        }
+        _textField.text = text;
     }
     
     [self setUpBarView];

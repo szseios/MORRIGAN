@@ -354,62 +354,62 @@
 
 - (void)setStarRank:(NSNotification *)notice
 {
-    NSString *starStr = notice.object;
+    NSDictionary *userInfo = notice.userInfo;
+    NSString *starStr = [userInfo objectForKey:@"rank"];
+    NSString *eValueStr = [userInfo objectForKey:@"eValue"];
     if (starStr && starStr.length > 0) {
 //        [_mainView setStarLabelAndImage:starStr];
         NSString *imageName;
-        NSString *starLabelStr;
         switch (starStr.integerValue) {
             case -1:
             {
                 imageName = @"icon_star_0";
-                starLabelStr = @"0";
             }
                 break;
             case 0:
             {
                 imageName = @"icon_star_5";
-                starLabelStr = @"0.5";
             }
                 break;
             case 1:
             {
                 imageName = @"icon_star_10";
-                starLabelStr = @"1";
             }
                 break;
                 
             case 2:
             {
                 imageName = @"icon_star_15";
-                starLabelStr = @"1.5";
             }
                 break;
                 
             case 3:
             {
                 imageName = @"icon_star_20";
-                starLabelStr = @"2";
             }
                 break;
                 
             case 4:
             {
                 imageName = @"icon_star_25";
-                starLabelStr = @"2.5";
             }
                 break;
                 
             case 5:
             {
                 imageName = @"icon_star_30";
-                starLabelStr = @"3";
             }
                 break;
                 
                 
             default:
                 break;
+        }
+        NSString *starLabelStr = @"0";
+        if (eValueStr.length > 0 ) {
+            NSInteger star = eValueStr.integerValue;
+            starLabelStr = [NSString stringWithFormat:@"%ld",star];
+            
         }
         NSMutableAttributedString *attributeString = [[NSMutableAttributedString alloc] initWithString:[NSString stringWithFormat:@"%@star",starLabelStr]];
         [attributeString setAttributes:@{NSFontAttributeName:[UIFont systemFontOfSize:18]} range:NSMakeRange(0, starLabelStr.length)];

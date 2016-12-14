@@ -191,12 +191,11 @@ static RecordManager *manager;
          
          if ([[obj objectForKey:HTTP_KEY_RESULTCODE] isEqualToString:HTTP_RESULTCODE_SUCCESS]) {
              NSLog(@"获取星级评定成功！");
-             NSString *tempStr = [obj objectForKey:@"rank"];
-             if (tempStr) {
-                 starStr = tempStr;
-             }
+             NSString *tempStr = [obj objectForKey:@"rank"] ? [obj objectForKey:@"rank"] : @"";
+             NSString *eValue = [obj objectForKey:@"eValue"] ?  [obj objectForKey:@"eValue"] : @"";
+             NSDictionary *tempDict = @{@"rank":tempStr,@"eValue":eValue};
              dispatch_async(dispatch_get_main_queue(), ^{
-                 [[NSNotificationCenter defaultCenter] postNotificationName:GETSTARRANKNOTIFICATION object:starStr];
+                 [[NSNotificationCenter defaultCenter] postNotificationName:GETSTARRANKNOTIFICATION object:nil userInfo:tempDict];
              });
          } else {
              NSLog(@"获取星级评定失败！");
