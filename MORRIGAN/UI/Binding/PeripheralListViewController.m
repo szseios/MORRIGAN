@@ -91,6 +91,25 @@
     _squareView.layer.borderWidth = 1;
     _squareView.hidden = YES;
     _bottomView.hidden = YES;
+    
+    
+    if ([BluetoothManager share].scannedPeripherals.count == 1 &&
+        [BluetoothManager share].macAddresses.count == 1) {
+        NSString *macAddress = [[BluetoothManager share].macAddresses firstObject];
+        _selectedMacAddress = macAddress;
+        PeripheralModel *model = [_linkedPeripherals objectForKey:macAddress];
+        if (model) {
+            
+            [BluetoothManager share].willConnectMacAddress = _selectedMacAddress;
+            CBPeripheral *peripheral = [[BluetoothManager share].scannedPeripherals firstObject];
+            [[BluetoothManager share] connectingBlueTooth:peripheral];
+            
+            _bottomView.hidden = NO;
+            _squareView.hidden = NO;
+            self.view.userInteractionEnabled = NO;
+            [self startAnimating];
+        }
+    }
 }
 
 - (void)didReceiveMemoryWarning {
