@@ -345,21 +345,43 @@
 - (void)startAnimation
 {
     CGFloat tempTime = kDelayTime / 4;
-    animation1Timer = [NSTimer scheduledTimerWithTimeInterval:0.1 repeats:NO block:^(NSTimer * _Nonnull timer) {
-        [self startAnimation1];
-    }];
+//    animation1Timer = [NSTimer scheduledTimerWithTimeInterval:0.1 repeats:NO block:^(NSTimer * _Nonnull timer) {
+//        [self startAnimation1];
+//    }];
+    animation1Timer = [NSTimer scheduledTimerWithTimeInterval:0.1
+                                                       target:self
+                                                     selector:@selector(startAnimation1)
+                                                     userInfo:nil
+                                                      repeats:NO];
     
-    animation2Timer = [NSTimer scheduledTimerWithTimeInterval:tempTime * 1 repeats:NO block:^(NSTimer * _Nonnull timer) {
-        [self startAnimation2];
-    }];
+//    animation2Timer = [NSTimer scheduledTimerWithTimeInterval:tempTime * 1 repeats:NO block:^(NSTimer * _Nonnull timer) {
+//        [self startAnimation2];
+//    }];
+    animation2Timer = [NSTimer scheduledTimerWithTimeInterval:1
+                                                       target:self
+                                                     selector:@selector(startAnimation2)
+                                                     userInfo:nil
+                                                      repeats:NO];
     
-    animation3Timer = [NSTimer scheduledTimerWithTimeInterval:tempTime * 2 repeats:NO block:^(NSTimer * _Nonnull timer) {
-        [self startAnimation3];
-    }];
+//    animation3Timer = [NSTimer scheduledTimerWithTimeInterval:tempTime * 2 repeats:NO block:^(NSTimer * _Nonnull timer) {
+//        [self startAnimation3];
+//    }];
     
-    animation4Timer = [NSTimer scheduledTimerWithTimeInterval:tempTime * 3 repeats:NO block:^(NSTimer * _Nonnull timer) {
-        [self startAnimation4];
-    }];
+    animation3Timer = [NSTimer scheduledTimerWithTimeInterval:2
+                                                       target:self
+                                                     selector:@selector(startAnimation3)
+                                                     userInfo:nil
+                                                      repeats:NO];
+    
+//    animation4Timer = [NSTimer scheduledTimerWithTimeInterval:tempTime * 3 repeats:NO block:^(NSTimer * _Nonnull timer) {
+//        [self startAnimation4];
+//    }];
+    
+    animation4Timer = [NSTimer scheduledTimerWithTimeInterval:3
+                                                       target:self
+                                                     selector:@selector(startAnimation4)
+                                                     userInfo:nil
+                                                      repeats:NO];
 
 
 }
