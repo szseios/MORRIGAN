@@ -62,16 +62,19 @@
 -(void)start{
     
     self.hidden = NO;
-    timer = [NSTimer scheduledTimerWithTimeInterval:.2 target:self selector:@selector(ticker) userInfo:nil repeats:YES];
+    if(timer == nil) {
+        timer = [NSTimer scheduledTimerWithTimeInterval:.2 target:self selector:@selector(ticker) userInfo:nil repeats:YES];
+    }
     
 }
 
 
 -(void)stop{
     
-    [timer invalidate];
-    timer = nil;
-    
+    if(timer != nil) {
+        [timer invalidate];
+        timer = nil;
+    }
 }
 
 - (void)initAnimationViews {

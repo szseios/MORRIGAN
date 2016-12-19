@@ -216,6 +216,13 @@
     if (self.connectBottomView) {
         [self.view bringSubviewToFront:self.connectBottomView];
     }
+    
+    [self.view bringSubviewToFront:_slider];
+    
+    
+    // 解决后台播放完成后不能循环播放的问题
+    [[UIApplication sharedApplication] beginReceivingRemoteControlEvents];
+    
 }
 
 - (NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section {
@@ -320,6 +327,7 @@
     MusicModel *model = [_musics objectAtIndex:_selectedIndexPath.row];
     [_slider setValue:[MusicManager share].currentTime / model.playbackDuration
              animated:YES];
+    [self.view bringSubviewToFront:_slider];
 }
 
 - (void)sliderValueChanged {
@@ -425,7 +433,9 @@
 //        [self playMusicByIndexPath:_selectedIndexPath];
 //    }
 //    [MusicManager share].currentSelectedIndex = _selectedIndexPath.row;
-    [self playMusicByIndexPath:_selectedIndexPath];
+    
+     [self playMusicByIndexPath:_selectedIndexPath];
+    
 }
 
 
