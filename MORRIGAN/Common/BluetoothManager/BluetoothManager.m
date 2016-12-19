@@ -342,10 +342,8 @@ NSString * const ElectricQuantityChanged = @"ElectricQuantityChanged";
         [[NSNotificationCenter defaultCenter] postNotificationName:DisconnectPeripheral
                                                             object:@(weakSelf.manualDisconnect)];
         [weakSelf endTimer];
-        
         //如果是手动断开连接
         if (weakSelf.manualDisconnect) {
-            
             weakSelf.manualDisconnect = NO;
         }
         else {
@@ -482,7 +480,7 @@ NSString * const ElectricQuantityChanged = @"ElectricQuantityChanged";
 #pragma mark -
 
 - (void)startConnectPeripheralTimer {
-    if (!_timer) {
+    if (_timer) {
         [_timer invalidate];
         _timer = nil;
     }
@@ -494,7 +492,7 @@ NSString * const ElectricQuantityChanged = @"ElectricQuantityChanged";
 }
 
 - (void)startReconnectPeripheralTimer {
-    if (!_timer) {
+    if (_timer) {
         [_timer invalidate];
         _timer = nil;
     }
@@ -506,7 +504,7 @@ NSString * const ElectricQuantityChanged = @"ElectricQuantityChanged";
 }
 
 - (void)startTimer {
-    if (!_timer) {
+    if (_timer) {
         [_timer invalidate];
         _timer = nil;
     }
@@ -518,7 +516,7 @@ NSString * const ElectricQuantityChanged = @"ElectricQuantityChanged";
 }
 
 - (void)endTimer {
-    if (!_timer) {
+    if (_timer) {
         [_timer invalidate];
         _timer = nil;
     }
@@ -545,6 +543,7 @@ NSString * const ElectricQuantityChanged = @"ElectricQuantityChanged";
 #pragma mark - 重连
 
 - (void)showConnectView {
+    NSLog(@"showConnectView");
     [self hideConnectView];
     _alertView = [[UIAlertView alloc] initWithTitle:nil
                                             message:@"设备已断开连接，是否重连"
@@ -552,10 +551,11 @@ NSString * const ElectricQuantityChanged = @"ElectricQuantityChanged";
                                   cancelButtonTitle:@"取消"
                                   otherButtonTitles:@"重新连接", nil];
     [_alertView show];
-    [self startReconnectPeripheralTimer];
+   // [self startReconnectPeripheralTimer];
 }
 
 - (void)hideConnectView {
+    NSLog(@"hideConnectView");
     if (_alertView) {
         [_alertView dismissWithClickedButtonIndex:_alertView.cancelButtonIndex
                                          animated:NO];
