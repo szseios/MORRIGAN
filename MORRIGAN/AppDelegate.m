@@ -43,25 +43,26 @@
         loginViewController = [[LoginViewController alloc] init];
     }
     
-    self.window.rootViewController = [[UIViewController alloc] init];
-    [self.window makeKeyAndVisible];
+//    self.window.rootViewController = [[UIViewController alloc] init];
+//    [self.window makeKeyAndVisible];
     
     
     // 启动页面
-    UIImageView *wellcomeView = [[UIImageView alloc]initWithFrame:CGRectMake(0,0,kScreenWidth,kScreenHeight)];
-    [wellcomeView setImage:[UIImage imageNamed:@"640-1136"]];
-    [self.window addSubview:wellcomeView];
-    [self.window bringSubviewToFront:wellcomeView];
-    __block UIImageView *wellcomeViewBlock = wellcomeView;
+//    UIImageView *wellcomeView = [[UIImageView alloc]initWithFrame:CGRectMake(0,0,kScreenWidth,kScreenHeight)];
+//    [wellcomeView setImage:[UIImage imageNamed:@"640-1136"]];
+//    [self.window addSubview:wellcomeView];
+//    [self.window bringSubviewToFront:wellcomeView];
+//    __block UIImageView *wellcomeViewBlock = wellcomeView;
+//    
+//    dispatch_after(dispatch_time(DISPATCH_TIME_NOW, (int64_t)(kWelcomePageDelayTime * NSEC_PER_SEC)), dispatch_get_main_queue(), ^{
+//        [wellcomeViewBlock removeFromSuperview];
     
-    dispatch_after(dispatch_time(DISPATCH_TIME_NOW, (int64_t)(kWelcomePageDelayTime * NSEC_PER_SEC)), dispatch_get_main_queue(), ^{
-        [wellcomeViewBlock removeFromSuperview];
-        
-        _nav = [[UINavigationController alloc] initWithRootViewController:loginViewController];
-        _nav.navigationBarHidden = YES;
-        self.window.rootViewController = _nav;
+    _nav = [[UINavigationController alloc] initWithRootViewController:loginViewController];
+    _nav.navigationBarHidden = YES;
+    self.window.rootViewController = _nav;
+    [self.window makeKeyAndVisible];
 
-    });
+//    });
   
 //    NSDateFormatter *dateFormatter = [[NSDateFormatter alloc] init];
 //    [dateFormatter setDateFormat:@"yyyy-MM-dd HH:mm:ss"];
