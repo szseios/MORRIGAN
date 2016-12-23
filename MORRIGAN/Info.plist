@@ -17,9 +17,9 @@
 	<key>CFBundlePackageType</key>
 	<string>APPL</string>
 	<key>CFBundleShortVersionString</key>
-	<string>1.0</string>
+	<string>1.0.2</string>
 	<key>CFBundleVersion</key>
-	<string>1</string>
+	<string>1.0.2</string>
 	<key>LSApplicationCategoryType</key>
 	<string>App plays audio</string>
 	<key>LSApplicationQueriesSchemes</key>
@@ -34,11 +34,13 @@
 		<true/>
 	</dict>
 	<key>NSAppleMusicUsageDescription</key>
-	<string></string>
+	<string>是否允许此App访问你的媒体资料库？</string>
+	<key>NSBluetoothPeripheralUsageDescription</key>
+	<string>是否允许此App使用你的蓝牙？</string>
 	<key>NSCameraUsageDescription</key>
-	<string></string>
+	<string>是否允许此App使用你的相机？</string>
 	<key>NSPhotoLibraryUsageDescription</key>
-	<string></string>
+	<string>是否允许此App访问你的相册？ </string>
 	<key>UIBackgroundModes</key>
 	<array>
 		<string>audio</string>

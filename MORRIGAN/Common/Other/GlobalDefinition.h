@@ -30,21 +30,21 @@
 
 // ---------------------------------------------------------------------------------------------------------
 
-#define APP_SERVER_URL    @"http://112.74.100.227:8083/"
+#define APP_SERVER_URL    @"https://www.bcdest.com/"
 
 // 注册
 #define ID_REGISTER             1001
-#define URL_REGISTER            @"http://112.74.100.227:8083/rest/moli/regist"
+#define URL_REGISTER            @"https://www.bcdest.com/rest/moli/regist"
 
 // 短信验证码
 #define ID_GET_PHONE_MSG_CODE   1002
-#define URL_GET_PHONE_MSG_CODE  @"http://112.74.100.227:8083//rest/moli/send-msg"
+#define URL_GET_PHONE_MSG_CODE  @"https://www.bcdest.com/rest/moli/send-msg"
 // 登陆
 #define ID_LOGIN                1003
-#define URL_LOGIN               @"http://112.74.100.227:8083/rest/moli/login"
+#define URL_LOGIN               @"https://www.bcdest.com/rest/moli/login"
 // 重置密码
 #define ID_RESET_PWD            1004
-#define URL_RESET_PWD           @"http://112.74.100.227:8083/rest/moli/forget-psw"
+#define URL_RESET_PWD           @"https://www.bcdest.com/rest/moli/forget-psw"
 
 // 编辑个人信息
 #define ID_EDIT_USERINFO            1005
