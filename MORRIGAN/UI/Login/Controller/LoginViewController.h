@@ -1,5 +1,5 @@
 //
-//  登陆界面
+//  登录界面
 //
 //  LoginViewController.h
 //  MORRIGAN

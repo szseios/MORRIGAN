@@ -141,7 +141,7 @@
                 
             case 2:
             {
-                UIAlertView *alert = [[UIAlertView alloc] initWithTitle:@"注销用户信息" message:@"注销后此账号将删除所有有关信息，只能通过重新注册才能登陆" delegate:self cancelButtonTitle:@"取消" otherButtonTitles:@"注销", nil];
+                UIAlertView *alert = [[UIAlertView alloc] initWithTitle:@"注销用户信息" message:@"注销后此账号将删除所有有关信息，只能通过重新注册才能登录" delegate:self cancelButtonTitle:@"取消" otherButtonTitles:@"注销", nil];
                 [alert show];
             }
                 break;
@@ -187,7 +187,7 @@
              [MBProgressHUD showHUDByContent:@"注销成功！" view:UI_Window afterDelay:2];
              NSLog(@"注销成功！");
              
-             // 注销登陆成功时调用这个
+             // 注销登录成功时调用这个
              NSUserDefaults *defaults = [NSUserDefaults standardUserDefaults];
              [defaults removeObjectForKey:kUserDefaultIdKey];
              [defaults removeObjectForKey:kUserDefaultPasswordKey];

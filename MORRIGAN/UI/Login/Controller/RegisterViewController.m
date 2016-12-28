@@ -264,7 +264,7 @@
 
     
 
-    // 注册／登陆
+    // 注册／登录
     CGFloat registerAndLoginBtnRootViewH = 40.0;
     CGFloat registerAndLoginBtnRootViewW = editViewW;
     CGFloat registerAndLoginBtnRootViewSpace = 20.0;
@@ -278,10 +278,10 @@
     registerAndLoginBtnRootView.backgroundColor = [UIColor clearColor];
     [self.rootView addSubview:registerAndLoginBtnRootView];
     
-    // 登陆
+    // 登录
     CGFloat buttonW = (registerAndLoginBtnRootViewW - registerAndLoginBtnRootViewSpace)/2;
     UIButton *loginBtnView = [[UIButton alloc] initWithFrame:CGRectMake(0, 0, buttonW, registerAndLoginBtnRootViewH)];
-    [loginBtnView setTitle:@"登陆" forState:UIControlStateNormal];
+    [loginBtnView setTitle:@"登录" forState:UIControlStateNormal];
     //loginBtnView.backgroundColor = [UIColor orangeColor];
     loginBtnView.backgroundColor = [UIColor clearColor];
     [loginBtnView setTitleColor:[UIColor colorWithRed:255.0 green:255.0 blue:255.0 alpha:0.8]forState:UIControlStateNormal];
@@ -417,7 +417,7 @@
  
 }
 
-// 注册/登陆按钮按下(改变按钮背景)
+// 注册/登录按钮按下(改变按钮背景)
 - (void)registerAndLoginButtonClickInRegisterSetBg:(id)sender
 {
     NSLog(@"registerButtonClickInLoginSetBg");
@@ -492,7 +492,7 @@
 }
 
 
-// 登陆按钮点击
+// 登录按钮点击
 - (void)loginButtonClickInRegister:(id)sender
 {
     NSLog(@"loginButtonClickInRegister");
@@ -515,7 +515,7 @@
         {
 //            if(alertView.tag == kAlertViewTagOfIntoLogin) {
 //                
-//                // 进入登陆界面
+//                // 进入登录界面
 //                [self intoLoginPage];
 //            }
 
@@ -651,17 +651,17 @@
          
          if ([[obj objectForKey:HTTP_KEY_RESULTCODE] isEqualToString:HTTP_RESULTCODE_SUCCESS]) {
              NSLog(@"注册成功！");
-//             UIAlertView *alert = [[UIAlertView alloc] initWithTitle:@"注册成功!" message:@"点击确认进入登陆界面" delegate:self cancelButtonTitle:nil otherButtonTitles:@"确定", nil];
+//             UIAlertView *alert = [[UIAlertView alloc] initWithTitle:@"注册成功!" message:@"点击确认进入登录界面" delegate:self cancelButtonTitle:nil otherButtonTitles:@"确定", nil];
 //             alert.tag = kAlertViewTagOfIntoLogin;
 //             [alert show];
              [MBProgressHUD showHUDByContent:@"注册成功！" view:self.view];
              dispatch_after(dispatch_time(DISPATCH_TIME_NOW, (int64_t)(0.5 * NSEC_PER_SEC)), dispatch_get_main_queue(), ^{
-                 // 保存用户名和密码，自动登陆
+                 // 保存用户名和密码，自动登录
                  NSUserDefaults *defaults = [NSUserDefaults standardUserDefaults];
                  [defaults setObject:phoneNumberBlock forKey:kUserDefaultIdKey];
                  [defaults setObject:passwordBlock forKey:kUserDefaultPasswordKey];
                  [defaults synchronize];
-                 // 进入登陆界面
+                 // 进入登录界面
                  [selfBlock intoLoginPage];
              });
              
@@ -711,7 +711,7 @@
 }
 
 
-// 进入登陆界面
+// 进入登录界面
 - (void)intoLoginPage
 {
     [UserInfo share].mobile = _phoneNumbrInputView.text;

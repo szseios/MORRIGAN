@@ -1,5 +1,5 @@
 //
-//  登陆界面
+//  登录界面
 //
 //  LoginViewController.m
 //  MORRIGAN
@@ -57,7 +57,7 @@
         NSLog(@"%@",password);
         _phoneNumbrInputView.text = phoneNumber;
         _passwordInputView.text = password;
-        // 自动登陆
+        // 自动登录
         [self loginButtonClickInLogin: nil];
     } else if([UserInfo share].mobile && [UserInfo share].mobile.length > 0) {
          _phoneNumbrInputView.text = [UserInfo share].mobile;
@@ -72,14 +72,14 @@
 //        
 //    } else {
 //        
-//        // 注销登陆成功时调用这个
+//        // 注销登录成功时调用这个
 //        //    NSUserDefaults *defaults = [NSUserDefaults standardUserDefaults];
 //        //    [defaults removeObjectForKey:kUserDefaultIdKey];
 //        //    [defaults removeObjectForKey:kUserDefaultPasswordKey];
 //        
 //        
 //        
-//        // 自动登陆
+//        // 自动登录
 //        NSUserDefaults *defaults = [NSUserDefaults standardUserDefaults];
 //        NSString *phoneNumber = [defaults objectForKey:kUserDefaultIdKey];
 //        NSString *password = [defaults objectForKey:kUserDefaultPasswordKey];
@@ -223,7 +223,7 @@
     
     
     
-    // 注册／登陆
+    // 注册／登录
     CGFloat registerAndLoginBtnRootViewH = 40.0;
     CGFloat registerAndLoginBtnRootViewW = editViewW;
     CGFloat registerAndLoginBtnRootViewSpace = 20.0;
@@ -248,9 +248,9 @@
     CGColorRef colorref = CGColorCreate(colorSpace,(CGFloat[]){ 1, 1, 1, 0.8 });
     [registerBtnView.layer setBorderColor:colorref];//边框颜色
     [registerAndLoginBtnRootView addSubview:registerBtnView];
-    // 登陆
+    // 登录
     UIButton *loginBtnView = [[UIButton alloc] initWithFrame:CGRectMake(buttonW + registerAndLoginBtnRootViewSpace, 0, buttonW, registerAndLoginBtnRootViewH)];
-    [loginBtnView setTitle:@"登陆" forState:UIControlStateNormal];
+    [loginBtnView setTitle:@"登录" forState:UIControlStateNormal];
     //loginBtnView.backgroundColor = [UIColor orangeColor];
     loginBtnView.backgroundColor = [UIColor clearColor];
     [loginBtnView setTitleColor:[UIColor colorWithRed:255.0 green:255.0 blue:255.0 alpha:0.8]forState:UIControlStateNormal];
@@ -306,7 +306,7 @@
     [self.navigationController pushViewController:forgetPwdViewController animated:YES];
 }
 
-// 注册/登陆按钮按下(改变按钮背景)
+// 注册/登录按钮按下(改变按钮背景)
 - (void)registerAndLoginButtonClickInLoginSetBg:(id)sender
 {
     NSLog(@"registerButtonClickInLoginSetBg");
@@ -328,7 +328,7 @@
 }
 
 
-// 登陆按钮点击
+// 登录按钮点击
 - (void)loginButtonClickInLogin:(id)sender
 {
     NSLog(@"loginButtonClickInLogin");
@@ -407,7 +407,7 @@
 
          if ([[obj objectForKey:HTTP_KEY_RESULTCODE] isEqualToString:HTTP_RESULTCODE_SUCCESS]) {
              NSLog(@"账号已经注册！");
-             // 登陆
+             // 登录
              [weakSelf beginLogin:phoneNumberBlock password:passwordBlock];
              
          } else if ([[obj objectForKey:HTTP_KEY_RESULTCODE] isEqualToString:HTTP_RESULTCODE_ERROR]) {
@@ -422,12 +422,12 @@
 }
 
 
-// 登陆
+// 登录
 - (void)beginLogin:(NSString *)phoneNumber password:(NSString *)password
 {
-    [self showRemoteAnimation:@"正在登陆, 请稍候..."];
+    [self showRemoteAnimation:@"正在登录, 请稍候..."];
     
-    NSLog(@"登陆，手机：%@, 密码：%@ ", phoneNumber, password);
+    NSLog(@"登录，手机：%@, 密码：%@ ", phoneNumber, password);
     
     NSDictionary *dictionary = @{@"mobile": phoneNumber,
                                  @"password": password
@@ -454,7 +454,7 @@
          });
          
          if ([[obj objectForKey:HTTP_KEY_RESULTCODE] isEqualToString:HTTP_RESULTCODE_SUCCESS]) {
-             NSLog(@"登陆成功！");
+             NSLog(@"登录成功！");
              [MBProgressHUD showHUDByContent:@"登录成功！" view:self.view];
 
              dispatch_after(dispatch_time(DISPATCH_TIME_NOW, (int64_t)(0.5 * NSEC_PER_SEC)), dispatch_get_main_queue(), ^{
@@ -484,7 +484,7 @@
                      [UserInfo share].emotionStr = @"未婚";
                  }
                  
-                 // 保存用户名和密码，下次自动登陆
+                 // 保存用户名和密码，下次自动登录
                  NSUserDefaults *defaults = [NSUserDefaults standardUserDefaults];
                  [defaults setObject:phoneNumberBlock forKey:kUserDefaultIdKey];
                  [defaults setObject:passwordBlock forKey:kUserDefaultPasswordKey];
@@ -504,9 +504,9 @@
 
          } else {
              
-             NSLog(@"登陆失败！");
+             NSLog(@"登录失败！");
              
-             UIAlertView *alert = [[UIAlertView alloc] initWithTitle:[obj objectForKey:HTTP_KEY_RESULTMESSAGE] == nil ? @"登陆失败！": [obj objectForKey:HTTP_KEY_RESULTMESSAGE] message:nil delegate:self cancelButtonTitle:nil otherButtonTitles:@"确定", nil];
+             UIAlertView *alert = [[UIAlertView alloc] initWithTitle:[obj objectForKey:HTTP_KEY_RESULTMESSAGE] == nil ? @"登录失败！": [obj objectForKey:HTTP_KEY_RESULTMESSAGE] message:nil delegate:self cancelButtonTitle:nil otherButtonTitles:@"确定", nil];
              [alert show];
              
          }
