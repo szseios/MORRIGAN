@@ -350,6 +350,12 @@
     BOOL isPhoneNumberRight = [Utils checkMobile: phoneNumber];
     BOOL isPasswordRight = [Utils checkPassWord: password];
     
+    
+    AppDelegate *appDelegate = [UIApplication sharedApplication].delegate;
+    if ([appDelegate checkReachable] == NO) {
+        return;
+    }
+    
     // 校验
     if(phoneNumber && phoneNumber.length == 0) {
         UIAlertView *alert = [[UIAlertView alloc] initWithTitle:@"请输账号" message:nil delegate:self cancelButtonTitle:nil otherButtonTitles:@"确定", nil];
@@ -376,11 +382,7 @@
         return;
     }
 
-    
-    AppDelegate *appDelegate = [UIApplication sharedApplication].delegate;
-    if ([appDelegate checkReachable] == NO) {
-        return;
-    }
+
     // 是否注册
     [self ifRegister:phoneNumber password:password];
     

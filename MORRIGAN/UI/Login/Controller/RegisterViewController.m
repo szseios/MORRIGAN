@@ -366,6 +366,12 @@
     NSString *phoneNumber = _phoneNumbrInputView.text;
     BOOL isPhoneNumberRight = [Utils checkMobile: phoneNumber];
     
+    
+    AppDelegate *appDelegate = [UIApplication sharedApplication].delegate;
+    if ([appDelegate checkReachable] == NO) {
+        return;
+    }
+    
     if(phoneNumber && phoneNumber.length == 0) {
         UIAlertView *alert = [[UIAlertView alloc] initWithTitle:@"请输入手机号" message:nil delegate:self cancelButtonTitle:nil otherButtonTitles:@"确定", nil];
         [alert show];
@@ -442,6 +448,12 @@
     BOOL isPasswordRight = [Utils checkPassWord: password];
     BOOL isauthCodeRight = [Utils checkAuthCode: authCode];
     
+    
+    AppDelegate *appDelegate = [UIApplication sharedApplication].delegate;
+    if ([appDelegate checkReachable] == NO) {
+        return;
+    }
+    
     // 校验
     if(phoneNumber && phoneNumber.length == 0) {
         UIAlertView *alert = [[UIAlertView alloc] initWithTitle:@"请输入手机号" message:nil delegate:self cancelButtonTitle:nil otherButtonTitles:@"确定", nil];
@@ -479,11 +491,7 @@
         [alert show];
         return;
     }
-    
-    AppDelegate *appDelegate = [UIApplication sharedApplication].delegate;
-    if ([appDelegate checkReachable] == NO) {
-        return;
-    }
+
     
     
     // 注册
@@ -525,12 +533,6 @@
         case 1:
         {
             if(alertView.tag == kAlertViewTagOfConfirmPhoneNumber) {
-               
-                AppDelegate *appDelegate = [UIApplication sharedApplication].delegate;
-                if ([appDelegate checkReachable] == NO) {
-                    return;
-                }
-                
                 // 获取手机验证码
                 //[self getPhoneMsgCode];
                 [self ifRegister:_phoneNumbrInputView.text];
