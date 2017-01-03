@@ -265,6 +265,12 @@
         return;
     }
     
+    AppDelegate *appDelegate = [UIApplication sharedApplication].delegate;
+    if ([appDelegate checkReachable] == NO) {
+        return;
+    }
+
+    
     NSString *phoneNumber = _phoneNumbrInputView.text;
     BOOL isPhoneNumberRight = [Utils checkMobile: phoneNumber];
     
@@ -348,6 +354,12 @@
     BOOL isPasswordRight = [Utils checkPassWord: password];
     BOOL isauthCodeRight = [Utils checkAuthCode: authCode];
     
+    
+    AppDelegate *appDelegate = [UIApplication sharedApplication].delegate;
+    if ([appDelegate checkReachable] == NO) {
+        return;
+    }
+    
     // 校验
     if(phoneNumber && phoneNumber.length == 0) {
         UIAlertView *alert = [[UIAlertView alloc] initWithTitle:@"请输入手机号" message:nil delegate:self cancelButtonTitle:nil otherButtonTitles:@"确定", nil];
@@ -386,10 +398,6 @@
         return;
     }
     
-    AppDelegate *appDelegate = [UIApplication sharedApplication].delegate;
-    if ([appDelegate checkReachable] == NO) {
-        return;
-    }
     
     // 更改密码
     [self beginResetPwd:phoneNumber authCode:authCode password:password];
@@ -405,7 +413,7 @@
         case 0:
         {
 //            if(alertView.tag == kAlertViewTagOfIntoLogin) {
-//                // 进入登陆界面
+//                // 进入登录界面
 //                [self intoLoginPage];
 //                
 //            }
@@ -417,11 +425,6 @@
         {
             if(alertView.tag == kAlertViewTagOfConfirmPhoneNumber) {
                
-                AppDelegate *appDelegate = [UIApplication sharedApplication].delegate;
-                if ([appDelegate checkReachable] == NO) {
-                    return;
-                }
-                
                 // 获取手机验证码
                 [self getPhoneMsgCode];
                 
@@ -436,7 +439,7 @@
 
 #pragma mark - other
 
-// 进入登陆界面
+// 进入登录界面
 - (void)intoLoginPage
 {
     // 注销／退出／修改密码
@@ -552,7 +555,7 @@
          
          if ([[obj objectForKey:HTTP_KEY_RESULTCODE] isEqualToString:HTTP_RESULTCODE_SUCCESS]) {
              NSLog(@"修改密码成功!");
-//             UIAlertView *alert = [[UIAlertView alloc] initWithTitle: @"修改密码成功！点击返回登陆界面" message:nil delegate:self cancelButtonTitle:nil otherButtonTitles:@"确定", nil];
+//             UIAlertView *alert = [[UIAlertView alloc] initWithTitle: @"修改密码成功！点击返回登录界面" message:nil delegate:self cancelButtonTitle:nil otherButtonTitles:@"确定", nil];
 //             alert.tag = kAlertViewTagOfIntoLogin;
 //             [alert show];
              
@@ -560,7 +563,7 @@
              [MBProgressHUD showHUDByContent:@"修改密码成功！" view:self.view];
              dispatch_after(dispatch_time(DISPATCH_TIME_NOW, (int64_t)(0.5 * NSEC_PER_SEC)), dispatch_get_main_queue(), ^{
                 
-                 // 进入登陆界面
+                 // 进入登录界面
                  [self intoLoginPage];
              });
 

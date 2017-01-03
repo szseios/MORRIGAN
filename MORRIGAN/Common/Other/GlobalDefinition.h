@@ -39,7 +39,7 @@
 // 短信验证码
 #define ID_GET_PHONE_MSG_CODE   1002
 #define URL_GET_PHONE_MSG_CODE  @"https://www.bcdest.com/rest/moli/send-msg"
-// 登陆
+// 登录
 #define ID_LOGIN                1003
 #define URL_LOGIN               @"https://www.bcdest.com/rest/moli/login"
 // 重置密码
