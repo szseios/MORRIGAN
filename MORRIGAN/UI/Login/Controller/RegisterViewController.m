@@ -90,7 +90,7 @@
     labelView1.textColor = [UIColor whiteColor];
     labelView1.textAlignment = NSTextAlignmentCenter;
     labelView1.font = [UIFont boldSystemFontOfSize:20.0];
-    [sexRootView addSubview:labelView1];
+    //[sexRootView addSubview:labelView1];
     // 一旦选择 性别 注册后不可更改
     CGFloat labelView2H = 20.0;
     UILabel *labelView2 = [[UILabel alloc] initWithFrame:CGRectMake(0, labelView1Y + labelView1H, kScreenWidth, labelView2H)];
@@ -98,7 +98,7 @@
     labelView2.textColor = [UIColor whiteColor];
     labelView2.textAlignment = NSTextAlignmentCenter;
     labelView2.font = [UIFont systemFontOfSize:15.0];
-    [sexRootView addSubview:labelView2];
+    //[sexRootView addSubview:labelView2];
     // 男士
     CGFloat secBtnY = labelView2.frame.origin.y + labelView2.frame.size.height + 20.0;
     CGFloat sexBtnLeftRightMarging = 60.0;
@@ -114,14 +114,14 @@
     manButton.tag = kManButtonTag;
     [manButton addTarget:self action:@selector(sexButtonClickInRegister:) forControlEvents:UIControlEventTouchUpInside];
     _manButton = manButton;
-    [sexRootView addSubview:manButton];
+    //[sexRootView addSubview:manButton];
     // 女士
     UIButton *womanButton = [[UIButton alloc] initWithFrame:CGRectMake(sexBtnLeftRightMarging + sexBtnH + setBtnSpace, secBtnY, sexBtnH, sexBtnH)];
     //womanButton.backgroundColor = [UIColor whiteColor];
     womanButton.tag = kWomanButtonTag;
     [womanButton addTarget:self action:@selector(sexButtonClickInRegister:) forControlEvents:UIControlEventTouchUpInside];
     _womanButton = womanButton;
-    [sexRootView addSubview:womanButton];
+    //[sexRootView addSubview:womanButton];
     // 男士
     CGFloat manLabelY = manButton.frame.origin.y + manButton.frame.size.height + 10.0;
     CGFloat manLabelW = sexBtnH;
@@ -131,14 +131,14 @@
     manLabel.textAlignment = NSTextAlignmentCenter;
     manLabel.textColor = [UIColor whiteColor];
     manLabel.font = [UIFont boldSystemFontOfSize:17.0];
-    [sexRootView addSubview:manLabel];
+    //[sexRootView addSubview:manLabel];
     // 女士
     UILabel *womanLabel = [[UILabel alloc] initWithFrame:CGRectMake(womanButton.frame.origin.x, manLabelY, manLabelW, manLabelH)];
     womanLabel.text = @"女士";
     womanLabel.textAlignment = NSTextAlignmentCenter;
     womanLabel.textColor = [UIColor whiteColor];
     womanLabel.font = [UIFont boldSystemFontOfSize:17.0];
-    [sexRootView addSubview:womanLabel];
+    //[sexRootView addSubview:womanLabel];
     
     
     UIColor *inputViewTextColor = [UIColor colorWithRed:255.0 green:255.0 blue:255.0 alpha:0.3];

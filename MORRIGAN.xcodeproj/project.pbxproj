@@ -1601,6 +1601,7 @@
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				PROVISIONING_PROFILE = "7955a63f-a73a-4b58-a9af-6fd2a0902bf3";
 				PROVISIONING_PROFILE_SPECIFIER = Morrigan_Appstore;
+				TARGETED_DEVICE_FAMILY = 1;
 			};
 			name = Debug;
 		};
@@ -1625,6 +1626,7 @@
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				PROVISIONING_PROFILE = "7955a63f-a73a-4b58-a9af-6fd2a0902bf3";
 				PROVISIONING_PROFILE_SPECIFIER = Morrigan_Appstore;
+				TARGETED_DEVICE_FAMILY = 1;
 			};
 			name = Release;
 		};
