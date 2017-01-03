@@ -99,7 +99,8 @@
     
     _slider.tintColor = [Utils stringTOColor:@"#ff70dc"];
     _slider.maximumTrackTintColor = [Utils stringTOColor:@"#603684"];
-    int count;
+    
+    int count = 45;
     if (kScreenHeight == 568) {
         count = 50;
     }
@@ -193,7 +194,6 @@
     frame.origin.y = 160;
     _pcseView.frame = frame;
     [self.view addSubview:_pcseView];
-    [self.view bringSubviewToFront:_musicView];
     
     UITapGestureRecognizer *hiddenTableView = [[UITapGestureRecognizer alloc] initWithTarget:self action:@selector(hiddeMusicView)];
     [_pcseView addGestureRecognizer:hiddenTableView];
@@ -217,11 +217,16 @@
         [self.view bringSubviewToFront:self.connectBottomView];
     }
     
-    [self.view bringSubviewToFront:_slider];
-    
     
     // 解决后台播放完成后不能循环播放的问题
     [[UIApplication sharedApplication] beginReceivingRemoteControlEvents];
+    
+    [self.view bringSubviewToFront:_startButton];
+    [self.view bringSubviewToFront:_previousButton];
+    [self.view bringSubviewToFront:_nextButton];
+
+    [self.view bringSubviewToFront:_slider];
+    [self.view bringSubviewToFront:_musicView];
     
 }
 
@@ -327,7 +332,7 @@
     MusicModel *model = [_musics objectAtIndex:_selectedIndexPath.row];
     [_slider setValue:[MusicManager share].currentTime / model.playbackDuration
              animated:YES];
-    [self.view bringSubviewToFront:_slider];
+//    [self.view bringSubviewToFront:_slider];
 }
 
 - (void)sliderValueChanged {

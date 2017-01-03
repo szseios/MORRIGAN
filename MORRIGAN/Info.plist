@@ -34,17 +34,18 @@
 		<true/>
 	</dict>
 	<key>NSAppleMusicUsageDescription</key>
-	<string>是否允许此App访问你的媒体资料库？</string>
+	<string>是否允许此App访问媒体资料库？</string>
 	<key>NSBluetoothPeripheralUsageDescription</key>
-	<string>是否允许此App使用你的蓝牙？</string>
+	<string>是否允许此App使用蓝牙？</string>
 	<key>NSCameraUsageDescription</key>
-	<string>是否允许此App使用你的相机？</string>
+	<string>是否允许此App使用相机？</string>
 	<key>NSPhotoLibraryUsageDescription</key>
-	<string>是否允许此App访问你的相册？ </string>
+	<string>是否允许此App访问相册？ </string>
 	<key>UIBackgroundModes</key>
 	<array>
 		<string>audio</string>
 		<string>bluetooth-central</string>
+		<string>bluetooth-peripheral</string>
 	</array>
 	<key>UIRequiredDeviceCapabilities</key>
 	<array>
