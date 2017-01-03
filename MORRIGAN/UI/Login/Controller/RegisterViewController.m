@@ -144,6 +144,10 @@
     UIColor *inputViewTextColor = [UIColor colorWithRed:255.0 green:255.0 blue:255.0 alpha:0.3];
     // 手机号
     CGFloat editViewPaddingTop = 50.0;
+    if(kScreenHeight < 500) {
+        // 4/ipa
+        editViewPaddingTop = 20.0;
+    }
     CGFloat editViewPaddingLeftRight = 30.0;
     CGFloat editViewH = 44.0;
     CGFloat editViewW = kScreenWidth - editViewPaddingLeftRight * 2;
@@ -270,7 +274,10 @@
     CGFloat registerAndLoginBtnRootViewSpace = 20.0;
     CGFloat registerAndLoginBtnRootViewX = editViewPaddingLeftRight;
     CGFloat registerAndLoginBtnRootViewY = kScreenHeight - 120.0 - registerAndLoginBtnRootViewH;
-    if(kScreenHeight < 570) {
+    if(kScreenHeight < 500) {
+        // 4/ipa
+        registerAndLoginBtnRootViewY = PWDRootView.origin.y + PWDRootView.size.height + 30.0;
+    } else if(kScreenHeight < 570) {
         // 5s
         registerAndLoginBtnRootViewY = kScreenHeight - 90.0 - registerAndLoginBtnRootViewH;
     }

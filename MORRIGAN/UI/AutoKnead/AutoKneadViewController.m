@@ -67,7 +67,13 @@
     
     
     // 上面部分背景
-    UIImageView *upBgView = [[UIImageView alloc] initWithFrame:CGRectMake(0, 0, kScreenWidth, kScreenHeight/2)];
+    UIImageView *upBgView;
+    if(kScreenHeight < 500) {
+        // 4/ipa
+        upBgView = [[UIImageView alloc] initWithFrame:CGRectMake(0, 0, kScreenWidth, kScreenHeight/1.7)];
+    } else {
+        upBgView = [[UIImageView alloc] initWithFrame:CGRectMake(0, 0, kScreenWidth, kScreenHeight/2)];
+    }
     upBgView.image = [UIImage imageNamed:@"auto_upBackground_before"];
     [self.view addSubview:upBgView];
     
@@ -81,6 +87,11 @@
         // 5s
         downBgViewY = kScreenHeight/2 - 63;
     }
+    if(kScreenHeight < 500) {
+        // 4/ipa
+        downBgViewY = kScreenHeight/2 -10;
+    }
+    
     UIImageView *downBgView = [[UIImageView alloc] initWithFrame:CGRectMake(0, downBgViewY, kScreenWidth, kScreenHeight/3*2)];
     downBgView.image = [UIImage imageNamed:@"auto_downBackgrround"];
     [self.view addSubview:downBgView];
@@ -259,6 +270,10 @@
     // 向上拖动 任意模式按钮
     CGFloat label1H = 18;
     CGFloat label1Y = startBtn.frame.origin.y + startBtn.frame.size.height + 20;
+    if(kScreenHeight < 500) {
+        // 4/ipa
+        label1Y = startBtn.frame.origin.y + startBtn.frame.size.height + 5;
+    }
     UILabel *label1 = [[UILabel alloc] initWithFrame:CGRectMake(0, label1Y, kScreenWidth, label1H)];
     label1.text = @"向上拖动 任意模式按钮";
     label1.textColor = [Utils stringTOColor:kColor_6911a5];
@@ -282,7 +297,12 @@
         // 5s
         buttonY = label2.frame.origin.y + label2.frame.size.height + 40;
     }
+    if(kScreenHeight < 500) {
+        // 4/ipa
+        buttonY = label2.frame.origin.y + label2.frame.size.height + 5;
+    }
     buttonX = margingLeftRight;
+   
     // 轻柔（底部：1行－左）
     FuntionButton *funButton1 = [[FuntionButton alloc] initWithFrame:CGRectMake(buttonX, buttonY, buttonW, buttonH)];
     funButton1.buttonImage = [UIImage imageNamed:@"soft"];

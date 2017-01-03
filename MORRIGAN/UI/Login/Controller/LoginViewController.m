@@ -229,6 +229,11 @@
     CGFloat registerAndLoginBtnRootViewSpace = 20.0;
     CGFloat registerAndLoginBtnRootViewX = editViewPaddingLeftRight;
     CGFloat registerAndLoginBtnRootViewY = kScreenHeight - 120.0 - registerAndLoginBtnRootViewH;
+    if(kScreenHeight < 500) {
+        // 4/ipa
+        registerAndLoginBtnRootViewY = PWDRootView.origin.y + PWDRootView.size.height + 60.0;
+    }
+    
     UIView *registerAndLoginBtnRootView = [[UIView alloc]initWithFrame:CGRectMake(registerAndLoginBtnRootViewX, registerAndLoginBtnRootViewY, registerAndLoginBtnRootViewW, registerAndLoginBtnRootViewH)];
     registerAndLoginBtnRootView.backgroundColor = [UIColor clearColor];
     [self.rootView addSubview:registerAndLoginBtnRootView];

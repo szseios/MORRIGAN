@@ -139,6 +139,13 @@
 {
     CGFloat mainViewW = kScreenWidth * 0.75 + (kScreenWidth > 320 ? 30 : 10); //kScreenWidth > 320 ? 300 : 220;
     CGFloat mainViewH = mainViewW / 623 * 860.0;
+    if(kScreenHeight < 500) {
+        // 4/ipa
+        CGFloat tem1 = 50;
+        CGFloat tem2 = (mainViewW-tem1)/mainViewW;
+        mainViewW = mainViewW - tem1;
+        mainViewH = mainViewH * tem2;
+    }
     CGFloat mainViewX = (kScreenWidth - mainViewW) /2 + (kScreenWidth > 320 ? 20 : 15); //kScreenWidth > 320 ? 50 : 20;
     NSArray *ForenoonArray = [DBManager selectForenoonDatas:[UserInfo share].userId];
     NSArray *AfternoonArray = [DBManager selectaAfternoonDatas:[UserInfo share].userId];
@@ -157,6 +164,10 @@
 - (void)setUpBottomView
 {
     CGFloat bottomViewY = self.view.height - (kScreenHeight > 568 ? 140 : 130);
+    if(kScreenHeight < 500) {
+        // 4/ipa
+        bottomViewY = bottomViewY + 10;
+    }
     CGFloat bottomViewW = self.view.width - 60;
     _bottomView = [[UIView alloc] initWithFrame:CGRectMake(30, bottomViewY, bottomViewW, 150)];
     
