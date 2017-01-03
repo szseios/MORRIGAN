@@ -58,7 +58,7 @@
         topArray = [[NSArray alloc]initWithArray:tempTopBarArray];
         
         [self initAnimationViews];
-       
+    
         [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(stop) name:@"stopTimer" object:nil];
   
     }
