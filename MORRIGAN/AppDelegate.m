@@ -42,6 +42,7 @@
     }else{
         loginViewController = [[LoginViewController alloc] init];
     }
+
     
 //    self.window.rootViewController = [[UIViewController alloc] init];
 //    [self.window makeKeyAndVisible];
