@@ -201,6 +201,11 @@
     CGFloat timeLabelY = (_centerView.frame.size.width / 2) - 50;
     CGFloat timeLabelW = CGRectGetWidth(_centerView.frame);
     CGFloat timeLabelH = 100;
+    if(kScreenHeight < 500) {
+        // 4/ipa
+        timeLabelY = (_centerView.frame.size.width / 2) - 70;
+
+    }
     _timeLabel = [[UILabel alloc] initWithFrame:CGRectMake(0, timeLabelY, timeLabelW, timeLabelH)];
     NSString *time = [UserInfo share].target;
     if (!time) {
@@ -213,6 +218,10 @@
     }
     NSMutableAttributedString *attributeString = [[NSMutableAttributedString alloc] initWithString:[NSString stringWithFormat:@"%@min",time]];
     [attributeString setAttributes:@{NSFontAttributeName:[UIFont systemFontOfSize:60]} range:NSMakeRange(0, time.length)];
+    if(kScreenHeight < 500) {
+        // 4/ipa
+        [attributeString setAttributes:@{NSFontAttributeName:[UIFont systemFontOfSize:50]} range:NSMakeRange(0, time.length)];
+    }
     _timeLabel.attributedText = attributeString;
     _timeLabel.textColor = [UIColor whiteColor];
     _timeLabel.textAlignment = NSTextAlignmentCenter;
@@ -229,6 +238,10 @@
     _dateLabel.alpha = 0.5;
     
     _dateLabel.font = [UIFont systemFontOfSize:(kScreenWidth > 320 ? 15 : 12)];
+    if(kScreenHeight < 500) {
+        // 4/ipa
+        _dateLabel.font = [UIFont systemFontOfSize:10];
+    }
     [_dateLabel sizeToFit];
     _dateLabel.center = CGPointMake(_centerView.width / 2 -15, dateLabelY + 25/2);
     [_centerView addSubview:_dateLabel];
@@ -239,6 +252,10 @@
     _APMLabel.textColor = [UIColor whiteColor];
     _APMLabel.textAlignment = NSTextAlignmentLeft;
     _APMLabel.font = [UIFont systemFontOfSize:(kScreenWidth > 320 ? 24 : 20)];
+    if(kScreenHeight < 500) {
+        // 4/ipa
+        _APMLabel.font = [UIFont systemFontOfSize:15];
+    }
     [_centerView addSubview:_APMLabel];
     
     CGFloat horizY = CGRectGetMaxY(_dateLabel.frame);
@@ -316,8 +333,16 @@
     _electricityLabel.textColor = [UIColor whiteColor];
     _electricityLabel.textAlignment = NSTextAlignmentCenter;
     _electricityLabel.font = [UIFont systemFontOfSize:10];
+    if(kScreenHeight < 500) {
+        // 4/ipa
+        _electricityLabel.font = [UIFont systemFontOfSize:8];
+    }
     NSMutableAttributedString *attributeString = [[NSMutableAttributedString alloc] initWithString:[NSString stringWithFormat:@"%ld%%",percent]];
     [attributeString setAttributes:@{NSFontAttributeName:[UIFont systemFontOfSize:20]} range:NSMakeRange(0, attributeString.length - 1)];
+    if(kScreenHeight < 500) {
+        // 4/ipa
+        [attributeString setAttributes:@{NSFontAttributeName:[UIFont systemFontOfSize:15]} range:NSMakeRange(0, attributeString.length - 1)];
+    }
     _electricityLabel.attributedText = attributeString;
     [_upView addSubview:_electricityLabel];
     
@@ -326,6 +351,10 @@
     label.textAlignment = NSTextAlignmentCenter;
     label.textColor = [UIColor whiteColor];
     label.font  = [UIFont systemFontOfSize:kScreenWidth > 320 ? 12 : 10];
+    if(kScreenHeight < 500) {
+        // 4/ipa
+        label.font  = [UIFont systemFontOfSize:8];
+    }
     label.text = @"电量";
     [_upView addSubview:label];
     
