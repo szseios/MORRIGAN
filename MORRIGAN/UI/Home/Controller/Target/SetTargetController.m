@@ -42,6 +42,11 @@
     
     [self setUpRulerView];
     [self.view bringSubviewToFront:_achieveButton];
+    
+    if(kScreenHeight < 500) {
+        // 4/ipa
+        _achieveButton.y = kScreenHeight - 80;
+    }
 }
 
 - (void)viewWillAppear:(BOOL)animated

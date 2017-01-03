@@ -244,29 +244,29 @@ static NSString *cellIdentifier = @"cellIdentifier";
 
 - (void)setUpChooseViewWithType:(pickerViewType)type
 {
-    _pickerBackgroudView = [[UIView alloc] initWithFrame:CGRectMake(0, kScreenHeight, kScreenWidth, kScreenHeight)];
-    _pickerBackgroudView.backgroundColor = [UIColor clearColor];
+    _pickerBackgroudView = [[UIView alloc] initWithFrame:CGRectMake(0, kScreenHeight, kScreenWidth, kScreenHeight-64)];
+    _pickerBackgroudView.backgroundColor = [UIColor colorWithRed:0.8 green:0.8 blue:0.8 alpha:0.4];
     [self.view addSubview:_pickerBackgroudView];
     switch (type) {
         case pickerViewTypeAge:
         {
-            _chooseView = [[ChooseDataView alloc] initWithType:pickerViewTypeAge withFrame:CGRectMake(0, kScreenHeight - 250, kScreenWidth, 250)];
+            _chooseView = [[ChooseDataView alloc] initWithType:pickerViewTypeAge withFrame:CGRectMake(0, kScreenHeight - 250-64, kScreenWidth, 250)];
         }
             break;
         case pickerViewTypeHeight:
         {
-            _chooseView = [[ChooseDataView alloc] initWithType:pickerViewTypeHeight withFrame:CGRectMake(0, kScreenHeight - 250, kScreenWidth, 250)];
+            _chooseView = [[ChooseDataView alloc] initWithType:pickerViewTypeHeight withFrame:CGRectMake(0, kScreenHeight - 250-64, kScreenWidth, 250)];
         }
             break;
         case pickerViewTypeWeight:
         {
-            _chooseView = [[ChooseDataView alloc] initWithType:pickerViewTypeWeight withFrame:CGRectMake(0, kScreenHeight - 250, kScreenWidth, 250)];
+            _chooseView = [[ChooseDataView alloc] initWithType:pickerViewTypeWeight withFrame:CGRectMake(0, kScreenHeight - 250-64, kScreenWidth, 250)];
             
         }
             break;
         case pickerViewTypeFeeling:
         {
-            _chooseView = [[ChooseDataView alloc] initWithType:pickerViewTypeFeeling withFrame:CGRectMake(0, kScreenHeight - 250, kScreenWidth, 250)];
+            _chooseView = [[ChooseDataView alloc] initWithType:pickerViewTypeFeeling withFrame:CGRectMake(0, kScreenHeight - 250-64, kScreenWidth, 250)];
          
         }
             break;
@@ -278,7 +278,7 @@ static NSString *cellIdentifier = @"cellIdentifier";
     _chooseView.delegate = self;
     [_pickerBackgroudView addSubview:_chooseView];
     [UIView animateWithDuration:0.2 animations:^{
-        _pickerBackgroudView.y = 0;
+        _pickerBackgroudView.y = 64;
     }];
 
 }

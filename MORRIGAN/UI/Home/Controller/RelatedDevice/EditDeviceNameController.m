@@ -41,6 +41,7 @@
     [self.view addSubview:backImageView];
     _textField = [[UITextField alloc] initWithFrame:CGRectMake(20, 104, kScreenWidth - 40, 30)];
     _textField.placeholder = @"输入修改名称";
+    _textField.clearButtonMode = UITextFieldViewModeWhileEditing;
     _textField.backgroundColor = [UIColor colorWithRed:0.9 green:0.9 blue:0.9 alpha:0.9];
     [self.view addSubview:_textField];
     if (_model) {
@@ -81,6 +82,8 @@
 
 - (void)uploadDeviceNameData
 {
+    
+    __weak EditDeviceNameController *blockSelf = self;
     NSDictionary *dictionary = @{
                                  @"userId":[UserInfo share].userId,
                                  @"deviceName":_textField.text,
@@ -95,7 +98,11 @@
      {
          if ([[obj objectForKey:HTTP_KEY_RESULTCODE] isEqualToString:HTTP_RESULTCODE_SUCCESS]) {
              [MBProgressHUD showHUDByContent:@"修改设备信息成功！" view:UI_Window afterDelay:2];
-             [[NSNotificationCenter defaultCenter] postNotificationName:CHANGEDEVICENAMENOTIFICATION object:_textField.text];
+             [[NSNotificationCenter defaultCenter] postNotificationName:CHANGEDEVICENAMENOTIFICATION object:blockSelf.textField.text];
+             BOOL success = [DBManager updatePeripheralName:blockSelf.model];
+             if (!success) {
+                 NSLog(@"修改数据库设备名称失败");
+             }
              [self.navigationController popViewControllerAnimated:YES];
              NSLog(@"修改设备信息成功！");
          }else{

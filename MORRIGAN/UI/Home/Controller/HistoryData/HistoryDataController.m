@@ -453,6 +453,10 @@ static NSString *cellID = @"DataCellID";
     _bottomTableView.backgroundColor = [UIColor clearColor];
     _bottomTableView.tableFooterView = [UIView new];
     [_bottomTableView setBounces:NO];
+    if(kScreenHeight < 500) {
+        // 4/ipa
+        _bottomTableView.contentInset = UIEdgeInsetsMake(0, 0, 150, 0);
+    }
     
     [self.view addSubview:_bottomTableView];
 }

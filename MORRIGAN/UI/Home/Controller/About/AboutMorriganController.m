@@ -33,6 +33,10 @@ static NSString *cellID = @"cellID";
     [_aboutTableView registerNib:[UINib nibWithNibName:@"AboutMorriganCell" bundle:nil] forCellReuseIdentifier:cellID];
     _aboutTableView.tableFooterView = [UIView new];
     _aboutTableView.bounces = NO;
+    if(kScreenHeight < 500) {
+        // 4/ipa
+        _aboutTableView.rowHeight = 40;
+    }
     [self setUpBarView];
 }
 
@@ -53,7 +57,7 @@ static NSString *cellID = @"cellID";
 
 - (void)setUpBarView
 {
-    _barView = [[BasicBarView alloc] initWithFrame:CGRectMake(0, 20, kScreenWidth, 44) withType:superBarTypeLeftItemBackAndRightItemBinding withTitle:@"关于MORRIGAN" isShowRightButton:NO];
+    _barView = [[BasicBarView alloc] initWithFrame:CGRectMake(0, 20, kScreenWidth, 44) withType:superBarTypeLeftItemBackAndRightItemBinding withTitle:@"关于摩莉" isShowRightButton:NO];
     [self.view addSubview:_barView];
     _barView.delegate = self;
 }

@@ -31,7 +31,7 @@
     _textField.backgroundColor = [UIColor colorWithRed:0.9 green:0.9 blue:0.9 alpha:0.8];
     _textField.clipsToBounds = YES;
     _textField.layer.cornerRadius = 5;
-    
+    _textField.clearButtonMode = UITextFieldViewModeWhileEditing;
     if ([UserInfo share].nickName.length > 0) {
         _textField.text = [UserInfo share].nickName;
     }else{
