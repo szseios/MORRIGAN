@@ -19,13 +19,20 @@
     NSTimer* timer;
     NSArray* barArray;
     NSArray* topArray;
+    NSInteger _barHeight;
 }
 - (id)initWithNumberOfBars:(int)numberOfBars
 {
     self = [super init];
     if (self) {
         
-        self.frame = CGRectMake(0, 0, kPadding*numberOfBars+(kWidth*numberOfBars), kHeight);
+        _barHeight = kHeight;
+        
+        if (kScreenHeight < 568) {
+            _barHeight = 100;
+        }
+        
+        self.frame = CGRectMake(0, 0, kPadding*numberOfBars+(kWidth*numberOfBars), _barHeight);
         
         NSMutableArray* tempBarArray = [[NSMutableArray alloc]initWithCapacity:numberOfBars];
         NSMutableArray* tempTopBarArray = [[NSMutableArray alloc]initWithCapacity:numberOfBars];
@@ -84,7 +91,7 @@
         UIImageView *topBar = [topArray objectAtIndex:i];
         
         CGRect rect = bar.frame;
-        rect.size.height = arc4random() % (kHeight / 2 - 25) + 25;
+        rect.size.height = arc4random() % (_barHeight / 2 - 25) + 25;
         rect.origin.y = self.height / 2 - rect.size.height;
         bar.frame = rect;
         rect.origin.y = self.frame.size.height / 2;
@@ -101,7 +108,7 @@
             UIImageView *topBar = [topArray objectAtIndex:i];
             
             CGRect rect = bar.frame;
-            rect.size.height = arc4random() % (kHeight / 2 - 25) + 25;
+            rect.size.height = arc4random() % (_barHeight / 2 - 25) + 25;
             rect.origin.y = self.height / 2 - rect.size.height;
             bar.frame = rect;
             rect.origin.y = self.frame.size.height / 2;
