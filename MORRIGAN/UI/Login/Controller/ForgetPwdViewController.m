@@ -207,7 +207,7 @@
     //showPWDView.backgroundColor = [UIColor blueColor];
     [showPWDView addTarget:self action:@selector(showPWDButtonClickInForgetPwd) forControlEvents:UIControlEventTouchUpInside];
     _showPwdButton = showPWDView;
-    [_showPwdButton setImage:[UIImage imageNamed:@"ic_show_pwd_off"] forState:UIControlStateNormal];
+    [_showPwdButton setImage:[UIImage imageNamed:@"ic_show_pwd_on"] forState:UIControlStateNormal];
     [PWDRootView addSubview:showPWDView];
     // 密码输入框
     UITextField *PWDInputView = [[UITextField alloc] initWithFrame:CGRectMake(iconW + phoneinputViewPaddingLeft, 0, PWDRootView.frame.size.width - iconW - showPWDViewW - phoneinputViewPaddingLeft, editViewH)];
@@ -216,7 +216,7 @@
     [PWDInputView setInputAccessoryView:self.keyboardTopView];
     [PWDInputView setValue:inputViewTextColor forKeyPath:@"_placeholderLabel.textColor"];
     PWDInputView.textColor = [UIColor whiteColor];
-    PWDInputView.secureTextEntry = YES;
+    PWDInputView.secureTextEntry = NO;
     _passwordInputView = PWDInputView;
     [PWDRootView addSubview:PWDInputView];
     // 分割线

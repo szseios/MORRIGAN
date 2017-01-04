@@ -409,8 +409,9 @@
 //    }
 
     if(!isPhoneNumberRight || !isPasswordRight) {
-        UIAlertView *alert = [[UIAlertView alloc] initWithTitle:@"手机号或密码错误" message:nil delegate:self cancelButtonTitle:nil otherButtonTitles:@"确定", nil];
-        [alert show];
+//        UIAlertView *alert = [[UIAlertView alloc] initWithTitle:@"手机号或密码错误" message:nil delegate:self cancelButtonTitle:nil otherButtonTitles:@"确定", nil];
+//        [alert show];
+        [MBProgressHUD showHUDByContent:@"手机号或密码错误" view:self.view];
         return;
     }
     
@@ -540,8 +541,9 @@
              
              NSLog(@"登录失败！");
              
-             UIAlertView *alert = [[UIAlertView alloc] initWithTitle:[obj objectForKey:HTTP_KEY_RESULTMESSAGE] == nil ? @"登录失败！": [obj objectForKey:HTTP_KEY_RESULTMESSAGE] message:nil delegate:self cancelButtonTitle:nil otherButtonTitles:@"确定", nil];
-             [alert show];
+//             UIAlertView *alert = [[UIAlertView alloc] initWithTitle:[obj objectForKey:HTTP_KEY_RESULTMESSAGE] == nil ? @"登录失败！": [obj objectForKey:HTTP_KEY_RESULTMESSAGE] message:nil delegate:self cancelButtonTitle:nil otherButtonTitles:@"确定", nil];
+//             [alert show];
+             [MBProgressHUD showHUDByContent:@"登录失败" view:self.view];
              
          }
          
