@@ -185,7 +185,7 @@
 - (BOOL)checkReachable {
     if ([_reach currentReachabilityStatus] == NotReachable) {
 
-        UIAlertView *alert = [[UIAlertView alloc] initWithTitle:@"当前网络不可用，请检查你的网络设置。" message:nil delegate:self cancelButtonTitle:nil otherButtonTitles:@"确定", nil];
+        UIAlertView *alert = [[UIAlertView alloc] initWithTitle:@"请检查当前网络" message:nil delegate:self cancelButtonTitle:nil otherButtonTitles:@"确定", nil];
         [alert show];
         return NO;
     }else{

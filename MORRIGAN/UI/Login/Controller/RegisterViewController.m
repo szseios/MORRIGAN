@@ -180,6 +180,7 @@
     // 注意：先设置phoneInputView.placeholder才有效
     [phoneInputView setValue:inputViewTextColor forKeyPath:@"_placeholderLabel.textColor"];
     phoneInputView.textColor = [UIColor whiteColor];
+    [phoneInputView addTarget:self  action:@selector(textFieldDidChange:)  forControlEvents:UIControlEventAllEditingEvents];
     _phoneNumbrInputView = phoneInputView;
     [phoneNumRootView addSubview:phoneInputView];
     // 分割线
@@ -401,9 +402,11 @@
 // 手机输入框点击
 -(void)textFieldDidBeginEditing:(UITextField *)textField
 {
-    if(textField == _phoneNumbrInputView) {
-        _cleanUpButton.hidden = NO;
-    }
+//    if(textField == _phoneNumbrInputView) {
+//        if(textField.text.length >= 1) {
+//            _cleanUpButton.hidden = NO;
+//        }
+//    }
 }
 -(void)textFieldDidEndEditing:(UITextField *)textField
 {
@@ -411,6 +414,18 @@
         _cleanUpButton.hidden = YES;
     }
 }
+
+- (void)textFieldDidChange:(UITextField *)textField
+{
+    if (textField == _phoneNumbrInputView) {
+        if(textField.text.length >= 1) {
+            _cleanUpButton.hidden = NO;
+        }else {
+            _cleanUpButton.hidden = YES;
+        }
+    }
+}
+
 
 // 显示密码按钮点击
 - (void)cleanUpButtonClickRegister
@@ -455,7 +470,7 @@
     BOOL isPasswordRight = [Utils checkPassWord: password];
     BOOL isauthCodeRight = [Utils checkAuthCode: authCode];
     
-    
+     // 校验顺序：网络 - 用户名格式 - 注册未注册 - 用户名、密码、用户和用户名
     AppDelegate *appDelegate = [UIApplication sharedApplication].delegate;
     if ([appDelegate checkReachable] == NO) {
         return;
