@@ -89,7 +89,7 @@ NSString * const ElectricQuantityChanged = @"ElectricQuantityChanged";
         if (central.state == CBCentralManagerStatePoweredOn) {
             NSLog(@"设备打开成功，开始扫描设备");
             if (weakSelf.reconnect) {
-                [weakSelf start];
+//                [weakSelf start];
             }
         }
         else if (central.state == CBCentralManagerStatePoweredOff) {

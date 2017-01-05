@@ -68,7 +68,8 @@
 - (void)viewWillDisappear:(BOOL)animated {
     [super viewWillDisappear:animated];
     [[NSNotificationCenter defaultCenter] removeObserver:self];
-    [[MusicManager share] pause];
+    [MusicManager share].delegate = nil;
+    [[MusicManager share] stop];
     [self recordEndDate];
 }
 
@@ -120,10 +121,10 @@
                                                                _panGestureView.height - 4.5,
                                                                kScreenWidth,
                                                                0.5)];
-    topLine.backgroundColor = [UIColor colorWithRed:186 / 255.0
-                                              green:140 / 255.0
-                                               blue:244 / 255.0
-                                              alpha:1];
+    topLine.backgroundColor = [UIColor colorWithRed:0 / 255.0
+                                              green:0 / 255.0
+                                               blue:0 / 255.0
+                                              alpha:0.08];
     [_panGestureView addSubview:topLine];
     
     UITapGestureRecognizer *show = [[UITapGestureRecognizer alloc] initWithTarget:self action:@selector(showMusicView)];
@@ -603,6 +604,7 @@
 
 - (void)dealloc
 {
+    [[NSNotificationCenter defaultCenter] removeObserver:self];
     [MusicManager share].delegate = nil;
     [[MusicManager share] stop];
     [self recordEndDate];

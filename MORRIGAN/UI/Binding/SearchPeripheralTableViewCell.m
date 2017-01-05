@@ -8,6 +8,13 @@
 
 #import "SearchPeripheralTableViewCell.h"
 
+@interface SearchPeripheralTableViewCell() {
+    CAShapeLayer *_rectLayer;
+    CAShapeLayer *_layer;
+}
+
+@end
+
 @implementation SearchPeripheralTableViewCell
 
 - (void)awakeFromNib {
@@ -17,10 +24,10 @@
                                                                            0,
                                                                            68,
                                                                            70)];
-    CAShapeLayer *layer = [CAShapeLayer layer];
-    layer.fillColor = [UIColor colorWithRed:0 / 255.0 green:0 / 255.0 blue:0 / 255.0 alpha:0.06].CGColor;
-    layer.path = path.CGPath;
-    [_numberView.layer addSublayer:layer];
+    _layer = [CAShapeLayer layer];
+    _layer.fillColor = [UIColor colorWithRed:0 / 255.0 green:0 / 255.0 blue:0 / 255.0 alpha:0.06].CGColor;
+    _layer.path = path.CGPath;
+    [_numberView.layer addSublayer:_layer];
     _numberView.clipsToBounds = YES;
 
     UIBezierPath *rectPath = [UIBezierPath bezierPathWithRoundedRect:CGRectMake(0,
@@ -29,10 +36,10 @@
                                                                                 49)
                                                    byRoundingCorners:UIRectCornerTopRight | UIRectCornerBottomLeft | UIRectCornerBottomRight
                                                          cornerRadii:CGSizeMake(5, 5)];
-    CAShapeLayer *rectLayer = [CAShapeLayer layer];
-    rectLayer.fillColor = [UIColor colorWithRed:0 / 255.0 green:0 / 255.0 blue:0 / 255.0 alpha:0.06].CGColor;
-    rectLayer.path = rectPath.CGPath;
-    [_nameView.layer addSublayer:rectLayer];
+    _rectLayer = [CAShapeLayer layer];
+    _rectLayer.fillColor = [UIColor colorWithRed:0 / 255.0 green:0 / 255.0 blue:0 / 255.0 alpha:0.06].CGColor;
+    _rectLayer.path = rectPath.CGPath;
+    [_nameView.layer addSublayer:_rectLayer];
     
     _numberLabel = [[UILabel alloc] initWithFrame:CGRectMake(_numberView.x,
                                                              _numberView.y + 5,
@@ -59,6 +66,45 @@
     [super setSelected:selected animated:animated];
 
     // Configure the view for the selected state
+}
+
+- (void)setHighlighted:(BOOL)highlighted animated:(BOOL)animated {
+    [super setHighlighted:highlighted animated:animated];
+    
+    UIColor *fillColor;
+    
+    if (highlighted) {
+        fillColor =  [UIColor colorWithRed:0 / 255.0 green:0 / 255.0 blue:0 / 255.0 alpha:0.2];
+    }
+    else {
+        fillColor =  [UIColor colorWithRed:0 / 255.0 green:0 / 255.0 blue:0 / 255.0 alpha:0.06];
+    }
+    
+    [_rectLayer removeFromSuperlayer];
+    _rectLayer = nil;
+//    [_layer removeFromSuperlayer];
+//    _layer = nil;
+    
+//    UIBezierPath *path = [UIBezierPath bezierPathWithOvalInRect:CGRectMake(0,
+//                                                                           0,
+//                                                                           68,
+//                                                                           70)];
+//    _layer = [CAShapeLayer layer];
+//    _layer.fillColor = fillColor.CGColor;
+//    _layer.path = path.CGPath;
+//    [_numberView.layer addSublayer:_layer];
+    
+    UIBezierPath *rectPath = [UIBezierPath bezierPathWithRoundedRect:CGRectMake(0,
+                                                                                0,
+                                                                                kScreenWidth - 60,
+                                                                                49)
+                                                   byRoundingCorners:UIRectCornerTopRight | UIRectCornerBottomLeft | UIRectCornerBottomRight
+                                                         cornerRadii:CGSizeMake(5, 5)];
+    _rectLayer = [CAShapeLayer layer];
+    _rectLayer.fillColor = fillColor.CGColor;
+    _rectLayer.path = rectPath.CGPath;
+    [_nameView.layer addSublayer:_rectLayer];
+    
 }
 
 @end

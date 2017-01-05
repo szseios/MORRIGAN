@@ -148,6 +148,7 @@
     PeripheralModel *model = [_linkedPeripherals objectForKey:macAddress];
     if (model) {
         cell.linkedIcon.hidden = NO;
+        cell.nameLabel.text = model.name;
     }
     return cell;
 }

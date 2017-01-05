@@ -20,6 +20,8 @@
 
 @interface AppDelegate ()
 
+@property (nonatomic,assign)UIBackgroundTaskIdentifier bgTask;
+
 @end
 
 @implementation AppDelegate
@@ -42,42 +44,42 @@
     }else{
         loginViewController = [[LoginViewController alloc] init];
     }
-
     
-//    self.window.rootViewController = [[UIViewController alloc] init];
-//    [self.window makeKeyAndVisible];
+    
+    //    self.window.rootViewController = [[UIViewController alloc] init];
+    //    [self.window makeKeyAndVisible];
     
     
     // 启动页面
-//    UIImageView *wellcomeView = [[UIImageView alloc]initWithFrame:CGRectMake(0,0,kScreenWidth,kScreenHeight)];
-//    [wellcomeView setImage:[UIImage imageNamed:@"640-1136"]];
-//    [self.window addSubview:wellcomeView];
-//    [self.window bringSubviewToFront:wellcomeView];
-//    __block UIImageView *wellcomeViewBlock = wellcomeView;
-//    
-//    dispatch_after(dispatch_time(DISPATCH_TIME_NOW, (int64_t)(kWelcomePageDelayTime * NSEC_PER_SEC)), dispatch_get_main_queue(), ^{
-//        [wellcomeViewBlock removeFromSuperview];
+    //    UIImageView *wellcomeView = [[UIImageView alloc]initWithFrame:CGRectMake(0,0,kScreenWidth,kScreenHeight)];
+    //    [wellcomeView setImage:[UIImage imageNamed:@"640-1136"]];
+    //    [self.window addSubview:wellcomeView];
+    //    [self.window bringSubviewToFront:wellcomeView];
+    //    __block UIImageView *wellcomeViewBlock = wellcomeView;
+    //
+    //    dispatch_after(dispatch_time(DISPATCH_TIME_NOW, (int64_t)(kWelcomePageDelayTime * NSEC_PER_SEC)), dispatch_get_main_queue(), ^{
+    //        [wellcomeViewBlock removeFromSuperview];
     
     _nav = [[UINavigationController alloc] initWithRootViewController:loginViewController];
     _nav.navigationBarHidden = YES;
     self.window.rootViewController = _nav;
     [self.window makeKeyAndVisible];
-
-//    });
-  
-//    NSDateFormatter *dateFormatter = [[NSDateFormatter alloc] init];
-//    [dateFormatter setDateFormat:@"yyyy-MM-dd HH:mm:ss"];
-//    NSDate *date1 = [dateFormatter dateFromString:@"2016-12-02 20:15:01"];
-//    NSDate *date2 = [dateFormatter dateFromString:@"2016-12-02 20:30:01"];
-//    
-//    MassageRecordModel *model = [[MassageRecordModel alloc] init];
-//    model.userID = @"0bb15e9c-561c-4573-9726-11a1e4d82390";
-//    model.type = 1;
-//    model.startTime = date1;
-//    model.endTime = date2;
-//    [DBManager insertData:model.userID startTime:model.startTime endTime:model.endTime type:model.type];
-//    NSArray *array = [DBManager selectUploadDatas:@"1"];
-
+    
+    //    });
+    
+    //    NSDateFormatter *dateFormatter = [[NSDateFormatter alloc] init];
+    //    [dateFormatter setDateFormat:@"yyyy-MM-dd HH:mm:ss"];
+    //    NSDate *date1 = [dateFormatter dateFromString:@"2016-12-02 20:15:01"];
+    //    NSDate *date2 = [dateFormatter dateFromString:@"2016-12-02 20:30:01"];
+    //
+    //    MassageRecordModel *model = [[MassageRecordModel alloc] init];
+    //    model.userID = @"0bb15e9c-561c-4573-9726-11a1e4d82390";
+    //    model.type = 1;
+    //    model.startTime = date1;
+    //    model.endTime = date2;
+    //    [DBManager insertData:model.userID startTime:model.startTime endTime:model.endTime type:model.type];
+    //    NSArray *array = [DBManager selectUploadDatas:@"1"];
+    
     return YES;
 }
 
@@ -92,30 +94,33 @@
     // Use this method to release shared resources, save user data, invalidate timers, and store enough application state information to restore your application to its current state in case it is terminated later.
     // If your application supports background execution, this method is called instead of applicationWillTerminate: when the user quits.
     
-    UIApplication*   app = [UIApplication sharedApplication];
-    __block  UIBackgroundTaskIdentifier bgTask;
-    bgTask = [app beginBackgroundTaskWithExpirationHandler:^{
+    self.bgTask = [application beginBackgroundTaskWithName:@"bluetoothTask" expirationHandler:^{
         dispatch_async(dispatch_get_main_queue(), ^{
-            if (bgTask != UIBackgroundTaskInvalid)
-            {
-                bgTask = UIBackgroundTaskInvalid;
+            if (self.bgTask != UIBackgroundTaskInvalid) {
+                [application endBackgroundTask:self.bgTask];
+                self.bgTask = UIBackgroundTaskInvalid;
             }
         });
     }];
     
     dispatch_async(dispatch_get_global_queue(DISPATCH_QUEUE_PRIORITY_DEFAULT, 0), ^{
         dispatch_async(dispatch_get_main_queue(), ^{
-            if (bgTask != UIBackgroundTaskInvalid)
+            if (self.bgTask != UIBackgroundTaskInvalid)
             {
-                bgTask = UIBackgroundTaskInvalid;
+                self.bgTask = UIBackgroundTaskInvalid;
             }
         });
     });
+
 }
 
 
 - (void)applicationWillEnterForeground:(UIApplication *)application {
     // Called as part of the transition from the background to the active state; here you can undo many of the changes made on entering the background.
+    if (self.bgTask != UIBackgroundTaskInvalid) {
+        [application endBackgroundTask:self.bgTask];
+        self.bgTask = UIBackgroundTaskInvalid;
+    }
 }
 
 
@@ -126,10 +131,10 @@
 
 - (void)applicationWillTerminate:(UIApplication *)application {
     // Called when the application is about to terminate. Save data if appropriate. See also applicationDidEnterBackground:.
+    [[BluetoothManager share] unConnectingBlueTooth];
 }
 
 
-#pragma mark - Reachability
 
 - (void)initReachability {
     __block AppDelegate *appDelegate = self;
@@ -173,18 +178,18 @@
     
     _reach.unreachableBlock = ^(Reachability * reachability) {
         //if ([appDelegate.window.rootViewController isKindOfClass:[NMOARootViewController class]]) {
-            NSLog(@"网络状态改变  :  没有网络");
-            dispatch_after(dispatch_time(DISPATCH_TIME_NOW, (int64_t)(1 * NSEC_PER_SEC)), dispatch_get_main_queue(), ^{
-                [appDelegate unreachable];
-            });
-       // }
+        NSLog(@"网络状态改变  :  没有网络");
+        dispatch_after(dispatch_time(DISPATCH_TIME_NOW, (int64_t)(1 * NSEC_PER_SEC)), dispatch_get_main_queue(), ^{
+            [appDelegate unreachable];
+        });
+        // }
     };
     [_reach startNotifier];
 }
 
 - (BOOL)checkReachable {
     if ([_reach currentReachabilityStatus] == NotReachable) {
-
+        
         UIAlertView *alert = [[UIAlertView alloc] initWithTitle:@"当前网络不可用，请检查你的网络设置。" message:nil delegate:self cancelButtonTitle:nil otherButtonTitles:@"确定", nil];
         [alert show];
         return NO;
@@ -196,11 +201,11 @@
 - (void)unreachable {
     NetworkStatus status = [_reach currentReachabilityStatus];
     if (status == NotReachable) {
-//        [MBProgressHUD showHUDByContent:@"当前网络不可用，请检查您的网络设置。"
-//                                   view:UI_Window
-//                             afterDelay:3];
-//        UIAlertView *alert = [[UIAlertView alloc] initWithTitle:@"当前网络不可用，请检查你的网络设置。" message:nil delegate:self cancelButtonTitle:nil otherButtonTitles:@"确定", nil];
-//        [alert show];
+        //        [MBProgressHUD showHUDByContent:@"当前网络不可用，请检查您的网络设置。"
+        //                                   view:UI_Window
+        //                             afterDelay:3];
+        //        UIAlertView *alert = [[UIAlertView alloc] initWithTitle:@"当前网络不可用，请检查你的网络设置。" message:nil delegate:self cancelButtonTitle:nil otherButtonTitles:@"确定", nil];
+        //        [alert show];
     }
     NSLog(@"当前网络状态 : %@",[_reach currentReachabilityString]);
 }
