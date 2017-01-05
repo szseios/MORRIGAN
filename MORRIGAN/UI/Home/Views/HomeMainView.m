@@ -198,7 +198,7 @@
     _centerView.backgroundColor = [UIColor clearColor];
     [self addSubview:_centerView];
     
-    CGFloat timeLabelY = (_centerView.frame.size.width / 2) - 50;
+    CGFloat timeLabelY = (_centerView.frame.size.width / 2) - 60;
     CGFloat timeLabelW = CGRectGetWidth(_centerView.frame);
     CGFloat timeLabelH = 100;
     if(kScreenHeight < 500) {
@@ -216,8 +216,10 @@
             time = [NSString stringWithFormat:@"%ld",tempTime];
         }
     }
+    UIFontDescriptor *attributeFontDescriptor = [UIFontDescriptor fontDescriptorWithFontAttributes:@{UIFontDescriptorFamilyAttribute: @"Helvetica",UIFontDescriptorNameAttribute:@"Helvetica-Oblique",UIFontDescriptorSizeAttribute: (kScreenWidth > 320 ? @30.0 : @20.0)}];
+    _timeLabel.font = [UIFont fontWithDescriptor:attributeFontDescriptor size:0.0];
     NSMutableAttributedString *attributeString = [[NSMutableAttributedString alloc] initWithString:[NSString stringWithFormat:@"%@min",time]];
-    [attributeString setAttributes:@{NSFontAttributeName:[UIFont systemFontOfSize:60]} range:NSMakeRange(0, time.length)];
+    [attributeString setAttributes:@{NSFontAttributeName:[UIFont fontWithDescriptor:attributeFontDescriptor size:(kScreenWidth > 320 ? 85.0 : 70.0)]} range:NSMakeRange(0, time.length)];
     if(kScreenHeight < 500) {
         // 4/ipa
         [attributeString setAttributes:@{NSFontAttributeName:[UIFont systemFontOfSize:50]} range:NSMakeRange(0, time.length)];
@@ -231,7 +233,7 @@
     [formatter setDateFormat:@"yyyy年MM月dd日"];
     NSString *dateStr = [formatter stringFromDate:[NSDate date]];
     
-    CGFloat dateLabelY = CGRectGetMaxY(_timeLabel.frame);
+    CGFloat dateLabelY = CGRectGetMaxY(_timeLabel.frame) + (kScreenWidth > 320 ? 15 : 0);
     _dateLabel = [[UILabel alloc] initWithFrame:CGRectMake(0, dateLabelY, timeLabelW- 50, 25)];
     _dateLabel.text = dateStr;
     _dateLabel.textColor = [UIColor whiteColor];
@@ -258,7 +260,7 @@
     }
     [_centerView addSubview:_APMLabel];
     
-    CGFloat horizY = CGRectGetMaxY(_dateLabel.frame);
+    CGFloat horizY = CGRectGetMaxY(_dateLabel.frame) + (kScreenWidth > 320 ? 10 : 0);;
     _horizView = [[UIView alloc] initWithFrame:CGRectMake(20,horizY , 65, 4)];
     _horizView.backgroundColor = [UIColor clearColor];
     _horizView.center = CGPointMake(_centerView.width / 2, horizY + 15);
@@ -381,76 +383,18 @@
     _starLabel = [[UILabel alloc] initWithFrame:CGRectMake(starX, starY, starW, starH)];
     _starLabel.textColor = [UIColor whiteColor];
     _starLabel.textAlignment = NSTextAlignmentCenter;
-    NSString *starCount = _starCount ? _starCount : @"0";
-    _starLabel.font = [UIFont systemFontOfSize:10];
+    NSString *starCount = _starCount ? _starCount : @"25";
+    _starLabel.font = [UIFont systemFontOfSize:12];
     [self starLabelAttributeStr:starCount];
     [_downView addSubview:_starLabel];
     
-    CGFloat starImageY = CGRectGetMaxY(_starLabel.frame);
+    CGFloat starImageY = CGRectGetMaxY(_starLabel.frame)+3;
     CGFloat starImageX = 12;
     CGFloat starImageW = _downView.width - 24;
     CGFloat starImageH = kScreenHeight > 568 ? 12 : 10;
     _starImage = [[UIImageView alloc] initWithFrame:CGRectMake(starImageX, starImageY, starImageW, starImageH)];
     _starImage.backgroundColor = [UIColor clearColor];
-//    if (_starCount) {
-//        NSString *imageName;
-//        NSString *starStr;
-//        switch (_starCount.integerValue) {
-//            case -1:
-//            {
-//                imageName = @"icon_star_0";
-//                starStr = @"0";
-//            }
-//                break;
-//            case 0:
-//            {
-//                imageName = @"icon_star_5";
-//                starStr = @"0.5";
-//            }
-//                break;
-//            case 1:
-//            {
-//                imageName = @"icon_star_10";
-//                starStr = @"1";
-//            }
-//                break;
-//                
-//            case 2:
-//            {
-//                imageName = @"icon_star_15";
-//                starStr = @"1.5";
-//            }
-//                break;
-//                
-//            case 3:
-//            {
-//                imageName = @"icon_star_20";
-//                starStr = @"2";
-//            }
-//                break;
-//                
-//            case 4:
-//            {
-//                imageName = @"icon_star_25";
-//                starStr = @"2.5";
-//            }
-//                break;
-//                
-//            case 5:
-//            {
-//                imageName = @"icon_star_30";
-//                starStr = @"3";
-//            }
-//                break;
-//                
-//                
-//            default:
-//                break;
-//        }
-//        [_starImage setImage:[UIImage imageNamed:imageName]];
-//    }else{
-        _starImage.image = [UIImage imageNamed:@"icon_star_0"];
-//    }
+    _starImage.image = [UIImage imageNamed:@"icon_star_0"];
     [_downView addSubview:_starImage];
     
 }
@@ -622,7 +566,7 @@
 - (void)starLabelAttributeStr:(NSString *)starStr
 {
     NSMutableAttributedString *attributeString = [[NSMutableAttributedString alloc] initWithString:[NSString stringWithFormat:@"%@star",starStr]];
-    [attributeString setAttributes:@{NSFontAttributeName:[UIFont systemFontOfSize:18]} range:NSMakeRange(0, starStr.length)];
+    [attributeString setAttributes:@{NSFontAttributeName:[UIFont systemFontOfSize:(kScreenWidth > 320 ? 24 : 18)]} range:NSMakeRange(0, starStr.length)];
     
     _starLabel.attributedText = attributeString;
 }

@@ -46,6 +46,7 @@ static NSString *cellIdentifier = @"cellIdentifier";
     _personalTableView.delegate = self;
     _personalTableView.dataSource = self;
     _personalTableView.backgroundColor = [UIColor clearColor];
+    _personalTableView.separatorColor = [UIColor colorWithRed:169.0f/255.0f green:86.0f/255.0f blue:254.0f/255.0f alpha:0.7];
     [_personalTableView registerNib:[UINib nibWithNibName:@"PersonalCell" bundle:nil] forCellReuseIdentifier:cellIdentifier];
     [self.view addSubview:_personalTableView];
     

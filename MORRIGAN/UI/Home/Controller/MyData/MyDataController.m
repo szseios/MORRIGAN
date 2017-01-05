@@ -105,6 +105,8 @@ static NSString *cellIdentifier = @"cellIdentifier";
         [UserInfo share].mobile = @"";
         // 上传护理记录数据
         [[RecordManager share] uploadDBDatas:NO];
+        //退出后直接断开蓝牙
+        [[BluetoothManager share] unConnectingBlueTooth];
         [self.navigationController pushViewController:loginViewController animated:NO];
     }
 }

@@ -12,9 +12,9 @@
 
 @property (weak, nonatomic) IBOutlet UIImageView *titleImage;
 @property (weak, nonatomic) IBOutlet UILabel *titleLabel;
-@property (weak, nonatomic) IBOutlet UILabel *minuteLabel;
-@property (weak, nonatomic) IBOutlet UIImageView *emptyImage;
-@property (weak, nonatomic) IBOutlet UILabel *unitLabel;
+@property (nonatomic , strong) UILabel *minuteLabel;
+@property (nonatomic , strong) UIImageView *emptyImage;
+@property (nonatomic , strong) UILabel *unitLabel;
 
 - (void)setTitle:(NSString *)title minuteCount:(NSString *)minute withIndexPath:(NSIndexPath *)index;
 
