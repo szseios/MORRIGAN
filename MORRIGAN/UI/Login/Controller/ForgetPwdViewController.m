@@ -138,6 +138,7 @@
     // 注意：先设置phoneInputView.placeholder才有效
     [phoneInputView setValue:inputViewTextColor forKeyPath:@"_placeholderLabel.textColor"];
     phoneInputView.textColor = [UIColor whiteColor];
+    [phoneInputView addTarget:self  action:@selector(textFieldDidChange:)  forControlEvents:UIControlEventAllEditingEvents];
     _phoneNumbrInputView = phoneInputView;
     [phoneNumRootView addSubview:phoneInputView];
     // 分割线
@@ -206,7 +207,7 @@
     //showPWDView.backgroundColor = [UIColor blueColor];
     [showPWDView addTarget:self action:@selector(showPWDButtonClickInForgetPwd) forControlEvents:UIControlEventTouchUpInside];
     _showPwdButton = showPWDView;
-    [_showPwdButton setImage:[UIImage imageNamed:@"ic_show_pwd_off"] forState:UIControlStateNormal];
+    [_showPwdButton setImage:[UIImage imageNamed:@"ic_show_pwd_on"] forState:UIControlStateNormal];
     [PWDRootView addSubview:showPWDView];
     // 密码输入框
     UITextField *PWDInputView = [[UITextField alloc] initWithFrame:CGRectMake(iconW + phoneinputViewPaddingLeft, 0, PWDRootView.frame.size.width - iconW - showPWDViewW - phoneinputViewPaddingLeft, editViewH)];
@@ -215,7 +216,7 @@
     [PWDInputView setInputAccessoryView:self.keyboardTopView];
     [PWDInputView setValue:inputViewTextColor forKeyPath:@"_placeholderLabel.textColor"];
     PWDInputView.textColor = [UIColor whiteColor];
-    PWDInputView.secureTextEntry = YES;
+    PWDInputView.secureTextEntry = NO;
     _passwordInputView = PWDInputView;
     [PWDRootView addSubview:PWDInputView];
     // 分割线
@@ -298,14 +299,27 @@
 // 手机输入框点击
 -(void)textFieldDidBeginEditing:(UITextField *)textField
 {
-    if(textField == _phoneNumbrInputView) {
-        _cleanUpButton.hidden = NO;
-    }
+//    if(textField == _phoneNumbrInputView) {
+//        if(textField.text.length >= 1) {
+//            _cleanUpButton.hidden = NO;
+//        }
+//    }
 }
 -(void)textFieldDidEndEditing:(UITextField *)textField
 {
     if(textField == _phoneNumbrInputView) {
         _cleanUpButton.hidden = YES;
+    }
+}
+
+- (void)textFieldDidChange:(UITextField *)textField
+{
+    if (textField == _phoneNumbrInputView) {
+        if(textField.text.length >= 1) {
+            _cleanUpButton.hidden = NO;
+        }else {
+            _cleanUpButton.hidden = YES;
+        }
     }
 }
 
@@ -358,7 +372,7 @@
     BOOL isPasswordRight = [Utils checkPassWord: password];
     BOOL isauthCodeRight = [Utils checkAuthCode: authCode];
     
-    
+    // 校验顺序：网络 - 用户名格式 - 注册未注册 - 用户名、密码、用户和用户名
     AppDelegate *appDelegate = [UIApplication sharedApplication].delegate;
     if ([appDelegate checkReachable] == NO) {
         return;

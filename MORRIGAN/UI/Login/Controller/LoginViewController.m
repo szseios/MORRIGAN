@@ -166,6 +166,7 @@
     // 注意：先设置phoneInputView.placeholder才有效
     [phoneInputView setValue:inputViewTextColor forKeyPath:@"_placeholderLabel.textColor"];
     phoneInputView.textColor = [UIColor whiteColor];
+    [phoneInputView addTarget:self  action:@selector(textFieldDidChange:)  forControlEvents:UIControlEventAllEditingEvents];
     _phoneNumbrInputView = phoneInputView;
     [phoneNumRootView addSubview:phoneInputView];
     // 分割线
@@ -274,14 +275,34 @@
 // 手机输入框点击
 -(void)textFieldDidBeginEditing:(UITextField *)textField
 {
-    if(textField == _phoneNumbrInputView) {
-        _cleanUpButton.hidden = NO;
-    }
+//    if(textField == _phoneNumbrInputView) {
+//        _cleanUpButton.hidden = NO;
+//    }
 }
 -(void)textFieldDidEndEditing:(UITextField *)textField
 {
     if(textField == _phoneNumbrInputView) {
         _cleanUpButton.hidden = YES;
+    }
+}
+
+-(BOOL)textField:(UITextField *)textField shouldChangeCharactersInRange:(NSRange)range replacementString:(NSString *)string
+{
+    if (textField == _phoneNumbrInputView) {
+        if (textField.text.length >= 11) return NO;
+    }
+    
+    return YES;
+}
+
+- (void)textFieldDidChange:(UITextField *)textField
+{
+    if (textField == _phoneNumbrInputView) {
+        if(textField.text.length >= 1) {
+            _cleanUpButton.hidden = NO;
+        }else {
+            _cleanUpButton.hidden = YES;
+        }
     }
 }
 
@@ -355,38 +376,45 @@
     BOOL isPhoneNumberRight = [Utils checkMobile: phoneNumber];
     BOOL isPasswordRight = [Utils checkPassWord: password];
     
-    
+    // 校验顺序：网络 - 用户名格式 - 注册未注册 - 用户名、密码、用户和用户名
     AppDelegate *appDelegate = [UIApplication sharedApplication].delegate;
     if ([appDelegate checkReachable] == NO) {
         return;
     }
     
     // 校验
-    if(phoneNumber && phoneNumber.length == 0) {
-        UIAlertView *alert = [[UIAlertView alloc] initWithTitle:@"请输账号" message:nil delegate:self cancelButtonTitle:nil otherButtonTitles:@"确定", nil];
-        [alert show];
-        return;
-    }
-    
-    if(!isPhoneNumberRight) {
-        UIAlertView *alert = [[UIAlertView alloc] initWithTitle:@"您输入的手机号码有误" message:nil delegate:self cancelButtonTitle:nil otherButtonTitles:@"确定", nil];
-        [alert show];
-        return;
-    }
-    
-    
-    if(password && password.length == 0) {
-        UIAlertView *alert = [[UIAlertView alloc] initWithTitle:@"请输入密码" message:nil delegate:self cancelButtonTitle:nil otherButtonTitles:@"确定", nil];
-        [alert show];
-        return;
-    }
-    
-    if(!isPasswordRight) {
-        UIAlertView *alert = [[UIAlertView alloc] initWithTitle:@"您输入的密码格式有误" message:nil delegate:self cancelButtonTitle:nil otherButtonTitles:@"确定", nil];
-        [alert show];
-        return;
-    }
+//    if(phoneNumber && phoneNumber.length == 0) {
+//        UIAlertView *alert = [[UIAlertView alloc] initWithTitle:@"请输账号" message:nil delegate:self cancelButtonTitle:nil otherButtonTitles:@"确定", nil];
+//        [alert show];
+//        return;
+//    }
+//    
+//    if(!isPhoneNumberRight) {
+//        UIAlertView *alert = [[UIAlertView alloc] initWithTitle:@"您输入的手机号码有误" message:nil delegate:self cancelButtonTitle:nil otherButtonTitles:@"确定", nil];
+//        [alert show];
+//        return;
+//    }
+//    
+//    
+//    if(password && password.length == 0) {
+//        UIAlertView *alert = [[UIAlertView alloc] initWithTitle:@"请输入密码" message:nil delegate:self cancelButtonTitle:nil otherButtonTitles:@"确定", nil];
+//        [alert show];
+//        return;
+//    }
+//    
+//    if(!isPasswordRight) {
+//        UIAlertView *alert = [[UIAlertView alloc] initWithTitle:@"您输入的密码格式有误" message:nil delegate:self cancelButtonTitle:nil otherButtonTitles:@"确定", nil];
+//        [alert show];
+//        return;
+//    }
 
+    if(!isPhoneNumberRight || !isPasswordRight) {
+//        UIAlertView *alert = [[UIAlertView alloc] initWithTitle:@"手机号或密码错误" message:nil delegate:self cancelButtonTitle:nil otherButtonTitles:@"确定", nil];
+//        [alert show];
+        [MBProgressHUD showHUDByContent:@"手机号或密码错误" view:self.view];
+        return;
+    }
+    
 
     // 是否注册
     [self ifRegister:phoneNumber password:password];
@@ -419,7 +447,7 @@
              
          } else if ([[obj objectForKey:HTTP_KEY_RESULTCODE] isEqualToString:HTTP_RESULTCODE_ERROR]) {
              NSLog(@"账号未注册！");
-             UIAlertView *alert = [[UIAlertView alloc] initWithTitle: @"该账号不存在，请先注册" message:nil delegate:self cancelButtonTitle:@"取消" otherButtonTitles:@"注册", nil];
+             UIAlertView *alert = [[UIAlertView alloc] initWithTitle: @"该手机号未注册" message:nil delegate:self cancelButtonTitle:@"取消" otherButtonTitles:@"注册", nil];
              alert.tag = kAlertViewTagOfIntoRegister;
              [alert show];
 
@@ -513,8 +541,9 @@
              
              NSLog(@"登录失败！");
              
-             UIAlertView *alert = [[UIAlertView alloc] initWithTitle:[obj objectForKey:HTTP_KEY_RESULTMESSAGE] == nil ? @"登录失败！": [obj objectForKey:HTTP_KEY_RESULTMESSAGE] message:nil delegate:self cancelButtonTitle:nil otherButtonTitles:@"确定", nil];
-             [alert show];
+//             UIAlertView *alert = [[UIAlertView alloc] initWithTitle:[obj objectForKey:HTTP_KEY_RESULTMESSAGE] == nil ? @"登录失败！": [obj objectForKey:HTTP_KEY_RESULTMESSAGE] message:nil delegate:self cancelButtonTitle:nil otherButtonTitles:@"确定", nil];
+//             [alert show];
+             [MBProgressHUD showHUDByContent:@"登录失败" view:self.view];
              
          }
          
