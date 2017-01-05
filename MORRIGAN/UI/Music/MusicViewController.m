@@ -181,6 +181,7 @@
                                                                 green:239 / 255.0
                                                                  blue:254 / 255.0
                                                                 alpha:1];
+    _tableView.separatorStyle = UITableViewCellSeparatorStyleNone;
     _tableView.tableFooterView = [[UIView alloc] initWithFrame:CGRectZero];
     [_musicView addSubview:_tableView];
     
@@ -245,6 +246,13 @@
     cell.title = model.title;
     cell.artist = model.artist;
     cell.time = [model playBackDurationString];
+    
+    if (indexPath.row == _musics.count - 1) {
+        [cell setSeparator:YES];
+    }
+    else {
+        [cell setSeparator:NO];
+    }
     
     if (_selectedIndexPath &&
         indexPath.row == _selectedIndexPath.row &&
@@ -452,7 +460,8 @@
     NSLog(@"%f",location.y);
     if (recognizer.state == UIGestureRecognizerStateChanged) {
         if (location.y >= kScreenHeight - _musicView.frame.size.height &&
-            location.y <= kScreenHeight - 65) {
+            location.y <= kScreenHeight - 63) {
+            [_panGestureView setImage:[UIImage imageNamed:@"music_background_bottom"]];
             _musicView.y = location.y;
         }
     }
@@ -464,9 +473,9 @@
             [UIView animateWithDuration:0.25 animations:^{
                 
                 CGRect frame = _musicView.frame;
-                frame.origin.y = kScreenHeight - 65;
+                frame.origin.y = kScreenHeight - 63;
                 [_musicView setFrame:frame];
-                
+                [_panGestureView setImage:[UIImage imageNamed:@"music_background_bottom_onbottom"]];
             }];
         }
         else {
@@ -483,6 +492,7 @@
 
 - (void)showMusicView {
     if ([self musicViewOnBottom]) {
+        [_panGestureView setImage:[UIImage imageNamed:@"music_background_bottom"]];
         [_tableView reloadData];
         [UIView animateWithDuration:0.25 animations:^{
             
@@ -504,9 +514,9 @@
         [UIView animateWithDuration:0.25 animations:^{
             
             CGRect frame = _musicView.frame;
-            frame.origin.y = kScreenHeight - 65;
+            frame.origin.y = kScreenHeight - 63;
             [_musicView setFrame:frame];
-            
+            [_panGestureView setImage:[UIImage imageNamed:@"music_background_bottom_onbottom"]];
         }];
     }
     NSLog(@"hiddeMusicView");
@@ -519,7 +529,7 @@
 
 //判断是否在底部
 - (BOOL)musicViewOnBottom {
-    if (_musicView.frame.origin.y == (kScreenHeight - 65)) {
+    if (_musicView.frame.origin.y == (kScreenHeight - 63)) {
         return YES;
     }
     return NO;

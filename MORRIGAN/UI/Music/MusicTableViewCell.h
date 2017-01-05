@@ -17,6 +17,8 @@
 @property (strong, nonatomic) UIView *animationImageView;
 @property (strong, nonatomic) UILabel *timeLabel;
 
+@property (nonatomic,strong) UIView *line;
+
 @property (nonatomic, copy) NSString *title;
 @property (nonatomic, copy) NSString *artist;
 @property (nonatomic, copy) NSString *time;
@@ -32,5 +34,7 @@
 - (void)stopAnimation;
 
 - (void)resetBars;
+
+- (void)setSeparator:(BOOL)fill;
 
 @end

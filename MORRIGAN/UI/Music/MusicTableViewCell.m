@@ -169,6 +169,26 @@
     }
 }
 
+- (void)setSeparator:(BOOL)fill {
+    if (_line) {
+        [_line removeFromSuperview];
+        _line = nil;
+    }
+    CGFloat x = 0;
+    if (!fill) {
+        x = 20;
+    }
+    _line = [[UIView alloc] initWithFrame:CGRectMake(x,
+                                                     self.contentView.height - 0.5,
+                                                     kScreenWidth - x,
+                                                     0.5)];
+    _line.backgroundColor = [UIColor colorWithRed:0 / 255.0
+                                            green:0 / 255.0
+                                             blue:0 / 255.0
+                                            alpha:0.05];
+    [self.contentView addSubview:_line];
+}
+
 
 - (void)setSelected:(BOOL)selected animated:(BOOL)animated {
     [super setSelected:selected animated:animated];
