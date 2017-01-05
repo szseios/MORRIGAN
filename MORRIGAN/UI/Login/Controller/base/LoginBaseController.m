@@ -71,6 +71,7 @@
     CGRect f = _rootScroolView.frame;
     f.size.height = kScreenHeight - height;
     _rootScroolView.frame = f;
+    _rootScroolView.contentOffset = CGPointMake(0, 120);
     _rootScroolView.scrollEnabled = YES;
     
 }

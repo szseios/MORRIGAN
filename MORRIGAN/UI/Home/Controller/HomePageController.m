@@ -67,10 +67,10 @@
     self.view.userInteractionEnabled = YES;
     [self.view addGestureRecognizer:tap];
     
-    if (![UserInfo share].isConnected) {
-        UIAlertView *alert = [[UIAlertView alloc] initWithTitle:@"还未连接设备" message:nil delegate:self cancelButtonTitle:@"取消" otherButtonTitles:@"连接", nil];
-        [alert show];
-    }
+//    if (![UserInfo share].isConnected) {
+//        UIAlertView *alert = [[UIAlertView alloc] initWithTitle:@"还未连接设备" message:nil delegate:self cancelButtonTitle:@"取消" otherButtonTitles:@"连接", nil];
+//        [alert show];
+//    }
    
     [self setUpHomeMainView];
     
@@ -146,7 +146,7 @@
         mainViewW = mainViewW - tem1;
         mainViewH = mainViewH * tem2;
     }
-    CGFloat mainViewX = (kScreenWidth - mainViewW) /2 + (kScreenWidth > 320 ? 20 : 15); //kScreenWidth > 320 ? 50 : 20;
+    CGFloat mainViewX = (kScreenWidth - mainViewW) /2 + (kScreenWidth > 320 ? (kScreenWidth < 414 ? 15 : 18) : 13); //kScreenWidth > 320 ? 50 : 20;
     NSArray *ForenoonArray = [DBManager selectForenoonDatas:[UserInfo share].userId];
     NSArray *AfternoonArray = [DBManager selectaAfternoonDatas:[UserInfo share].userId];
     _mainView = [[HomeMainView alloc] initWithAMMorriganArray:ForenoonArray PMMorriganTime:AfternoonArray  withFarme:CGRectMake(mainViewX, 74, mainViewW, mainViewH)];
@@ -243,7 +243,7 @@
 {
     if ([UserInfo share].isConnected) {
         UIAlertView *alert = [[UIAlertView alloc] initWithTitle:nil
-                                                        message:@"确定切换设备？"
+                                                        message:@"确定要切换设备"
                                                        delegate:self
                                               cancelButtonTitle:@"取消"
                                               otherButtonTitles:@"确定", nil];
@@ -319,11 +319,6 @@
             SearchPeripheralViewController *ctl = [[SearchPeripheralViewController alloc] init];
             [self.navigationController pushViewController:ctl animated:YES];
             
-        }
-    }
-    else {
-        if (buttonIndex == 1) {
-            [self clickBingdingDevice];
         }
     }
     
@@ -423,7 +418,7 @@
             
         }
         NSMutableAttributedString *attributeString = [[NSMutableAttributedString alloc] initWithString:[NSString stringWithFormat:@"%@star",starLabelStr]];
-        [attributeString setAttributes:@{NSFontAttributeName:[UIFont systemFontOfSize:18]} range:NSMakeRange(0, starLabelStr.length)];
+        [attributeString setAttributes:@{NSFontAttributeName:[UIFont systemFontOfSize:(kScreenWidth > 320 ? 24 : 18)]} range:NSMakeRange(0, starLabelStr.length)];
         _mainView.starLabel.attributedText = attributeString;
         [_mainView.starImage setImage:[UIImage imageNamed:imageName]];
     }

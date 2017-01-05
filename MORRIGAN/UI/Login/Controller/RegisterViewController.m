@@ -180,6 +180,7 @@
     // 注意：先设置phoneInputView.placeholder才有效
     [phoneInputView setValue:inputViewTextColor forKeyPath:@"_placeholderLabel.textColor"];
     phoneInputView.textColor = [UIColor whiteColor];
+    [phoneInputView addTarget:self  action:@selector(textFieldDidChange:)  forControlEvents:UIControlEventAllEditingEvents];
     _phoneNumbrInputView = phoneInputView;
     [phoneNumRootView addSubview:phoneInputView];
     // 分割线
@@ -248,7 +249,7 @@
     //showPWDView.backgroundColor = [UIColor blueColor];
     [showPWDView addTarget:self action:@selector(showPWDButtonClickInRegister) forControlEvents:UIControlEventTouchUpInside];
     _showPwdButton = showPWDView;
-    [_showPwdButton setImage:[UIImage imageNamed:@"ic_show_pwd_off"] forState:UIControlStateNormal];
+    [_showPwdButton setImage:[UIImage imageNamed:@"ic_show_pwd_on"] forState:UIControlStateNormal];
     [PWDRootView addSubview:showPWDView];
     // 密码输入框
     UITextField *PWDInputView = [[UITextField alloc] initWithFrame:CGRectMake(iconW + phoneinputViewPaddingLeft, 0, PWDRootView.frame.size.width - iconW - showPWDViewW - phoneinputViewPaddingLeft, editViewH)];
@@ -257,7 +258,7 @@
     [PWDInputView setInputAccessoryView:self.keyboardTopView];
     [PWDInputView setValue:inputViewTextColor forKeyPath:@"_placeholderLabel.textColor"];
     PWDInputView.textColor = [UIColor whiteColor];
-    PWDInputView.secureTextEntry = YES;
+    PWDInputView.secureTextEntry = NO;
     _passwordInputView = PWDInputView;
     [PWDRootView addSubview:PWDInputView];
     // 分割线
@@ -379,31 +380,38 @@
         return;
     }
     
-    if(phoneNumber && phoneNumber.length == 0) {
-        UIAlertView *alert = [[UIAlertView alloc] initWithTitle:@"请输入手机号" message:nil delegate:self cancelButtonTitle:nil otherButtonTitles:@"确定", nil];
-        [alert show];
-        return;
-    }
+//    if(phoneNumber && phoneNumber.length == 0) {
+//        UIAlertView *alert = [[UIAlertView alloc] initWithTitle:@"请输入手机号" message:nil delegate:self cancelButtonTitle:nil otherButtonTitles:@"确定", nil];
+//        [alert show];
+//        return;
+//    }
     
     if(!isPhoneNumberRight) {
-        UIAlertView *alert = [[UIAlertView alloc] initWithTitle:@"您输入的手机号码有误" message:nil delegate:self cancelButtonTitle:nil otherButtonTitles:@"确定", nil];
-        [alert show];
+//        UIAlertView *alert = [[UIAlertView alloc] initWithTitle:@"请输入正确的手机号" message:nil delegate:self cancelButtonTitle:nil otherButtonTitles:@"确定", nil];
+//        [alert show];
+        [MBProgressHUD showHUDByContent:@"请输入正确的手机号" view:self.view];
         return;
     }
     
     
-    UIAlertView *alert = [[UIAlertView alloc] initWithTitle:@"确认手机号码" message:phoneNumber delegate:self cancelButtonTitle:@"取消" otherButtonTitles:@"确定", nil];
-    alert.tag = kAlertViewTagOfConfirmPhoneNumber;
-    [alert show];
+//    UIAlertView *alert = [[UIAlertView alloc] initWithTitle:@"确认手机号码" message:phoneNumber delegate:self cancelButtonTitle:@"取消" otherButtonTitles:@"确定", nil];
+//    alert.tag = kAlertViewTagOfConfirmPhoneNumber;
+//    [alert show];
+    
+    // 获取手机验证码
+    //[self getPhoneMsgCode];
+    [self ifRegister:_phoneNumbrInputView.text];
 }
 
 
 // 手机输入框点击
 -(void)textFieldDidBeginEditing:(UITextField *)textField
 {
-    if(textField == _phoneNumbrInputView) {
-        _cleanUpButton.hidden = NO;
-    }
+//    if(textField == _phoneNumbrInputView) {
+//        if(textField.text.length >= 1) {
+//            _cleanUpButton.hidden = NO;
+//        }
+//    }
 }
 -(void)textFieldDidEndEditing:(UITextField *)textField
 {
@@ -411,6 +419,18 @@
         _cleanUpButton.hidden = YES;
     }
 }
+
+- (void)textFieldDidChange:(UITextField *)textField
+{
+    if (textField == _phoneNumbrInputView) {
+        if(textField.text.length >= 1) {
+            _cleanUpButton.hidden = NO;
+        }else {
+            _cleanUpButton.hidden = YES;
+        }
+    }
+}
+
 
 // 显示密码按钮点击
 - (void)cleanUpButtonClickRegister
@@ -455,50 +475,61 @@
     BOOL isPasswordRight = [Utils checkPassWord: password];
     BOOL isauthCodeRight = [Utils checkAuthCode: authCode];
     
-    
+     // 校验顺序：网络 - 用户名格式 - 注册未注册 - 用户名、密码、用户和用户名
     AppDelegate *appDelegate = [UIApplication sharedApplication].delegate;
     if ([appDelegate checkReachable] == NO) {
         return;
     }
     
     // 校验
-    if(phoneNumber && phoneNumber.length == 0) {
-        UIAlertView *alert = [[UIAlertView alloc] initWithTitle:@"请输入手机号" message:nil delegate:self cancelButtonTitle:nil otherButtonTitles:@"确定", nil];
-        [alert show];
-        return;
-    }
-    
-    if(!isPhoneNumberRight) {
-        UIAlertView *alert = [[UIAlertView alloc] initWithTitle:@"您输入的手机号码有误" message:nil delegate:self cancelButtonTitle:nil otherButtonTitles:@"确定", nil];
-        [alert show];
-        return;
-    }
-    
+//    if(phoneNumber && phoneNumber.length == 0) {
+//        UIAlertView *alert = [[UIAlertView alloc] initWithTitle:@"请输入手机号" message:nil delegate:self cancelButtonTitle:nil otherButtonTitles:@"确定", nil];
+//        [alert show];
+//        return;
+//    }
+//    
+//    if(!isPhoneNumberRight) {
+//        UIAlertView *alert = [[UIAlertView alloc] initWithTitle:@"您输入的手机号码有误" message:nil delegate:self cancelButtonTitle:nil otherButtonTitles:@"确定", nil];
+//        [alert show];
+//        return;
+//    }
+//    
+//    
+//    if(password && password.length == 0) {
+//        UIAlertView *alert = [[UIAlertView alloc] initWithTitle:@"请输入密码" message:nil delegate:self cancelButtonTitle:nil otherButtonTitles:@"确定", nil];
+//        [alert show];
+//        return;
+//    }
+//    
+//    if(!isPasswordRight) {
+//        UIAlertView *alert = [[UIAlertView alloc] initWithTitle:@"您输入的密码格式有误" message:nil delegate:self cancelButtonTitle:nil otherButtonTitles:@"确定", nil];
+//        [alert show];
+//        return;
+//    }
+//    
+//    if(authCode && authCode.length == 0) {
+//        UIAlertView *alert = [[UIAlertView alloc] initWithTitle:@"请输入验证码" message:nil delegate:self cancelButtonTitle:nil otherButtonTitles:@"确定", nil];
+//        [alert show];
+//        return;
+//    }
+//    
+//    if(!isauthCodeRight) {
+//        UIAlertView *alert = [[UIAlertView alloc] initWithTitle:@"验证码格式错误，请重新填写" message:nil delegate:self cancelButtonTitle:nil otherButtonTitles:@"确定", nil];
+//        [alert show];
+//        return;
+//    }
     
     if(password && password.length == 0) {
-        UIAlertView *alert = [[UIAlertView alloc] initWithTitle:@"请输入密码" message:nil delegate:self cancelButtonTitle:nil otherButtonTitles:@"确定", nil];
-        [alert show];
+       [MBProgressHUD showHUDByContent:@"请输入密码" view:self.view];
         return;
     }
     
-    if(!isPasswordRight) {
-        UIAlertView *alert = [[UIAlertView alloc] initWithTitle:@"您输入的密码格式有误" message:nil delegate:self cancelButtonTitle:nil otherButtonTitles:@"确定", nil];
-        [alert show];
+    if(!isPhoneNumberRight || !isPasswordRight) {
+        //        UIAlertView *alert = [[UIAlertView alloc] initWithTitle:@"手机号或密码错误" message:nil delegate:self cancelButtonTitle:nil otherButtonTitles:@"确定", nil];
+        //        [alert show];
+        [MBProgressHUD showHUDByContent:@"手机号或密码错误" view:self.view];
         return;
     }
-    
-    if(authCode && authCode.length == 0) {
-        UIAlertView *alert = [[UIAlertView alloc] initWithTitle:@"请输入验证码" message:nil delegate:self cancelButtonTitle:nil otherButtonTitles:@"确定", nil];
-        [alert show];
-        return;
-    }
-    
-    if(!isauthCodeRight) {
-        UIAlertView *alert = [[UIAlertView alloc] initWithTitle:@"验证码格式错误，请重新填写" message:nil delegate:self cancelButtonTitle:nil otherButtonTitles:@"确定", nil];
-        [alert show];
-        return;
-    }
-
     
     
     // 注册
@@ -577,8 +608,8 @@
              NSLog(@"获取验证码失败！");
          }
          
-         UIAlertView *alert = [[UIAlertView alloc] initWithTitle:[obj objectForKey:HTTP_KEY_RESULTMESSAGE] message:nil delegate:self cancelButtonTitle:nil otherButtonTitles:@"确定", nil];
-         [alert show];
+//         UIAlertView *alert = [[UIAlertView alloc] initWithTitle:[obj objectForKey:HTTP_KEY_RESULTMESSAGE] message:nil delegate:self cancelButtonTitle:nil otherButtonTitles:@"确定", nil];
+//         [alert show];
          
          
      }];
@@ -663,7 +694,7 @@
 //             UIAlertView *alert = [[UIAlertView alloc] initWithTitle:@"注册成功!" message:@"点击确认进入登录界面" delegate:self cancelButtonTitle:nil otherButtonTitles:@"确定", nil];
 //             alert.tag = kAlertViewTagOfIntoLogin;
 //             [alert show];
-             [MBProgressHUD showHUDByContent:@"注册成功！" view:self.view];
+             [MBProgressHUD showHUDByContent:@"注册成功" view:self.view];
              dispatch_after(dispatch_time(DISPATCH_TIME_NOW, (int64_t)(0.5 * NSEC_PER_SEC)), dispatch_get_main_queue(), ^{
                  // 保存用户名和密码，自动登录
                  NSUserDefaults *defaults = [NSUserDefaults standardUserDefaults];
@@ -678,8 +709,9 @@
          } else {
              
              NSLog(@"注册失败！");
-             UIAlertView *alert = [[UIAlertView alloc] initWithTitle:@"注册失败!" message: [obj objectForKey:HTTP_KEY_RESULTMESSAGE] delegate:self cancelButtonTitle:nil otherButtonTitles:@"确定", nil];
-             [alert show];
+//             UIAlertView *alert = [[UIAlertView alloc] initWithTitle:@"注册失败!" message: [obj objectForKey:HTTP_KEY_RESULTMESSAGE] delegate:self cancelButtonTitle:nil otherButtonTitles:@"确定", nil];
+//             [alert show];
+             [MBProgressHUD showHUDByContent:@"注册失败" view:self.view];
          }
          
      }];
@@ -705,8 +737,9 @@
          if ([[obj objectForKey:HTTP_KEY_RESULTCODE] isEqualToString:HTTP_RESULTCODE_SUCCESS]) {
              NSLog(@"账号已经注册！");
              
-             UIAlertView *alert = [[UIAlertView alloc] initWithTitle: @"账号已经被注册过" message:nil delegate:self cancelButtonTitle:@"确定" otherButtonTitles:nil, nil];
-             [alert show];
+//             UIAlertView *alert = [[UIAlertView alloc] initWithTitle: @"该手机号已被注册" message:nil delegate:self cancelButtonTitle:@"确定" otherButtonTitles:nil, nil];
+//             [alert show];
+             [MBProgressHUD showHUDByContent:@"该手机号已被注册" view:self.view];
              
              
          } else if ([[obj objectForKey:HTTP_KEY_RESULTCODE] isEqualToString:HTTP_RESULTCODE_ERROR]) {

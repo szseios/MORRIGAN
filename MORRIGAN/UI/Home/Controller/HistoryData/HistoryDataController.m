@@ -22,9 +22,13 @@
 
 @property (nonatomic , strong) UISegmentedControl *pageSegmente;
 
-@property (nonatomic , strong) UITableView *bottomTableView;
+@property (nonatomic , strong) UITableView *dayTableView;
+
+@property (nonatomic , strong) UITableView *weekTableView;
 
 @property (nonatomic , strong) NSArray *titleArray;
+
+@property (nonatomic , strong) NSArray *weekTitleArray;
 
 @property (nonatomic , strong) UIView *dayView;
 
@@ -62,12 +66,15 @@
 
 @property (nonatomic , assign) NSInteger selectDayIndexInWeek;
 
+@property (nonatomic , strong) UIScrollView *scrollView;
+
 
 @end
 
 @implementation HistoryDataController
 
-static NSString *cellID = @"DataCellID";
+static NSString *dayCellID = @"dayCellID";
+static NSString *weekCellID = @"weekCellID";
 
 - (void)viewDidLoad {
     [super viewDidLoad];
@@ -77,8 +84,10 @@ static NSString *cellID = @"DataCellID";
     [self.view addSubview:backImageView];
     
     _titleArray = @[@"今日目标",@"今日护养",@"剩余目标值"];
+    _weekTitleArray = @[@"今日目标",@"今日护养",@"剩余目标值",@"平均养护"];
     [self setUpBarView];
     [self setUpSegmentPageView];
+    [self setUpScrollView];
     [self setUpDayBarChatView];
     [self setUpWeekBarChatView];
     [self setUpBottomView];
@@ -131,7 +140,7 @@ static NSString *cellID = @"DataCellID";
                 
                 // 更新周界面显示
                 [self updateWeekBarView];
-                [_bottomTableView reloadData];
+                [_weekTableView reloadData];
                 
                 
                 
@@ -150,14 +159,15 @@ static NSString *cellID = @"DataCellID";
 - (void)updateWeekBarView
 {
     [_weekMinuteDataLabel removeFromSuperview];
-    CGFloat labelY = 12;
-    _weekMinuteDataLabel = [[UILabel alloc] initWithFrame:CGRectMake(15, labelY, 60, 60)];
-    _weekMinuteDataLabel.textColor = [UIColor whiteColor];
+    CGFloat labelY = 30;
+    _weekMinuteDataLabel = [[UILabel alloc] initWithFrame:CGRectMake(15, (_weekTimeLong > 0 ? labelY : 20), 60, 20)];
+    _weekMinuteDataLabel.textColor = [UIColor colorWithRed:1 green:1 blue:1 alpha:0.6];
     _weekMinuteDataLabel.textAlignment = NSTextAlignmentRight;
-    _weekMinuteDataLabel.font = [UIFont systemFontOfSize:35];
+    _weekMinuteDataLabel.font = [UIFont systemFontOfSize:14];
     _weekMinuteDataLabel.text = [NSString stringWithFormat:@"%ld", _weekTimeLong];
     if(_weekTimeLong == 0) {
         _weekMinuteDataLabel.text = @"--";
+        _weekMinuteDataLabel.font = [UIFont systemFontOfSize:35];
     }
     [_weekMinuteDataLabel sizeToFit];
     [_weekView addSubview:_weekMinuteDataLabel];
@@ -165,9 +175,10 @@ static NSString *cellID = @"DataCellID";
     
     [_weekUnitLabel removeFromSuperview];
     CGFloat unitLabelX = CGRectGetMaxX(_weekMinuteDataLabel.frame) + 2;
-    _weekUnitLabel = [[UILabel alloc] initWithFrame:CGRectMake(unitLabelX, labelY+10, 40, 30)];
-    _weekUnitLabel.textColor = [UIColor whiteColor];
+    _weekUnitLabel = [[UILabel alloc] initWithFrame:CGRectMake(unitLabelX, labelY+2, 40, 20)];
+    _weekUnitLabel.textColor = [UIColor colorWithRed:1 green:1 blue:1 alpha:0.6];
     _weekUnitLabel.text = @"分钟";
+    _weekUnitLabel.font = [UIFont systemFontOfSize:14];
     [_weekView addSubview:_weekUnitLabel];
     
     NSInteger maxTimeLong = 0;
@@ -188,7 +199,7 @@ static NSString *cellID = @"DataCellID";
         labelFrame.size.height = 15;
         UILabel *secLabel = [[UILabel alloc] initWithFrame:labelFrame];
         secLabel.text = [NSString stringWithFormat:@"%ld", timeLong];
-        secLabel.textColor = [UIColor whiteColor];
+        secLabel.textColor = [UIColor colorWithRed:1 green:1 blue:1 alpha:0.6];
         secLabel.textAlignment = NSTextAlignmentCenter;
         secLabel.font = [UIFont systemFontOfSize:10.0];
         secLabel.tag = 2600 + i;
@@ -224,48 +235,60 @@ static NSString *cellID = @"DataCellID";
     [_pageSegmente setSelectedSegmentIndex:0];
 }
 
+- (void)setUpScrollView
+{
+    CGFloat scrollViewY = 115;
+    _scrollView = [[UIScrollView alloc] initWithFrame:CGRectMake(0, scrollViewY, kScreenWidth, self.view.height - scrollViewY)];
+    _scrollView.backgroundColor = [UIColor colorWithRed:0.96 green:0.96 blue:0.96 alpha:1];
+    _scrollView.delegate = self;
+    _scrollView.pagingEnabled = YES;
+    _scrollView.contentSize = CGSizeMake(kScreenWidth * 2 , 1);
+    _scrollView.showsHorizontalScrollIndicator = NO;
+    [self.view addSubview:_scrollView];
+}
+
 - (void)setUpDayBarChatView
 {
     _dayLabelArray = [NSMutableArray array];
     
-    UIView *chatView = [[UIView alloc] initWithFrame:CGRectMake(0, 115, kScreenWidth, 250)];
+    UIView *chatView = [[UIView alloc] initWithFrame:CGRectMake(0, 0, kScreenWidth*2, kScreenHeight*0.4)];
     chatView.backgroundColor = [UIColor colorWithRed:130/255.0 green:0.0 blue:230/255.0 alpha:1];
-    [self.view addSubview:chatView];
+    [_scrollView addSubview:chatView];
     
-    _dayView = [[UIView alloc] initWithFrame:chatView.frame];
+    _dayView = [[UIView alloc] initWithFrame:CGRectMake(0, 0, kScreenWidth, chatView.height)];
     _dayView.backgroundColor = [UIColor clearColor];
-    [self.view addSubview:_dayView];
+    [_scrollView addSubview:_dayView];
     
-    CGFloat labelY = 12;
+    CGFloat labelY = 30;
     
-    
-    _dateLabel = [[UILabel alloc] initWithFrame:CGRectMake(100, 22, kScreenWidth - 120, 30)];
-    _dateLabel.textColor = [UIColor whiteColor];
+    _dateLabel = [[UILabel alloc] initWithFrame:CGRectMake(100, labelY, kScreenWidth - 120, 20)];
+    _dateLabel.textColor = [UIColor colorWithRed:1 green:1 blue:1 alpha:0.7];
     _dateLabel.textAlignment = NSTextAlignmentRight;
     NSDateFormatter *fomatter = [[NSDateFormatter alloc] init];
     [fomatter setDateFormat:@"yyyy年MM月dd日"];
     NSString *dateStr = [fomatter stringFromDate:[NSDate date]];
     _dateLabel.text = dateStr;
+    _dateLabel.font = [UIFont systemFontOfSize:14];
     [_dayView addSubview:_dateLabel];
     
-    CGFloat dayBarViewY = 210;
+    CGFloat dayBarViewY = _dayView.height - 35;
     CGFloat dayBarViewX = 10 + ((kScreenWidth - 20) / 96);
     CGFloat dayBarViewW = kScreenWidth - 20 - ((kScreenWidth - 20) / 48);
     
     UIView *lineView = [[UIView alloc] initWithFrame:CGRectMake(dayBarViewX, dayBarViewY, dayBarViewW, 2)];
-    lineView.backgroundColor = [UIColor colorWithRed:0.9 green:0.9 blue:0.9 alpha:0.9];
+    lineView.backgroundColor = [UIColor colorWithRed:1 green:1 blue:1 alpha:0.5];
     [_dayView addSubview:lineView];
     
     CGFloat barX = (kScreenWidth - 20) / 24;
     CGFloat barW = barX/2;
     CGFloat mostBarH = dayBarViewY;
     NSDictionary *todatSecDict = [self getTodatSecDict];
-//    CGRect secLabelFame = CGRectMake(0, 0, 0, 0);
     NSInteger todayMaxSec = 0;
     for (NSInteger i = 0; i < 24; i++) {
+        //24个时间柱子
         NSString *hourKey = [NSString stringWithFormat:@"%02ld",i+1];
         NSInteger sec = [[todatSecDict objectForKey:hourKey] integerValue];
-        CGFloat h = sec*2.1 + 5;
+        CGFloat h = sec*2.1 + 2;
         UIView *bar = [[UIView alloc] initWithFrame:CGRectMake(barX * i+10 + ((kScreenWidth - 20) / 96), mostBarH - h, barW, h)];
         bar.backgroundColor = [UIColor whiteColor];
         bar.alpha = 0.6;
@@ -279,7 +302,7 @@ static NSString *cellID = @"DataCellID";
         
         UILabel *hourTimeLabel = [[UILabel alloc] initWithFrame:CGRectMake(barX * i+7 + ((kScreenWidth - 20) / 96), mostBarH - h - 15 , barW + 7, 15.0)];
         hourTimeLabel.text = [NSString stringWithFormat:@"%ld", sec];
-        hourTimeLabel.textColor = [UIColor whiteColor];
+        hourTimeLabel.textColor = [UIColor colorWithRed:1 green:1 blue:1 alpha:0.5];
         hourTimeLabel.textAlignment = NSTextAlignmentCenter;
         hourTimeLabel.font = [UIFont systemFontOfSize:10.0];
         hourTimeLabel.tag = 1500 + i;
@@ -296,7 +319,7 @@ static NSString *cellID = @"DataCellID";
             _selectHourIndexInDay = i;
         }
         
-        if (i == 0 || i == 4 || i == 9 || i == 14 || i == 19 || i == 23 ) {
+        if (i == 0 || i == 5 || i == 11 || i == 17 || i == 23 ) {
             UILabel *label = [self setUpLabelWithInteger:i];
             [_dayView addSubview:label];
         }
@@ -304,30 +327,23 @@ static NSString *cellID = @"DataCellID";
     }
     _weekTimeLong = _weekTimeLong + _todayAllSec;
     
-    _minuteDataLabel = [[UILabel alloc] initWithFrame:CGRectMake(15, labelY, 60, 60)];
-    _minuteDataLabel.textColor = [UIColor whiteColor];
+    _minuteDataLabel = [[UILabel alloc] initWithFrame:CGRectMake(15, (_weekTimeLong > 0 ? labelY : 20), 60, 20)];
+    _minuteDataLabel.textColor = [UIColor colorWithRed:1 green:1 blue:1 alpha:0.5];
     _minuteDataLabel.textAlignment = NSTextAlignmentRight;
-    _minuteDataLabel.font = [UIFont systemFontOfSize:35];
+    _minuteDataLabel.font = [UIFont systemFontOfSize:(_todayAllSec > 0 ? 14 : 35)];
     _minuteDataLabel.text = _todayAllSec > 0 ? [NSString stringWithFormat:@"%ld", _todayAllSec] : @"--";
     [_minuteDataLabel sizeToFit];
     [_dayView addSubview:_minuteDataLabel];
     
     CGFloat unitLabelX = CGRectGetMaxX(_minuteDataLabel.frame) + 2;
-    UILabel *unitLabel = [[UILabel alloc] initWithFrame:CGRectMake(unitLabelX, labelY+10, 40, 30)];
-    unitLabel.textColor = [UIColor whiteColor];
+    UILabel *unitLabel = [[UILabel alloc] initWithFrame:CGRectMake(unitLabelX, labelY+2, 40, 20)];
+    unitLabel.textColor = [UIColor colorWithRed:1 green:1 blue:1 alpha:0.6];
     unitLabel.text = @"分钟";
+    unitLabel.font = [UIFont systemFontOfSize:14];
     [_dayView addSubview:unitLabel];
    
     UILabel *didShowLabel = (UILabel *)_dayLabelArray[_selectHourIndexInDay];
     didShowLabel.hidden = NO;
-//    
-//    // 在最大分钟数顶部添加label
-//    UILabel *secLabel = [[UILabel alloc] initWithFrame:secLabelFame];
-//    secLabel.text = [NSString stringWithFormat:@"%ld", todayMaxSec];
-//    secLabel.textColor = [UIColor whiteColor];
-//    secLabel.textAlignment = NSTextAlignmentCenter;
-//    secLabel.font = [UIFont systemFontOfSize:10.0];
-//    [_dayView addSubview:secLabel];
 }
 
 - (void)showMorriganTime:(UITapGestureRecognizer *)tap
@@ -358,59 +374,61 @@ static NSString *cellID = @"DataCellID";
 {
     CGFloat barLabelX = (kScreenWidth - 20) / 24;
     CGFloat addX = (i >= 9 ? 8 : 10);
-    UILabel *label = [[UILabel alloc] initWithFrame:CGRectMake(barLabelX * i + addX+ + ((kScreenWidth - 20) / 96), 215, 30, 20)];
+    UILabel *label = [[UILabel alloc] initWithFrame:CGRectMake(barLabelX * i + addX + ((kScreenWidth - 20) / 96), _dayView.height - 28, 30, 20)];
     label.text = (i == 23 ? [NSString stringWithFormat:@"%ld时",i+1] : [NSString stringWithFormat:@"%ld",i+1]);
     if (i == 23) {
         CGFloat distance = kScreenWidth > 320 ? 2 : 3.5;
         label.x -= distance;
     }
     label.font = [UIFont systemFontOfSize:10];
-    label.textColor = [UIColor colorWithRed:0.9 green:0.9 blue:0.9 alpha:0.9];
+    label.textColor = [UIColor colorWithRed:1 green:1 blue:1 alpha:0.5];
 //    label.textAlignment = NSTextAlignmentCenter;
     return label;
 }
 - (void)setUpWeekBarChatView
 {
     _weekLabelArray = [NSMutableArray array];
-    _weekView = [[UIView alloc] initWithFrame:_dayView.frame];
+    _weekView = [[UIView alloc] initWithFrame:CGRectMake(kScreenWidth, 0, kScreenWidth, _dayView.height)];
     _weekView.backgroundColor = [UIColor clearColor];
-    [self.view addSubview:_weekView];
+    [_scrollView addSubview:_weekView];
     
-    CGFloat labelY = 15;
-    _weekMinuteDataLabel = [[UILabel alloc] initWithFrame:CGRectMake(15, labelY, 60, 60)];
-    _weekMinuteDataLabel.textColor = [UIColor whiteColor];
+    CGFloat labelY = 30;
+    _weekMinuteDataLabel = [[UILabel alloc] initWithFrame:CGRectMake(15, (_weekTimeLong > 0 ? labelY : 20), 60, 20)];
+    _weekMinuteDataLabel.textColor = [UIColor colorWithRed:1 green:1 blue:1 alpha:0.6];
     _weekMinuteDataLabel.textAlignment = NSTextAlignmentRight;
-    _weekMinuteDataLabel.font = [UIFont systemFontOfSize:35];
+    _weekMinuteDataLabel.font = [UIFont systemFontOfSize:14];
     _weekMinuteDataLabel.text = @"--";
     [_weekMinuteDataLabel sizeToFit];
     
     [_weekView addSubview:_weekMinuteDataLabel];
     
     CGFloat unitLabelX = CGRectGetMaxX(_weekMinuteDataLabel.frame) + 2;
-    _weekUnitLabel = [[UILabel alloc] initWithFrame:CGRectMake(unitLabelX, labelY, 40, 30)];
+    _weekUnitLabel = [[UILabel alloc] initWithFrame:CGRectMake(unitLabelX, labelY+2, 40, 20)];
     _weekUnitLabel.textColor = [UIColor whiteColor];
     _weekUnitLabel.text = @"分钟";
+    _weekUnitLabel.font = [UIFont systemFontOfSize:14];
     [_weekView addSubview:_weekUnitLabel];
     
-    _weekDateLabel = [[UILabel alloc] initWithFrame:CGRectMake(100, 25, kScreenWidth - 120, 30)];
-    _weekDateLabel.textColor = [UIColor whiteColor];
+    _weekDateLabel = [[UILabel alloc] initWithFrame:CGRectMake(100, labelY, kScreenWidth - 120, 20)];
+    _weekDateLabel.textColor = [UIColor colorWithRed:1 green:1 blue:1 alpha:0.6];
     _weekDateLabel.textAlignment = NSTextAlignmentRight;
+    _weekDateLabel.font = [UIFont systemFontOfSize:14];
     _weekDateLabel.text = [self currentWeekFirstDayToLastDay];
     [_weekView addSubview:_weekDateLabel];
     
-    CGFloat dayBarViewY = 210;
+    CGFloat dayBarViewY = _dayView.height - 35;
     CGFloat dayBarViewX = 15;
     CGFloat dayBarViewW = kScreenWidth - 30;
     
     UIView *lineView = [[UIView alloc] initWithFrame:CGRectMake(dayBarViewX, dayBarViewY, dayBarViewW, 2)];
-    lineView.backgroundColor = [UIColor colorWithRed:0.9 green:0.9 blue:0.9 alpha:0.9];
+    lineView.backgroundColor = [UIColor colorWithRed:1 green:1 blue:1 alpha:0.6];
     [_weekView addSubview:lineView];
     
     CGFloat barX = 15;
     CGFloat barW = (kScreenWidth - 30) / (7 + 6);
     CGFloat mostBarH = dayBarViewY;
     for (NSInteger i = 0; i < 7; i++) {
-        CGFloat h = 5;
+        CGFloat h = 2;
         UIView *bar = [[UIView alloc] initWithFrame:CGRectMake(barX, mostBarH - h, barW, h)];
         bar.backgroundColor = [UIColor whiteColor];
         bar.alpha = 0.6;
@@ -428,37 +446,52 @@ static NSString *cellID = @"DataCellID";
         [_weekBarViewArray addObject:bar];
 
         // 星期label
-        UILabel *label = [[UILabel alloc] initWithFrame:CGRectMake(barX, 215, barW, 20)];
+        UILabel *label = [[UILabel alloc] initWithFrame:CGRectMake(barX, dayBarViewY+5, barW, 20)];
         label.text = [kWeekFormatDict objectForKey:[NSString stringWithFormat:@"%ld" ,i]];
         label.textAlignment = NSTextAlignmentCenter;
         label.font = [UIFont systemFontOfSize:10];
-        label.textColor = [UIColor colorWithRed:0.9 green:0.9 blue:0.9 alpha:0.9];
+        label.textColor = [UIColor colorWithRed:1 green:1 blue:1 alpha:0.6];
         [_weekView addSubview:label];
     
         
         // 更新下一个条状视图水平位置
         barX = barX + 2*barW;
     }
-    _weekView.hidden = YES;
     
 }
 
 - (void)setUpBottomView
 {
-    CGFloat tableViewY = 250 + 110 + 12;
-    _bottomTableView = [[UITableView alloc] initWithFrame:CGRectMake(0,tableViewY ,kScreenWidth , 200) style:UITableViewStylePlain];
-    _bottomTableView.delegate = self;
-    _bottomTableView.dataSource = self;
-    [_bottomTableView registerNib:[UINib nibWithNibName:@"HistoryDataCell" bundle:nil] forCellReuseIdentifier:cellID];
-    _bottomTableView.backgroundColor = [UIColor clearColor];
-    _bottomTableView.tableFooterView = [UIView new];
-    [_bottomTableView setBounces:NO];
+    CGFloat tableViewY = _dayView.height + 12;
+    _dayTableView = [[UITableView alloc] initWithFrame:CGRectMake(0,tableViewY ,kScreenWidth , 200) style:UITableViewStylePlain];
+    _dayTableView.delegate = self;
+    _dayTableView.dataSource = self;
+    [_dayTableView registerNib:[UINib nibWithNibName:@"HistoryDataCell" bundle:nil] forCellReuseIdentifier:dayCellID];
+    _dayTableView.backgroundColor = [UIColor clearColor];
+    _dayTableView.tableFooterView = [UIView new];
+    [_dayTableView setBounces:NO];
     if(kScreenHeight < 500) {
         // 4/ipa
-        _bottomTableView.contentInset = UIEdgeInsetsMake(0, 0, 150, 0);
+        _dayTableView.contentInset = UIEdgeInsetsMake(0, 0, 150, 0);
     }
     
-    [self.view addSubview:_bottomTableView];
+    [_scrollView addSubview:_dayTableView];
+    
+    _weekTableView = [[UITableView alloc] initWithFrame:CGRectMake(kScreenWidth,tableViewY ,kScreenWidth , 200) style:UITableViewStylePlain];
+    _weekTableView.delegate = self;
+    _weekTableView.dataSource = self;
+    [_weekTableView registerNib:[UINib nibWithNibName:@"HistoryDataCell" bundle:nil] forCellReuseIdentifier:weekCellID];
+    _weekTableView.backgroundColor = [UIColor clearColor];
+    _weekTableView.tableFooterView = [UIView new];
+    [_weekTableView setBounces:NO];
+    if(kScreenHeight < 500) {
+        // 4/ipa
+        _weekTableView.contentInset = UIEdgeInsetsMake(0, 0, 150, 0);
+    }
+    
+    [_scrollView addSubview:_weekTableView];
+    
+    
 }
 
 - (NSString *)currentWeekFirstDayToLastDay
@@ -548,17 +581,11 @@ static NSString *cellID = @"DataCellID";
 {
     NSInteger buttonIndex = sender.selectedSegmentIndex;
     if (buttonIndex == 0) {
-        _dayView.hidden = NO;
-        _weekView.hidden = YES;
-        _titleArray = @[@"今日目标",@"今日护养",@"剩余目标值"];
-        [_bottomTableView reloadData];
         [_barView setTitleLabelText:@"今日一览"];
+        [_scrollView scrollRectToVisible:CGRectMake(0, 0, kScreenWidth, 1) animated:YES];
     }else{
-        _dayView.hidden = YES;
-        _weekView.hidden = NO;
-        _titleArray = @[@"本周目标",@"本周护养",@"剩余目标值",@"平均养护"];
-        [_bottomTableView reloadData];
         [_barView setTitleLabelText:@"本周一阅"];
+        [_scrollView scrollRectToVisible:CGRectMake(kScreenWidth, 0, kScreenWidth, 1) animated:YES];
     }
 }
 
@@ -567,12 +594,6 @@ static NSString *cellID = @"DataCellID";
 - (void)clickBack
 {
     [self.navigationController popViewControllerAnimated:YES];
-}
-
-- (void)clickBingdingDevice
-{
-    SearchPeripheralViewController *search = [[SearchPeripheralViewController alloc] init];
-    [self.navigationController pushViewController:search animated:YES];
 }
 
 #pragma mark - UITableViewDelegate,UITableViewDataSource
@@ -584,7 +605,13 @@ static NSString *cellID = @"DataCellID";
 
 - (NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section
 {
-    return _titleArray.count;
+    if (tableView == _dayTableView) {
+        return 3;
+    }
+    else if (tableView == _weekTableView){
+        return 4;
+    }
+    return 0;
 }
 
 - (CGFloat)tableView:(UITableView *)tableView heightForRowAtIndexPath:(NSIndexPath *)indexPath
@@ -594,40 +621,73 @@ static NSString *cellID = @"DataCellID";
 
 - (UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath
 {
-    HistoryDataCell *cell = [tableView dequeueReusableCellWithIdentifier:cellID forIndexPath:indexPath];
-    cell.selectionStyle = UITableViewCellSelectionStyleNone;
-    NSString *minuteCount = nil;
-    switch (indexPath.row) {
-        case 0:
-        {
-            minuteCount = _dayView.hidden == NO ? [UserInfo share].target : [NSString stringWithFormat:@"%ld",[[UserInfo share].target integerValue]*7];
- 
+    if (tableView == _dayTableView) {
+        HistoryDataCell *cell = [tableView dequeueReusableCellWithIdentifier:dayCellID forIndexPath:indexPath];
+        cell.selectionStyle = UITableViewCellSelectionStyleNone;
+        NSString *minuteCount = nil;
+        switch (indexPath.row) {
+            case 0:
+            {
+                minuteCount = [UserInfo share].target;
+                
+            }
+                break;
+            case 1:
+            {
+                minuteCount = [self getTodaySecondsString];
+                
+            }
+                break;
+            case 2:
+            {
+                minuteCount = [self getTodayResidueSecondsString];
+            }
+                break;
+                
+            default:
+                break;
         }
-            break;
-        case 1:
-        {
-            minuteCount = _dayView.hidden == NO ?  [self getTodaySecondsString] : (_weekTimeLong > 0 ? [NSString stringWithFormat:@"%ld", _weekTimeLong] : nil);
-           
+        
+            [cell setTitle:_titleArray[indexPath.row] minuteCount:minuteCount withIndexPath:indexPath];
+       return cell;
+    }
+    else{
+        HistoryDataCell *cell = [tableView dequeueReusableCellWithIdentifier:weekCellID forIndexPath:indexPath];
+        cell.selectionStyle = UITableViewCellSelectionStyleNone;
+        NSString *minuteCount = nil;
+        switch (indexPath.row) {
+            case 0:
+            {
+                minuteCount = [NSString stringWithFormat:@"%ld",[[UserInfo share].target integerValue]*7];
+                
+            }
+                break;
+            case 1:
+            {
+                minuteCount = _weekTimeLong > 0 ? [NSString stringWithFormat:@"%ld", _weekTimeLong] : nil;
+                
+            }
+                break;
+            case 2:
+            {
+                minuteCount = [[UserInfo share].target integerValue]*7 - _weekTimeLong > 0 ? [NSString stringWithFormat:@"%ld", [[UserInfo share].target integerValue]*7 - _weekTimeLong] : nil;
+            }
+                break;
+                
+            case 3:
+            {
+                minuteCount = _weekTimeLong/7 > 0 ? [NSString stringWithFormat:@"%ld", _weekTimeLong/7] : nil;
+            }
+                break;
+                
+            default:
+                break;
         }
-            break;
-        case 2:
-        {
-            minuteCount = _dayView.hidden == NO ?  [self getTodayResidueSecondsString] : ([[UserInfo share].target integerValue]*7 - _weekTimeLong > 0 ? [NSString stringWithFormat:@"%ld", [[UserInfo share].target integerValue]*7 - _weekTimeLong] : nil);
-        }
-            break;
-            
-        case 3:
-        {
-            minuteCount = _weekTimeLong/7 > 0 ? [NSString stringWithFormat:@"%ld", _weekTimeLong/7] : nil;
-        }
-            break;
-            
-        default:
-            break;
+        
+        [cell setTitle:_weekTitleArray[indexPath.row] minuteCount:minuteCount withIndexPath:indexPath];
+        return cell;
     }
     
-    [cell setTitle:_titleArray[indexPath.row] minuteCount:minuteCount withIndexPath:indexPath];
-    return cell;
 }
 
 
@@ -713,6 +773,21 @@ static NSString *cellID = @"DataCellID";
     }
     
     return hourResultDict;
+}
+
+#pragma mark - UIScrollViewDelegate
+
+- (void)scrollViewDidScroll:(UIScrollView *)scrollView
+{
+    if (scrollView == _scrollView) {
+        CGFloat offsetX = scrollView.contentOffset.x;
+        if (offsetX <= kScreenWidth*0.5) {
+            _pageSegmente.selectedSegmentIndex = 0;
+        }
+        else if (offsetX >= kScreenWidth){
+            _pageSegmente.selectedSegmentIndex = 1;
+        }
+    }
 }
 
 

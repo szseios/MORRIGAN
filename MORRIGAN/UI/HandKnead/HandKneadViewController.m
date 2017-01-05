@@ -333,7 +333,7 @@
     //leftChestButton.backgroundColor = [UIColor orangeColor];
     leftChestButton.tag = kButtonSelectedTag;
     [leftChestButton setImage:[UIImage imageNamed:@"leftBreast_highlight"] forState:UIControlStateNormal];
-    [leftChestButton setImage:[UIImage imageNamed:@"leftBreast"] forState:UIControlStateHighlighted];
+    [leftChestButton setImage:[UIImage imageNamed:@"leftBreast_click"] forState:UIControlStateHighlighted];
     [leftChestButton  addTarget:self action:@selector(leftChestButtonClick:) forControlEvents: UIControlEventTouchUpInside];
     [self.view addSubview: leftChestButton];
     _leftChestButton = leftChestButton;
@@ -353,7 +353,7 @@
     //rightChestButton.backgroundColor = [UIColor orangeColor];
     rightChestButton.tag = kButtonSelectedTag;
     [rightChestButton setImage:[UIImage imageNamed:@"rightBreast_higlight"] forState:UIControlStateNormal];
-    [rightChestButton setImage:[UIImage imageNamed:@"rightBreast"] forState:UIControlStateHighlighted];
+    [rightChestButton setImage:[UIImage imageNamed:@"rightBreast_click"] forState:UIControlStateHighlighted];
     [rightChestButton  addTarget:self action:@selector(rightChestButtonClick:) forControlEvents: UIControlEventTouchUpInside];
     [self.view addSubview: rightChestButton];
     _rightChestButton = rightChestButton;
@@ -661,7 +661,7 @@
         if(button.tag == kButtonUnselectedTag) {
             button.tag = kButtonSelectedTag;
             [button setImage:[UIImage imageNamed:@"leftBreast_highlight"] forState:UIControlStateNormal];
-            [button setImage:[UIImage imageNamed:@"leftBreast"] forState:UIControlStateHighlighted];
+            // [button setImage:[UIImage imageNamed:@"leftBreast"] forState:UIControlStateHighlighted];
             
         } else if(button.tag == kButtonSelectedTag) {
             if(_rightChestButton.tag == kButtonUnselectedTag) {
@@ -673,14 +673,14 @@
             }
             button.tag = kButtonUnselectedTag;
             [button setImage:[UIImage imageNamed:@"leftBreast"] forState:UIControlStateNormal];
-            [button setImage:[UIImage imageNamed:@"leftBreast_highlight"] forState:UIControlStateHighlighted];
+            //[button setImage:[UIImage imageNamed:@"leftBreast_highlight"] forState:UIControlStateHighlighted];
         }
     } else {
         // 右胸
         if(button.tag == kButtonUnselectedTag) {
             button.tag = kButtonSelectedTag;
             [button setImage:[UIImage imageNamed:@"rightBreast_higlight"] forState:UIControlStateNormal];
-            [button setImage:[UIImage imageNamed:@"rightBreast"] forState:UIControlStateHighlighted];
+            //[button setImage:[UIImage imageNamed:@"rightBreast"] forState:UIControlStateHighlighted];
             
         } else if(button.tag == kButtonSelectedTag) {
             if(_leftChestButton.tag == kButtonUnselectedTag) {
@@ -692,7 +692,7 @@
             }
             button.tag = kButtonUnselectedTag;
             [button setImage:[UIImage imageNamed:@"rightBreast"] forState:UIControlStateNormal];
-            [button setImage:[UIImage imageNamed:@"rightBreast_higlight"] forState:UIControlStateHighlighted];
+            //[button setImage:[UIImage imageNamed:@"rightBreast_higlight"] forState:UIControlStateHighlighted];
         }
         
     }

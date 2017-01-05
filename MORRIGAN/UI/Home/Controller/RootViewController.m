@@ -41,6 +41,10 @@
     
     _homeCtl = [[HomePageController alloc] init];
     _homeCtl.delegate = self;
+    _homeCtl.view.layer.shadowColor = [UIColor colorWithRed:132/255 green:28/255 blue:194/255 alpha:0.3].CGColor;//shadowColor阴影颜色
+    _homeCtl.view.layer.shadowOffset = CGSizeMake(-4,4);//shadowOffset阴影偏移,x向右偏移-4，y向下偏移4，默认(0, -3),这个跟shadowRadius配合使用
+    _homeCtl.view.layer.shadowOpacity = 0.8;//阴影透明度，默认0
+    _homeCtl.view.layer.shadowRadius = 6;//阴影半径，默认3
     [self addChildViewController:_homeCtl];
     
     _personCtl = [[PersonalController alloc] init];
@@ -157,6 +161,8 @@
 - (void)alertView:(UIAlertView *)alertView clickedButtonAtIndex:(NSInteger)buttonIndex
 {
     if (buttonIndex == 1) {
+        //注销后直接断开蓝牙
+        [[BluetoothManager share] unConnectingBlueTooth];
         [self registerUser];
     }
 }
