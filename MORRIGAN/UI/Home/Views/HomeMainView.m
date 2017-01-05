@@ -383,7 +383,7 @@
     _starLabel = [[UILabel alloc] initWithFrame:CGRectMake(starX, starY, starW, starH)];
     _starLabel.textColor = [UIColor whiteColor];
     _starLabel.textAlignment = NSTextAlignmentCenter;
-    NSString *starCount = _starCount ? _starCount : @"25";
+    NSString *starCount = _starCount ? _starCount : @"0";
     _starLabel.font = [UIFont systemFontOfSize:12];
     [self starLabelAttributeStr:starCount];
     [_downView addSubview:_starLabel];

@@ -179,9 +179,11 @@ NSString * const ElectricQuantityChanged = @"ElectricQuantityChanged";
         if (![DBManager insertPeripheral:peripheral macAddress:weakSelf.willConnectMacAddress]) {
             NSLog(@"保存已绑定设备信息失败.  peripheral.name : %@",peripheral.name);
         }
-        
+
         [[NSNotificationCenter defaultCenter] postNotificationName:ConnectPeripheralSuccess
-                                                            object:nil];
+                                                                object:nil];
+
+        
         
     }];
     
