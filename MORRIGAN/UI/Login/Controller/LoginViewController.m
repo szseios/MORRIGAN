@@ -543,7 +543,7 @@
              
 //             UIAlertView *alert = [[UIAlertView alloc] initWithTitle:[obj objectForKey:HTTP_KEY_RESULTMESSAGE] == nil ? @"登录失败！": [obj objectForKey:HTTP_KEY_RESULTMESSAGE] message:nil delegate:self cancelButtonTitle:nil otherButtonTitles:@"确定", nil];
 //             [alert show];
-             [MBProgressHUD showHUDByContent:@"登录失败" view:self.view];
+             [MBProgressHUD showHUDByContent:@"帐号或密码错误" view:self.view];
              
          }
          
