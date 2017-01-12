@@ -231,11 +231,16 @@
     CGFloat okBtnRootViewH = 44.0;
     CGFloat okBtnRootViewW = editViewW;
     CGFloat okBtnRootViewX = editViewPaddingLeftRight;
-    CGFloat okBtnRootViewY = kScreenHeight - 100.0 - okBtnRootViewH;
+    CGFloat okBtnRootViewY = kScreenHeight - 130.0 - okBtnRootViewH;
     if(kScreenHeight < 500) {
         // 4/ipa
         okBtnRootViewY = kScreenHeight - 30.0 - okBtnRootViewH;
     }
+    
+    if (kScreenHeight == 568) {
+        okBtnRootViewY = kScreenHeight - 100.0 - okBtnRootViewH;
+    }
+    
     UIView *okBtnRootView = [[UIView alloc]initWithFrame:CGRectMake(okBtnRootViewX, okBtnRootViewY, okBtnRootViewW, okBtnRootViewH)];
     okBtnRootView.backgroundColor = [UIColor clearColor];
     [self.rootView addSubview:okBtnRootView];
