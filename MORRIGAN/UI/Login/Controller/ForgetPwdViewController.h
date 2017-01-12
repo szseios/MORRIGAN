@@ -14,4 +14,6 @@
 
 @interface ForgetPwdViewController : LoginBaseController
 
+@property(strong, nonatomic)NSString* phoneNumber;
+
 @end

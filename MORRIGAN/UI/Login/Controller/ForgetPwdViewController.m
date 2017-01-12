@@ -44,13 +44,13 @@
 
 @implementation ForgetPwdViewController
 
+
+
 - (void)viewDidLoad {
     [super viewDidLoad];
     
-    
-    // 初始化视图
     [self initView];
-
+    _phoneNumbrInputView.text = _phoneNumber;
 }
 
 
@@ -284,21 +284,33 @@
     NSString *phoneNumber = _phoneNumbrInputView.text;
     BOOL isPhoneNumberRight = [Utils checkMobile: phoneNumber];
     
-    if(phoneNumber && phoneNumber.length == 0) {
-        UIAlertView *alert = [[UIAlertView alloc] initWithTitle:@"请输入手机号" message:nil delegate:self cancelButtonTitle:nil otherButtonTitles:@"确定", nil];
-        [alert show];
-        return;
-    }
+//    if(phoneNumber && phoneNumber.length == 0) {
+//        UIAlertView *alert = [[UIAlertView alloc] initWithTitle:@"请输入手机号" message:nil delegate:self cancelButtonTitle:nil otherButtonTitles:@"确定", nil];
+//        [alert show];
+//        return;
+//    }
+//    
+//    if(!isPhoneNumberRight) {
+//        UIAlertView *alert = [[UIAlertView alloc] initWithTitle:@"您输入的手机号码有误" message:nil delegate:self cancelButtonTitle:nil otherButtonTitles:@"确定", nil];
+//        [alert show];
+//        return;
+//    }
+
     
     if(!isPhoneNumberRight) {
-        UIAlertView *alert = [[UIAlertView alloc] initWithTitle:@"您输入的手机号码有误" message:nil delegate:self cancelButtonTitle:nil otherButtonTitles:@"确定", nil];
-        [alert show];
+        //        UIAlertView *alert = [[UIAlertView alloc] initWithTitle:@"请输入正确的手机号" message:nil delegate:self cancelButtonTitle:nil otherButtonTitles:@"确定", nil];
+        //        [alert show];
+        [MBProgressHUD showHUDByContent:@"请输入正确的手机号" view:self.view];
         return;
     }
     
-    UIAlertView *alert = [[UIAlertView alloc] initWithTitle:@"确认手机号码" message:phoneNumber delegate:self cancelButtonTitle:@"取消" otherButtonTitles:@"确定", nil];
-    alert.tag = kAlertViewTagOfConfirmPhoneNumber;
-    [alert show];
+    
+//    UIAlertView *alert = [[UIAlertView alloc] initWithTitle:@"确认手机号码" message:phoneNumber delegate:self cancelButtonTitle:@"取消" otherButtonTitles:@"确定", nil];
+//    alert.tag = kAlertViewTagOfConfirmPhoneNumber;
+//    [alert show];
+    
+    // 获取手机验证码
+    [self getPhoneMsgCode];
 }
 
 // 手机输入框点击
@@ -383,43 +395,66 @@
         return;
     }
     
-    // 校验
-    if(phoneNumber && phoneNumber.length == 0) {
-        UIAlertView *alert = [[UIAlertView alloc] initWithTitle:@"请输入手机号" message:nil delegate:self cancelButtonTitle:nil otherButtonTitles:@"确定", nil];
-        [alert show];
-        return;
-    }
-    
+//    // 校验
+//    if(phoneNumber && phoneNumber.length == 0) {
+//        UIAlertView *alert = [[UIAlertView alloc] initWithTitle:@"请输入手机号" message:nil delegate:self cancelButtonTitle:nil otherButtonTitles:@"确定", nil];
+//        [alert show];
+//        return;
+//    }
+//    
+//    if(!isPhoneNumberRight) {
+//        UIAlertView *alert = [[UIAlertView alloc] initWithTitle:@"您输入的手机号码有误" message:nil delegate:self cancelButtonTitle:nil otherButtonTitles:@"确定", nil];
+//        [alert show];
+//        return;
+//    }
+//    
+//    
+//    if(password && password.length == 0) {
+//        UIAlertView *alert = [[UIAlertView alloc] initWithTitle:@"请输入密码" message:nil delegate:self cancelButtonTitle:nil otherButtonTitles:@"确定", nil];
+//        [alert show];
+//        return;
+//    }
+//    
+//    if(!isPasswordRight) {
+//        UIAlertView *alert = [[UIAlertView alloc] initWithTitle:@"您输入的密码格式有误" message:nil delegate:self cancelButtonTitle:nil otherButtonTitles:@"确定", nil];
+//        [alert show];
+//        return;
+//    }
+//    
+//    if(authCode && authCode.length == 0) {
+//        UIAlertView *alert = [[UIAlertView alloc] initWithTitle:@"请输入验证码" message:nil delegate:self cancelButtonTitle:nil otherButtonTitles:@"确定", nil];
+//        [alert show];
+//        return;
+//    }
+//    
+//    if(!isauthCodeRight) {
+//        UIAlertView *alert = [[UIAlertView alloc] initWithTitle:@"验证码格式错误，请重新填写" message:nil delegate:self cancelButtonTitle:nil otherButtonTitles:@"确定", nil];
+//        [alert show];
+//        return;
+//    }
     if(!isPhoneNumberRight) {
-        UIAlertView *alert = [[UIAlertView alloc] initWithTitle:@"您输入的手机号码有误" message:nil delegate:self cancelButtonTitle:nil otherButtonTitles:@"确定", nil];
-        [alert show];
-        return;
-    }
-    
-    
-    if(password && password.length == 0) {
-        UIAlertView *alert = [[UIAlertView alloc] initWithTitle:@"请输入密码" message:nil delegate:self cancelButtonTitle:nil otherButtonTitles:@"确定", nil];
-        [alert show];
-        return;
-    }
-    
-    if(!isPasswordRight) {
-        UIAlertView *alert = [[UIAlertView alloc] initWithTitle:@"您输入的密码格式有误" message:nil delegate:self cancelButtonTitle:nil otherButtonTitles:@"确定", nil];
-        [alert show];
+        [MBProgressHUD showHUDByContent:@"请输入正确的手机号" view:self.view];
         return;
     }
     
     if(authCode && authCode.length == 0) {
-        UIAlertView *alert = [[UIAlertView alloc] initWithTitle:@"请输入验证码" message:nil delegate:self cancelButtonTitle:nil otherButtonTitles:@"确定", nil];
-        [alert show];
+        [MBProgressHUD showHUDByContent:@"请输入验证码" view:self.view];
         return;
     }
     
-    if(!isauthCodeRight) {
-        UIAlertView *alert = [[UIAlertView alloc] initWithTitle:@"验证码格式错误，请重新填写" message:nil delegate:self cancelButtonTitle:nil otherButtonTitles:@"确定", nil];
-        [alert show];
+    if(password && password.length == 0) {
+        [MBProgressHUD showHUDByContent:@"请输入密码" view:self.view];
         return;
     }
+    
+    
+    if(!isPhoneNumberRight || !isPasswordRight) {
+        //        UIAlertView *alert = [[UIAlertView alloc] initWithTitle:@"手机号或密码错误" message:nil delegate:self cancelButtonTitle:nil otherButtonTitles:@"确定", nil];
+        //        [alert show];
+        [MBProgressHUD showHUDByContent:@"手机号或密码错误" view:self.view];
+        return;
+    }
+    
     
     
     // 更改密码
@@ -496,10 +531,11 @@
          } else {
              
              NSLog(@"获取验证码失败！");
+             [MBProgressHUD showHUDByContent:[obj objectForKey:HTTP_KEY_RESULTMESSAGE] view:self.view];
          }
          
-         UIAlertView *alert = [[UIAlertView alloc] initWithTitle:[obj objectForKey:HTTP_KEY_RESULTMESSAGE] message:nil delegate:self cancelButtonTitle:nil otherButtonTitles:@"确定", nil];
-         [alert show];
+//         UIAlertView *alert = [[UIAlertView alloc] initWithTitle:[obj objectForKey:HTTP_KEY_RESULTMESSAGE] message:nil delegate:self cancelButtonTitle:nil otherButtonTitles:@"确定", nil];
+//         [alert show];
          
          
      }];

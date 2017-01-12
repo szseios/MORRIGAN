@@ -329,6 +329,7 @@
 {
     NSLog(@"forgetPWDButtonClickInLogin");
     ForgetPwdViewController *forgetPwdViewController = [[ForgetPwdViewController alloc] init];
+    forgetPwdViewController.phoneNumber = _phoneNumbrInputView.text;
     [self.navigationController pushViewController:forgetPwdViewController animated:YES];
 }
 

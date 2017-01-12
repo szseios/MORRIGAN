@@ -399,8 +399,8 @@
 //    [alert show];
     
     // 获取手机验证码
-    //[self getPhoneMsgCode];
-    [self ifRegister:_phoneNumbrInputView.text];
+    [self getPhoneMsgCode];
+    //[self ifRegister:_phoneNumbrInputView.text];
 }
 
 
@@ -519,10 +519,21 @@
 //        return;
 //    }
     
+    if(phoneNumber && phoneNumber.length == 0) {
+        [MBProgressHUD showHUDByContent:@"请输入正确的手机号" view:self.view];
+        return;
+    }
+    
+    if(authCode && authCode.length == 0) {
+        [MBProgressHUD showHUDByContent:@"请输入验证码" view:self.view];
+        return;
+    }
+    
     if(password && password.length == 0) {
        [MBProgressHUD showHUDByContent:@"请输入密码" view:self.view];
         return;
     }
+
     
     if(!isPhoneNumberRight || !isPasswordRight) {
         //        UIAlertView *alert = [[UIAlertView alloc] initWithTitle:@"手机号或密码错误" message:nil delegate:self cancelButtonTitle:nil otherButtonTitles:@"确定", nil];
@@ -532,17 +543,19 @@
     }
     
     
-    if(authCode == nil || authCode.length == 0 ) {
-        //        UIAlertView *alert = [[UIAlertView alloc] initWithTitle:@"验证码格式错误，请重新填写" message:nil delegate:self cancelButtonTitle:nil otherButtonTitles:@"确定", nil];
-        //        [alert show];
-        //        return;
-        //    }
-        [MBProgressHUD showHUDByContent:@"请输入验证码" view:self.view];
-        return;
-    }
+//    if(authCode == nil || authCode.length == 0 ) {
+//        //        UIAlertView *alert = [[UIAlertView alloc] initWithTitle:@"验证码格式错误，请重新填写" message:nil delegate:self cancelButtonTitle:nil otherButtonTitles:@"确定", nil];
+//        //        [alert show];
+//        //        return;
+//        //    }
+//        [MBProgressHUD showHUDByContent:@"请输入验证码" view:self.view];
+//        return;
+//    }
     
-    // 注册
-    [self beginRegister:phoneNumber authCode:authCode password:password sex:_sexString];
+    
+    [self ifRegister:_phoneNumbrInputView.text];
+//    // 注册
+//    [self beginRegister:phoneNumber authCode:authCode password:password sex:_sexString];
     
 }
 
@@ -568,11 +581,11 @@
     switch (buttonIndex) {
         case 0:
         {
-//            if(alertView.tag == kAlertViewTagOfIntoLogin) {
-//                
-//                // 进入登录界面
-//                [self intoLoginPage];
-//            }
+            if(alertView.tag == kAlertViewTagOfIntoLogin) {
+                
+                // 进入登录界面
+                [self intoLoginPage];
+            }
 
         }
             break;
@@ -615,6 +628,7 @@
          } else {
              
              NSLog(@"获取验证码失败！");
+             [MBProgressHUD showHUDByContent:[obj objectForKey:HTTP_KEY_RESULTMESSAGE] view:self.view];
          }
          
 //         UIAlertView *alert = [[UIAlertView alloc] initWithTitle:[obj objectForKey:HTTP_KEY_RESULTMESSAGE] message:nil delegate:self cancelButtonTitle:nil otherButtonTitles:@"确定", nil];
@@ -749,12 +763,18 @@
 //             UIAlertView *alert = [[UIAlertView alloc] initWithTitle: @"该手机号已被注册" message:nil delegate:self cancelButtonTitle:@"确定" otherButtonTitles:nil, nil];
 //             [alert show];
              [MBProgressHUD showHUDByContent:@"该手机号已被注册" view:self.view];
+             UIAlertView *alert = [[UIAlertView alloc] initWithTitle: @"该手机号已注册" message:nil delegate:self cancelButtonTitle:@"确定" otherButtonTitles:nil, nil];
+             alert.tag = kAlertViewTagOfIntoLogin;
+             [alert show];
              
              
          } else if ([[obj objectForKey:HTTP_KEY_RESULTCODE] isEqualToString:HTTP_RESULTCODE_ERROR]) {
              NSLog(@"账号未注册！");
-             // 获取手机验证码
-             [weakSelf getPhoneMsgCode];
+//             // 获取手机验证码
+//             [weakSelf getPhoneMsgCode];
+             
+             // 注册
+             [self beginRegister:_phoneNumbrInputView.text authCode:_authCodeInputView.text password:_passwordInputView.text sex:_sexString];
              
          }
          
