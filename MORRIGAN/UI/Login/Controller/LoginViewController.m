@@ -427,6 +427,7 @@
 - (void)ifRegister:(NSString *)phoneNumber password:(NSString *)password
 {
     NSLog(@"是否注册，手机：%@, 密码：%@ ", phoneNumber, password);
+    [self showRemoteAnimation:@"正在登录, 请稍候..."];
     
     NSDictionary *dictionary = @{@"mobile": phoneNumber};
     __weak LoginViewController *weakSelf = self;
@@ -460,7 +461,6 @@
 // 登录
 - (void)beginLogin:(NSString *)phoneNumber password:(NSString *)password
 {
-    [self showRemoteAnimation:@"正在登录, 请稍候..."];
     
     NSLog(@"登录，手机：%@, 密码：%@ ", phoneNumber, password);
     
