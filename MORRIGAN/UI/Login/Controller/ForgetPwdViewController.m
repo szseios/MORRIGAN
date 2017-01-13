@@ -70,20 +70,20 @@
     topRootView.backgroundColor = [Utils stringTOColor:kColor_440067];
     [self.rootView addSubview:topRootView];
     // 取消按钮
-    CGFloat cancleBtnY = 25.0;
+    CGFloat cancleBtnY = 0.0;
     if(kScreenHeight < 570) {
         // 5s
-        cancleBtnY = 20.0;
+        cancleBtnY = 0.0;
     }
-    CGFloat cancleBtnW = 40.0;
-    UIButton *cancleBtn = [[UIButton alloc] initWithFrame:CGRectMake(10, cancleBtnY, cancleBtnW, cancleBtnW)];
+    CGFloat cancleBtnW = 35.0;
+    UIButton *cancleBtn = [[UIButton alloc] initWithFrame:CGRectMake(5, cancleBtnY, cancleBtnW, cancleBtnW)];
     //cancleBtn.backgroundColor = [UIColor blueColor];
     [cancleBtn setImage:[UIImage imageNamed:@"ic_close"] forState:UIControlStateNormal];
     [cancleBtn setImage:[UIImage imageNamed:@"ic_close"] forState:UIControlStateHighlighted];
     [cancleBtn addTarget:self action:@selector(cancleButtonClickInForgetPwd) forControlEvents:UIControlEventTouchUpInside];
     [topRootView addSubview:cancleBtn];
     // 忘记密码
-    CGFloat labelView1Y = cancleBtnY + cancleBtnW;
+    CGFloat labelView1Y = (imageViewH-30-20-20)/2;
     CGFloat labelView1H = 30.0;
     UILabel *labelView1 = [[UILabel alloc] initWithFrame:CGRectMake(0, labelView1Y, kScreenWidth, labelView1H)];
     labelView1.text = @"忘记密码";
