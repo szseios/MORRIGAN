@@ -38,6 +38,8 @@
 
 @property (nonatomic , strong) UIImage *selectedImage;
 
+@property (nonatomic , strong) UIView *realPickerBackgroudView;
+
 @end
 
 @implementation MyDataController
@@ -246,8 +248,11 @@ static NSString *cellIdentifier = @"cellIdentifier";
 
 - (void)setUpChooseViewWithType:(pickerViewType)type
 {
+    _realPickerBackgroudView = [[UIView alloc] initWithFrame:CGRectMake(0, 64, kScreenWidth, kScreenHeight-64)];
+    _realPickerBackgroudView.backgroundColor = [UIColor colorWithRed:0 green:0 blue:0 alpha:0.4];
+    [self.view addSubview:_realPickerBackgroudView];
     _pickerBackgroudView = [[UIView alloc] initWithFrame:CGRectMake(0, kScreenHeight, kScreenWidth, kScreenHeight-64)];
-    _pickerBackgroudView.backgroundColor = [UIColor colorWithRed:0.8 green:0.8 blue:0.8 alpha:0.4];
+    _pickerBackgroudView.backgroundColor = [UIColor clearColor];
     [self.view addSubview:_pickerBackgroudView];
     switch (type) {
         case pickerViewTypeAge:
@@ -295,10 +300,16 @@ static NSString *cellIdentifier = @"cellIdentifier";
     }];
     [_pickerBackgroudView removeFromSuperview];
     _pickerBackgroudView = nil;
+    
+    [_realPickerBackgroudView removeFromSuperview];
+    _realPickerBackgroudView = nil;
 }
 
 - (void)sureToSelectData:(NSString *)selectData
 {
+    
+    [_realPickerBackgroudView removeFromSuperview];
+    _realPickerBackgroudView = nil;
     if(selectData == nil || selectData.length == 0) {
         [UIView animateWithDuration:0.2 animations:^{
             self.pickerBackgroudView.y = kScreenHeight;
@@ -539,6 +550,9 @@ static NSString *cellIdentifier = @"cellIdentifier";
 - (void)touchesBegan:(NSSet<UITouch *> *)touches withEvent:(UIEvent *)event
 {
     [_pickerBackgroudView removeFromSuperview];
+    _pickerBackgroudView = nil;
+    [_realPickerBackgroudView removeFromSuperview];
+    _realPickerBackgroudView = nil;
 }
 
 - (void)didReceiveMemoryWarning {

@@ -20,12 +20,12 @@
     _unitLabel.textColor = [UIColor colorWithRed:0 green:0 blue:0 alpha:0.4];
     [self addSubview:_unitLabel];
     
-    _minuteLabel = [[UILabel alloc] initWithFrame:CGRectMake(kScreenWidth - 250, self.height / 2 - 15, 200, 30)];
+    _minuteLabel = [[UILabel alloc] initWithFrame:CGRectMake(kScreenWidth - 245, self.height / 2 - 15, 200, 30)];
     _minuteLabel.font = [UIFont systemFontOfSize:15];
     _minuteLabel.textAlignment = NSTextAlignmentRight;
     _minuteLabel.textColor = [UIColor colorWithRed:0 green:0 blue:0 alpha:0.4];
     [self addSubview:_minuteLabel];
-    _emptyImage = [[UIImageView alloc] initWithFrame:CGRectMake(kScreenWidth - 82, self.height / 2 - 2, 30, 4)];
+    _emptyImage = [[UIImageView alloc] initWithFrame:CGRectMake(kScreenWidth - 80, self.height / 2 - 2, 30, 4)];
     _emptyImage.image = [UIImage imageNamed:@"icon_noRecord"];
     [self addSubview:_emptyImage];
 }

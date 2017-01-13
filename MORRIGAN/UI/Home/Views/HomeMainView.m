@@ -156,7 +156,7 @@
     CGFloat y = 0.f;
     //第一个波纹的公式
     for (float x = 0.f; x <= waveW ; x++) {
-        y = 10*sin((250 / waveW) * (x * M_PI / 140) - self.waveOffsetX * M_PI / 140 + M_PI*1.25) + waveW * 0.7;
+        y = 10*sin((280 / waveW) * (x * M_PI / 140) - self.waveOffsetX * M_PI / 140 + M_PI*1.2) + waveW * 0.685;
         CGPathAddLineToPoint(path, nil, x, y);
         x++;
     }

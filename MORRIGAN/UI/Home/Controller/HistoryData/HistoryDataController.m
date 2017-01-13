@@ -160,7 +160,7 @@ static NSString *weekCellID = @"weekCellID";
 {
     [_weekMinuteDataLabel removeFromSuperview];
     CGFloat labelY = 30;
-    _weekMinuteDataLabel = [[UILabel alloc] initWithFrame:CGRectMake(15, (_weekTimeLong > 0 ? labelY : 20), 60, 20)];
+    _weekMinuteDataLabel = [[UILabel alloc] initWithFrame:CGRectMake(15, (_weekTimeLong > 0 ? labelY+3 : 20), 60, 20)];
     _weekMinuteDataLabel.textColor = [UIColor colorWithRed:1 green:1 blue:1 alpha:0.6];
     _weekMinuteDataLabel.textAlignment = NSTextAlignmentRight;
     _weekMinuteDataLabel.font = [UIFont systemFontOfSize:14];
@@ -290,8 +290,7 @@ static NSString *weekCellID = @"weekCellID";
         NSInteger sec = [[todatSecDict objectForKey:hourKey] integerValue];
         CGFloat h = sec*2.1 + 2;
         UIView *bar = [[UIView alloc] initWithFrame:CGRectMake(barX * i+10 + ((kScreenWidth - 20) / 96), mostBarH - h, barW, h)];
-        bar.backgroundColor = [UIColor whiteColor];
-        bar.alpha = 0.6;
+        bar.backgroundColor = [UIColor colorWithRed:1 green:1 blue:1 alpha:0.5];
         bar.tag = 1000 + i;
         [_dayView addSubview:bar];
         
@@ -327,7 +326,7 @@ static NSString *weekCellID = @"weekCellID";
     }
     _weekTimeLong = _weekTimeLong + _todayAllSec;
     
-    _minuteDataLabel = [[UILabel alloc] initWithFrame:CGRectMake(15, (_weekTimeLong > 0 ? labelY : 20), 60, 20)];
+    _minuteDataLabel = [[UILabel alloc] initWithFrame:CGRectMake(15, (_weekTimeLong > 0 ? labelY+3 : 20), 60, 20)];
     _minuteDataLabel.textColor = [UIColor colorWithRed:1 green:1 blue:1 alpha:0.5];
     _minuteDataLabel.textAlignment = NSTextAlignmentRight;
     _minuteDataLabel.font = [UIFont systemFontOfSize:(_todayAllSec > 0 ? 14 : 35)];
@@ -393,11 +392,11 @@ static NSString *weekCellID = @"weekCellID";
     [_scrollView addSubview:_weekView];
     
     CGFloat labelY = 30;
-    _weekMinuteDataLabel = [[UILabel alloc] initWithFrame:CGRectMake(15, (_weekTimeLong > 0 ? labelY : 20), 60, 20)];
+    _weekMinuteDataLabel = [[UILabel alloc] initWithFrame:CGRectMake(15, (_weekTimeLong > 0 ? labelY+3 : 20), 60, 20)];
     _weekMinuteDataLabel.textColor = [UIColor colorWithRed:1 green:1 blue:1 alpha:0.6];
     _weekMinuteDataLabel.textAlignment = NSTextAlignmentRight;
     _weekMinuteDataLabel.font = [UIFont systemFontOfSize:14];
-    _weekMinuteDataLabel.text = @"--";
+    _weekMinuteDataLabel.text = @"__";
     [_weekMinuteDataLabel sizeToFit];
     
     [_weekView addSubview:_weekMinuteDataLabel];
@@ -421,7 +420,7 @@ static NSString *weekCellID = @"weekCellID";
     CGFloat dayBarViewW = kScreenWidth - 30;
     
     UIView *lineView = [[UIView alloc] initWithFrame:CGRectMake(dayBarViewX, dayBarViewY, dayBarViewW, 2)];
-    lineView.backgroundColor = [UIColor colorWithRed:1 green:1 blue:1 alpha:0.6];
+    lineView.backgroundColor = [UIColor colorWithRed:1 green:1 blue:1 alpha:0.5];
     [_weekView addSubview:lineView];
     
     CGFloat barX = 15;
@@ -430,8 +429,7 @@ static NSString *weekCellID = @"weekCellID";
     for (NSInteger i = 0; i < 7; i++) {
         CGFloat h = 2;
         UIView *bar = [[UIView alloc] initWithFrame:CGRectMake(barX, mostBarH - h, barW, h)];
-        bar.backgroundColor = [UIColor whiteColor];
-        bar.alpha = 0.6;
+        bar.backgroundColor = [UIColor colorWithRed:1 green:1 blue:1 alpha:0.5];
         bar.tag = 2000 + i;
         [_weekView addSubview:bar];
         
@@ -779,15 +777,34 @@ static NSString *weekCellID = @"weekCellID";
 
 - (void)scrollViewDidScroll:(UIScrollView *)scrollView
 {
+//    if (scrollView == _scrollView) {
+//        CGFloat offsetX = scrollView.contentOffset.x;
+//        if (offsetX < kScreenWidth) {
+//            _pageSegmente.selectedSegmentIndex = 0;
+//        }
+//        else if (offsetX >= kScreenWidth){
+//            _pageSegmente.selectedSegmentIndex = 1;
+//        }
+//    }
+}
+
+- (void)scrollViewDidEndDecelerating:(UIScrollView *)scrollView
+{
     if (scrollView == _scrollView) {
         CGFloat offsetX = scrollView.contentOffset.x;
-        if (offsetX <= kScreenWidth*0.5) {
+        if (offsetX < kScreenWidth) {
             _pageSegmente.selectedSegmentIndex = 0;
         }
         else if (offsetX >= kScreenWidth){
             _pageSegmente.selectedSegmentIndex = 1;
         }
     }
+}
+
+
+- (void)scrollViewDidEndScrollingAnimation:(UIScrollView *)scrollView
+{
+    
 }
 
 
