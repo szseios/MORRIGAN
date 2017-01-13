@@ -71,7 +71,19 @@
     CGRect f = _rootScroolView.frame;
     f.size.height = kScreenHeight - height;
     _rootScroolView.frame = f;
-    _rootScroolView.contentOffset = CGPointMake(0, 120);
+    _rootScroolView.contentOffset = CGPointMake(0, 170);
+    if (kScreenHeight == 568) {
+        _rootScroolView.contentOffset = CGPointMake(0, 170);
+    }
+    else if (kScreenHeight == 667) {
+        _rootScroolView.contentOffset = CGPointMake(0, 170);
+    }
+    else if (kScreenHeight == 736) {
+        _rootScroolView.contentOffset = CGPointMake(0, 190);
+    }
+    else if (kScreenHeight < 500) {
+        _rootScroolView.contentOffset = CGPointMake(0, 210);
+    }
     _rootScroolView.scrollEnabled = YES;
     
 }

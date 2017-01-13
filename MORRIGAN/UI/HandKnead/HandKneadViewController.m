@@ -219,7 +219,7 @@
     [bigCircleRootView addSubview:gearLabel];
     
     // 时间（55:55）
-    CGFloat timeLabelW = 100;
+    CGFloat timeLabelW = 120;
     CGFloat timeLabelH = 40;
     CGFloat timeLabelX = bigCircleRootViewW/2 - timeLabelW/2;
     CGFloat timeLabelY = bigCircleRootViewH - 30 - timeLabelH;
@@ -231,7 +231,7 @@
     timeLabel.text = @"00:00";
     timeLabel.textAlignment = NSTextAlignmentCenter;
     timeLabel.textColor = [UIColor whiteColor];
-    timeLabel.font = [UIFont boldSystemFontOfSize:25.0];
+    timeLabel.font = [UIFont systemFontOfSize:30.0];
     [bigCircleRootView addSubview:timeLabel];
     _timeLabel = timeLabel;
     

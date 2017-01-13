@@ -378,7 +378,7 @@
     funButton4.funCodeString = @"04";
     [self.view addSubview:funButton4];
     UILabel *labelStrong = [[UILabel alloc] initWithFrame:CGRectMake(buttonX, buttonY + buttonH + 10, buttonW, 20)];
-    labelStrong.text = @"强振";
+    labelStrong.text = @"强震";
     labelStrong.textColor = [Utils stringTOColor:kColor_6911a5];
     labelStrong.textAlignment = NSTextAlignmentCenter;
     [self.view addSubview:labelStrong];
