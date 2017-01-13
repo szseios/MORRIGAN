@@ -84,7 +84,7 @@
     else if (kScreenHeight < 500) {
         _rootScroolView.contentOffset = CGPointMake(0, 210);
     }
-    _rootScroolView.scrollEnabled = NO;
+    _rootScroolView.scrollEnabled = YES;
     
 }
 
