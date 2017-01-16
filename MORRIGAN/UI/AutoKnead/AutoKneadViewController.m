@@ -341,6 +341,33 @@
     [self.view addSubview:labelWater];
     
     buttonX = kScreenWidth - margingLeftRight - buttonW;
+    
+    
+    // 动感（底部：2行－右）
+    FuntionButton *funButton5 = [[FuntionButton alloc] initWithFrame:CGRectMake(buttonX, buttonY, buttonW, buttonH)];
+    funButton5.buttonImage = [UIImage imageNamed:@"movingFeel"];
+    funButton5.buttonBeenDrapImage = [UIImage imageNamed:@"select_movingFeel"];
+    funButton5.buttonKneedingImage = [UIImage imageNamed:@"icon-movingFeel"];
+    [funButton5 setImage:funButton5.buttonImage forState:UIControlStateNormal];
+    UIPanGestureRecognizer *panGestureRecognizer5 = [[UIPanGestureRecognizer alloc] initWithTarget:self action:@selector(dragReplyButton:)];
+    [funButton5 addGestureRecognizer:panGestureRecognizer5];
+    [funButton5 addTarget:self action:@selector(preKneedHandler:) forControlEvents:UIControlEventTouchUpInside];
+    funButton5.tag = kTagOfFeel;
+    funButton5.funCodeString = @"05";
+    [self.view addSubview:funButton5];
+    UILabel *labelFeel = [[UILabel alloc] initWithFrame:CGRectMake(buttonX, buttonY + buttonH + 10, buttonW, 20)];
+    labelFeel.text = @"动感";
+    labelFeel.textColor = [Utils stringTOColor:kColor_6911a5];
+    labelFeel.textAlignment = NSTextAlignmentCenter;
+    [self.view addSubview:labelFeel];
+    
+    buttonY = funButton5.frame.origin.y + funButton5.frame.size.height + 50;
+    if(kScreenHeight < 570) {
+        // 5s
+        buttonY = funButton5.frame.origin.y + funButton5.frame.size.height + 30;
+    }
+    buttonX = funButton1.frame.origin.x + funButton1.frame.size.width + ((funButton2.frame.origin.x - (funButton1.frame.origin.x + funButton1.frame.size.width))/2 - buttonW/2);
+    
     // 微按（底部：1行－右）
     FuntionButton *funButton3 = [[FuntionButton alloc] initWithFrame:CGRectMake(buttonX, buttonY, buttonW, buttonH)];
     funButton3.buttonImage = [UIImage imageNamed:@"lightPress"];
@@ -359,12 +386,7 @@
     labelLittle.textAlignment = NSTextAlignmentCenter;
     [self.view addSubview:labelLittle];
     
-    buttonY = funButton3.frame.origin.y + funButton3.frame.size.height + 50;
-    if(kScreenHeight < 570) {
-        // 5s
-        buttonY = funButton3.frame.origin.y + funButton3.frame.size.height + 30;
-    }
-    buttonX = funButton1.frame.origin.x + funButton1.frame.size.width + ((funButton2.frame.origin.x - (funButton1.frame.origin.x + funButton1.frame.size.width))/2 - buttonW/2);
+    buttonX = funButton2.frame.origin.x + funButton2.frame.size.width + ((funButton5.frame.origin.x - (funButton2.frame.origin.x + funButton2.frame.size.width))/2 - buttonW/2);
     // 强振（底部：2行－左）
     FuntionButton *funButton4 = [[FuntionButton alloc] initWithFrame:CGRectMake(buttonX, buttonY, buttonW, buttonH)];
     funButton4.buttonImage = [UIImage imageNamed:@"strongShake"];
@@ -383,24 +405,8 @@
     labelStrong.textAlignment = NSTextAlignmentCenter;
     [self.view addSubview:labelStrong];
     
-    buttonX = funButton2.frame.origin.x + funButton2.frame.size.width + ((funButton3.frame.origin.x - (funButton2.frame.origin.x + funButton2.frame.size.width))/2 - buttonW/2);
-    // 动感（底部：2行－右）
-    FuntionButton *funButton5 = [[FuntionButton alloc] initWithFrame:CGRectMake(buttonX, buttonY, buttonW, buttonH)];
-    funButton5.buttonImage = [UIImage imageNamed:@"movingFeel"];
-    funButton5.buttonBeenDrapImage = [UIImage imageNamed:@"select_movingFeel"];
-    funButton5.buttonKneedingImage = [UIImage imageNamed:@"icon-movingFeel"];
-    [funButton5 setImage:funButton5.buttonImage forState:UIControlStateNormal];
-    UIPanGestureRecognizer *panGestureRecognizer5 = [[UIPanGestureRecognizer alloc] initWithTarget:self action:@selector(dragReplyButton:)];
-    [funButton5 addGestureRecognizer:panGestureRecognizer5];
-    [funButton5 addTarget:self action:@selector(preKneedHandler:) forControlEvents:UIControlEventTouchUpInside];
-    funButton5.tag = kTagOfFeel;
-    funButton5.funCodeString = @"05";
-    [self.view addSubview:funButton5];
-    UILabel *labelFeel = [[UILabel alloc] initWithFrame:CGRectMake(buttonX, buttonY + buttonH + 10, buttonW, 20)];
-    labelFeel.text = @"动感";
-    labelFeel.textColor = [Utils stringTOColor:kColor_6911a5];
-    labelFeel.textAlignment = NSTextAlignmentCenter;
-    [self.view addSubview:labelFeel];
+    
+    
     
     // 用于随意拖动的按钮
     _dragButton = [[FuntionButton alloc] initWithFrame:CGRectMake(50, buttonY, buttonW, buttonH)];
