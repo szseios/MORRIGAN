@@ -121,6 +121,8 @@
     NSArray *array = [self.navigationController viewControllers];
     for (UIViewController *ctl in array) {
         if ([ctl isKindOfClass:[RootViewController class]]) {
+            [self stopAnimating];
+            [[BluetoothManager share] unConnectingBlueTooth];
             [self.navigationController popToViewController:ctl animated:YES];
             break;
         }
