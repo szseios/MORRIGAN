@@ -160,7 +160,7 @@
     CGFloat phoneinputViewPaddingLeft = 5.0;
     UITextField *phoneInputView = [[UITextField alloc] initWithFrame:CGRectMake(iconW + phoneinputViewPaddingLeft, 0, phoneNumRootView.frame.size.width - iconW - cleanUpViewW - phoneinputViewPaddingLeft, editViewH)];
     //phoneInputView.backgroundColor = [UIColor greenColor];
-    phoneInputView.placeholder = @"请填写手机号码";
+    phoneInputView.placeholder = @"请输入手机号码";
     phoneInputView.delegate = self;
     [phoneInputView setInputAccessoryView:self.keyboardTopView];
     // 注意：先设置phoneInputView.placeholder才有效
@@ -198,11 +198,11 @@
     // 密码输入框
     UITextField *PWDInputView = [[UITextField alloc] initWithFrame:CGRectMake(iconW + phoneinputViewPaddingLeft, 0, PWDRootView.frame.size.width - iconW - showPWDViewW - phoneinputViewPaddingLeft, editViewH)];
     //PWDInputView.backgroundColor = [UIColor greenColor];
-    PWDInputView.placeholder = @"输入密码";
+    PWDInputView.placeholder = @"请输入密码";
     [PWDInputView setInputAccessoryView:self.keyboardTopView];
     [PWDInputView setValue:inputViewTextColor forKeyPath:@"_placeholderLabel.textColor"];
     PWDInputView.textColor = [UIColor whiteColor];
-    PWDInputView.secureTextEntry = YES;
+    PWDInputView.secureTextEntry = NO;
     _passwordInputView = PWDInputView;
     [PWDRootView addSubview:PWDInputView];
     // 分割线
@@ -320,7 +320,7 @@
     NSLog(@"showPWDButtonClickInLogin");
     _passwordInputView.secureTextEntry = !_passwordInputView.secureTextEntry;
     //_showPwdButton.backgroundColor = _passwordInputView.secureTextEntry ? [UIColor blueColor] : [UIColor redColor];
-    [_showPwdButton setImage:[UIImage imageNamed:_passwordInputView.secureTextEntry ?@"ic_show_pwd_off" : @"ic_show_pwd_on"] forState:UIControlStateNormal];
+    [_showPwdButton setImage:[UIImage imageNamed:_passwordInputView.secureTextEntry ?@"ic_show_pwd_on" : @"ic_show_pwd_off"] forState:UIControlStateNormal];
 }
 
 
