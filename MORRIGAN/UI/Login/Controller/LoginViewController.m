@@ -199,6 +199,7 @@
     UITextField *PWDInputView = [[UITextField alloc] initWithFrame:CGRectMake(iconW + phoneinputViewPaddingLeft, 0, PWDRootView.frame.size.width - iconW - showPWDViewW - phoneinputViewPaddingLeft, editViewH)];
     //PWDInputView.backgroundColor = [UIColor greenColor];
     PWDInputView.placeholder = @"请输入密码";
+    PWDInputView.delegate = self;
     [PWDInputView setInputAccessoryView:self.keyboardTopView];
     [PWDInputView setValue:inputViewTextColor forKeyPath:@"_placeholderLabel.textColor"];
     PWDInputView.textColor = [UIColor whiteColor];
@@ -304,6 +305,19 @@
             _cleanUpButton.hidden = YES;
         }
     }
+}
+
+-(BOOL)textFieldShouldReturn:(UITextField *)textField
+{
+    if(textField == _phoneNumbrInputView) {
+        [_passwordInputView becomeFirstResponder];
+    } else {
+        [_passwordInputView endEditing:YES];
+        return YES;
+    }
+    
+    
+    return YES;
 }
 
 // 显示密码按钮点击
