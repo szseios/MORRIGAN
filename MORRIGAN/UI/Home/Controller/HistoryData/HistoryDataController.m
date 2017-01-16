@@ -184,14 +184,34 @@ static NSString *weekCellID = @"weekCellID";
     NSInteger maxTimeLong = 0;
     for (NSInteger i = 0; i < _weekDataArray.count; i++) {
         NSInteger timeLong = [_weekDataArray[i] integerValue];
+        // timeLong = 180; // 测试
         if(maxTimeLong < timeLong) {
             maxTimeLong = timeLong;
             _selectDayIndexInWeek = i;
         }
         
         CGRect frame = ((UIView *)_weekBarViewArray[i]).frame;
-        frame.size.height = frame.size.height + timeLong*0.65;
-        frame.origin.y =  frame.origin.y - timeLong*0.65;
+        
+        CGFloat temp = timeLong*0.65;
+        if (kScreenHeight == 568) {
+            // 5s
+            temp = timeLong*0.9;
+        }
+        else if (kScreenHeight == 667) {
+            // 6
+            temp = timeLong*1.2;
+        }
+        else if (kScreenHeight == 736) {
+            // 6p
+            temp = timeLong*1.3;
+        }
+        else if (kScreenHeight < 500) {
+            // ipad
+            temp = timeLong*0.70;
+        }
+        
+        frame.size.height = frame.size.height + temp;
+        frame.origin.y =  frame.origin.y - temp;
         ((UIView *)_weekBarViewArray[i]).frame = frame;
         
         CGRect labelFrame = ((UIView *)_weekBarViewArray[i]).frame;
@@ -251,7 +271,7 @@ static NSString *weekCellID = @"weekCellID";
 {
     _dayLabelArray = [NSMutableArray array];
     
-    UIView *chatView = [[UIView alloc] initWithFrame:CGRectMake(0, 0, kScreenWidth*2, kScreenHeight*0.4)];
+    UIView *chatView = [[UIView alloc] initWithFrame:CGRectMake(0, 0, kScreenWidth*2, kScreenHeight*0.5)];
     chatView.backgroundColor = [UIColor colorWithRed:130/255.0 green:0.0 blue:230/255.0 alpha:1];
     [_scrollView addSubview:chatView];
     
@@ -288,7 +308,24 @@ static NSString *weekCellID = @"weekCellID";
         //24个时间柱子
         NSString *hourKey = [NSString stringWithFormat:@"%02ld",i+1];
         NSInteger sec = [[todatSecDict objectForKey:hourKey] integerValue];
-        CGFloat h = sec*2.1 + 2;
+        //sec = 60; //测试
+        CGFloat h = sec*3.7 + 2;
+        if (kScreenHeight == 568) {
+            // 5s
+            h = sec*2.8 + 2;
+        }
+        else if (kScreenHeight == 667) {
+            // 6
+            h = sec*3.7 + 2;
+        }
+        else if (kScreenHeight == 736) {
+            // 6p
+            h = sec*4.0 + 2;
+        }
+        else if (kScreenHeight < 500) {
+            // ipad
+            h = sec*2.1 + 2;
+        }
         UIView *bar = [[UIView alloc] initWithFrame:CGRectMake(barX * i+10 + ((kScreenWidth - 20) / 96), mostBarH - h, barW, h)];
         bar.backgroundColor = [UIColor colorWithRed:1 green:1 blue:1 alpha:0.5];
         bar.tag = 1000 + i;
