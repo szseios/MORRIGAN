@@ -91,21 +91,31 @@
     labelView1.textAlignment = NSTextAlignmentCenter;
     labelView1.font = [UIFont boldSystemFontOfSize:20.0];
     [topRootView addSubview:labelView1];
-    // 输入您的手机号，获取验证码方可修改密码，密码修改成功后，要牢记哦
+    // 输入您的手机号，获取验证码方可修改密码
     CGFloat labelView2H = 20.0;
     UILabel *labelView2 = [[UILabel alloc] initWithFrame:CGRectMake(20, labelView1Y + labelView1H, kScreenWidth - 20*2, labelView2H)];
-    labelView2.text = @" 输入您的手机号,获取验证码方可修改密码,密码修改成功后,要牢记哦";
-    labelView2.numberOfLines = 0;
-    [labelView2 sizeToFit];
+    labelView2.text = @"输入您的手机号,获取验证码方可修改密码";
+//    labelView2.numberOfLines = 1;
+//    [labelView2 sizeToFit];
     labelView2.textColor = [UIColor whiteColor];
     labelView2.textAlignment = NSTextAlignmentCenter;
-    labelView2.font = [UIFont systemFontOfSize:15.0];
+    labelView2.font = [UIFont systemFontOfSize:17.0];
     [topRootView addSubview:labelView2];
+    
+    // 密码修改成功后,要注意牢记
+    UILabel *labelView3 = [[UILabel alloc] initWithFrame:CGRectMake(20, labelView1Y + labelView1H + labelView2H, kScreenWidth - 20*2, labelView2H)];
+    labelView3.text = @"密码修改成功后,要注意牢记";
+//    labelView3.numberOfLines = 1;
+//    [labelView3 sizeToFit];
+    labelView3.textColor = [UIColor whiteColor];
+    labelView3.textAlignment = NSTextAlignmentCenter;
+    labelView3.font = [UIFont systemFontOfSize:17.0];
+    [topRootView addSubview:labelView3];
 
     
     UIColor *inputViewTextColor = [UIColor colorWithRed:255.0 green:255.0 blue:255.0 alpha:0.3];
     // 手机号
-    CGFloat editViewPaddingTop = 50.0;
+    CGFloat editViewPaddingTop = 20.0;
     CGFloat editViewPaddingLeftRight = 30.0;
     CGFloat editViewH = 44.0;
     CGFloat editViewW = kScreenWidth - editViewPaddingLeftRight * 2;
@@ -132,7 +142,7 @@
     CGFloat phoneinputViewPaddingLeft = 5.0;
     UITextField *phoneInputView = [[UITextField alloc] initWithFrame:CGRectMake(iconW + phoneinputViewPaddingLeft, 0, phoneNumRootView.frame.size.width - iconW - cleanUpViewW - phoneinputViewPaddingLeft, editViewH)];
     //phoneInputView.backgroundColor = [UIColor greenColor];
-    phoneInputView.placeholder = @"请填写手机号码";
+    phoneInputView.placeholder = @"请输入手机号码";
     phoneInputView.delegate = self;
     [phoneInputView setInputAccessoryView:self.keyboardTopView];
     // 注意：先设置phoneInputView.placeholder才有效
@@ -179,6 +189,7 @@
     UITextField *authCodeInputView = [[UITextField alloc] initWithFrame:CGRectMake(iconW + phoneinputViewPaddingLeft, 0, authCodeRootView.frame.size.width - iconW - getAuthCodeViewW - phoneinputViewPaddingLeft, editViewH)];
     //authCodeInputView.backgroundColor = [UIColor greenColor];
     authCodeInputView.placeholder = @"输入验证码";
+    authCodeInputView.delegate = self;
     [authCodeInputView setInputAccessoryView:self.keyboardTopView];
     [authCodeInputView setValue:inputViewTextColor forKeyPath:@"_placeholderLabel.textColor"];
     authCodeInputView.textColor = [UIColor whiteColor];
@@ -212,7 +223,8 @@
     // 密码输入框
     UITextField *PWDInputView = [[UITextField alloc] initWithFrame:CGRectMake(iconW + phoneinputViewPaddingLeft, 0, PWDRootView.frame.size.width - iconW - showPWDViewW - phoneinputViewPaddingLeft, editViewH)];
     //PWDInputView.backgroundColor = [UIColor greenColor];
-    PWDInputView.placeholder = @"输入密码";
+    PWDInputView.placeholder = @"请输入密码";
+    PWDInputView.delegate = self;
     [PWDInputView setInputAccessoryView:self.keyboardTopView];
     [PWDInputView setValue:inputViewTextColor forKeyPath:@"_placeholderLabel.textColor"];
     PWDInputView.textColor = [UIColor whiteColor];
@@ -329,6 +341,16 @@
     }
 }
 
+-(BOOL)textField:(UITextField *)textField shouldChangeCharactersInRange:(NSRange)range replacementString:(NSString *)string
+{
+    if (textField == _phoneNumbrInputView) {
+        if (textField.text.length >= 11 && string.length>0) return NO;
+    }
+    
+    return YES;
+}
+
+
 - (void)textFieldDidChange:(UITextField *)textField
 {
     if (textField == _phoneNumbrInputView) {
@@ -338,6 +360,21 @@
             _cleanUpButton.hidden = YES;
         }
     }
+}
+
+-(BOOL)textFieldShouldReturn:(UITextField *)textField
+{
+    if(textField == _phoneNumbrInputView) {
+        [_authCodeInputView becomeFirstResponder];
+    } else if(textField == _authCodeInputView) {
+        [_passwordInputView becomeFirstResponder];
+    } else {
+        [_passwordInputView endEditing:YES];
+        return YES;
+    }
+    
+    
+    return YES;
 }
 
 // 显示密码按钮点击

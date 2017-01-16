@@ -69,81 +69,135 @@
 {
     [super initView];
     
-    // 性别选择
-    CGFloat imageViewH = 270.0;
+//    // 性别选择
+//    CGFloat imageViewH = 270.0;
+//    if(kScreenHeight < 570) {
+//        // 5s
+//        imageViewH = 270.0 - 70;
+//    }
+//    UIView *sexRootView = [[UIView alloc] initWithFrame:CGRectMake(0, 0, kScreenWidth, imageViewH)];
+//    sexRootView.backgroundColor = [Utils stringTOColor:kColor_440067];
+//    [self.rootView addSubview:sexRootView];
+//    // 选择性别
+//    CGFloat labelView1Y = 35.0;
+//    CGFloat labelView1H = 30.0;
+//    if(kScreenHeight < 570) {
+//        // 5s
+//        labelView1Y = 35.0 - 20;
+//    }
+//    UILabel *labelView1 = [[UILabel alloc] initWithFrame:CGRectMake(0, labelView1Y, kScreenWidth, labelView1H)];
+//    labelView1.text = @"选择性别";
+//    labelView1.textColor = [UIColor whiteColor];
+//    labelView1.textAlignment = NSTextAlignmentCenter;
+//    labelView1.font = [UIFont boldSystemFontOfSize:20.0];
+//    [sexRootView addSubview:labelView1];
+//    // 一旦选择 性别 注册后不可更改
+//    CGFloat labelView2H = 20.0;
+//    UILabel *labelView2 = [[UILabel alloc] initWithFrame:CGRectMake(0, labelView1Y + labelView1H, kScreenWidth, labelView2H)];
+//    labelView2.text = @"一旦选择 性别 注册后不可更改";
+//    labelView2.textColor = [UIColor whiteColor];
+//    labelView2.textAlignment = NSTextAlignmentCenter;
+//    labelView2.font = [UIFont systemFontOfSize:15.0];
+//    [sexRootView addSubview:labelView2];
+//    // 男士
+//    CGFloat secBtnY = labelView2.frame.origin.y + labelView2.frame.size.height + 20.0;
+//    CGFloat sexBtnLeftRightMarging = 60.0;
+//    CGFloat sexBtnH = 100.0;
+//    if(kScreenHeight < 570) {
+//        // 5s
+//        sexBtnH = 70.0;
+//    }
+//
+//    CGFloat setBtnSpace = (kScreenWidth - 2*sexBtnLeftRightMarging - sexBtnH *2);
+//    UIButton *manButton = [[UIButton alloc] initWithFrame:CGRectMake(sexBtnLeftRightMarging, secBtnY, sexBtnH, sexBtnH)];
+//    //manButton.backgroundColor = [UIColor whiteColor];
+//    manButton.tag = kManButtonTag;
+//    [manButton addTarget:self action:@selector(sexButtonClickInRegister:) forControlEvents:UIControlEventTouchUpInside];
+//    _manButton = manButton;
+//    [sexRootView addSubview:manButton];
+//    // 女士
+//    UIButton *womanButton = [[UIButton alloc] initWithFrame:CGRectMake(sexBtnLeftRightMarging + sexBtnH + setBtnSpace, secBtnY, sexBtnH, sexBtnH)];
+//    //womanButton.backgroundColor = [UIColor whiteColor];
+//    womanButton.tag = kWomanButtonTag;
+//    [womanButton addTarget:self action:@selector(sexButtonClickInRegister:) forControlEvents:UIControlEventTouchUpInside];
+//    _womanButton = womanButton;
+//    [sexRootView addSubview:womanButton];
+//    // 男士
+//    CGFloat manLabelY = manButton.frame.origin.y + manButton.frame.size.height + 10.0;
+//    CGFloat manLabelW = sexBtnH;
+//    CGFloat manLabelH = 20.0;
+//    UILabel *manLabel = [[UILabel alloc] initWithFrame:CGRectMake(manButton.frame.origin.x, manLabelY, manLabelW, manLabelH)];
+//    manLabel.text = @"男士";
+//    manLabel.textAlignment = NSTextAlignmentCenter;
+//    manLabel.textColor = [UIColor whiteColor];
+//    manLabel.font = [UIFont boldSystemFontOfSize:17.0];
+//    [sexRootView addSubview:manLabel];
+//    // 女士
+//    UILabel *womanLabel = [[UILabel alloc] initWithFrame:CGRectMake(womanButton.frame.origin.x, manLabelY, manLabelW, manLabelH)];
+//    womanLabel.text = @"女士";
+//    womanLabel.textAlignment = NSTextAlignmentCenter;
+//    womanLabel.textColor = [UIColor whiteColor];
+//    womanLabel.font = [UIFont boldSystemFontOfSize:17.0];
+//    [sexRootView addSubview:womanLabel];
+    
+    // 上半部分视图
+    CGFloat imageViewH = 434/2.0;
     if(kScreenHeight < 570) {
         // 5s
-        imageViewH = 270.0 - 70;
+        imageViewH = 434/2.5;
     }
-    UIView *sexRootView = [[UIView alloc] initWithFrame:CGRectMake(0, 0, kScreenWidth, imageViewH)];
-    sexRootView.backgroundColor = [Utils stringTOColor:kColor_440067];
-    [self.rootView addSubview:sexRootView];
-    // 选择性别
-    CGFloat labelView1Y = 35.0;
+    
+    UIView *topRootView = [[UIView alloc] initWithFrame:CGRectMake(0, 0, kScreenWidth, imageViewH)];
+    //topRootView.backgroundColor = [UIColor redColor];
+    topRootView.backgroundColor = [Utils stringTOColor:kColor_440067];
+    [self.rootView addSubview:topRootView];
+    // 取消按钮
+    CGFloat cancleBtnY = 0.0;
+    if(kScreenHeight < 570) {
+        // 5s
+        cancleBtnY = 0.0;
+    }
+    CGFloat cancleBtnW = 35.0;
+    UIButton *cancleBtn = [[UIButton alloc] initWithFrame:CGRectMake(5, cancleBtnY, cancleBtnW, cancleBtnW)];
+    //cancleBtn.backgroundColor = [UIColor blueColor];
+    [cancleBtn setImage:[UIImage imageNamed:@"ic_close"] forState:UIControlStateNormal];
+    [cancleBtn setImage:[UIImage imageNamed:@"ic_close"] forState:UIControlStateHighlighted];
+    [cancleBtn addTarget:self action:@selector(cancleButtonClickInForgetPwd) forControlEvents:UIControlEventTouchUpInside];
+    //[topRootView addSubview:cancleBtn];
+    // 忘记密码
+    CGFloat labelView1Y = (imageViewH-30-20-20)/2;
     CGFloat labelView1H = 30.0;
-    if(kScreenHeight < 570) {
-        // 5s
-        labelView1Y = 35.0 - 20;
-    }
     UILabel *labelView1 = [[UILabel alloc] initWithFrame:CGRectMake(0, labelView1Y, kScreenWidth, labelView1H)];
-    labelView1.text = @"选择性别";
+    labelView1.text = @"手机号注册";
     labelView1.textColor = [UIColor whiteColor];
     labelView1.textAlignment = NSTextAlignmentCenter;
     labelView1.font = [UIFont boldSystemFontOfSize:20.0];
-    //[sexRootView addSubview:labelView1];
-    // 一旦选择 性别 注册后不可更改
+    [topRootView addSubview:labelView1];
+    // 输入您的手机号,获取验证码即可注册
     CGFloat labelView2H = 20.0;
-    UILabel *labelView2 = [[UILabel alloc] initWithFrame:CGRectMake(0, labelView1Y + labelView1H, kScreenWidth, labelView2H)];
-    labelView2.text = @"一旦选择 性别 注册后不可更改";
+    UILabel *labelView2 = [[UILabel alloc] initWithFrame:CGRectMake(20, labelView1Y + labelView1H, kScreenWidth - 20*2, labelView2H)];
+    labelView2.text = @"输入您的手机号,获取验证码即可注册";
+    //    labelView2.numberOfLines = 1;
+    //    [labelView2 sizeToFit];
     labelView2.textColor = [UIColor whiteColor];
     labelView2.textAlignment = NSTextAlignmentCenter;
-    labelView2.font = [UIFont systemFontOfSize:15.0];
-    //[sexRootView addSubview:labelView2];
-    // 男士
-    CGFloat secBtnY = labelView2.frame.origin.y + labelView2.frame.size.height + 20.0;
-    CGFloat sexBtnLeftRightMarging = 60.0;
-    CGFloat sexBtnH = 100.0;
-    if(kScreenHeight < 570) {
-        // 5s
-        sexBtnH = 70.0;
-    }
-
-    CGFloat setBtnSpace = (kScreenWidth - 2*sexBtnLeftRightMarging - sexBtnH *2);
-    UIButton *manButton = [[UIButton alloc] initWithFrame:CGRectMake(sexBtnLeftRightMarging, secBtnY, sexBtnH, sexBtnH)];
-    //manButton.backgroundColor = [UIColor whiteColor];
-    manButton.tag = kManButtonTag;
-    [manButton addTarget:self action:@selector(sexButtonClickInRegister:) forControlEvents:UIControlEventTouchUpInside];
-    _manButton = manButton;
-    //[sexRootView addSubview:manButton];
-    // 女士
-    UIButton *womanButton = [[UIButton alloc] initWithFrame:CGRectMake(sexBtnLeftRightMarging + sexBtnH + setBtnSpace, secBtnY, sexBtnH, sexBtnH)];
-    //womanButton.backgroundColor = [UIColor whiteColor];
-    womanButton.tag = kWomanButtonTag;
-    [womanButton addTarget:self action:@selector(sexButtonClickInRegister:) forControlEvents:UIControlEventTouchUpInside];
-    _womanButton = womanButton;
-    //[sexRootView addSubview:womanButton];
-    // 男士
-    CGFloat manLabelY = manButton.frame.origin.y + manButton.frame.size.height + 10.0;
-    CGFloat manLabelW = sexBtnH;
-    CGFloat manLabelH = 20.0;
-    UILabel *manLabel = [[UILabel alloc] initWithFrame:CGRectMake(manButton.frame.origin.x, manLabelY, manLabelW, manLabelH)];
-    manLabel.text = @"男士";
-    manLabel.textAlignment = NSTextAlignmentCenter;
-    manLabel.textColor = [UIColor whiteColor];
-    manLabel.font = [UIFont boldSystemFontOfSize:17.0];
-    //[sexRootView addSubview:manLabel];
-    // 女士
-    UILabel *womanLabel = [[UILabel alloc] initWithFrame:CGRectMake(womanButton.frame.origin.x, manLabelY, manLabelW, manLabelH)];
-    womanLabel.text = @"女士";
-    womanLabel.textAlignment = NSTextAlignmentCenter;
-    womanLabel.textColor = [UIColor whiteColor];
-    womanLabel.font = [UIFont boldSystemFontOfSize:17.0];
-    //[sexRootView addSubview:womanLabel];
+    labelView2.font = [UIFont systemFontOfSize:17.0];
+    [topRootView addSubview:labelView2];
+    
+    // 注册成功后,密码要注意牢记
+    UILabel *labelView3 = [[UILabel alloc] initWithFrame:CGRectMake(20, labelView1Y + labelView1H + labelView2H, kScreenWidth - 20*2, labelView2H)];
+    labelView3.text = @"注册成功后,密码要注意牢记";
+    //    labelView3.numberOfLines = 1;
+    //    [labelView3 sizeToFit];
+    labelView3.textColor = [UIColor whiteColor];
+    labelView3.textAlignment = NSTextAlignmentCenter;
+    labelView3.font = [UIFont systemFontOfSize:17.0];
+    [topRootView addSubview:labelView3];
     
     
     UIColor *inputViewTextColor = [UIColor colorWithRed:255.0 green:255.0 blue:255.0 alpha:0.3];
     // 手机号
-    CGFloat editViewPaddingTop = 50.0;
+    CGFloat editViewPaddingTop = 20.0;
     if(kScreenHeight < 500) {
         // 4/ipa
         editViewPaddingTop = 20.0;
@@ -174,7 +228,7 @@
     CGFloat phoneinputViewPaddingLeft = 5.0;
     UITextField *phoneInputView = [[UITextField alloc] initWithFrame:CGRectMake(iconW + phoneinputViewPaddingLeft, 0, phoneNumRootView.frame.size.width - iconW - cleanUpViewW - phoneinputViewPaddingLeft, editViewH)];
     //phoneInputView.backgroundColor = [UIColor greenColor];
-    phoneInputView.placeholder = @"请填写手机号码";
+    phoneInputView.placeholder = @"请输入手机号码";
     phoneInputView.delegate = self;
     [phoneInputView setInputAccessoryView:self.keyboardTopView];
     // 注意：先设置phoneInputView.placeholder才有效
@@ -221,6 +275,7 @@
     UITextField *authCodeInputView = [[UITextField alloc] initWithFrame:CGRectMake(iconW + phoneinputViewPaddingLeft, 0, authCodeRootView.frame.size.width - iconW - getAuthCodeViewW - phoneinputViewPaddingLeft, editViewH)];
     //authCodeInputView.backgroundColor = [UIColor greenColor];
     authCodeInputView.placeholder = @"输入验证码";
+    authCodeInputView.delegate = self;
     [authCodeInputView setInputAccessoryView:self.keyboardTopView];
     [authCodeInputView setValue:inputViewTextColor forKeyPath:@"_placeholderLabel.textColor"];
     authCodeInputView.textColor = [UIColor whiteColor];
@@ -254,7 +309,8 @@
     // 密码输入框
     UITextField *PWDInputView = [[UITextField alloc] initWithFrame:CGRectMake(iconW + phoneinputViewPaddingLeft, 0, PWDRootView.frame.size.width - iconW - showPWDViewW - phoneinputViewPaddingLeft, editViewH)];
     //PWDInputView.backgroundColor = [UIColor greenColor];
-    PWDInputView.placeholder = @"输入密码";
+    PWDInputView.placeholder = @"请输入密码";
+    PWDInputView.delegate = self;
     [PWDInputView setInputAccessoryView:self.keyboardTopView];
     [PWDInputView setValue:inputViewTextColor forKeyPath:@"_placeholderLabel.textColor"];
     PWDInputView.textColor = [UIColor whiteColor];
@@ -420,6 +476,16 @@
     }
 }
 
+-(BOOL)textField:(UITextField *)textField shouldChangeCharactersInRange:(NSRange)range replacementString:(NSString *)string
+{
+    if (textField == _phoneNumbrInputView) {
+        if (textField.text.length >= 11 && string.length>0) return NO;
+    }
+    
+    return YES;
+}
+
+
 - (void)textFieldDidChange:(UITextField *)textField
 {
     if (textField == _phoneNumbrInputView) {
@@ -429,6 +495,21 @@
             _cleanUpButton.hidden = YES;
         }
     }
+}
+
+-(BOOL)textFieldShouldReturn:(UITextField *)textField
+{
+    if(textField == _phoneNumbrInputView) {
+        [_authCodeInputView becomeFirstResponder];
+    } else if(textField == _authCodeInputView) {
+        [_passwordInputView becomeFirstResponder];
+    } else {
+        [_passwordInputView endEditing:YES];
+        return YES;
+    }
+    
+    
+    return YES;
 }
 
 

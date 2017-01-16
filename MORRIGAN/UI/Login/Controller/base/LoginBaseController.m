@@ -55,6 +55,9 @@
     self.rootScroolView.contentSize = CGSizeMake(kScreenWidth, kScreenHeight);
     self.rootScroolView.scrollEnabled = NO;
     [self.view addSubview:self.rootScroolView];
+    
+    // 状态栏颜色
+    self.view.backgroundColor =[Utils stringTOColor:kColor_440067];
 }
 
 
@@ -92,6 +95,7 @@
 - (void)keyboardWillHide:(NSNotification *)aNotification
 {
     CGRect f = _rootScroolView.frame;
+    f.origin.y = 20;
     f.size.height = kScreenHeight;
     _rootScroolView.frame = f;
     _rootScroolView.scrollEnabled = NO;
