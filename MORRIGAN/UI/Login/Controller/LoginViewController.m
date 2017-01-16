@@ -119,7 +119,7 @@
         imageVieY = 169/2 - 20;
     }
 
-    UIImageView *imageView = [[UIImageView alloc] initWithFrame:CGRectMake(169/2, imageVieY, imageW, imageH)];
+    UIImageView *imageView = [[UIImageView alloc] initWithFrame:CGRectMake((kScreenWidth-imageW)/2, imageVieY, imageW, imageH)];
     imageView.image = [UIImage imageNamed:@"bg_morrig"];
     [imageViewBg addSubview:imageView];
     [self.rootView addSubview:imageViewBg];

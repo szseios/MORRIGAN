@@ -143,7 +143,7 @@
     
     UIColor *inputViewTextColor = [UIColor colorWithRed:255.0 green:255.0 blue:255.0 alpha:0.3];
     // 手机号
-    CGFloat editViewPaddingTop = 50.0;
+    CGFloat editViewPaddingTop = 20.0;
     if(kScreenHeight < 500) {
         // 4/ipa
         editViewPaddingTop = 20.0;
