@@ -94,7 +94,7 @@
     // 输入您的手机号，获取验证码方可修改密码
     CGFloat labelView2H = 20.0;
     UILabel *labelView2 = [[UILabel alloc] initWithFrame:CGRectMake(20, labelView1Y + labelView1H, kScreenWidth - 20*2, labelView2H)];
-    labelView2.text = @" 输入您的手机号,获取验证码方可修改密码";
+    labelView2.text = @"输入您的手机号,获取验证码方可修改密码";
 //    labelView2.numberOfLines = 1;
 //    [labelView2 sizeToFit];
     labelView2.textColor = [UIColor whiteColor];
