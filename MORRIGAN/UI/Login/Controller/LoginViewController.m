@@ -289,7 +289,7 @@
 -(BOOL)textField:(UITextField *)textField shouldChangeCharactersInRange:(NSRange)range replacementString:(NSString *)string
 {
     if (textField == _phoneNumbrInputView) {
-        if (textField.text.length >= 11) return NO;
+        if (textField.text.length >= 11 && string.length>0) return NO;
     }
     
     return YES;

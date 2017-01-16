@@ -339,6 +339,16 @@
     }
 }
 
+-(BOOL)textField:(UITextField *)textField shouldChangeCharactersInRange:(NSRange)range replacementString:(NSString *)string
+{
+    if (textField == _phoneNumbrInputView) {
+        if (textField.text.length >= 11 && string.length>0) return NO;
+    }
+    
+    return YES;
+}
+
+
 - (void)textFieldDidChange:(UITextField *)textField
 {
     if (textField == _phoneNumbrInputView) {
