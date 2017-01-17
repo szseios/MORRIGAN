@@ -83,13 +83,13 @@
     [cancleBtn addTarget:self action:@selector(cancleButtonClickInForgetPwd) forControlEvents:UIControlEventTouchUpInside];
     [topRootView addSubview:cancleBtn];
     // 忘记密码
-    CGFloat labelView1Y = (imageViewH-30-20-20)/2;
-    CGFloat labelView1H = 30.0;
+    CGFloat labelView1Y = (imageViewH-40-20-20)/2;
+    CGFloat labelView1H = 40.0;
     UILabel *labelView1 = [[UILabel alloc] initWithFrame:CGRectMake(0, labelView1Y, kScreenWidth, labelView1H)];
     labelView1.text = @"忘记密码";
     labelView1.textColor = [UIColor whiteColor];
     labelView1.textAlignment = NSTextAlignmentCenter;
-    labelView1.font = [UIFont boldSystemFontOfSize:20.0];
+    labelView1.font = [UIFont systemFontOfSize:24.0];
     [topRootView addSubview:labelView1];
     // 输入您的手机号，获取验证码方可修改密码
     CGFloat labelView2H = 20.0;
@@ -99,7 +99,7 @@
 //    [labelView2 sizeToFit];
     labelView2.textColor = [UIColor whiteColor];
     labelView2.textAlignment = NSTextAlignmentCenter;
-    labelView2.font = [UIFont systemFontOfSize:17.0];
+    labelView2.font = [UIFont systemFontOfSize:15.0];
     [topRootView addSubview:labelView2];
     
     // 密码修改成功后,要注意牢记
@@ -109,7 +109,7 @@
 //    [labelView3 sizeToFit];
     labelView3.textColor = [UIColor whiteColor];
     labelView3.textAlignment = NSTextAlignmentCenter;
-    labelView3.font = [UIFont systemFontOfSize:17.0];
+    labelView3.font = [UIFont systemFontOfSize:15.0];
     [topRootView addSubview:labelView3];
 
     
