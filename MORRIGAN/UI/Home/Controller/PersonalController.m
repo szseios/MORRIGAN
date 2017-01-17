@@ -110,7 +110,8 @@ static NSString *cellIdentifier = @"cellIdentifier";
 {
     PersonalCell *cell = [tableView dequeueReusableCellWithIdentifier:cellIdentifier];
     cell.backgroundColor = [UIColor clearColor];
-    [cell setSelectionStyle:UITableViewCellSelectionStyleNone];
+    cell.selectedBackgroundView = [[UIView alloc] initWithFrame:cell.bounds];
+    cell.selectedBackgroundView.backgroundColor = [UIColor colorWithRed:0 green:0 blue:0 alpha:0.2];
     if (!cell) {
         cell = [[PersonalCell alloc] init];
     }

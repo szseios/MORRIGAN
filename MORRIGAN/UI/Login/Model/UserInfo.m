@@ -25,4 +25,21 @@ static UserInfo *info;
 
 }
 
++ (void)resetUserInfo
+{
+    [UserInfo share].emotion = @"";
+    [UserInfo share].emotionStr = @"";
+    [UserInfo share].nickName = @"";
+    [UserInfo share].userId = @"";
+    [UserInfo share].imgUrl = @"";
+    [UserInfo share].high = @"";
+    [UserInfo share].weight = @"";
+    [UserInfo share].age = @"";
+    [UserInfo share].sex = @"";
+    [UserInfo share].authCode = @"";
+    [UserInfo share].target = @"";
+    [UserInfo share].mobile = @"";
+    [UserInfo share].password = @"";
+}
+
 @end

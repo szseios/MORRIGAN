@@ -28,5 +28,7 @@
 
 + (UserInfo *)share;
 
++ (void)resetUserInfo;
+
 
 @end

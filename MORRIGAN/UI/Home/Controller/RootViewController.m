@@ -163,6 +163,7 @@
     if (buttonIndex == 1) {
         //注销后直接断开蓝牙
         [[BluetoothManager share] unConnectingBlueTooth];
+        [UserInfo resetUserInfo];
         [self registerUser];
     }
 }
