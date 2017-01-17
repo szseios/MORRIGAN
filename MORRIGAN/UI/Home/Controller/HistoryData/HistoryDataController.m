@@ -84,7 +84,7 @@ static NSString *weekCellID = @"weekCellID";
     [self.view addSubview:backImageView];
     
     _titleArray = @[@"今日目标",@"今日护养",@"剩余目标值"];
-    _weekTitleArray = @[@"今日目标",@"今日护养",@"剩余目标值",@"平均养护"];
+    _weekTitleArray = @[@"本周目标",@"本周护养",@"剩余目标值",@"平均养护"];
     [self setUpBarView];
     [self setUpSegmentPageView];
     [self setUpScrollView];
@@ -184,6 +184,9 @@ static NSString *weekCellID = @"weekCellID";
     NSInteger maxTimeLong = 0;
     for (NSInteger i = 0; i < _weekDataArray.count; i++) {
         NSInteger timeLong = [_weekDataArray[i] integerValue];
+        if (timeLong > 180) {
+            timeLong = 180;
+        }
         // timeLong = 180; // 测试
         if(maxTimeLong < timeLong) {
             maxTimeLong = timeLong;
@@ -195,7 +198,7 @@ static NSString *weekCellID = @"weekCellID";
         CGFloat temp = timeLong*0.65;
         if (kScreenHeight == 568) {
             // 5s
-            temp = timeLong*0.9;
+            temp = timeLong*0.85;
         }
         else if (kScreenHeight == 667) {
             // 6
@@ -270,8 +273,8 @@ static NSString *weekCellID = @"weekCellID";
 - (void)setUpDayBarChatView
 {
     _dayLabelArray = [NSMutableArray array];
-    
-    UIView *chatView = [[UIView alloc] initWithFrame:CGRectMake(0, 0, kScreenWidth*2, kScreenHeight*0.5)];
+    CGFloat chatHeight = kScreenWidth > 320 ? 0.5 : 0.44;
+    UIView *chatView = [[UIView alloc] initWithFrame:CGRectMake(0, 0, kScreenWidth*2, kScreenHeight*chatHeight)];
     chatView.backgroundColor = [UIColor colorWithRed:130/255.0 green:0.0 blue:230/255.0 alpha:1];
     [_scrollView addSubview:chatView];
     
@@ -308,11 +311,11 @@ static NSString *weekCellID = @"weekCellID";
         //24个时间柱子
         NSString *hourKey = [NSString stringWithFormat:@"%02ld",i+1];
         NSInteger sec = [[todatSecDict objectForKey:hourKey] integerValue];
-        //sec = 60; //测试
+//        sec = 60; //测试
         CGFloat h = sec*3.7 + 2;
         if (kScreenHeight == 568) {
             // 5s
-            h = sec*2.8 + 2;
+            h = sec*2.5 + 2;
         }
         else if (kScreenHeight == 667) {
             // 6
@@ -484,7 +487,7 @@ static NSString *weekCellID = @"weekCellID";
         UILabel *label = [[UILabel alloc] initWithFrame:CGRectMake(barX, dayBarViewY+5, barW, 20)];
         label.text = [kWeekFormatDict objectForKey:[NSString stringWithFormat:@"%ld" ,i]];
         label.textAlignment = NSTextAlignmentCenter;
-        label.font = [UIFont systemFontOfSize:12];
+        label.font = [UIFont systemFontOfSize:(kScreenWidth > 320 ? 12 : 10)];
         label.textColor = [UIColor colorWithRed:1 green:1 blue:1 alpha:0.6];
         [_weekView addSubview:label];
     
@@ -509,6 +512,10 @@ static NSString *weekCellID = @"weekCellID";
         // 4/ipa
         _dayTableView.contentInset = UIEdgeInsetsMake(0, 0, 150, 0);
     }
+    else if (kScreenHeight == 568) {
+        _dayTableView.contentInset = UIEdgeInsetsMake(0, 0, 50, 0);
+        
+    }
     
     [_scrollView addSubview:_dayTableView];
     
@@ -522,6 +529,9 @@ static NSString *weekCellID = @"weekCellID";
     if(kScreenHeight < 500) {
         // 4/ipa
         _weekTableView.contentInset = UIEdgeInsetsMake(0, 0, 150, 0);
+    }
+    else if (kScreenHeight == 568) {
+        _weekTableView.contentInset = UIEdgeInsetsMake(0, 0, 50, 0);
     }
     
     [_scrollView addSubview:_weekTableView];

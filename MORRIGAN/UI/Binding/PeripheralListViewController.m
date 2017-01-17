@@ -92,6 +92,7 @@
     _squareView.hidden = YES;
     _bottomView.hidden = YES;
     
+    [_backButton addTarget:self action:@selector(clickToCancelConnecting) forControlEvents:UIControlEventTouchUpInside];
     
     if ([BluetoothManager share].scannedPeripherals.count == 1 &&
         [BluetoothManager share].macAddresses.count == 1) {
@@ -117,12 +118,13 @@
     // Dispose of any resources that can be recreated.
 }
 
-- (IBAction)back:(id)sender {
+- (void)clickToCancelConnecting
+{
     NSArray *array = [self.navigationController viewControllers];
+    [self stopAnimating];
+    [[BluetoothManager share] unConnectingBlueTooth];
     for (UIViewController *ctl in array) {
         if ([ctl isKindOfClass:[RootViewController class]]) {
-            [self stopAnimating];
-            [[BluetoothManager share] unConnectingBlueTooth];
             [self.navigationController popToViewController:ctl animated:YES];
             break;
         }

@@ -163,7 +163,7 @@
     if (buttonIndex == 1) {
         //注销后直接断开蓝牙
         [[BluetoothManager share] unConnectingBlueTooth];
-        [UserInfo resetUserInfo];
+        
         [self registerUser];
     }
 }
@@ -193,7 +193,7 @@
              
              [MBProgressHUD showHUDByContent:@"注销成功！" view:UI_Window afterDelay:2];
              NSLog(@"注销成功！");
-             
+             [UserInfo resetUserInfo];
              // 注销登录成功时调用这个
              NSUserDefaults *defaults = [NSUserDefaults standardUserDefaults];
              [defaults removeObjectForKey:kUserDefaultIdKey];
