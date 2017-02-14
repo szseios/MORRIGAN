@@ -48,6 +48,7 @@
     NSTimer *animation2Timer;
     NSTimer *animation3Timer;
     NSTimer *animation4Timer;
+    
 }
 
 @end
@@ -363,7 +364,7 @@
     rightChestLabel.textColor = [Utils stringTOColor:kColor_6911a5];
     [self.view addSubview:rightChestLabel];
 
-    //[self startAnimation];
+//    [self startAnimation];
     
 }
 
@@ -374,7 +375,17 @@
 //    animation1Timer = [NSTimer scheduledTimerWithTimeInterval:0.1 repeats:NO block:^(NSTimer * _Nonnull timer) {
 //        [self startAnimation1];
 //    }];
-    animation1Timer = [NSTimer scheduledTimerWithTimeInterval:0.1
+    
+    
+    CGFloat time1 = 0.1;
+    if(_currentGear == 1) {
+        time1 = time1/1;
+    } else if(_currentGear == 2) {
+        time1 = time1/3;
+    } else if(_currentGear == 3) {
+        time1 = time1/6;
+    }
+    animation1Timer = [NSTimer scheduledTimerWithTimeInterval:time1
                                                        target:self
                                                      selector:@selector(startAnimation1)
                                                      userInfo:nil
@@ -383,7 +394,15 @@
 //    animation2Timer = [NSTimer scheduledTimerWithTimeInterval:tempTime * 1 repeats:NO block:^(NSTimer * _Nonnull timer) {
 //        [self startAnimation2];
 //    }];
-    animation2Timer = [NSTimer scheduledTimerWithTimeInterval:1
+    CGFloat time2 = 1;
+    if(_currentGear == 1) {
+        time2 = time2/1;
+    } else if(_currentGear == 2) {
+        time2 = time2/3;
+    } else if(_currentGear == 3) {
+        time2 = time2/6;
+    }
+    animation2Timer = [NSTimer scheduledTimerWithTimeInterval:time2
                                                        target:self
                                                      selector:@selector(startAnimation2)
                                                      userInfo:nil
@@ -393,7 +412,16 @@
 //        [self startAnimation3];
 //    }];
     
-    animation3Timer = [NSTimer scheduledTimerWithTimeInterval:2
+    
+    CGFloat time3 = 2;
+    if(_currentGear == 1) {
+        time3 = time2/1;
+    } else if(_currentGear == 2) {
+        time3 = time2/3;
+    } else if(_currentGear == 3) {
+        time3 = time2/6;
+    }
+    animation3Timer = [NSTimer scheduledTimerWithTimeInterval:time3
                                                        target:self
                                                      selector:@selector(startAnimation3)
                                                      userInfo:nil
@@ -403,7 +431,15 @@
 //        [self startAnimation4];
 //    }];
     
-    animation4Timer = [NSTimer scheduledTimerWithTimeInterval:3
+    CGFloat time4 = 3;
+    if(_currentGear == 1) {
+        time4 = time4/1;
+    } else if(_currentGear == 2) {
+        time4 = time4/3;
+    } else if(_currentGear == 3) {
+        time4 = time4/6;
+    }
+    animation4Timer = [NSTimer scheduledTimerWithTimeInterval:time4
                                                        target:self
                                                      selector:@selector(startAnimation4)
                                                      userInfo:nil
@@ -470,6 +506,7 @@
     
     // 缩放动画
     CAKeyframeAnimation *scaleAnimation = [CAKeyframeAnimation animationWithKeyPath:@"transform.scale"];
+    
     scaleAnimation.values = @[@(1.0), @(1.2), @(1.4), @(1.6)];
     scaleAnimation.keyTimes = @[@(0), @(0.33), @(0.66), @(1)];
     scaleAnimation.timingFunctions = @[[CAMediaTimingFunction functionWithName:kCAMediaTimingFunctionLinear], [CAMediaTimingFunction functionWithName:kCAMediaTimingFunctionLinear], [CAMediaTimingFunction functionWithName:kCAMediaTimingFunctionEaseIn]];
@@ -481,6 +518,15 @@
     opacityAnimation.toValue = [NSNumber numberWithFloat:0.1];
     // 动画组
     CAAnimationGroup *animationGroup = [CAAnimationGroup animation];
+
+    if(_currentGear == 1) {
+        time = time/1;
+    } else if(_currentGear == 2) {
+        time = time/3;
+    } else if(_currentGear == 3) {
+        time = time/6;
+    }
+    
     animationGroup.duration = time;
     animationGroup.autoreverses = NO;        //是否重播，原动画的倒播
     animationGroup.repeatCount = NSNotFound; //HUGE_VALF
@@ -506,9 +552,14 @@
     }
     _gearNumLabel.text = [NSString stringWithFormat:@"%ld", _currentGear];
     
-    
+
     [self sendData];
     
+    if(_currentStartStop == 1) {
+        [self stopAnimation];
+        [self startAnimation];
+    }
+
 }
 
 
@@ -527,6 +578,12 @@
     _gearNumLabel.text = [NSString stringWithFormat:@"%ld", _currentGear];
     
     [self sendData];
+    
+    if(_currentStartStop == 1) {
+        [self stopAnimation];
+        [self startAnimation];
+    }
+
 }
 
 // START 按钮点击
