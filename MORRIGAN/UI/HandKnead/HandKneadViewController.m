@@ -403,7 +403,7 @@
     rightChestLabel.textColor = [Utils stringTOColor:kColor_6911a5];
     [self.view addSubview:rightChestLabel];
 
-    [self startAnimation];
+//    [self startAnimation];
     
 }
 
