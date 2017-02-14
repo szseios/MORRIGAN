@@ -146,7 +146,7 @@
         mainViewW = mainViewW - tem1;
         mainViewH = mainViewH * tem2;
     }
-    CGFloat mainViewX = (kScreenWidth - mainViewW) /2 + (kScreenWidth > 320 ? 20 : 13); //kScreenWidth > 320 ? 50 : 20;
+    CGFloat mainViewX = (kScreenWidth - mainViewW) /2 + (kScreenWidth > 320 ? 13 : 10); //kScreenWidth > 320 ? 50 : 20;
     NSArray *ForenoonArray = [DBManager selectForenoonDatas:[UserInfo share].userId];
     NSArray *AfternoonArray = [DBManager selectaAfternoonDatas:[UserInfo share].userId];
     _mainView = [[HomeMainView alloc] initWithAMMorriganArray:ForenoonArray PMMorriganTime:AfternoonArray  withFarme:CGRectMake(mainViewX, 74, mainViewW, mainViewH)];
