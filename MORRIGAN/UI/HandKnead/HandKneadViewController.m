@@ -70,7 +70,46 @@
     
     [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(bluetoothDisConnectHandlerInHandkneed) name:DisconnectPeripheral object:nil];
     
+    [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(enterBackgroundHandler:) name:UIApplicationDidEnterBackgroundNotification object:nil];
+    [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(enterForegroundHandler:) name:UIApplicationWillEnterForegroundNotification object:nil];
+    
 }
+
+-(void)viewDidAppear:(BOOL)animated
+{
+    [super viewDidAppear:animated];
+   
+    if(_currentStartStop == 1) {
+        [self startAnimation];
+        
+    }
+    
+}
+
+-(void)viewDidDisappear:(BOOL)animated
+{
+    [super viewDidDisappear:animated];
+    
+    if(_currentStartStop == 1) {
+        [self stopAnimation];
+    }
+}
+
+// 进入后台
+- (void)enterBackgroundHandler:(UIApplication *)application {
+    if(_currentStartStop == 1) {
+        [self stopAnimation];
+    }
+}
+
+// 进入前台
+- (void)enterForegroundHandler:(UIApplication *)application {
+    if(_currentStartStop == 1) {
+        [self startAnimation];
+
+    }
+}
+
 
 // 视图初始化
 - (void)viewInit
@@ -364,7 +403,7 @@
     rightChestLabel.textColor = [Utils stringTOColor:kColor_6911a5];
     [self.view addSubview:rightChestLabel];
 
-//    [self startAnimation];
+    [self startAnimation];
     
 }
 

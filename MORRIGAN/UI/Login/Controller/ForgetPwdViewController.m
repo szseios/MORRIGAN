@@ -571,8 +571,8 @@
              [MBProgressHUD showHUDByContent:[obj objectForKey:HTTP_KEY_RESULTMESSAGE] view:self.view];
          }
          
-//         UIAlertView *alert = [[UIAlertView alloc] initWithTitle:[obj objectForKey:HTTP_KEY_RESULTMESSAGE] message:nil delegate:self cancelButtonTitle:nil otherButtonTitles:@"确定", nil];
-//         [alert show];
+         UIAlertView *alert = [[UIAlertView alloc] initWithTitle:[obj objectForKey:HTTP_KEY_RESULTMESSAGE] message:nil delegate:self cancelButtonTitle:nil otherButtonTitles:@"确定", nil];
+         [alert show];
          
          
      }];
