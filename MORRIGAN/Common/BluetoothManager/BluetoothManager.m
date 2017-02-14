@@ -310,6 +310,9 @@ NSString * const ElectricQuantityChanged = @"ElectricQuantityChanged";
         if ([peripheralName hasPrefix:@"Morrigan"] ) {
             return YES;
         }
+        if ([peripheralName hasPrefix:@"H001ML"] ) {
+            return YES;
+        }
 //        NSLog(@"过滤设备 %@",peripheralName);
         return NO;
     }];

@@ -160,10 +160,10 @@ static NSString *weekCellID = @"weekCellID";
 {
     [_weekMinuteDataLabel removeFromSuperview];
     CGFloat labelY = 30;
-    _weekMinuteDataLabel = [[UILabel alloc] initWithFrame:CGRectMake(15, (_weekTimeLong > 0 ? labelY+3 : 20), 60, 20)];
+    _weekMinuteDataLabel = [[UILabel alloc] initWithFrame:CGRectMake(15, (_weekTimeLong > 0 ? 20 : 20), 60, 20)];
     _weekMinuteDataLabel.textColor = [UIColor colorWithRed:1 green:1 blue:1 alpha:0.6];
     _weekMinuteDataLabel.textAlignment = NSTextAlignmentRight;
-    _weekMinuteDataLabel.font = [UIFont systemFontOfSize:14];
+    _weekMinuteDataLabel.font = [UIFont systemFontOfSize:30];
     _weekMinuteDataLabel.text = [NSString stringWithFormat:@"%ld", _weekTimeLong];
     if(_weekTimeLong == 0) {
         _weekMinuteDataLabel.text = @"--";
@@ -284,6 +284,7 @@ static NSString *weekCellID = @"weekCellID";
     
     CGFloat labelY = 30;
     
+    //日期
     _dateLabel = [[UILabel alloc] initWithFrame:CGRectMake(100, labelY, kScreenWidth - 120, 20)];
     _dateLabel.textColor = [UIColor colorWithRed:1 green:1 blue:1 alpha:0.7];
     _dateLabel.textAlignment = NSTextAlignmentRight;
@@ -366,10 +367,10 @@ static NSString *weekCellID = @"weekCellID";
     }
     _weekTimeLong = _weekTimeLong + _todayAllSec;
     
-    _minuteDataLabel = [[UILabel alloc] initWithFrame:CGRectMake(15, (_weekTimeLong > 0 ? labelY+3 : 20), 60, 20)];
+    _minuteDataLabel = [[UILabel alloc] initWithFrame:CGRectMake(15, (_weekTimeLong > 0 ? 20 : 20), 60, 20)];
     _minuteDataLabel.textColor = [UIColor colorWithRed:1 green:1 blue:1 alpha:0.5];
     _minuteDataLabel.textAlignment = NSTextAlignmentRight;
-    _minuteDataLabel.font = [UIFont systemFontOfSize:(_todayAllSec > 0 ? 14 : 30)];
+    _minuteDataLabel.font = [UIFont systemFontOfSize:(_todayAllSec > 0 ? 30 : 30)];
     _minuteDataLabel.text = _todayAllSec > 0 ? [NSString stringWithFormat:@"%ld", _todayAllSec] : @"--";
     [_minuteDataLabel sizeToFit];
     [_dayView addSubview:_minuteDataLabel];
@@ -432,18 +433,18 @@ static NSString *weekCellID = @"weekCellID";
     [_scrollView addSubview:_weekView];
     
     CGFloat labelY = 30;
-    _weekMinuteDataLabel = [[UILabel alloc] initWithFrame:CGRectMake(15, (_weekTimeLong > 0 ? labelY+3 : 20), 60, 20)];
+    _weekMinuteDataLabel = [[UILabel alloc] initWithFrame:CGRectMake(15, (_weekTimeLong > 0 ? 20 : 20), 60, 20)];
     _weekMinuteDataLabel.textColor = [UIColor colorWithRed:1 green:1 blue:1 alpha:0.6];
     _weekMinuteDataLabel.textAlignment = NSTextAlignmentRight;
-    _weekMinuteDataLabel.font = [UIFont systemFontOfSize:14];
-    _weekMinuteDataLabel.text = @"__";
+    _weekMinuteDataLabel.font = [UIFont systemFontOfSize:30];
+    _weekMinuteDataLabel.text = @"--";
     [_weekMinuteDataLabel sizeToFit];
     
     [_weekView addSubview:_weekMinuteDataLabel];
     
     CGFloat unitLabelX = CGRectGetMaxX(_weekMinuteDataLabel.frame) + 2;
     _weekUnitLabel = [[UILabel alloc] initWithFrame:CGRectMake(unitLabelX, labelY+2, 40, 20)];
-    _weekUnitLabel.textColor = [UIColor whiteColor];
+    _weekUnitLabel.textColor = [UIColor colorWithRed:1 green:1 blue:1 alpha:0.6];;
     _weekUnitLabel.text = @"分钟";
     _weekUnitLabel.font = [UIFont systemFontOfSize:14];
     [_weekView addSubview:_weekUnitLabel];

@@ -83,7 +83,10 @@
 
 - (void)stopFlashing
 {
-    [_searchButton.layer removeAllAnimations];
+    if (_searchButton) {
+        
+        [_searchButton.layer removeAllAnimations];
+    }
 }
 
 - (void)startFlashing

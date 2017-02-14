@@ -29,7 +29,7 @@
 - (void)awakeFromNib {
     [super awakeFromNib];
     // Initialization code
-    _unitLabel = [[UILabel alloc] initWithFrame:CGRectMake(kScreenWidth - 45, self.height / 2-8, 30, 30)];
+    _unitLabel = [[UILabel alloc] initWithFrame:CGRectMake(kScreenWidth - 45, self.height / 2-8, 30, 16)];
     _unitLabelFrameShort = _unitLabel.frame;
     _unitLabelFrameLong = CGRectMake(kScreenWidth - 58, self.height / 2-8, 40, 30);
     _unitLabel.font = [UIFont systemFontOfSize:12];
@@ -38,9 +38,9 @@
     _unitLabel.textColor = [UIColor colorWithRed:0 green:0 blue:0 alpha:0.4];
     [self addSubview:_unitLabel];
     
-    _minuteLabel = [[UILabel alloc] initWithFrame:CGRectMake(kScreenWidth - 245, self.height / 2 - 15, 200, 30)];
+    _minuteLabel = [[UILabel alloc] initWithFrame:CGRectMake(kScreenWidth - 245, self.height / 2 - 9, 200, 16)];
     _minuteLabelFrameShort = _minuteLabel.frame;
-    _minuteLabelFrameLong = CGRectMake(kScreenWidth - 258, self.height / 2 - 15, 200, 30);
+    _minuteLabelFrameLong = CGRectMake(kScreenWidth - 258, self.height / 2 - 9, 200, 16);
     _minuteLabel.font = [UIFont systemFontOfSize:15];
     _minuteLabel.textAlignment = NSTextAlignmentRight;
     _minuteLabel.textColor = [UIColor colorWithRed:0 green:0 blue:0 alpha:0.4];
