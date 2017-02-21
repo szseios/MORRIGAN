@@ -403,7 +403,7 @@
     rightChestLabel.textColor = [Utils stringTOColor:kColor_6911a5];
     [self.view addSubview:rightChestLabel];
 
-//    [self startAnimation];
+    //[self startAnimation];
     
 }
 
@@ -454,11 +454,11 @@
     
     CGFloat time3 = 2;
     if(_currentGear == 1) {
-        time3 = time2/1;
+        time3 = time3/1;
     } else if(_currentGear == 2) {
-        time3 = time2/3;
+        time3 = time3/3;
     } else if(_currentGear == 3) {
-        time3 = time2/6;
+        time3 = time3/6;
     }
     animation3Timer = [NSTimer scheduledTimerWithTimeInterval:time3
                                                        target:self
