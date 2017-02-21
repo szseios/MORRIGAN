@@ -50,7 +50,6 @@
 		<string>audio</string>
 		<string>bluetooth-central</string>
 		<string>fetch</string>
-		<string>location</string>
 	</array>
 	<key>UIRequiredDeviceCapabilities</key>
 	<array>
