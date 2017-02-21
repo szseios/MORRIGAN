@@ -12,6 +12,9 @@
 #import "BluetoothManager.h"
 #import "RecordManager.h"
 #import "MassageRecordModel.h"
+#import <MediaPlayer/MediaPlayer.h>
+#import <AVFoundation/AVFoundation.h>
+
 
 #define kTagOfDefault       0        // 默认按钮tag
 #define kTagOfSoft          1000     // 轻柔按钮tag
@@ -40,6 +43,7 @@
     BOOL _preKneeding;   // 正在体验按摩
     NSTimer *_timer;     // 6s切换按摩方式定时器
 }
+@property (nonatomic , strong) NSTimer *backgroundTimer;
 
 @end
 
@@ -50,14 +54,21 @@
     
     [self viewInit];
     [super viewDidLoad];
-    
+    [self startBackgroundTimer];
     [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(bluetoothDisConnectHandlerInAutoKnead) name:DisconnectPeripheral object:nil];
+    
+    [[UIApplication sharedApplication] beginBackgroundTaskWithExpirationHandler:nil];
+    
 }
 
 -(void)viewDidDisappear:(BOOL)animated
 {
     [super viewDidDisappear:animated];
     [self stopKneed];
+    if(_backgroundTimer) {
+        [_backgroundTimer invalidate];
+        _backgroundTimer = nil;
+    }
 }
 
 
@@ -787,6 +798,22 @@
         [_timer invalidate];
         _timer = nil;
     }
+}
+
+
+- (void)startBackgroundTimer
+{
+    if(_backgroundTimer) {
+        [_backgroundTimer invalidate];
+        _backgroundTimer = nil;
+    }
+    _backgroundTimer = [NSTimer scheduledTimerWithTimeInterval:3 target:self selector:@selector(getData) userInfo:nil repeats:YES];
+}
+
+- (void)getData
+{
+    [[RecordManager share] getStarRank];
+    
 }
 
 

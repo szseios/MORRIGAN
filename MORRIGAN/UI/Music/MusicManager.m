@@ -65,7 +65,8 @@ static MusicManager *manager = nil;
     return self;
 }
 
-- (void)playMusicByURL:(NSURL *)url {
+- (void)playMusicByURL:(NSURL *)url
+{
     dispatch_async(dispatch_get_global_queue(0, 0), ^{
         if (_player) {
             [_player stop];

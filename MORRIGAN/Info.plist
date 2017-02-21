@@ -20,6 +20,8 @@
 	<string>1.0.3</string>
 	<key>CFBundleVersion</key>
 	<string>1.0.3</string>
+	<key>LDSBACKKEY</key>
+	<string>3b27397bee7a8919985e2f9432f1e686</string>
 	<key>LSApplicationCategoryType</key>
 	<string>App plays audio</string>
 	<key>LSApplicationQueriesSchemes</key>
@@ -39,11 +41,16 @@
 	<string>是否允许此App使用蓝牙？</string>
 	<key>NSCameraUsageDescription</key>
 	<string>是否允许此App使用相机？</string>
+	<key>NSLocationAlwaysUsageDescription</key>
+	<string>请点击允许以获得更好的服务</string>
 	<key>NSPhotoLibraryUsageDescription</key>
 	<string>是否允许此App访问相册？ </string>
 	<key>UIBackgroundModes</key>
 	<array>
 		<string>audio</string>
+		<string>bluetooth-central</string>
+		<string>fetch</string>
+		<string>location</string>
 	</array>
 	<key>UIRequiredDeviceCapabilities</key>
 	<array>

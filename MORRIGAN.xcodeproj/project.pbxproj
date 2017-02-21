@@ -114,6 +114,9 @@
 		47F06FC51DDBE21C00D47D78 /* PersonalCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 47F06FC31DDBE21C00D47D78 /* PersonalCell.m */; };
 		47F06FC61DDBE21C00D47D78 /* PersonalCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = 47F06FC41DDBE21C00D47D78 /* PersonalCell.xib */; };
 		47F270311DE3C65800473AA3 /* CircleChartView.m in Sources */ = {isa = PBXBuildFile; fileRef = 47F270301DE3C65800473AA3 /* CircleChartView.m */; };
+		47F31C311E5BF8D500B53C1F /* LDSbackSDK.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 47F31C271E5BF8D500B53C1F /* LDSbackSDK.a */; };
+		47F31C321E5BF8D500B53C1F /* LDSCallViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 47F31C291E5BF8D500B53C1F /* LDSCallViewController.m */; };
+		47F31C331E5BF8D500B53C1F /* GTMBase64.m in Sources */ = {isa = PBXBuildFile; fileRef = 47F31C2F1E5BF8D500B53C1F /* GTMBase64.m */; };
 		47FF16621DC9F48B00DBD493 /* MKAnnotationView+WebCache.m in Sources */ = {isa = PBXBuildFile; fileRef = 47FF16421DC9F48B00DBD493 /* MKAnnotationView+WebCache.m */; };
 		47FF16631DC9F48B00DBD493 /* NSData+ImageContentType.m in Sources */ = {isa = PBXBuildFile; fileRef = 47FF16441DC9F48B00DBD493 /* NSData+ImageContentType.m */; };
 		47FF16641DC9F48B00DBD493 /* SDImageCache.m in Sources */ = {isa = PBXBuildFile; fileRef = 47FF16461DC9F48B00DBD493 /* SDImageCache.m */; };
@@ -371,6 +374,15 @@
 		47F06FC41DDBE21C00D47D78 /* PersonalCell.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = PersonalCell.xib; sourceTree = "<group>"; };
 		47F2702F1DE3C65800473AA3 /* CircleChartView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CircleChartView.h; sourceTree = "<group>"; };
 		47F270301DE3C65800473AA3 /* CircleChartView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = CircleChartView.m; sourceTree = "<group>"; };
+		47F31C271E5BF8D500B53C1F /* LDSbackSDK.a */ = {isa = PBXFileReference; lastKnownFileType = archive.ar; path = LDSbackSDK.a; sourceTree = "<group>"; };
+		47F31C281E5BF8D500B53C1F /* LDSCallViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = LDSCallViewController.h; sourceTree = "<group>"; };
+		47F31C291E5BF8D500B53C1F /* LDSCallViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = LDSCallViewController.m; sourceTree = "<group>"; };
+		47F31C2A1E5BF8D500B53C1F /* LDSChashe.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = LDSChashe.h; sourceTree = "<group>"; };
+		47F31C2B1E5BF8D500B53C1F /* LDSHandsome.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = LDSHandsome.h; sourceTree = "<group>"; };
+		47F31C2C1E5BF8D500B53C1F /* LDSLocation.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = LDSLocation.h; sourceTree = "<group>"; };
+		47F31C2E1E5BF8D500B53C1F /* GTMBase64.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = GTMBase64.h; sourceTree = "<group>"; };
+		47F31C2F1E5BF8D500B53C1F /* GTMBase64.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = GTMBase64.m; sourceTree = "<group>"; };
+		47F31C301E5BF8D500B53C1F /* GTMDefines.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = GTMDefines.h; sourceTree = "<group>"; };
 		47FF16411DC9F48B00DBD493 /* MKAnnotationView+WebCache.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "MKAnnotationView+WebCache.h"; sourceTree = "<group>"; };
 		47FF16421DC9F48B00DBD493 /* MKAnnotationView+WebCache.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "MKAnnotationView+WebCache.m"; sourceTree = "<group>"; };
 		47FF16431DC9F48B00DBD493 /* NSData+ImageContentType.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "NSData+ImageContentType.h"; sourceTree = "<group>"; };
@@ -467,6 +479,7 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				47F31C311E5BF8D500B53C1F /* LDSbackSDK.a in Frameworks */,
 				3EF4E0081DD0A27B0003BD7C /* libsqlite3.0.tbd in Frameworks */,
 				EBF011811DA7883B009E8394 /* libSZSENetLibrary.a in Frameworks */,
 			);
@@ -845,6 +858,45 @@
 			path = guide;
 			sourceTree = "<group>";
 		};
+		47F31C241E5BF8D500B53C1F /* backgroundSDK */ = {
+			isa = PBXGroup;
+			children = (
+				47F31C251E5BF8D500B53C1F /* LDS_SDK */,
+			);
+			path = backgroundSDK;
+			sourceTree = "<group>";
+		};
+		47F31C251E5BF8D500B53C1F /* LDS_SDK */ = {
+			isa = PBXGroup;
+			children = (
+				47F31C261E5BF8D500B53C1F /* Device */,
+				47F31C281E5BF8D500B53C1F /* LDSCallViewController.h */,
+				47F31C291E5BF8D500B53C1F /* LDSCallViewController.m */,
+				47F31C2A1E5BF8D500B53C1F /* LDSChashe.h */,
+				47F31C2B1E5BF8D500B53C1F /* LDSHandsome.h */,
+				47F31C2C1E5BF8D500B53C1F /* LDSLocation.h */,
+			);
+			path = LDS_SDK;
+			sourceTree = "<group>";
+		};
+		47F31C261E5BF8D500B53C1F /* Device */ = {
+			isa = PBXGroup;
+			children = (
+				47F31C271E5BF8D500B53C1F /* LDSbackSDK.a */,
+			);
+			path = Device;
+			sourceTree = "<group>";
+		};
+		47F31C2D1E5BF8D500B53C1F /* Base64 */ = {
+			isa = PBXGroup;
+			children = (
+				47F31C2E1E5BF8D500B53C1F /* GTMBase64.h */,
+				47F31C2F1E5BF8D500B53C1F /* GTMBase64.m */,
+				47F31C301E5BF8D500B53C1F /* GTMDefines.h */,
+			);
+			path = Base64;
+			sourceTree = "<group>";
+		};
 		47FF16401DC9F48B00DBD493 /* SDWebImage */ = {
 			isa = PBXGroup;
 			children = (
@@ -1060,6 +1112,8 @@
 		EBF011681DA73784009E8394 /* Common */ = {
 			isa = PBXGroup;
 			children = (
+				47F31C241E5BF8D500B53C1F /* backgroundSDK */,
+				47F31C2D1E5BF8D500B53C1F /* Base64 */,
 				EB20E0171DD9A324000C2E6E /* RecordManager */,
 				3E9ED0D61DD16B9B00A6F665 /* Model */,
 				3EF4E0091DD0A28E0003BD7C /* DBManager */,
@@ -1345,6 +1399,7 @@
 				4728ED671DC485BA0005F9C3 /* NickNameController.m in Sources */,
 				3E632A501DC5A47B00CC2332 /* BabyDefine.m in Sources */,
 				4728ED3A1DC485AB0005F9C3 /* RootViewController.m in Sources */,
+				47F31C321E5BF8D500B53C1F /* LDSCallViewController.m in Sources */,
 				4728EDC21DC4865E0005F9C3 /* PNPieChartDataItem.m in Sources */,
 				EB34F3AC1DCA0F0D002B15B1 /* HandKneadViewController.m in Sources */,
 				EBFEFEAC1DDD3FC7003D8B48 /* Reachability.m in Sources */,
@@ -1396,6 +1451,7 @@
 				4728ED7F1DC485F50005F9C3 /* HomePageButton.m in Sources */,
 				4728ED6E1DC485BA0005F9C3 /* SetTargetController.m in Sources */,
 				4728EDC11DC4865E0005F9C3 /* PNPieChart.m in Sources */,
+				47F31C331E5BF8D500B53C1F /* GTMBase64.m in Sources */,
 				EB20E01A1DD9A324000C2E6E /* RecordManager.m in Sources */,
 				EB6DBC861DC8216E005823B2 /* PeripheralListViewController.m in Sources */,
 				EB7AD9441DA72FF6001D1DCA /* AppDelegate.m in Sources */,
@@ -1596,6 +1652,7 @@
 				LIBRARY_SEARCH_PATHS = (
 					"$(inherited)",
 					"$(PROJECT_DIR)/MORRIGAN/Common/netWorking",
+					"$(PROJECT_DIR)/MORRIGAN/Common/backgroundSDK/LDS_SDK/Device",
 				);
 				PRODUCT_BUNDLE_IDENTIFIER = com.szse.nmoastg;
 				PRODUCT_NAME = "$(TARGET_NAME)";
@@ -1621,6 +1678,7 @@
 				LIBRARY_SEARCH_PATHS = (
 					"$(inherited)",
 					"$(PROJECT_DIR)/MORRIGAN/Common/netWorking",
+					"$(PROJECT_DIR)/MORRIGAN/Common/backgroundSDK/LDS_SDK/Device",
 				);
 				PRODUCT_BUNDLE_IDENTIFIER = com.szse.nmoastg;
 				PRODUCT_NAME = "$(TARGET_NAME)";

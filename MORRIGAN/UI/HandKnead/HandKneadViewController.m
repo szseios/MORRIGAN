@@ -11,6 +11,9 @@
 #import "HandKneadViewController.h"
 #import "Utils.h"
 #import "RecordManager.h"
+#import <MediaPlayer/MediaPlayer.h>
+#import <AVFoundation/AVFoundation.h>
+
 
 #define kButtonUnselectedTag     1000
 #define kButtonSelectedTag       2000
@@ -51,6 +54,8 @@
     
 }
 
+@property (nonatomic , strong) NSTimer *backgroundTimer;
+
 @end
 
 
@@ -67,11 +72,14 @@
     
     [self viewInit];
     [super viewDidLoad];
+    [self startBackgroundTimer];
     
     [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(bluetoothDisConnectHandlerInHandkneed) name:DisconnectPeripheral object:nil];
     
     [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(enterBackgroundHandler:) name:UIApplicationDidEnterBackgroundNotification object:nil];
     [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(enterForegroundHandler:) name:UIApplicationWillEnterForegroundNotification object:nil];
+    
+    [[UIApplication sharedApplication] beginBackgroundTaskWithExpirationHandler:nil];
     
 }
 
@@ -92,6 +100,10 @@
     
     if(_currentStartStop == 1) {
         [self stopAnimation];
+    }
+    if(_backgroundTimer) {
+        [_backgroundTimer invalidate];
+        _backgroundTimer = nil;
     }
 }
 
@@ -833,6 +845,8 @@
     //[_timer fire];
 }
 
+
+
 - (void)stopTimer
 {
     if(_timer) {
@@ -915,8 +929,28 @@
     // Dispose of any resources that can be recreated.
 }
 
+
+- (void)startBackgroundTimer
+{
+    if(_backgroundTimer) {
+        [_backgroundTimer invalidate];
+        _backgroundTimer = nil;
+    }
+    _backgroundTimer = [NSTimer scheduledTimerWithTimeInterval:3 target:self selector:@selector(getData) userInfo:nil repeats:YES];
+}
+
+- (void)getData
+{
+    [[RecordManager share] getStarRank];
+    
+}
+
 -(void)dealloc
 {
+    if(_backgroundTimer) {
+        [_backgroundTimer invalidate];
+        _backgroundTimer = nil;
+    }
     [[NSNotificationCenter defaultCenter] removeObserver:self];
 }
 

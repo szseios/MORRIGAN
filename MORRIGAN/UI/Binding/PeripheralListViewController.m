@@ -107,7 +107,7 @@
             
             _bottomView.hidden = NO;
             _squareView.hidden = NO;
-            self.view.userInteractionEnabled = NO;
+            self.view.userInteractionEnabled = YES;
             [self startAnimating];
         }
     }
@@ -199,7 +199,7 @@
     
     _bottomView.hidden = NO;
     _squareView.hidden = NO;
-    self.view.userInteractionEnabled = NO;
+    self.view.userInteractionEnabled = YES;
     [self startAnimating];
     
 }
