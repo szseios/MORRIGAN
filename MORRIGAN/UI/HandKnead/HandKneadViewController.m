@@ -13,6 +13,7 @@
 #import "RecordManager.h"
 #import <MediaPlayer/MediaPlayer.h>
 #import <AVFoundation/AVFoundation.h>
+#import "MusicManager.h"
 
 
 #define kButtonUnselectedTag     1000
@@ -72,7 +73,7 @@
     
     [self viewInit];
     [super viewDidLoad];
-    [self startBackgroundTimer];
+//    [self startBackgroundTimer];
     
     [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(bluetoothDisConnectHandlerInHandkneed) name:DisconnectPeripheral object:nil];
     
@@ -80,6 +81,8 @@
     [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(enterForegroundHandler:) name:UIApplicationWillEnterForegroundNotification object:nil];
     
     [[UIApplication sharedApplication] beginBackgroundTaskWithExpirationHandler:nil];
+    
+    
     
 }
 
@@ -101,10 +104,11 @@
     if(_currentStartStop == 1) {
         [self stopAnimation];
     }
-    if(_backgroundTimer) {
-        [_backgroundTimer invalidate];
-        _backgroundTimer = nil;
-    }
+    [[MusicManager share] stop];
+//    if(_backgroundTimer) {
+//        [_backgroundTimer invalidate];
+//        _backgroundTimer = nil;
+//    }
 }
 
 // 进入后台
@@ -642,7 +646,6 @@
 {
     NSLog(@"startButtonClick");
     
-    
 //    // 测试上传护理记录
 //    MassageRecordModel *model1 = [[MassageRecordModel alloc] init];
 //    model1.userID = [UserInfo share].userId;
@@ -678,6 +681,7 @@
     [self updateStartStopState:_startButton];
    
     [self sendData];
+    [[MusicManager share] playSilenceMusicBackground];
     
 }
 
@@ -936,21 +940,17 @@
         [_backgroundTimer invalidate];
         _backgroundTimer = nil;
     }
-    _backgroundTimer = [NSTimer scheduledTimerWithTimeInterval:3 target:self selector:@selector(getData) userInfo:nil repeats:YES];
+    _backgroundTimer = [NSTimer scheduledTimerWithTimeInterval:2 target:self selector:@selector(getData) userInfo:nil repeats:YES];
 }
 
 - (void)getData
 {
-    [[RecordManager share] getStarRank];
+//    [[RecordManager share] getBackgroundStarRank];
     
 }
 
 -(void)dealloc
 {
-    if(_backgroundTimer) {
-        [_backgroundTimer invalidate];
-        _backgroundTimer = nil;
-    }
     [[NSNotificationCenter defaultCenter] removeObserver:self];
 }
 

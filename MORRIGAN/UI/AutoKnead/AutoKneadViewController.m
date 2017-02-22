@@ -14,6 +14,7 @@
 #import "MassageRecordModel.h"
 #import <MediaPlayer/MediaPlayer.h>
 #import <AVFoundation/AVFoundation.h>
+#import "MusicManager.h"
 
 
 #define kTagOfDefault       0        // 默认按钮tag
@@ -54,7 +55,7 @@
     
     [self viewInit];
     [super viewDidLoad];
-    [self startBackgroundTimer];
+//    [self startBackgroundTimer];
     [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(bluetoothDisConnectHandlerInAutoKnead) name:DisconnectPeripheral object:nil];
     
     [[UIApplication sharedApplication] beginBackgroundTaskWithExpirationHandler:nil];
@@ -65,10 +66,11 @@
 {
     [super viewDidDisappear:animated];
     [self stopKneed];
-    if(_backgroundTimer) {
-        [_backgroundTimer invalidate];
-        _backgroundTimer = nil;
-    }
+    [[MusicManager share] stop];
+//    if(_backgroundTimer) {
+//        [_backgroundTimer invalidate];
+//        _backgroundTimer = nil;
+//    }
 }
 
 
@@ -685,7 +687,7 @@
             hasSelected = YES;
         }
     }
-
+    
 
     // 必须选择一个
     if(hasSelected == NO) {
@@ -728,6 +730,7 @@
         model.type = MassageTypeAuto;
         [[RecordManager share] addToDB:model];
     }
+    [[MusicManager share] playSilenceMusicBackground];
 }
 
 - (void)bindingDeviceInAutoKnead
@@ -807,12 +810,12 @@
         [_backgroundTimer invalidate];
         _backgroundTimer = nil;
     }
-    _backgroundTimer = [NSTimer scheduledTimerWithTimeInterval:3 target:self selector:@selector(getData) userInfo:nil repeats:YES];
+    _backgroundTimer = [NSTimer scheduledTimerWithTimeInterval:2 target:self selector:@selector(getData) userInfo:nil repeats:YES];
 }
 
 - (void)getData
 {
-    [[RecordManager share] getStarRank];
+//    [[RecordManager share] getBackgroundStarRank];
     
 }
 

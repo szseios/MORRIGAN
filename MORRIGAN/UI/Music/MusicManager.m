@@ -224,5 +224,28 @@ static MusicManager *manager = nil;
 
 }
 
+#pragma mark - 后台播放无声音乐
+- (void)playSilenceMusicBackground
+{
+    NSString *filePath = [[NSBundle mainBundle] pathForResource:@"MusicList" ofType:@"plist"];
+    NSArray *array = [NSArray arrayWithContentsOfFile:filePath];
+    NSDictionary *dictionary = [array firstObject];
+    NSString *name = [dictionary objectForKey:@"fileName"];
+    NSURL *url = [[NSBundle mainBundle] URLForResource:name withExtension:@"mp3"];
+    dispatch_async(dispatch_get_global_queue(0, 0), ^{
+        if (_player) {
+            [_player stop];
+            _player = nil;
+        }
+        _player = [[AVAudioPlayer alloc] initWithContentsOfURL:url error:nil];
+        _player.delegate = self;
+        _player.meteringEnabled = YES;
+        _player.volume = 0.0f;
+        [[AVAudioSession sharedInstance] setActive:YES error:nil];
+        [[AVAudioSession sharedInstance] setCategory:AVAudioSessionCategoryAudioProcessing error:nil];
+        [_player play];
+    });
+}
+
 
 @end
