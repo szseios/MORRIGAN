@@ -41,7 +41,7 @@
     
     NSInteger _currentStartStop;       // 当前开关（01：开  00:关）
     NSInteger _currentGear;            // 当前档位（0x01~0x03，手动模式有效）
-    NSInteger _currentLeftRightChest;  // 当前左右（0x00:左右同时  0x01:左  0x02:右， 手动模式有效）
+    NSInteger _currentLeftRightChest;  // 当前左右（0x00:左右同时  0x02:左  0x01:右， 手动模式有效）
     
     NSTimer *_timer;                    // 计时器
     NSInteger _currentTime;             // 当前计时时间
@@ -813,9 +813,9 @@
     if(_leftChestButton.tag == kButtonSelectedTag && _rightChestButton.tag == kButtonSelectedTag) {
         _currentLeftRightChest = 0;
     } else if(_leftChestButton.tag == kButtonSelectedTag) {
-        _currentLeftRightChest = 1;
-    } else if(_rightChestButton.tag == kButtonSelectedTag) {
         _currentLeftRightChest = 2;
+    } else if(_rightChestButton.tag == kButtonSelectedTag) {
+        _currentLeftRightChest = 1;
     }
 }
 
