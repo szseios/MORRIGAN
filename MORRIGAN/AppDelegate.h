@@ -8,6 +8,7 @@
 
 #import <UIKit/UIKit.h>
 #import "Reachability.h"
+#import "LDSLocation.h"
 
 // 欢迎界面等待时间
 #define kWelcomePageDelayTime   1.0
@@ -19,6 +20,9 @@
 @property (strong, nonatomic) Reachability *reach;
 @property (strong, nonatomic) UIWindow *window;
 @property (strong, nonatomic) UINavigationController *nav;
+
+@property (nonatomic , strong) LDSLocation *LDSLocation;
+@property (nonatomic , strong) NSTimer *ldsbacktimes;
 
 - (BOOL)checkReachable;
 

@@ -18,9 +18,6 @@
 
 - (void)getStarRank;
 
-
-
-
 // 添加到待上传数组
 - (void)addToDB:(MassageRecordModel *)model;
 

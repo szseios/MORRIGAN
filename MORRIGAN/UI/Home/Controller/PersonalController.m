@@ -42,11 +42,12 @@ static NSString *cellIdentifier = @"cellIdentifier";
     [self.view addSubview:backgroudView];
     
     CGFloat cellWidth = kScreenWidth-80;
-    _personalTableView = [[UITableView alloc] initWithFrame:CGRectMake(0, 0,cellWidth ,self.view.height) style:UITableViewStyleGrouped];
+    _personalTableView = [[UITableView alloc] initWithFrame:CGRectMake(0, 0,cellWidth ,self.view.height) style:UITableViewStylePlain];
     _personalTableView.delegate = self;
     _personalTableView.dataSource = self;
     _personalTableView.backgroundColor = [UIColor clearColor];
-    _personalTableView.separatorColor = [UIColor colorWithRed:169.0f/255.0f green:86.0f/255.0f blue:254.0f/255.0f alpha:0.7];
+    _personalTableView.separatorColor = [UIColor colorWithRed:169.0f/255.0f green:86.0f/255.0f blue:254.0f/255.0f alpha:0.5];
+    
     [_personalTableView registerNib:[UINib nibWithNibName:@"PersonalCell" bundle:nil] forCellReuseIdentifier:cellIdentifier];
     [self.view addSubview:_personalTableView];
     
@@ -109,6 +110,8 @@ static NSString *cellIdentifier = @"cellIdentifier";
 {
     PersonalCell *cell = [tableView dequeueReusableCellWithIdentifier:cellIdentifier];
     cell.backgroundColor = [UIColor clearColor];
+    cell.selectedBackgroundView = [[UIView alloc] initWithFrame:cell.bounds];
+    cell.selectedBackgroundView.backgroundColor = [UIColor colorWithRed:0 green:0 blue:0 alpha:0.2];
     if (!cell) {
         cell = [[PersonalCell alloc] init];
     }

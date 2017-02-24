@@ -68,7 +68,7 @@
             {
                 _titleLabel.text = @"情感";
                 NSString *temp = [UserInfo share].emotionStr;
-                if (temp.length > 0) {
+                if (temp.length > 0 && temp) {
                     _contentLabel.text = temp;
                 }else{
                     _contentLabel.text = @"请输入";
@@ -80,7 +80,7 @@
             {
                 _titleLabel.text = @"身高";
                 NSString *temp = [UserInfo share].high;
-                if (temp.length > 0) {
+                if (temp.length > 0 && temp) {
                     _contentLabel.text = [NSString stringWithFormat:@"%@cm",temp];
                 }else{
                     _contentLabel.text = @"请输入";
@@ -93,7 +93,7 @@
             {
                 _titleLabel.text = @"体重";
                 NSString *temp = [UserInfo share].weight;
-                if (temp.length > 0) {
+                if (temp.length > 0 && temp) {
                     _contentLabel.text = [NSString stringWithFormat:@"%@kg",temp];
                 }else{
                     _contentLabel.text = @"请输入";

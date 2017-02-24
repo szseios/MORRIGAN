@@ -11,6 +11,10 @@
 #import "HandKneadViewController.h"
 #import "Utils.h"
 #import "RecordManager.h"
+#import <MediaPlayer/MediaPlayer.h>
+#import <AVFoundation/AVFoundation.h>
+#import "MusicManager.h"
+
 
 #define kButtonUnselectedTag     1000
 #define kButtonSelectedTag       2000
@@ -37,7 +41,7 @@
     
     NSInteger _currentStartStop;       // 当前开关（01：开  00:关）
     NSInteger _currentGear;            // 当前档位（0x01~0x03，手动模式有效）
-    NSInteger _currentLeftRightChest;  // 当前左右（0x00:左右同时  0x01:左  0x02:右， 手动模式有效）
+    NSInteger _currentLeftRightChest;  // 当前左右（0x00:左右同时  0x02:左  0x01:右， 手动模式有效）
     
     NSTimer *_timer;                    // 计时器
     NSInteger _currentTime;             // 当前计时时间
@@ -48,7 +52,10 @@
     NSTimer *animation2Timer;
     NSTimer *animation3Timer;
     NSTimer *animation4Timer;
+    
 }
+
+@property (nonatomic , strong) NSTimer *backgroundTimer;
 
 @end
 
@@ -66,10 +73,59 @@
     
     [self viewInit];
     [super viewDidLoad];
+//    [self startBackgroundTimer];
     
     [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(bluetoothDisConnectHandlerInHandkneed) name:DisconnectPeripheral object:nil];
     
+    [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(enterBackgroundHandler:) name:UIApplicationDidEnterBackgroundNotification object:nil];
+    [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(enterForegroundHandler:) name:UIApplicationWillEnterForegroundNotification object:nil];
+    
+    [[UIApplication sharedApplication] beginBackgroundTaskWithExpirationHandler:nil];
+    
+    
+    
 }
+
+-(void)viewDidAppear:(BOOL)animated
+{
+    [super viewDidAppear:animated];
+   
+    if(_currentStartStop == 1) {
+        [self startAnimation];
+        
+    }
+    
+}
+
+-(void)viewDidDisappear:(BOOL)animated
+{
+    [super viewDidDisappear:animated];
+    
+    if(_currentStartStop == 1) {
+        [self stopAnimation];
+    }
+    [[MusicManager share] stop];
+//    if(_backgroundTimer) {
+//        [_backgroundTimer invalidate];
+//        _backgroundTimer = nil;
+//    }
+}
+
+// 进入后台
+- (void)enterBackgroundHandler:(UIApplication *)application {
+    if(_currentStartStop == 1) {
+        [self stopAnimation];
+    }
+}
+
+// 进入前台
+- (void)enterForegroundHandler:(UIApplication *)application {
+    if(_currentStartStop == 1) {
+        [self startAnimation];
+
+    }
+}
+
 
 // 视图初始化
 - (void)viewInit
@@ -219,7 +275,7 @@
     [bigCircleRootView addSubview:gearLabel];
     
     // 时间（55:55）
-    CGFloat timeLabelW = 100;
+    CGFloat timeLabelW = 120;
     CGFloat timeLabelH = 40;
     CGFloat timeLabelX = bigCircleRootViewW/2 - timeLabelW/2;
     CGFloat timeLabelY = bigCircleRootViewH - 30 - timeLabelH;
@@ -231,7 +287,7 @@
     timeLabel.text = @"00:00";
     timeLabel.textAlignment = NSTextAlignmentCenter;
     timeLabel.textColor = [UIColor whiteColor];
-    timeLabel.font = [UIFont boldSystemFontOfSize:25.0];
+    timeLabel.font = [UIFont systemFontOfSize:30.0];
     [bigCircleRootView addSubview:timeLabel];
     _timeLabel = timeLabel;
     
@@ -374,7 +430,17 @@
 //    animation1Timer = [NSTimer scheduledTimerWithTimeInterval:0.1 repeats:NO block:^(NSTimer * _Nonnull timer) {
 //        [self startAnimation1];
 //    }];
-    animation1Timer = [NSTimer scheduledTimerWithTimeInterval:0.1
+    
+    
+    CGFloat time1 = 0.1;
+    if(_currentGear == 1) {
+        time1 = time1/1;
+    } else if(_currentGear == 2) {
+        time1 = time1/3;
+    } else if(_currentGear == 3) {
+        time1 = time1/6;
+    }
+    animation1Timer = [NSTimer scheduledTimerWithTimeInterval:time1
                                                        target:self
                                                      selector:@selector(startAnimation1)
                                                      userInfo:nil
@@ -383,7 +449,15 @@
 //    animation2Timer = [NSTimer scheduledTimerWithTimeInterval:tempTime * 1 repeats:NO block:^(NSTimer * _Nonnull timer) {
 //        [self startAnimation2];
 //    }];
-    animation2Timer = [NSTimer scheduledTimerWithTimeInterval:1
+    CGFloat time2 = 1;
+    if(_currentGear == 1) {
+        time2 = time2/1;
+    } else if(_currentGear == 2) {
+        time2 = time2/3;
+    } else if(_currentGear == 3) {
+        time2 = time2/6;
+    }
+    animation2Timer = [NSTimer scheduledTimerWithTimeInterval:time2
                                                        target:self
                                                      selector:@selector(startAnimation2)
                                                      userInfo:nil
@@ -393,7 +467,16 @@
 //        [self startAnimation3];
 //    }];
     
-    animation3Timer = [NSTimer scheduledTimerWithTimeInterval:2
+    
+    CGFloat time3 = 2;
+    if(_currentGear == 1) {
+        time3 = time3/1;
+    } else if(_currentGear == 2) {
+        time3 = time3/3;
+    } else if(_currentGear == 3) {
+        time3 = time3/6;
+    }
+    animation3Timer = [NSTimer scheduledTimerWithTimeInterval:time3
                                                        target:self
                                                      selector:@selector(startAnimation3)
                                                      userInfo:nil
@@ -403,7 +486,15 @@
 //        [self startAnimation4];
 //    }];
     
-    animation4Timer = [NSTimer scheduledTimerWithTimeInterval:3
+    CGFloat time4 = 3;
+    if(_currentGear == 1) {
+        time4 = time4/1;
+    } else if(_currentGear == 2) {
+        time4 = time4/3;
+    } else if(_currentGear == 3) {
+        time4 = time4/6;
+    }
+    animation4Timer = [NSTimer scheduledTimerWithTimeInterval:time4
                                                        target:self
                                                      selector:@selector(startAnimation4)
                                                      userInfo:nil
@@ -470,6 +561,7 @@
     
     // 缩放动画
     CAKeyframeAnimation *scaleAnimation = [CAKeyframeAnimation animationWithKeyPath:@"transform.scale"];
+    
     scaleAnimation.values = @[@(1.0), @(1.2), @(1.4), @(1.6)];
     scaleAnimation.keyTimes = @[@(0), @(0.33), @(0.66), @(1)];
     scaleAnimation.timingFunctions = @[[CAMediaTimingFunction functionWithName:kCAMediaTimingFunctionLinear], [CAMediaTimingFunction functionWithName:kCAMediaTimingFunctionLinear], [CAMediaTimingFunction functionWithName:kCAMediaTimingFunctionEaseIn]];
@@ -481,6 +573,15 @@
     opacityAnimation.toValue = [NSNumber numberWithFloat:0.1];
     // 动画组
     CAAnimationGroup *animationGroup = [CAAnimationGroup animation];
+
+    if(_currentGear == 1) {
+        time = time/1;
+    } else if(_currentGear == 2) {
+        time = time/3;
+    } else if(_currentGear == 3) {
+        time = time/6;
+    }
+    
     animationGroup.duration = time;
     animationGroup.autoreverses = NO;        //是否重播，原动画的倒播
     animationGroup.repeatCount = NSNotFound; //HUGE_VALF
@@ -506,9 +607,14 @@
     }
     _gearNumLabel.text = [NSString stringWithFormat:@"%ld", _currentGear];
     
-    
+
     [self sendData];
     
+    if(_currentStartStop == 1) {
+        [self stopAnimation];
+        [self startAnimation];
+    }
+
 }
 
 
@@ -527,13 +633,18 @@
     _gearNumLabel.text = [NSString stringWithFormat:@"%ld", _currentGear];
     
     [self sendData];
+    
+    if(_currentStartStop == 1) {
+        [self stopAnimation];
+        [self startAnimation];
+    }
+
 }
 
 // START 按钮点击
 - (void)startButtonClick:(id)sender
 {
     NSLog(@"startButtonClick");
-    
     
 //    // 测试上传护理记录
 //    MassageRecordModel *model1 = [[MassageRecordModel alloc] init];
@@ -562,7 +673,7 @@
     
     
     if (![UserInfo share].isConnected) {
-        UIAlertView *alert = [[UIAlertView alloc] initWithTitle:@"蓝牙未连接，请先连接设备再来按摩吧" message:nil delegate:self cancelButtonTitle:nil otherButtonTitles:@"确定", nil];
+        UIAlertView *alert = [[UIAlertView alloc] initWithTitle:@"请先连接设备再来开始按摩吧" message:nil delegate:self cancelButtonTitle:nil otherButtonTitles:@"确定", nil];
         [alert show];
         return;
     }
@@ -570,6 +681,7 @@
     [self updateStartStopState:_startButton];
    
     [self sendData];
+    [[MusicManager share] playSilenceMusicBackground];
     
 }
 
@@ -701,9 +813,9 @@
     if(_leftChestButton.tag == kButtonSelectedTag && _rightChestButton.tag == kButtonSelectedTag) {
         _currentLeftRightChest = 0;
     } else if(_leftChestButton.tag == kButtonSelectedTag) {
-        _currentLeftRightChest = 1;
-    } else if(_rightChestButton.tag == kButtonSelectedTag) {
         _currentLeftRightChest = 2;
+    } else if(_rightChestButton.tag == kButtonSelectedTag) {
+        _currentLeftRightChest = 1;
     }
 }
 
@@ -736,6 +848,8 @@
     _timer = [NSTimer scheduledTimerWithTimeInterval:1 target:self selector:@selector(timerHandler) userInfo:nil repeats:YES];
     //[_timer fire];
 }
+
+
 
 - (void)stopTimer
 {
@@ -817,6 +931,22 @@
 - (void)didReceiveMemoryWarning {
     [super didReceiveMemoryWarning];
     // Dispose of any resources that can be recreated.
+}
+
+
+- (void)startBackgroundTimer
+{
+    if(_backgroundTimer) {
+        [_backgroundTimer invalidate];
+        _backgroundTimer = nil;
+    }
+    _backgroundTimer = [NSTimer scheduledTimerWithTimeInterval:2 target:self selector:@selector(getData) userInfo:nil repeats:YES];
+}
+
+- (void)getData
+{
+//    [[RecordManager share] getBackgroundStarRank];
+    
 }
 
 -(void)dealloc

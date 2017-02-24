@@ -101,8 +101,11 @@ NSString * const ElectricQuantityChanged = @"ElectricQuantityChanged";
                 [UserInfo share].isConnected = NO;
                 weakSelf.curConnectPeripheral = nil;
                 //通知断开蓝牙设备
-                [[NSNotificationCenter defaultCenter] postNotificationName:DisconnectPeripheral
-                                                                    object:@(weakSelf.manualDisconnect)];
+                dispatch_async(dispatch_get_main_queue(), ^{
+                    [[NSNotificationCenter defaultCenter] postNotificationName:DisconnectPeripheral
+                                                                        object:@(weakSelf.manualDisconnect)];
+                    
+                });
                 [weakSelf endTimer];
                 
                 //如果是手动断开连接
@@ -179,9 +182,12 @@ NSString * const ElectricQuantityChanged = @"ElectricQuantityChanged";
         if (![DBManager insertPeripheral:peripheral macAddress:weakSelf.willConnectMacAddress]) {
             NSLog(@"保存已绑定设备信息失败.  peripheral.name : %@",peripheral.name);
         }
-
-        [[NSNotificationCenter defaultCenter] postNotificationName:ConnectPeripheralSuccess
+        dispatch_async(dispatch_get_main_queue(), ^{
+            [[NSNotificationCenter defaultCenter] postNotificationName:ConnectPeripheralSuccess
                                                                 object:nil];
+            
+        });
+
 
         
         
@@ -304,6 +310,9 @@ NSString * const ElectricQuantityChanged = @"ElectricQuantityChanged";
         if ([peripheralName hasPrefix:@"Morrigan"] ) {
             return YES;
         }
+        if ([peripheralName hasPrefix:@"H001ML"] ) {
+            return YES;
+        }
 //        NSLog(@"过滤设备 %@",peripheralName);
         return NO;
     }];
@@ -315,8 +324,11 @@ NSString * const ElectricQuantityChanged = @"ElectricQuantityChanged";
         weakSelf.willConnectPeripheral = nil;
         [UserInfo share].isConnected = NO;
         //通知连接蓝牙设备失败
-        [[NSNotificationCenter defaultCenter] postNotificationName:ConnectPeripheralError
-                                                            object:nil];
+        dispatch_async(dispatch_get_main_queue(), ^{
+            [[NSNotificationCenter defaultCenter] postNotificationName:ConnectPeripheralError
+                                                                object:nil];
+            
+        });
         [weakSelf endTimer];
         [weakSelf hideConnectView];
     }];
@@ -341,8 +353,11 @@ NSString * const ElectricQuantityChanged = @"ElectricQuantityChanged";
         weakSelf.curConnectPeripheral = nil;
         weakSelf.willConnectPeripheral = nil;
         //通知断开蓝牙设备
-        [[NSNotificationCenter defaultCenter] postNotificationName:DisconnectPeripheral
-                                                            object:@(weakSelf.manualDisconnect)];
+        dispatch_async(dispatch_get_main_queue(), ^{
+            [[NSNotificationCenter defaultCenter] postNotificationName:DisconnectPeripheral
+                                                                object:@(weakSelf.manualDisconnect)];
+            
+        });
         [weakSelf endTimer];
         //如果是手动断开连接
         if (weakSelf.manualDisconnect) {
@@ -375,8 +390,8 @@ NSString * const ElectricQuantityChanged = @"ElectricQuantityChanged";
      当应用挂起时，使用该key值表示只要接收到给定peripheral端的通知就显示一个提
      */
     NSDictionary *connectOptions = @{CBConnectPeripheralOptionNotifyOnConnectionKey:@YES,
-                                     CBConnectPeripheralOptionNotifyOnDisconnectionKey:@YES,
-                                     CBConnectPeripheralOptionNotifyOnNotificationKey:@YES};
+                                     CBConnectPeripheralOptionNotifyOnDisconnectionKey:@NO,
+                                     CBConnectPeripheralOptionNotifyOnNotificationKey:@NO};
     
     
     [_baby setBabyOptionsWithScanForPeripheralsWithOptions:scanForPeripheralsWithOptions

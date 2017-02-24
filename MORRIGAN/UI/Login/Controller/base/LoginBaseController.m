@@ -55,6 +55,9 @@
     self.rootScroolView.contentSize = CGSizeMake(kScreenWidth, kScreenHeight);
     self.rootScroolView.scrollEnabled = NO;
     [self.view addSubview:self.rootScroolView];
+    
+    // 状态栏颜色
+    self.view.backgroundColor =[Utils stringTOColor:kColor_440067];
 }
 
 
@@ -71,7 +74,19 @@
     CGRect f = _rootScroolView.frame;
     f.size.height = kScreenHeight - height;
     _rootScroolView.frame = f;
-    _rootScroolView.contentOffset = CGPointMake(0, 120);
+    _rootScroolView.contentOffset = CGPointMake(0, 170);
+    if (kScreenHeight == 568) {
+        _rootScroolView.contentOffset = CGPointMake(0, 170);
+    }
+    else if (kScreenHeight == 667) {
+        _rootScroolView.contentOffset = CGPointMake(0, 170);
+    }
+    else if (kScreenHeight == 736) {
+        _rootScroolView.contentOffset = CGPointMake(0, 190);
+    }
+    else if (kScreenHeight < 500) {
+        _rootScroolView.contentOffset = CGPointMake(0, 210);
+    }
     _rootScroolView.scrollEnabled = YES;
     
 }
@@ -80,6 +95,7 @@
 - (void)keyboardWillHide:(NSNotification *)aNotification
 {
     CGRect f = _rootScroolView.frame;
+    f.origin.y = 20;
     f.size.height = kScreenHeight;
     _rootScroolView.frame = f;
     _rootScroolView.scrollEnabled = NO;

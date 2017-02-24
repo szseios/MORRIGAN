@@ -39,7 +39,7 @@
     _barArray = [[NSMutableArray alloc] init];
     
     for(int i = 0; i < 4; i++){
-        UIImageView* bar = [[UIImageView alloc]initWithFrame:CGRectMake(i*width+i*padding, 3, width, 1)];
+        UIImageView* bar = [[UIImageView alloc]initWithFrame:CGRectMake(i*width+i*padding, 3, width, arc4random() % 15 + 4)];
         bar.userInteractionEnabled = YES;
         bar.image = [UIImage imageWithColor:[UIColor colorWithRed:157 / 255.0
                                                             green:96 / 255.0
@@ -162,7 +162,7 @@
 - (void)resetBars {
     for(UIImageView* bar in _barArray){
         CGRect rect = bar.frame;
-        rect.size.height = 1;
+        rect.size.height = arc4random() % 15 + 4;
         rect.origin.y = 3;
         bar.frame = rect;
         bar.hidden = NO;

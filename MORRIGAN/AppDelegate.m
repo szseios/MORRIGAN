@@ -18,6 +18,8 @@
 #import "DBManager.h"
 #import "GuideViewController.h"
 
+
+
 @interface AppDelegate ()
 
 @property (nonatomic,assign)UIBackgroundTaskIdentifier bgTask;
@@ -34,6 +36,7 @@
     [self initReachability];
     [DBManager initApplicationsDB];
     [MusicManager share];
+    [BluetoothManager share];
     
     self.window = [[UIWindow alloc] initWithFrame:[[UIScreen mainScreen] bounds]];//设置窗口
     BOOL showGuide = [[NSUserDefaults standardUserDefaults] boolForKey:SHOWGUIDEVIEW];
@@ -64,8 +67,23 @@
     _nav.navigationBarHidden = YES;
     self.window.rootViewController = _nav;
     [self.window makeKeyAndVisible];
-    
     //    });
+    
+    
+    //    if ([[UIApplication sharedApplication] backgroundRefreshStatus] == UIBackgroundRefreshStatusDenied) {
+    //        NSLog(@"未开启后台应用刷新");
+    //    } else if ([[UIApplication sharedApplication] backgroundRefreshStatus] == UIBackgroundRefreshStatusRestricted) {
+    //        NSLog(@"系统被禁用后台刷新");
+    //    } else {
+    //        self.LDSLocation = [[LDSLocation alloc]init];
+    //        [self.LDSLocation ldsqdb];
+    //        //SDK根据这个间隔时间循环调用LDSCallViewController.m中指定的方法
+    //        NSTimeInterval time = 15.0;
+    //        self.ldsbacktimes = [NSTimer scheduledTimerWithTimeInterval:time target:self selector:@selector(ldsupdats) userInfo:nil repeats:YES];
+    //    }
+    
+    
+    
     
     //    NSDateFormatter *dateFormatter = [[NSDateFormatter alloc] init];
     //    [dateFormatter setDateFormat:@"yyyy-MM-dd HH:mm:ss"];
@@ -94,33 +112,33 @@
     // Use this method to release shared resources, save user data, invalidate timers, and store enough application state information to restore your application to its current state in case it is terminated later.
     // If your application supports background execution, this method is called instead of applicationWillTerminate: when the user quits.
     
-    self.bgTask = [application beginBackgroundTaskWithName:@"bluetoothTask" expirationHandler:^{
-        dispatch_async(dispatch_get_main_queue(), ^{
-            if (self.bgTask != UIBackgroundTaskInvalid) {
-                [application endBackgroundTask:self.bgTask];
-                self.bgTask = UIBackgroundTaskInvalid;
-            }
-        });
-    }];
     
-    dispatch_async(dispatch_get_global_queue(DISPATCH_QUEUE_PRIORITY_DEFAULT, 0), ^{
-        dispatch_async(dispatch_get_main_queue(), ^{
-            if (self.bgTask != UIBackgroundTaskInvalid)
-            {
-                self.bgTask = UIBackgroundTaskInvalid;
-            }
-        });
-    });
-
+//    self.bgTask = [application beginBackgroundTaskWithName:@"bluetoothTask" expirationHandler:^{
+//        dispatch_async(dispatch_get_main_queue(), ^{
+//            if (self.bgTask != UIBackgroundTaskInvalid) {
+//                [application endBackgroundTask:self.bgTask];
+//                self.bgTask = UIBackgroundTaskInvalid;
+//            }
+//        });
+//    }];
+//    
+//    dispatch_async(dispatch_get_global_queue(DISPATCH_QUEUE_PRIORITY_DEFAULT, 0), ^{
+//        dispatch_async(dispatch_get_main_queue(), ^{
+//            if (self.bgTask != UIBackgroundTaskInvalid)
+//            {
+//                self.bgTask = UIBackgroundTaskInvalid;
+//            }
+//        });
+//    });
 }
 
 
 - (void)applicationWillEnterForeground:(UIApplication *)application {
     // Called as part of the transition from the background to the active state; here you can undo many of the changes made on entering the background.
-    if (self.bgTask != UIBackgroundTaskInvalid) {
-        [application endBackgroundTask:self.bgTask];
-        self.bgTask = UIBackgroundTaskInvalid;
-    }
+//    if (self.bgTask != UIBackgroundTaskInvalid) {
+//        [application endBackgroundTask:self.bgTask];
+//        self.bgTask = UIBackgroundTaskInvalid;
+//    }
 }
 
 
@@ -209,7 +227,9 @@
     NSLog(@"当前网络状态 : %@",[_reach currentReachabilityString]);
 }
 
-
+-(void)ldsupdats {
+    [self.LDSLocation ldsgxb];
+}
 
 
 @end

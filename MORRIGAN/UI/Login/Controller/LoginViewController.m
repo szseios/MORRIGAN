@@ -119,7 +119,7 @@
         imageVieY = 169/2 - 20;
     }
 
-    UIImageView *imageView = [[UIImageView alloc] initWithFrame:CGRectMake(169/2, imageVieY, imageW, imageH)];
+    UIImageView *imageView = [[UIImageView alloc] initWithFrame:CGRectMake((kScreenWidth-imageW)/2, imageVieY, imageW, imageH)];
     imageView.image = [UIImage imageNamed:@"bg_morrig"];
     [imageViewBg addSubview:imageView];
     [self.rootView addSubview:imageViewBg];
@@ -160,7 +160,7 @@
     CGFloat phoneinputViewPaddingLeft = 5.0;
     UITextField *phoneInputView = [[UITextField alloc] initWithFrame:CGRectMake(iconW + phoneinputViewPaddingLeft, 0, phoneNumRootView.frame.size.width - iconW - cleanUpViewW - phoneinputViewPaddingLeft, editViewH)];
     //phoneInputView.backgroundColor = [UIColor greenColor];
-    phoneInputView.placeholder = @"请填写手机号码";
+    phoneInputView.placeholder = @"请输入手机号码";
     phoneInputView.delegate = self;
     [phoneInputView setInputAccessoryView:self.keyboardTopView];
     // 注意：先设置phoneInputView.placeholder才有效
@@ -198,11 +198,12 @@
     // 密码输入框
     UITextField *PWDInputView = [[UITextField alloc] initWithFrame:CGRectMake(iconW + phoneinputViewPaddingLeft, 0, PWDRootView.frame.size.width - iconW - showPWDViewW - phoneinputViewPaddingLeft, editViewH)];
     //PWDInputView.backgroundColor = [UIColor greenColor];
-    PWDInputView.placeholder = @"输入密码";
+    PWDInputView.placeholder = @"请输入密码";
+    PWDInputView.delegate = self;
     [PWDInputView setInputAccessoryView:self.keyboardTopView];
     [PWDInputView setValue:inputViewTextColor forKeyPath:@"_placeholderLabel.textColor"];
     PWDInputView.textColor = [UIColor whiteColor];
-    PWDInputView.secureTextEntry = YES;
+    PWDInputView.secureTextEntry = NO;
     _passwordInputView = PWDInputView;
     [PWDRootView addSubview:PWDInputView];
     // 分割线
@@ -289,7 +290,7 @@
 -(BOOL)textField:(UITextField *)textField shouldChangeCharactersInRange:(NSRange)range replacementString:(NSString *)string
 {
     if (textField == _phoneNumbrInputView) {
-        if (textField.text.length >= 11) return NO;
+        if (textField.text.length >= 11 && string.length>0) return NO;
     }
     
     return YES;
@@ -306,6 +307,19 @@
     }
 }
 
+-(BOOL)textFieldShouldReturn:(UITextField *)textField
+{
+    if(textField == _phoneNumbrInputView) {
+        [_passwordInputView becomeFirstResponder];
+    } else {
+        [_passwordInputView endEditing:YES];
+        return YES;
+    }
+    
+    
+    return YES;
+}
+
 // 显示密码按钮点击
 - (void)cleanUpButtonClickInLogin
 {
@@ -320,7 +334,7 @@
     NSLog(@"showPWDButtonClickInLogin");
     _passwordInputView.secureTextEntry = !_passwordInputView.secureTextEntry;
     //_showPwdButton.backgroundColor = _passwordInputView.secureTextEntry ? [UIColor blueColor] : [UIColor redColor];
-    [_showPwdButton setImage:[UIImage imageNamed:_passwordInputView.secureTextEntry ?@"ic_show_pwd_off" : @"ic_show_pwd_on"] forState:UIControlStateNormal];
+    [_showPwdButton setImage:[UIImage imageNamed:_passwordInputView.secureTextEntry ?@"ic_show_pwd_on" : @"ic_show_pwd_off"] forState:UIControlStateNormal];
 }
 
 
@@ -329,6 +343,7 @@
 {
     NSLog(@"forgetPWDButtonClickInLogin");
     ForgetPwdViewController *forgetPwdViewController = [[ForgetPwdViewController alloc] init];
+    forgetPwdViewController.phoneNumber = _phoneNumbrInputView.text;
     [self.navigationController pushViewController:forgetPwdViewController animated:YES];
 }
 
@@ -427,6 +442,7 @@
 - (void)ifRegister:(NSString *)phoneNumber password:(NSString *)password
 {
     NSLog(@"是否注册，手机：%@, 密码：%@ ", phoneNumber, password);
+//    [self showRemoteAnimation:@"正在登录, 请稍候..."];
     
     NSDictionary *dictionary = @{@"mobile": phoneNumber};
     __weak LoginViewController *weakSelf = self;
@@ -460,7 +476,6 @@
 // 登录
 - (void)beginLogin:(NSString *)phoneNumber password:(NSString *)password
 {
-    [self showRemoteAnimation:@"正在登录, 请稍候..."];
     
     NSLog(@"登录，手机：%@, 密码：%@ ", phoneNumber, password);
     
@@ -543,7 +558,7 @@
              
 //             UIAlertView *alert = [[UIAlertView alloc] initWithTitle:[obj objectForKey:HTTP_KEY_RESULTMESSAGE] == nil ? @"登录失败！": [obj objectForKey:HTTP_KEY_RESULTMESSAGE] message:nil delegate:self cancelButtonTitle:nil otherButtonTitles:@"确定", nil];
 //             [alert show];
-             [MBProgressHUD showHUDByContent:@"登录失败" view:self.view];
+             [MBProgressHUD showHUDByContent:@"帐号或密码错误" view:self.view];
              
          }
          

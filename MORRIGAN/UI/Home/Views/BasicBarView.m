@@ -112,7 +112,10 @@
 
 - (void)stopFlashing
 {
-    [_rightButton.layer removeAllAnimations];
+    if (_rightButton) {
+        [_rightButton.layer removeAllAnimations];
+        
+    }
 }
 
 - (void)startFlashing

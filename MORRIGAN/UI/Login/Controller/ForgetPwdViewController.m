@@ -44,13 +44,13 @@
 
 @implementation ForgetPwdViewController
 
+
+
 - (void)viewDidLoad {
     [super viewDidLoad];
     
-    
-    // 初始化视图
     [self initView];
-
+    _phoneNumbrInputView.text = _phoneNumber;
 }
 
 
@@ -70,42 +70,52 @@
     topRootView.backgroundColor = [Utils stringTOColor:kColor_440067];
     [self.rootView addSubview:topRootView];
     // 取消按钮
-    CGFloat cancleBtnY = 25.0;
+    CGFloat cancleBtnY = 0.0;
     if(kScreenHeight < 570) {
         // 5s
-        cancleBtnY = 20.0;
+        cancleBtnY = 0.0;
     }
-    CGFloat cancleBtnW = 40.0;
-    UIButton *cancleBtn = [[UIButton alloc] initWithFrame:CGRectMake(10, cancleBtnY, cancleBtnW, cancleBtnW)];
+    CGFloat cancleBtnW = 35.0;
+    UIButton *cancleBtn = [[UIButton alloc] initWithFrame:CGRectMake(5, cancleBtnY, cancleBtnW, cancleBtnW)];
     //cancleBtn.backgroundColor = [UIColor blueColor];
     [cancleBtn setImage:[UIImage imageNamed:@"ic_close"] forState:UIControlStateNormal];
     [cancleBtn setImage:[UIImage imageNamed:@"ic_close"] forState:UIControlStateHighlighted];
     [cancleBtn addTarget:self action:@selector(cancleButtonClickInForgetPwd) forControlEvents:UIControlEventTouchUpInside];
     [topRootView addSubview:cancleBtn];
     // 忘记密码
-    CGFloat labelView1Y = cancleBtnY + cancleBtnW;
-    CGFloat labelView1H = 30.0;
+    CGFloat labelView1Y = (imageViewH-40-20-20)/2;
+    CGFloat labelView1H = 40.0;
     UILabel *labelView1 = [[UILabel alloc] initWithFrame:CGRectMake(0, labelView1Y, kScreenWidth, labelView1H)];
     labelView1.text = @"忘记密码";
     labelView1.textColor = [UIColor whiteColor];
     labelView1.textAlignment = NSTextAlignmentCenter;
-    labelView1.font = [UIFont boldSystemFontOfSize:20.0];
+    labelView1.font = [UIFont systemFontOfSize:24.0];
     [topRootView addSubview:labelView1];
-    // 输入您的手机号，获取验证码方可修改密码，密码修改成功后，要牢记哦
+    // 输入您的手机号，获取验证码方可修改密码
     CGFloat labelView2H = 20.0;
     UILabel *labelView2 = [[UILabel alloc] initWithFrame:CGRectMake(20, labelView1Y + labelView1H, kScreenWidth - 20*2, labelView2H)];
-    labelView2.text = @" 输入您的手机号,获取验证码方可修改密码,密码修改成功后,要牢记哦";
-    labelView2.numberOfLines = 0;
-    [labelView2 sizeToFit];
+    labelView2.text = @"输入您的手机号,获取验证码方可修改密码";
+//    labelView2.numberOfLines = 1;
+//    [labelView2 sizeToFit];
     labelView2.textColor = [UIColor whiteColor];
     labelView2.textAlignment = NSTextAlignmentCenter;
     labelView2.font = [UIFont systemFontOfSize:15.0];
     [topRootView addSubview:labelView2];
+    
+    // 密码修改成功后,要注意牢记
+    UILabel *labelView3 = [[UILabel alloc] initWithFrame:CGRectMake(20, labelView1Y + labelView1H + labelView2H, kScreenWidth - 20*2, labelView2H)];
+    labelView3.text = @"密码修改成功后,要注意牢记";
+//    labelView3.numberOfLines = 1;
+//    [labelView3 sizeToFit];
+    labelView3.textColor = [UIColor whiteColor];
+    labelView3.textAlignment = NSTextAlignmentCenter;
+    labelView3.font = [UIFont systemFontOfSize:15.0];
+    [topRootView addSubview:labelView3];
 
     
     UIColor *inputViewTextColor = [UIColor colorWithRed:255.0 green:255.0 blue:255.0 alpha:0.3];
     // 手机号
-    CGFloat editViewPaddingTop = 50.0;
+    CGFloat editViewPaddingTop = 20.0;
     CGFloat editViewPaddingLeftRight = 30.0;
     CGFloat editViewH = 44.0;
     CGFloat editViewW = kScreenWidth - editViewPaddingLeftRight * 2;
@@ -132,7 +142,7 @@
     CGFloat phoneinputViewPaddingLeft = 5.0;
     UITextField *phoneInputView = [[UITextField alloc] initWithFrame:CGRectMake(iconW + phoneinputViewPaddingLeft, 0, phoneNumRootView.frame.size.width - iconW - cleanUpViewW - phoneinputViewPaddingLeft, editViewH)];
     //phoneInputView.backgroundColor = [UIColor greenColor];
-    phoneInputView.placeholder = @"请填写手机号码";
+    phoneInputView.placeholder = @"请输入手机号码";
     phoneInputView.delegate = self;
     [phoneInputView setInputAccessoryView:self.keyboardTopView];
     // 注意：先设置phoneInputView.placeholder才有效
@@ -179,6 +189,7 @@
     UITextField *authCodeInputView = [[UITextField alloc] initWithFrame:CGRectMake(iconW + phoneinputViewPaddingLeft, 0, authCodeRootView.frame.size.width - iconW - getAuthCodeViewW - phoneinputViewPaddingLeft, editViewH)];
     //authCodeInputView.backgroundColor = [UIColor greenColor];
     authCodeInputView.placeholder = @"输入验证码";
+    authCodeInputView.delegate = self;
     [authCodeInputView setInputAccessoryView:self.keyboardTopView];
     [authCodeInputView setValue:inputViewTextColor forKeyPath:@"_placeholderLabel.textColor"];
     authCodeInputView.textColor = [UIColor whiteColor];
@@ -207,12 +218,13 @@
     //showPWDView.backgroundColor = [UIColor blueColor];
     [showPWDView addTarget:self action:@selector(showPWDButtonClickInForgetPwd) forControlEvents:UIControlEventTouchUpInside];
     _showPwdButton = showPWDView;
-    [_showPwdButton setImage:[UIImage imageNamed:@"ic_show_pwd_on"] forState:UIControlStateNormal];
+    [_showPwdButton setImage:[UIImage imageNamed:@"ic_show_pwd_off"] forState:UIControlStateNormal];
     [PWDRootView addSubview:showPWDView];
     // 密码输入框
     UITextField *PWDInputView = [[UITextField alloc] initWithFrame:CGRectMake(iconW + phoneinputViewPaddingLeft, 0, PWDRootView.frame.size.width - iconW - showPWDViewW - phoneinputViewPaddingLeft, editViewH)];
     //PWDInputView.backgroundColor = [UIColor greenColor];
-    PWDInputView.placeholder = @"输入密码";
+    PWDInputView.placeholder = @"请输入密码";
+    PWDInputView.delegate = self;
     [PWDInputView setInputAccessoryView:self.keyboardTopView];
     [PWDInputView setValue:inputViewTextColor forKeyPath:@"_placeholderLabel.textColor"];
     PWDInputView.textColor = [UIColor whiteColor];
@@ -231,11 +243,16 @@
     CGFloat okBtnRootViewH = 44.0;
     CGFloat okBtnRootViewW = editViewW;
     CGFloat okBtnRootViewX = editViewPaddingLeftRight;
-    CGFloat okBtnRootViewY = kScreenHeight - 100.0 - okBtnRootViewH;
+    CGFloat okBtnRootViewY = kScreenHeight - 130.0 - okBtnRootViewH;
     if(kScreenHeight < 500) {
         // 4/ipa
         okBtnRootViewY = kScreenHeight - 30.0 - okBtnRootViewH;
     }
+    
+    if (kScreenHeight == 568) {
+        okBtnRootViewY = kScreenHeight - 100.0 - okBtnRootViewH;
+    }
+    
     UIView *okBtnRootView = [[UIView alloc]initWithFrame:CGRectMake(okBtnRootViewX, okBtnRootViewY, okBtnRootViewW, okBtnRootViewH)];
     okBtnRootView.backgroundColor = [UIColor clearColor];
     [self.rootView addSubview:okBtnRootView];
@@ -279,21 +296,33 @@
     NSString *phoneNumber = _phoneNumbrInputView.text;
     BOOL isPhoneNumberRight = [Utils checkMobile: phoneNumber];
     
-    if(phoneNumber && phoneNumber.length == 0) {
-        UIAlertView *alert = [[UIAlertView alloc] initWithTitle:@"请输入手机号" message:nil delegate:self cancelButtonTitle:nil otherButtonTitles:@"确定", nil];
-        [alert show];
-        return;
-    }
+//    if(phoneNumber && phoneNumber.length == 0) {
+//        UIAlertView *alert = [[UIAlertView alloc] initWithTitle:@"请输入手机号" message:nil delegate:self cancelButtonTitle:nil otherButtonTitles:@"确定", nil];
+//        [alert show];
+//        return;
+//    }
+//    
+//    if(!isPhoneNumberRight) {
+//        UIAlertView *alert = [[UIAlertView alloc] initWithTitle:@"您输入的手机号码有误" message:nil delegate:self cancelButtonTitle:nil otherButtonTitles:@"确定", nil];
+//        [alert show];
+//        return;
+//    }
+
     
     if(!isPhoneNumberRight) {
-        UIAlertView *alert = [[UIAlertView alloc] initWithTitle:@"您输入的手机号码有误" message:nil delegate:self cancelButtonTitle:nil otherButtonTitles:@"确定", nil];
-        [alert show];
+        //        UIAlertView *alert = [[UIAlertView alloc] initWithTitle:@"请输入正确的手机号" message:nil delegate:self cancelButtonTitle:nil otherButtonTitles:@"确定", nil];
+        //        [alert show];
+        [MBProgressHUD showHUDByContent:@"请输入正确的手机号" view:self.view];
         return;
     }
     
-    UIAlertView *alert = [[UIAlertView alloc] initWithTitle:@"确认手机号码" message:phoneNumber delegate:self cancelButtonTitle:@"取消" otherButtonTitles:@"确定", nil];
-    alert.tag = kAlertViewTagOfConfirmPhoneNumber;
-    [alert show];
+    
+//    UIAlertView *alert = [[UIAlertView alloc] initWithTitle:@"确认手机号码" message:phoneNumber delegate:self cancelButtonTitle:@"取消" otherButtonTitles:@"确定", nil];
+//    alert.tag = kAlertViewTagOfConfirmPhoneNumber;
+//    [alert show];
+    
+    // 获取手机验证码
+    [self getPhoneMsgCode];
 }
 
 // 手机输入框点击
@@ -312,6 +341,16 @@
     }
 }
 
+-(BOOL)textField:(UITextField *)textField shouldChangeCharactersInRange:(NSRange)range replacementString:(NSString *)string
+{
+    if (textField == _phoneNumbrInputView) {
+        if (textField.text.length >= 11 && string.length>0) return NO;
+    }
+    
+    return YES;
+}
+
+
 - (void)textFieldDidChange:(UITextField *)textField
 {
     if (textField == _phoneNumbrInputView) {
@@ -321,6 +360,21 @@
             _cleanUpButton.hidden = YES;
         }
     }
+}
+
+-(BOOL)textFieldShouldReturn:(UITextField *)textField
+{
+    if(textField == _phoneNumbrInputView) {
+        [_authCodeInputView becomeFirstResponder];
+    } else if(textField == _authCodeInputView) {
+        [_passwordInputView becomeFirstResponder];
+    } else {
+        [_passwordInputView endEditing:YES];
+        return YES;
+    }
+    
+    
+    return YES;
 }
 
 // 显示密码按钮点击
@@ -337,7 +391,7 @@
     NSLog(@"showPWDButtonClickInForgetPwd");
     _passwordInputView.secureTextEntry = !_passwordInputView.secureTextEntry;
     //_showPwdButton.backgroundColor = _passwordInputView.secureTextEntry ? [UIColor blueColor] : [UIColor redColor];
-    [_showPwdButton setImage:[UIImage imageNamed:_passwordInputView.secureTextEntry ?@"ic_show_pwd_off" : @"ic_show_pwd_on"] forState:UIControlStateNormal];
+    [_showPwdButton setImage:[UIImage imageNamed:_passwordInputView.secureTextEntry ?@"ic_show_pwd_on" : @"ic_show_pwd_off"] forState:UIControlStateNormal];
     
 }
 
@@ -378,43 +432,66 @@
         return;
     }
     
-    // 校验
-    if(phoneNumber && phoneNumber.length == 0) {
-        UIAlertView *alert = [[UIAlertView alloc] initWithTitle:@"请输入手机号" message:nil delegate:self cancelButtonTitle:nil otherButtonTitles:@"确定", nil];
-        [alert show];
-        return;
-    }
-    
+//    // 校验
+//    if(phoneNumber && phoneNumber.length == 0) {
+//        UIAlertView *alert = [[UIAlertView alloc] initWithTitle:@"请输入手机号" message:nil delegate:self cancelButtonTitle:nil otherButtonTitles:@"确定", nil];
+//        [alert show];
+//        return;
+//    }
+//    
+//    if(!isPhoneNumberRight) {
+//        UIAlertView *alert = [[UIAlertView alloc] initWithTitle:@"您输入的手机号码有误" message:nil delegate:self cancelButtonTitle:nil otherButtonTitles:@"确定", nil];
+//        [alert show];
+//        return;
+//    }
+//    
+//    
+//    if(password && password.length == 0) {
+//        UIAlertView *alert = [[UIAlertView alloc] initWithTitle:@"请输入密码" message:nil delegate:self cancelButtonTitle:nil otherButtonTitles:@"确定", nil];
+//        [alert show];
+//        return;
+//    }
+//    
+//    if(!isPasswordRight) {
+//        UIAlertView *alert = [[UIAlertView alloc] initWithTitle:@"您输入的密码格式有误" message:nil delegate:self cancelButtonTitle:nil otherButtonTitles:@"确定", nil];
+//        [alert show];
+//        return;
+//    }
+//    
+//    if(authCode && authCode.length == 0) {
+//        UIAlertView *alert = [[UIAlertView alloc] initWithTitle:@"请输入验证码" message:nil delegate:self cancelButtonTitle:nil otherButtonTitles:@"确定", nil];
+//        [alert show];
+//        return;
+//    }
+//    
+//    if(!isauthCodeRight) {
+//        UIAlertView *alert = [[UIAlertView alloc] initWithTitle:@"验证码格式错误，请重新填写" message:nil delegate:self cancelButtonTitle:nil otherButtonTitles:@"确定", nil];
+//        [alert show];
+//        return;
+//    }
     if(!isPhoneNumberRight) {
-        UIAlertView *alert = [[UIAlertView alloc] initWithTitle:@"您输入的手机号码有误" message:nil delegate:self cancelButtonTitle:nil otherButtonTitles:@"确定", nil];
-        [alert show];
-        return;
-    }
-    
-    
-    if(password && password.length == 0) {
-        UIAlertView *alert = [[UIAlertView alloc] initWithTitle:@"请输入密码" message:nil delegate:self cancelButtonTitle:nil otherButtonTitles:@"确定", nil];
-        [alert show];
-        return;
-    }
-    
-    if(!isPasswordRight) {
-        UIAlertView *alert = [[UIAlertView alloc] initWithTitle:@"您输入的密码格式有误" message:nil delegate:self cancelButtonTitle:nil otherButtonTitles:@"确定", nil];
-        [alert show];
+        [MBProgressHUD showHUDByContent:@"请输入正确的手机号" view:self.view];
         return;
     }
     
     if(authCode && authCode.length == 0) {
-        UIAlertView *alert = [[UIAlertView alloc] initWithTitle:@"请输入验证码" message:nil delegate:self cancelButtonTitle:nil otherButtonTitles:@"确定", nil];
-        [alert show];
+        [MBProgressHUD showHUDByContent:@"请输入验证码" view:self.view];
         return;
     }
     
-    if(!isauthCodeRight) {
-        UIAlertView *alert = [[UIAlertView alloc] initWithTitle:@"验证码格式错误，请重新填写" message:nil delegate:self cancelButtonTitle:nil otherButtonTitles:@"确定", nil];
-        [alert show];
+    if(password && password.length == 0) {
+        [MBProgressHUD showHUDByContent:@"请输入密码" view:self.view];
         return;
     }
+    
+    
+    if(!isPhoneNumberRight || !isPasswordRight) {
+        //        UIAlertView *alert = [[UIAlertView alloc] initWithTitle:@"手机号或密码错误" message:nil delegate:self cancelButtonTitle:nil otherButtonTitles:@"确定", nil];
+        //        [alert show];
+        [MBProgressHUD showHUDByContent:@"手机号或密码错误" view:self.view];
+        return;
+    }
+    
     
     
     // 更改密码
@@ -491,6 +568,7 @@
          } else {
              
              NSLog(@"获取验证码失败！");
+             [MBProgressHUD showHUDByContent:[obj objectForKey:HTTP_KEY_RESULTMESSAGE] view:self.view];
          }
          
          UIAlertView *alert = [[UIAlertView alloc] initWithTitle:[obj objectForKey:HTTP_KEY_RESULTMESSAGE] message:nil delegate:self cancelButtonTitle:nil otherButtonTitles:@"确定", nil];

@@ -45,4 +45,6 @@
 
 - (NSString *)currentTimeString;
 
+- (void)playSilenceMusicBackground;
+
 @end
