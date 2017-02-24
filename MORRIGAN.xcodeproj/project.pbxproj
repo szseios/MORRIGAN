@@ -1585,8 +1585,8 @@
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				ASSETCATALOG_COMPILER_LAUNCHIMAGE_NAME = LaunchImage;
-				CODE_SIGN_IDENTITY = "iPhone Developer: 双南 黄 (JXJPSFJD9R)";
-				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer: 双南 黄 (JXJPSFJD9R)";
+				CODE_SIGN_IDENTITY = "iPhone Distribution: Shenzhen Stock Exchange";
+				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Distribution: Shenzhen Stock Exchange";
 				DEVELOPMENT_TEAM = 6C7QEGP2K7;
 				ENABLE_BITCODE = NO;
 				GCC_PREFIX_HEADER = MORRIGAN/PrefixHeader.pch;
@@ -1599,8 +1599,8 @@
 				);
 				PRODUCT_BUNDLE_IDENTIFIER = com.szse.nmoastg;
 				PRODUCT_NAME = "$(TARGET_NAME)";
-				PROVISIONING_PROFILE = "9ec3f871-2ea4-4e59-842c-c5d3ca64afce";
-				PROVISIONING_PROFILE_SPECIFIER = NMOA_Development;
+				PROVISIONING_PROFILE = "b5fbf3fd-d4fc-4ae4-9106-168e15562f4f";
+				PROVISIONING_PROFILE_SPECIFIER = NMOA_StgInhouse;
 				TARGETED_DEVICE_FAMILY = 1;
 			};
 			name = Debug;
@@ -1610,8 +1610,8 @@
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				ASSETCATALOG_COMPILER_LAUNCHIMAGE_NAME = LaunchImage;
-				CODE_SIGN_IDENTITY = "iPhone Developer: 双南 黄 (JXJPSFJD9R)";
-				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer: 双南 黄 (JXJPSFJD9R)";
+				CODE_SIGN_IDENTITY = "iPhone Distribution: Shenzhen Stock Exchange";
+				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Distribution: Shenzhen Stock Exchange";
 				DEVELOPMENT_TEAM = 6C7QEGP2K7;
 				ENABLE_BITCODE = NO;
 				GCC_PREFIX_HEADER = MORRIGAN/PrefixHeader.pch;
@@ -1624,8 +1624,8 @@
 				);
 				PRODUCT_BUNDLE_IDENTIFIER = com.szse.nmoastg;
 				PRODUCT_NAME = "$(TARGET_NAME)";
-				PROVISIONING_PROFILE = "9ec3f871-2ea4-4e59-842c-c5d3ca64afce";
-				PROVISIONING_PROFILE_SPECIFIER = NMOA_Development;
+				PROVISIONING_PROFILE = "b5fbf3fd-d4fc-4ae4-9106-168e15562f4f";
+				PROVISIONING_PROFILE_SPECIFIER = NMOA_StgInhouse;
 				TARGETED_DEVICE_FAMILY = 1;
 			};
 			name = Release;
